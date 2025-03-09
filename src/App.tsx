@@ -16,18 +16,31 @@ import {
   Inter_800ExtraBold,
   Inter_900Black,
 } from '@expo-google-fonts/inter';
+import { loadPanchangaData } from "./util/panchanga";
 
-Asset.loadAsync([
-  ...NavigationAssets,
-  require("./assets/newspaper.png"),
-  require("./assets/bell.png"),
-]);
+// Preload assets
+const preloadAssets = async () => {
+  // Load image assets
+  await Asset.loadAsync([
+    ...NavigationAssets,
+    require("./assets/newspaper.png"),
+    require("./assets/bell.png"),
+  ]);
+  
+  // Preload panchanga data separately
+  try {
+    await loadPanchangaData();
+    console.log("Panchanga data loaded successfully");
+  } catch (error) {
+    console.error("Failed to preload panchanga data:", error);
+  }
+};
 
 SplashScreen.preventAutoHideAsync();
 
 export function App() {
 
-  let [_] = useFonts({
+  let [fontsLoaded] = useFonts({
     Inter_100Thin,
     Inter_200ExtraLight,
     Inter_300Light,
@@ -39,20 +52,36 @@ export function App() {
     Inter_900Black,
   });
 
+  const [assetsLoaded, setAssetsLoaded] = React.useState(false);
+
+  // Load assets
+  React.useEffect(() => {
+    async function loadAssets() {
+      try {
+        await preloadAssets();
+        setAssetsLoaded(true);
+      } catch (error) {
+        console.error("Error loading assets:", error);
+      }
+    }
+
+    loadAssets();
+  }, []);
+
+  // Hide splash screen when everything is loaded
+  React.useEffect(() => {
+    if (fontsLoaded && assetsLoaded) {
+      SplashScreen.hideAsync();
+    }
+  }, [fontsLoaded, assetsLoaded]);
+
+  if (!fontsLoaded || !assetsLoaded) {
+    return null;
+  }
+
   return (
-    <GestureHandlerRootView>
-      <Navigation
-        linking={{
-          enabled: "auto",
-          prefixes: [
-            // Change the scheme to match your app's scheme defined in app.json
-            "helloworld://",
-          ],
-        }}
-        onReady={() => {
-          SplashScreen.hideAsync();
-        }}
-      />
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <Navigation />
     </GestureHandlerRootView>
   );
 }
