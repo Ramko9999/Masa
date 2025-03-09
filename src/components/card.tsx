@@ -14,21 +14,36 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   cardTitle: {
-    fontSize: 14,
+    fontSize: 16,
     paddingBottom: 8,
     letterSpacing: 1,
     textTransform: "uppercase",
-    fontWeight: "bold",
+    color: useGetColor("text-primary-tint-1"),
+  },
+  mainContainer: {
+    flexDirection: "row", 
+    alignItems: "center", 
+    gap: 10
+  },
+  mainText: {
+    fontSize: 32,
+    lineHeight: 38,
+  },
+  caption: {
+    fontSize: 16,
+    lineHeight: 24,
     color: useGetColor("text-primary-tint-1"),
   },
 });
 
 type CardProps = {
   title: string;
-  children: React.ReactNode;
+  icon?: React.ReactNode;
+  mainText: string;
+  caption: string;
 };
 
-export function Card({ title, children }: CardProps) {
+export function Card({ title, icon, mainText, caption }: CardProps) {
   return (
     <View
       style={[
@@ -36,8 +51,12 @@ export function Card({ title, children }: CardProps) {
         { borderColor: useGetColor("text-primary-tint-2") },
       ]}
     >
-      <Text style={styles.cardTitle}>{title}</Text>
-      {children}
+      <Text black style={styles.cardTitle}>{title}</Text>
+      <View style={styles.mainContainer}>
+        {icon}
+        <Text bold style={styles.mainText}>{mainText}</Text>
+      </View>
+      <Text semibold style={styles.caption}>{caption}</Text>
     </View>
   );
 }

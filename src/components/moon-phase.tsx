@@ -240,7 +240,7 @@ const tithiToPhaseComponent: Record<Tithi, React.FC<MoonProps>> = {
   [Tithi.purnima]: WaningCrescent2,
 };
 
-export const MoonPhase = ({ tithi }: { tithi: Tithi }) => {
+export const MoonPhase = ({ tithi, ...props }: { tithi: Tithi } & MoonProps) => {
   const PhaseComponent = tithiToPhaseComponent[tithi];
-  return <PhaseComponent />;
+  return <PhaseComponent {...props} />;
 };

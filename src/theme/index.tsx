@@ -9,8 +9,15 @@ type TextSizeProps = {
 };
 
 type TextWeightProps = {
+  thin?: boolean;
+  extralight?: boolean;
   light?: boolean;
+  regular?: boolean;
+  medium?: boolean;
+  semibold?: boolean;
   bold?: boolean;
+  extrabold?: boolean;
+  black?: boolean;
 };
 
 type TextColorProps = {
@@ -50,15 +57,29 @@ function getFontColor({ primary, tint1, tint2 }: TextColorProps) {
   return "text-primary";
 }
 
-function getFontWeight({ light, bold }: TextWeightProps) {
-  if (light) {
-    return "300";
+function getFontFamily({ thin, extralight, light, regular, medium, semibold, bold, extrabold, black }: TextWeightProps) {
+  if (thin) {
+    return "Inter_100Thin";
+  } else if (extralight) {
+    return "Inter_200ExtraLight";
+  } else if (light) {
+    return "Inter_300Light";
+  } else if (regular) {
+    return "Inter_400Regular";
+  } else if (medium) {
+    return "Inter_500Medium";
+  } else if (semibold) {
+    return "Inter_600SemiBold";
   } else if (bold) {
-    return "600";
+    return "Inter_700Bold";
+  } else if (extrabold) {
+    return "Inter_800ExtraBold";
+  } else if (black) {
+    return "Inter_900Black";
   }
 
-  // default return neutral weight
-  return "500";
+  // default return regular weight
+  return "Inter_400Regular";
 }
 
 export function Text(props: TextProps) {
@@ -70,7 +91,7 @@ export function Text(props: TextProps) {
         {
           fontSize: getFontSize(props),
           color,
-          fontWeight: getFontWeight(props),
+          fontFamily: getFontFamily(props),
         },
         style,
       ]}

@@ -89,9 +89,9 @@ function Day({ day, isSelected, isToday, onClick }: DayProps) {
         </Text>
         <Text
           small
+          black
           style={{
             color: isSelected ? secondary : textPrimaryTint1,
-            fontWeight: "bold",
           }}
         >
           {DAYS_OF_WEEK_ABBR[new Date(day).getDay()]}
@@ -150,17 +150,19 @@ type CalendarTitleProps = {
 function CalendarTitle({ day }: CalendarTitleProps) {
   return (
     <View style={calendarTitleStyles.container}>
-      <Text large bold>
+      <Text large extrabold>
         {DAYS_OF_WEEK[new Date(day).getDay()]}
       </Text>
       <View style={calendarTitleStyles.date}>
-        <Text tint1>
+        <Text tint1 bold>
           {new Intl.DateTimeFormat("en-US", { month: "long" }).format(
             new Date(day)
           )}{" "}
           {new Date(day).getDate().toString().padStart(2, "0")}
         </Text>
-        <Text tint2>{new Date(day).getFullYear()}</Text>
+        <Text tint2 bold>
+          {new Date(day).getFullYear()}
+        </Text>
       </View>
     </View>
   );
