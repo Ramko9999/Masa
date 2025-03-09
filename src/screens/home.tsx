@@ -10,11 +10,14 @@ import {
 import React from "react";
 import { WeekCalendar } from "../components/calendar";
 import { truncateToDay } from "../util/date";
+import { Card } from "../components/card";
+import { useGetColor } from "../theme/color";
+import { MoonPhase, Tithi } from "../components/moon-phase";
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    ...StyleUtils.flexRowCenterAll(10),
+    padding: 16,
   },
 });
 
@@ -23,12 +26,62 @@ export function Home() {
   const [selectedDay, setSelectedDay] = useState(truncateToDay(Date.now()));
   return (
     <>
-      <WeekCalendar selectedDay={selectedDay} onSelectDay={setSelectedDay} />
-      <View style={styles.container}>
-        <Text>Home</Text>
-        <TouchableOpacity onPress={() => setShowDialog(true)}>
-          <Text>Click me to show dialog</Text>
-        </TouchableOpacity>
+      <View style={{ flex: 1, backgroundColor: useGetColor("background") }}>
+        <WeekCalendar selectedDay={selectedDay} onSelectDay={setSelectedDay} />
+
+        <View style={styles.container}>
+          <Card title="TITHI—LUNAR DAY">
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "flex-start",
+                gap: 10,
+              }}
+            >
+              <MoonPhase tithi={Tithi.trayodashi} />
+              <View>
+                <Text style={{ fontSize: 24, lineHeight: 24 }}>Navami</Text>
+
+                <Text
+                  style={{
+                    fontSize: 12,
+                    color: useGetColor("text-primary-tint-1"),
+                  }}
+                >
+                  Changes to Amavasya at 4:45 PM
+                </Text>
+              </View>
+            </View>
+          </Card>
+          <Card title="VARA—DAY OF THE WEEK">
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "flex-start",
+                gap: 10,
+              }}
+            >
+              <View>
+                <Text style={{ fontSize: 24, lineHeight: 24 }}>Sanivaram</Text>
+              </View>
+            </View>
+          </Card>
+          <Card title="MASA-MONTH">
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "flex-start",
+                gap: 10,
+              }}
+            >
+              <View>
+                <Text style={{ fontSize: 24, lineHeight: 24 }}>
+                  Phaalgunamu
+                </Text>
+              </View>
+            </View>
+          </Card>
+        </View>
       </View>
       <Dialog show={showDialog} onHide={() => setShowDialog(false)} />
     </>

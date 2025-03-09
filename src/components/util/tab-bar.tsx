@@ -11,12 +11,12 @@ import {
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { StyleUtils } from "../../theme/style-utils";
 import { useGetColor } from "../../theme/color";
-import { LucideCalendar, LucideHome, LucideList } from "lucide-react-native";
+import { LucideBolt, LucideCalendar, LucideHome, LucideList } from "lucide-react-native";
 
 const tabStyles = StyleSheet.create({
   container: {
-    height: 45,
-    width: 45,
+    paddingHorizontal: 20,
+    paddingVertical: 12,
     borderRadius: 22,
     ...StyleUtils.flexRowCenterAll(),
   },
@@ -32,12 +32,12 @@ function UpcomingTab({ onPress }: TabProps) {
       <View
         style={[
           tabStyles.container,
-          { backgroundColor: useGetColor("text-primary-tint-2") },
+          { backgroundColor: useGetColor("button-background") },
         ]}
       >
-        <LucideList
-          size={28}
-          color={useGetColor("text-primary")}
+        <LucideBolt
+          size={24}
+          color={useGetColor("button-text")}
           strokeWidth={2}
         />
       </View>
@@ -51,12 +51,12 @@ function CalendarTab({ onPress }: TabProps) {
       <View
         style={[
           tabStyles.container,
-          { backgroundColor: useGetColor("text-primary-tint-2") },
+          { backgroundColor: useGetColor("button-background") },
         ]}
       >
         <LucideCalendar
-          size={28}
-          color={useGetColor("text-primary")}
+          size={24}
+          color={useGetColor("button-text")}
           strokeWidth={2}
         />
       </View>
@@ -70,12 +70,12 @@ function HomeTab({ onPress }: TabProps) {
       <View
         style={[
           tabStyles.container,
-          { backgroundColor: useGetColor("text-primary-tint-2") },
+          { backgroundColor: useGetColor("button-background") },
         ]}
       >
         <LucideHome
-          size={28}
-          color={useGetColor("text-primary")}
+          size={24}
+          color={useGetColor("button-text")}
           strokeWidth={2}
         />
       </View>
@@ -85,8 +85,10 @@ function HomeTab({ onPress }: TabProps) {
 
 const styles = StyleSheet.create({
   container: {
-    ...StyleUtils.flexRow(25),
+    ...StyleUtils.flexRow(12),
     alignItems: "center",
+    width: "100%",
+    justifyContent: "center",
     height: "100%",
   },
   tab: {
@@ -148,7 +150,7 @@ export function Tabs({ state, descriptors, navigation }: BottomTabBarProps) {
   };
 
   return (
-    <View style={[styles.container, { marginLeft: width / 2 - 22 }]}>
+    <View style={styles.container}>
       {renderTab(middleTab, middleTab === "home" ? "Home" : "Upcoming")}
       {renderTab("calendar", "Calendar")}
     </View>
@@ -158,6 +160,7 @@ export function Tabs({ state, descriptors, navigation }: BottomTabBarProps) {
 const tabBarStyles = StyleSheet.create({
   container: {
     position: "absolute",
+    flexDirection: "row",
     height: "10%",
     bottom: 0,
     width: "100%",
