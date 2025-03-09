@@ -12,7 +12,7 @@ import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import React from "react";
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
-const BACKDROP_VISIBLE_COLOR = "rgba(0, 0, 0, 0.8)";
+const BACKDROP_VISIBLE_COLOR = "rgba(0, 0, 0, 0.5)";
 
 const backdropStyles = StyleSheet.create({
   container: {
@@ -74,11 +74,15 @@ export const BottomSheet = forwardRef<BottomSheetRef, BottomSheetProps>(
     }, [show]);
 
     const hide = () => {
-      totalTranslation.value = withTiming(maxTranslation, {}, (done) => {
-        if (done) {
-          runOnJS(onHide)();
+      totalTranslation.value = withTiming(
+        maxTranslation,
+        {},
+        (done) => {
+          if (done) {
+            runOnJS(onHide)();
+          }
         }
-      });
+      );
     };
 
     const panGesture = Gesture.Pan()

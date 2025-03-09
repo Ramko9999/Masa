@@ -1,5 +1,9 @@
 import React from "react";
-import { StyleSheet, useWindowDimensions } from "react-native";
+import {
+  StyleSheet,
+  TouchableOpacity,
+  useWindowDimensions,
+} from "react-native";
 import { View, Text } from "../theme";
 import { useGetColor } from "../theme/color";
 import { DashedBorder } from "./util/dashed-border";
@@ -39,14 +43,15 @@ type CardProps = {
   icon?: React.ReactNode;
   mainText: string;
   caption: string;
+  onClick?: () => void;
 };
 
-export function Card({ title, icon, mainText, caption }: CardProps) {
+export function Card({ title, icon, mainText, caption, onClick }: CardProps) {
   const { width } = useWindowDimensions();
   const color = useGetColor("text-primary-tint-2");
 
   return (
-    <>
+    <TouchableOpacity onPress={onClick}>
       <DashedBorder
         width={width * 0.94} // Adjust based on your padding
         color={color}
@@ -68,6 +73,6 @@ export function Card({ title, icon, mainText, caption }: CardProps) {
           {caption}
         </Text>
       </View>
-    </>
+    </TouchableOpacity>
   );
 }

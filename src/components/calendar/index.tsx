@@ -59,8 +59,8 @@ function Day({ day, isSelected, isToday, onClick }: DayProps) {
   const textPrimary = useGetColor("text-primary");
   const textPrimaryTint1 = useGetColor("text-primary-tint-1");
   const textPrimaryTint2 = useGetColor("text-primary-tint-2");
+  const selectedBorderColor = convertHexToRGBA(textPrimaryTint2, 0.4);
   const secondary = useGetColor("secondary");
-  const selectedBorderColor = convertHexToRGBA(useGetColor("text-primary-tint-2"), 0.5);
   const selectionAnimation = useSharedValue(isSelected ? 1 : 0);
 
   useEffect(() => {

@@ -1,17 +1,8 @@
-import { BottomTabBarProps } from "@react-navigation/bottom-tabs";
-import { BlurView } from "expo-blur";
 import React from "react";
-import {
-  useWindowDimensions,
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-} from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { View, TouchableOpacity, StyleSheet } from "react-native";
 import { StyleUtils } from "../../theme/style-utils";
 import { useGetColor } from "../../theme/color";
-import { LucideBolt, LucideCalendar, LucideHome, LucideList } from "lucide-react-native";
+import { LucideBolt, LucideCalendar, LucideHome } from "lucide-react-native";
 
 const tabStyles = StyleSheet.create({
   container: {
@@ -109,78 +100,30 @@ const styles = StyleSheet.create({
   },
 });
 
-export function Tabs({ state, descriptors, navigation }: BottomTabBarProps) {
-  const currentRoute = state.routes[state.index];
-  const middleTab = currentRoute.name === "home" ? "upcoming" : "home";
-  const { width } = useWindowDimensions();
+type TabsProps = {
+  currentRoute: string;
+  onClick: (route: string) => void;
+};
 
-  const renderTab = (route: string, label: string) => {
-    const isFocused = currentRoute.name === route;
-
-    if (route === "upcoming") {
-      return <UpcomingTab onPress={() => navigation.navigate("upcoming")} />;
+export function Tabs({ currentRoute, onClick }: TabsProps) {
+  const renderTab = (route: string) => {
+    if (route === "home") {
+      return <UpcomingTab onPress={() => onClick("upcoming")} />;
     }
 
     if (route === "calendar") {
-      return <CalendarTab onPress={() => navigation.navigate("calendar")} />;
+      return <CalendarTab onPress={() => onClick("calendar")} />;
     }
 
-    if (route === "home") {
-      return <HomeTab onPress={() => navigation.navigate("home")} />;
+    if (route === "upcoming") {
+      return <HomeTab onPress={() => onClick("home")} />;
     }
-
-    return (
-      <TouchableOpacity
-        key={route}
-        style={styles.tab}
-        onPress={() => {
-          navigation.navigate(route);
-        }}
-      >
-        <Text
-          style={[
-            styles.tabText,
-            isFocused ? styles.activeTab : styles.inactiveTab,
-          ]}
-        >
-          {label}
-        </Text>
-      </TouchableOpacity>
-    );
   };
 
   return (
     <View style={styles.container}>
-      {renderTab(middleTab, middleTab === "home" ? "Home" : "Upcoming")}
-      {renderTab("calendar", "Calendar")}
+      {renderTab(currentRoute)}
+      {renderTab("calendar")}
     </View>
-  );
-}
-
-const tabBarStyles = StyleSheet.create({
-  container: {
-    position: "absolute",
-    flexDirection: "row",
-    height: "10%",
-    bottom: 0,
-    width: "100%",
-  },
-});
-export function TabBar({ state, descriptors, navigation }: BottomTabBarProps) {
-  const insets = useSafeAreaInsets();
-  return (
-    <BlurView
-      tint="light"
-      intensity={50}
-      style={tabBarStyles.container}
-      experimentalBlurMethod="dimezisBlurView"
-    >
-      <Tabs
-        state={state}
-        descriptors={descriptors}
-        navigation={navigation}
-        insets={insets}
-      />
-    </BlurView>
   );
 }
