@@ -4,11 +4,28 @@ import {
 } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { Home } from "../screens/home";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { Upcoming } from "../screens/upcoming";
+import { TabBar } from "../components/util/tab-bar";
 
-const RootStack = createStackNavigator({
+const Tabs = createBottomTabNavigator({
+  tabBar: (props) => <TabBar {...props} />,
   screens: {
     home: {
       screen: Home,
+      options: { headerShown: false },
+    },
+    upcoming: {
+      screen: Upcoming,
+      options: { headerShown: false },
+    },
+  },
+});
+
+const RootStack = createStackNavigator({
+  screens: {
+    tabs: {
+      screen: Tabs,
       options: {
         headerShown: false,
       },

@@ -8,6 +8,8 @@ import {
   useWindowDimensions,
 } from "react-native";
 import React from "react";
+import { WeekCalendar } from "../components/calendar";
+import { truncateToDay } from "../util/date";
 
 const styles = StyleSheet.create({
   container: {
@@ -18,8 +20,10 @@ const styles = StyleSheet.create({
 
 export function Home() {
   const [showDialog, setShowDialog] = useState(false);
+  const [selectedDay, setSelectedDay] = useState(truncateToDay(Date.now()));
   return (
     <>
+      <WeekCalendar selectedDay={selectedDay} onSelectDay={setSelectedDay} />
       <View style={styles.container}>
         <Text>Home</Text>
         <TouchableOpacity onPress={() => setShowDialog(true)}>
