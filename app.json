@@ -1,13 +1,13 @@
 {
   "expo": {
-    "name": "hindu-cal",
-    "slug": "hindu-cal",
+    "name": "masa",
+    "slug": "masa",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
-    "scheme": "hinducal",
+    "scheme": "masa",
     "ios": {
       "supportsTablet": true
     },
