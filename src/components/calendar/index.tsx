@@ -42,9 +42,9 @@ const dayStyles = StyleSheet.create({
     justifyContent: "center",
     height: 70,
     gap: 4,
-    borderWidth: 1,
+    borderWidth: 2,
     borderColor: "transparent",
-    borderRadius: 8,
+    borderRadius: 18,
   },
 });
 
@@ -59,7 +59,7 @@ function Day({ day, isSelected, isToday, onClick }: DayProps) {
   const textPrimary = useGetColor("text-primary");
   const textPrimaryTint1 = useGetColor("text-primary-tint-1");
   const textPrimaryTint2 = useGetColor("text-primary-tint-2");
-  const selectedBorderColor = convertHexToRGBA(textPrimary, 0.2);
+  const secondary = useGetColor("secondary");
   const selectionAnimation = useSharedValue(isSelected ? 1 : 0);
 
   useEffect(() => {
@@ -72,7 +72,7 @@ function Day({ day, isSelected, isToday, onClick }: DayProps) {
     borderColor: interpolateColor(
       selectionAnimation.value,
       [0, 1],
-      ["transparent", selectedBorderColor]
+      ["transparent", textPrimaryTint2]
     ),
   }));
 
@@ -90,7 +90,8 @@ function Day({ day, isSelected, isToday, onClick }: DayProps) {
         <Text
           small
           style={{
-            color: isSelected ? textPrimary : textPrimaryTint1,
+            color: isSelected ? secondary : textPrimaryTint1,
+            fontWeight: "bold",
           }}
         >
           {DAYS_OF_WEEK_ABBR[new Date(day).getDay()]}
@@ -138,7 +139,7 @@ const calendarTitleStyles = StyleSheet.create({
   },
   date: {
     ...StyleUtils.flexColumn(),
-    alignItems: "center",
+    alignItems: "flex-end",
   },
 });
 

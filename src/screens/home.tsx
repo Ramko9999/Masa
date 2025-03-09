@@ -10,6 +10,7 @@ import {
 import React from "react";
 import { WeekCalendar } from "../components/calendar";
 import { truncateToDay } from "../util/date";
+import { useGetColor } from "../theme/color";
 
 const styles = StyleSheet.create({
   container: {
@@ -23,12 +24,14 @@ export function Home() {
   const [selectedDay, setSelectedDay] = useState(truncateToDay(Date.now()));
   return (
     <>
-      <WeekCalendar selectedDay={selectedDay} onSelectDay={setSelectedDay} />
-      <View style={styles.container}>
-        <Text>Home</Text>
-        <TouchableOpacity onPress={() => setShowDialog(true)}>
-          <Text>Click me to show dialog</Text>
-        </TouchableOpacity>
+      <View style={{ flex: 1, backgroundColor: useGetColor("background") }}>
+        <WeekCalendar selectedDay={selectedDay} onSelectDay={setSelectedDay} />
+        <View style={styles.container}>
+          <Text>Home</Text>
+          <TouchableOpacity onPress={() => setShowDialog(true)}>
+            <Text>Click me to show dialog</Text>
+          </TouchableOpacity>
+        </View>
       </View>
       <Dialog show={showDialog} onHide={() => setShowDialog(false)} />
     </>
