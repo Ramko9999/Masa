@@ -1,8 +1,17 @@
-import { StyleSheet, TouchableOpacity } from "react-native";
-import React, { useEffect, useState } from "react";
+import {
+  StyleSheet,
+  TouchableOpacity,
+  useWindowDimensions,
+} from "react-native";
+import React, { useEffect } from "react";
 import { StyleUtils } from "../../theme/style-utils";
 import { View, Text } from "../../theme";
-import { generateEnclosingWeek, truncateToDay } from "../../util/date";
+import {
+  addDays,
+  generateEnclosingWeek,
+  removeDays,
+  truncateToDay,
+} from "../../util/date";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useGetColor } from "../../theme/color";
 import Animated, {
@@ -11,6 +20,9 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from "react-native-reanimated";
+import { convertHexToRGBA } from "../../util/color";
+import { ArrayUtils } from "../../util/array";
+import { InfiniteCalendar, PAGE_LOAD_SIZE } from "./infinite";
 
 const DAYS_OF_WEEK_ABBR = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
 const DAYS_OF_WEEK = [
@@ -39,15 +51,15 @@ const dayStyles = StyleSheet.create({
 type DayProps = {
   day: number;
   isSelected: boolean;
-  isMarked: boolean;
   isToday: boolean;
   onClick: (day: number) => void;
 };
 
-function Day({ day, isSelected, isMarked, isToday, onClick }: DayProps) {
+function Day({ day, isSelected, isToday, onClick }: DayProps) {
   const textPrimary = useGetColor("text-primary");
   const textPrimaryTint1 = useGetColor("text-primary-tint-1");
   const textPrimaryTint2 = useGetColor("text-primary-tint-2");
+  const selectedBorderColor = convertHexToRGBA(textPrimary, 0.2);
   const selectionAnimation = useSharedValue(isSelected ? 1 : 0);
 
   useEffect(() => {
@@ -60,7 +72,7 @@ function Day({ day, isSelected, isMarked, isToday, onClick }: DayProps) {
     borderColor: interpolateColor(
       selectionAnimation.value,
       [0, 1],
-      ["transparent", textPrimaryTint2]
+      ["transparent", selectedBorderColor]
     ),
   }));
 
@@ -97,20 +109,19 @@ const weekStyles = StyleSheet.create({
 type WeekProps = {
   week: number[];
   isSelected: (date: number) => boolean;
-  isMarked: (date: number) => boolean;
   isToday: (date: number) => boolean;
   onClick: (date: number) => void;
 };
 
-function Week({ week, isSelected, isMarked, isToday, onClick }: WeekProps) {
+function Week({ week, isSelected, isToday, onClick }: WeekProps) {
+  const { width } = useWindowDimensions();
   return (
-    <View style={weekStyles.container}>
+    <View style={[weekStyles.container, { width: width * 0.94 }]}>
       {week.map((dayDate, index) => (
         <Day
           key={index}
           day={dayDate}
           isSelected={isSelected(dayDate)}
-          isMarked={isMarked(dayDate)}
           isToday={isToday(dayDate)}
           onClick={() => onClick(dayDate)}
         />
@@ -146,7 +157,7 @@ function CalendarTitle({ day }: CalendarTitleProps) {
           {new Intl.DateTimeFormat("en-US", { month: "long" }).format(
             new Date(day)
           )}{" "}
-          {new Date(day).getDate()}
+          {new Date(day).getDate().toString().padStart(2, "0")}
         </Text>
         <Text tint2>{new Date(day).getFullYear()}</Text>
       </View>
@@ -162,9 +173,39 @@ const weekCalendarStyles = StyleSheet.create({
   },
 });
 
+function generatePreviousWeeks(currentDate: number, n: number) {
+  const weeks = [];
+  const week = generateEnclosingWeek(currentDate);
+  let weekDay = removeDays(week[0], 1);
+  for (let i = 0; i < n; i++) {
+    const lastWeek = generateEnclosingWeek(weekDay);
+    weeks.push(lastWeek);
+    weekDay = removeDays(lastWeek[0], 1);
+  }
+  return weeks.reverse();
+}
+
+function generateNextWeeks(currentDate: number, n: number) {
+  const weeks = [];
+  const week = generateEnclosingWeek(currentDate);
+  let weekDay = addDays(ArrayUtils.last(week), 1);
+  for (let i = 0; i < n; i++) {
+    const nextWeek = generateEnclosingWeek(weekDay);
+    weeks.push(nextWeek);
+    weekDay = addDays(ArrayUtils.last(nextWeek), 1);
+  }
+  return weeks;
+}
+
+function generateInitialWeeks(currentDate: number, n: number) {
+  const previousWeeks = generatePreviousWeeks(currentDate, n);
+  const nextWeeks = generateNextWeeks(currentDate, n);
+  return [...previousWeeks, generateEnclosingWeek(currentDate), ...nextWeeks];
+}
+
 type WeekCalendarProps = {
   selectedDay: number;
-  onSelectDay: (day: number) => void;
+  onSelectDay: (date: number) => void;
 };
 
 export function WeekCalendar({ selectedDay, onSelectDay }: WeekCalendarProps) {
@@ -175,12 +216,29 @@ export function WeekCalendar({ selectedDay, onSelectDay }: WeekCalendarProps) {
       style={[weekCalendarStyles.container, { paddingTop: insets.top + 20 }]}
     >
       <CalendarTitle day={selectedDay} />
-      <Week
-        week={generateEnclosingWeek(selectedDay)}
-        isSelected={(date) => date === selectedDay}
-        isMarked={() => false}
-        isToday={() => false}
-        onClick={onSelectDay}
+      <InfiniteCalendar
+        initialData={generateInitialWeeks(selectedDay, PAGE_LOAD_SIZE)}
+        initialDataIndex={PAGE_LOAD_SIZE}
+        loadMore={(currentWeeks, loadSize) => [
+          ...currentWeeks,
+          ...generateNextWeeks(ArrayUtils.last(currentWeeks)[0], loadSize),
+        ]}
+        loadPrevious={(currentWeeks, loadSize) => [
+          ...generatePreviousWeeks(currentWeeks[0][0], loadSize),
+          ...currentWeeks,
+        ]}
+        onSelect={(currentWeek) => onSelectDay(currentWeek[0])}
+        keyExtractor={(week) => week[0].toString()}
+        render={(week, _) => (
+          <Week
+            week={week}
+            isSelected={(date) => date === selectedDay}
+            isToday={(date) => date === truncateToDay(Date.now())}
+            onClick={(date) => {
+              onSelectDay(date);
+            }}
+          />
+        )}
       />
     </View>
   );

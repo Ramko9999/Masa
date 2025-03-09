@@ -19,4 +19,6 @@ export function truncateToDay(timestamp: number) {
   return date.valueOf();
 }
 
-
+export function removeDays(timestamp: number, days: number) {
+    return addDays(timestamp, -1 * days);
+  }
