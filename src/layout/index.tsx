@@ -7,9 +7,15 @@ import { Home } from "../screens/home";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Upcoming } from "../screens/upcoming";
 import { TabBar } from "../components/util/tab-bar";
+import React from "react";
 
 const Tabs = createBottomTabNavigator({
   tabBar: (props) => <TabBar {...props} />,
+  screenOptions: {
+    tabBarStyle: {
+      position: "absolute",
+    },
+  },
   screens: {
     home: {
       screen: Home,

@@ -1,5 +1,6 @@
 import { BottomTabBarProps } from "@react-navigation/bottom-tabs";
-import { useEffect } from "react";
+import { BlurView } from "expo-blur";
+import React from "react";
 import {
   useWindowDimensions,
   View,
@@ -7,20 +8,86 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from "react-native";
-import Animated, {
-  useAnimatedStyle,
-  useSharedValue,
-} from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { StyleUtils } from "../../theme/style-utils";
+import { useGetColor } from "../../theme/color";
+import { LucideCalendar, LucideHome, LucideList } from "lucide-react-native";
+
+const tabStyles = StyleSheet.create({
+  container: {
+    height: 45,
+    width: 45,
+    borderRadius: 22,
+    ...StyleUtils.flexRowCenterAll(),
+  },
+});
+
+type TabProps = {
+  onPress: () => void;
+};
+
+function UpcomingTab({ onPress }: TabProps) {
+  return (
+    <TouchableOpacity onPress={onPress}>
+      <View
+        style={[
+          tabStyles.container,
+          { backgroundColor: useGetColor("text-primary-tint-2") },
+        ]}
+      >
+        <LucideList
+          size={28}
+          color={useGetColor("text-primary")}
+          strokeWidth={2}
+        />
+      </View>
+    </TouchableOpacity>
+  );
+}
+
+function CalendarTab({ onPress }: TabProps) {
+  return (
+    <TouchableOpacity onPress={onPress}>
+      <View
+        style={[
+          tabStyles.container,
+          { backgroundColor: useGetColor("text-primary-tint-2") },
+        ]}
+      >
+        <LucideCalendar
+          size={28}
+          color={useGetColor("text-primary")}
+          strokeWidth={2}
+        />
+      </View>
+    </TouchableOpacity>
+  );
+}
+
+function HomeTab({ onPress }: TabProps) {
+  return (
+    <TouchableOpacity onPress={onPress}>
+      <View
+        style={[
+          tabStyles.container,
+          { backgroundColor: useGetColor("text-primary-tint-2") },
+        ]}
+      >
+        <LucideHome
+          size={28}
+          color={useGetColor("text-primary")}
+          strokeWidth={2}
+        />
+      </View>
+    </TouchableOpacity>
+  );
+}
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: "row",
-    backgroundColor: "#fff",
-    height: 60,
+    ...StyleUtils.flexRow(25),
     alignItems: "center",
-    justifyContent: "center",
-    paddingHorizontal: 20,
+    height: "100%",
   },
   tab: {
     flex: 1,
@@ -43,9 +110,22 @@ const styles = StyleSheet.create({
 export function Tabs({ state, descriptors, navigation }: BottomTabBarProps) {
   const currentRoute = state.routes[state.index];
   const middleTab = currentRoute.name === "home" ? "upcoming" : "home";
+  const { width } = useWindowDimensions();
 
   const renderTab = (route: string, label: string) => {
     const isFocused = currentRoute.name === route;
+
+    if (route === "upcoming") {
+      return <UpcomingTab onPress={() => navigation.navigate("upcoming")} />;
+    }
+
+    if (route === "calendar") {
+      return <CalendarTab onPress={() => navigation.navigate("calendar")} />;
+    }
+
+    if (route === "home") {
+      return <HomeTab onPress={() => navigation.navigate("home")} />;
+    }
 
     return (
       <TouchableOpacity
@@ -68,7 +148,7 @@ export function Tabs({ state, descriptors, navigation }: BottomTabBarProps) {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { marginLeft: width / 2 - 22 }]}>
       {renderTab(middleTab, middleTab === "home" ? "Home" : "Upcoming")}
       {renderTab("calendar", "Calendar")}
     </View>
@@ -78,35 +158,26 @@ export function Tabs({ state, descriptors, navigation }: BottomTabBarProps) {
 const tabBarStyles = StyleSheet.create({
   container: {
     position: "absolute",
+    height: "10%",
     bottom: 0,
-    left: 0,
-    right: 0,
-    backgroundColor: "#fff",
-    borderTopWidth: 1,
-    borderTopColor: "#E5E5EA",
+    width: "100%",
   },
 });
-
 export function TabBar({ state, descriptors, navigation }: BottomTabBarProps) {
-  const { height } = useWindowDimensions();
-  const translation = useSharedValue(0);
   const insets = useSafeAreaInsets();
-
-  const animatedStyle = useAnimatedStyle(
-    () => ({
-      transform: [{ translateY: translation.value }],
-    }),
-    []
-  );
-
   return (
-    <Animated.View style={[tabBarStyles.container, animatedStyle]}>
+    <BlurView
+      tint="light"
+      intensity={50}
+      style={tabBarStyles.container}
+      experimentalBlurMethod="dimezisBlurView"
+    >
       <Tabs
         state={state}
         descriptors={descriptors}
         navigation={navigation}
         insets={insets}
       />
-    </Animated.View>
+    </BlurView>
   );
 }
