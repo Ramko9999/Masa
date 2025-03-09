@@ -42,7 +42,7 @@ type CardProps = {
   title: string;
   icon?: React.ReactNode;
   mainText: string;
-  caption: string;
+  caption?: string;
   onClick?: () => void;
 };
 
@@ -69,9 +69,11 @@ export function Card({ title, icon, mainText, caption, onClick }: CardProps) {
             {mainText}
           </Text>
         </View>
-        <Text semibold style={styles.caption}>
-          {caption}
-        </Text>
+        {caption && (
+          <Text semibold style={styles.caption}>
+            {caption}
+          </Text>
+        )}
       </View>
     </TouchableOpacity>
   );
