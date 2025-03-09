@@ -1,16 +1,14 @@
 import React from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, useWindowDimensions } from "react-native";
 import { View, Text } from "../theme";
 import { useGetColor } from "../theme/color";
+import { DashedBorder } from "./util/dashed-border";
 
 const styles = StyleSheet.create({
   cardContainer: {
     width: "100%",
     flexDirection: "column",
     paddingVertical: 15,
-    borderTopWidth: 2,
-    borderTopColor: useGetColor("text-primary-tint-2"),
-    borderStyle: "dashed",
     backgroundColor: "white",
   },
   cardTitle: {
@@ -21,9 +19,9 @@ const styles = StyleSheet.create({
     color: useGetColor("text-primary-tint-1"),
   },
   mainContainer: {
-    flexDirection: "row", 
-    alignItems: "center", 
-    gap: 10
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
   },
   mainText: {
     fontSize: 32,
@@ -44,19 +42,32 @@ type CardProps = {
 };
 
 export function Card({ title, icon, mainText, caption }: CardProps) {
+  const { width } = useWindowDimensions();
+  const color = useGetColor("text-primary-tint-2");
+
   return (
-    <View
-      style={[
-        styles.cardContainer,
-        { borderColor: useGetColor("text-primary-tint-2") },
-      ]}
-    >
-      <Text black style={styles.cardTitle}>{title}</Text>
-      <View style={styles.mainContainer}>
-        {icon}
-        <Text bold style={styles.mainText}>{mainText}</Text>
+    <>
+      <DashedBorder
+        width={width * 0.94} // Adjust based on your padding
+        color={color}
+        dashLength={4}
+        dashGap={8}
+        strokeWidth={2}
+      />
+      <View style={styles.cardContainer}>
+        <Text black style={styles.cardTitle}>
+          {title}
+        </Text>
+        <View style={styles.mainContainer}>
+          {icon}
+          <Text bold style={styles.mainText}>
+            {mainText}
+          </Text>
+        </View>
+        <Text semibold style={styles.caption}>
+          {caption}
+        </Text>
       </View>
-      <Text semibold style={styles.caption}>{caption}</Text>
-    </View>
+    </>
   );
 }

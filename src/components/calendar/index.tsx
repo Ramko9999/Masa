@@ -60,6 +60,7 @@ function Day({ day, isSelected, isToday, onClick }: DayProps) {
   const textPrimaryTint1 = useGetColor("text-primary-tint-1");
   const textPrimaryTint2 = useGetColor("text-primary-tint-2");
   const secondary = useGetColor("secondary");
+  const selectedBorderColor = convertHexToRGBA(useGetColor("text-primary-tint-2"), 0.5);
   const selectionAnimation = useSharedValue(isSelected ? 1 : 0);
 
   useEffect(() => {
@@ -72,7 +73,7 @@ function Day({ day, isSelected, isToday, onClick }: DayProps) {
     borderColor: interpolateColor(
       selectionAnimation.value,
       [0, 1],
-      ["transparent", textPrimaryTint2]
+      ["transparent", selectedBorderColor]
     ),
   }));
 
@@ -171,7 +172,6 @@ function CalendarTitle({ day }: CalendarTitleProps) {
 const weekCalendarStyles = StyleSheet.create({
   container: {
     ...StyleUtils.flexColumn(),
-    flex: 1,
     paddingHorizontal: "3%",
   },
 });

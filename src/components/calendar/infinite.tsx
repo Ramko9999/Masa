@@ -17,6 +17,7 @@ type InfiniteCalendarProps<T> = {
   render: (data: T, index: number) => React.ReactNode;
 };
 
+// todo: optimize the flatlist
 export function InfiniteCalendar<T>({
   initialData,
   initialDataIndex,

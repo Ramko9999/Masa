@@ -16,7 +16,10 @@ import { MoonPhase, Tithi } from "../components/moon-phase";
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    height: "100%",
+    width: "100%",
+  },
+  panchanga: {
     padding: 16,
   },
 });
@@ -26,28 +29,28 @@ export function Home() {
   const [selectedDay, setSelectedDay] = useState(truncateToDay(Date.now()));
   return (
     <>
-      <View style={{ flex: 1, backgroundColor: useGetColor("background") }}>
+      <View
+        style={[
+          { backgroundColor: useGetColor("background") },
+          styles.container,
+        ]}
+      >
         <WeekCalendar selectedDay={selectedDay} onSelectDay={setSelectedDay} />
-
-        <View style={styles.container}>
-          <Card 
+        <View style={styles.panchanga}>
+          <Card
             title="TITHI—LUNAR DAY"
             icon={<MoonPhase tithi={Tithi.trayodashi} width={28} height={28} />}
             mainText="Navami"
             caption="Changes to Amavasya at 4:45 PM"
           />
 
-          <Card 
+          <Card
             title="VARA—DAY OF THE WEEK"
             mainText="Sanivaram"
             caption="Saturday"
           />
 
-          <Card 
-            title="MASA-MONTH"
-            mainText="Phaalgunamu"
-            caption="March"
-          />
+          <Card title="MASA-MONTH" mainText="Phaalgunamu" caption="March" />
         </View>
       </View>
       <Dialog show={showDialog} onHide={() => setShowDialog(false)} />
