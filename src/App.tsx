@@ -15,8 +15,9 @@ import {
   Inter_700Bold,
   Inter_800ExtraBold,
   Inter_900Black,
-} from '@expo-google-fonts/inter';
+} from "@expo-google-fonts/inter";
 import { loadPanchangaData } from "./util/panchanga";
+import { setupNotificationListeners } from "./util/notifications";
 
 // Preload assets
 const preloadAssets = async () => {
@@ -26,7 +27,7 @@ const preloadAssets = async () => {
     require("./assets/newspaper.png"),
     require("./assets/bell.png"),
   ]);
-  
+
   // Preload panchanga data separately
   try {
     await loadPanchangaData();
@@ -39,6 +40,13 @@ const preloadAssets = async () => {
 SplashScreen.preventAutoHideAsync();
 
 export function App() {
+  React.useEffect(() => {
+    const subscriptions = setupNotificationListeners();
+    return () => {
+      subscriptions.foregroundSubscription.remove();
+      subscriptions.responseSubscription.remove();
+    };
+  }, []);
 
   let [fontsLoaded] = useFonts({
     Inter_100Thin,

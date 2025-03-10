@@ -9,13 +9,19 @@
     "newArchEnabled": true,
     "scheme": "masa",
     "ios": {
-      "supportsTablet": true
+      "appleTeamId": "37U34B89DU",
+      "supportsTablet": true,
+      "entitlements": {
+        "com.apple.security.application-groups": "group.com.anonymous.masa"
+      },
+      "bundleIdentifier": "com.anonymous.masa"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.anonymous.masa"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -29,7 +35,8 @@
           "image": "./assets/splash-icon.png"
         }
       ],
-      "react-native-edge-to-edge"
+      "react-native-edge-to-edge",
+      "@bacons/apple-targets"
     ]
   }
 }

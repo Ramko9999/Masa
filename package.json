@@ -6,9 +6,11 @@
     "start": "expo start",
     "web": "expo start --web",
     "android": "expo run:android",
-    "ios": "expo run:ios"
+    "ios": "expo run:ios",
+    "build-widget": "npx expo prebuild --template node_modules/@bacons/apple-targets/prebuild-blank.tgz --clean"
   },
   "dependencies": {
+    "@bacons/apple-targets": "^0.2.1",
     "@expo-google-fonts/inter": "^0.2.3",
     "@expo/metro-runtime": "~4.0.0",
     "@react-navigation/bottom-tabs": "^7.2.1",
@@ -18,6 +20,8 @@
     "expo": "~52.0.11",
     "expo-asset": "~11.0.1",
     "expo-blur": "~14.0.3",
+    "expo-dev-client": "~5.0.12",
+    "expo-notifications": "~0.29.13",
     "expo-splash-screen": "~0.29.13",
     "expo-system-ui": "~4.0.4",
     "lucide-react-native": "^0.479.0",
