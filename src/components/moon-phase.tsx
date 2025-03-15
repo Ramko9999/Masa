@@ -2,6 +2,7 @@ import React from "react";
 import Svg, { Circle, Path, G } from "react-native-svg";
 import { ViewStyle } from "react-native";
 import { useGetColor } from "../theme/color";
+import { Tithi } from "../util/panchanga";
 
 export interface MoonProps {
   className?: string;
@@ -198,40 +199,6 @@ const WaningCrescent2 = (props: MoonProps) => (
     />
   </Moon>
 );
-
-// TODO: Do we want to prefix with Shukla and Krishna?
-export enum Tithi {
-  shukla_pratipada = 1,
-  shukla_dwitiya = 2,
-  shukla_tritiya = 3,
-  shukla_chaturthi = 4,
-  shukla_panchami = 5,
-  shukla_shashthi = 6,
-  shukla_saptami = 7,
-  shukla_ashtami = 8,
-  shukla_navami = 9,
-  shukla_dashami = 10,
-  shukla_ekadashi = 11,
-  shukla_dwadashi = 12,
-  shukla_trayodashi = 13,
-  shukla_chaturdashi = 14,
-  purnima = 15,
-  krishna_pratipada = 16,
-  krishna_dwitiya = 17,
-  krishna_tritiya = 18,
-  krishna_chaturthi = 19,
-  krishna_panchami = 20,
-  krishna_shashthi = 21,
-  krishna_saptami = 22,
-  krishna_ashtami = 23,
-  krishna_navami = 24,
-  krishna_dashami = 25,
-  krishna_ekadashi = 26,
-  krishna_dwadashi = 27,
-  krishna_trayodashi = 28,
-  krishna_chaturdashi = 29,
-  amavasya = 30,
-}
 
 // This mapping is not complete and is inaccurate. 
 // TODO: Make this more accurate. 

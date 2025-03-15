@@ -1,7 +1,7 @@
 import { StyleSheet, Button } from "react-native";
 import { View } from "../../theme";
 import { Card } from "../card";
-import { MoonPhase, Tithi } from "../moon-phase";
+import { MoonPhase } from "../moon-phase";
 import { truncateToDay } from "../../util/date";
 import { useEffect, useState } from "react";
 import { WeekCalendar } from "../calendar";
@@ -10,13 +10,14 @@ import {
   PanchangaData,
   getPanchangaForDate,
   formatTithiChangeTime,
-  mapTithiToEnum,
+  Tithi
 } from "../../util/panchanga";
 import { sendTestNotification, cancelAllNotifications } from "../../util/notifications";
 
 const panchangaStyles = StyleSheet.create({
   container: {
     padding: 16,
+    gap: 16,
   },
 });
 
@@ -48,12 +49,12 @@ function Pachanga({
           caption="Loading panchanga data"
         />
         <Card
-          title="VARA—DAY OF THE WEEK"
+          title="VAARA—DAY OF THE WEEK"
           mainText="Loading..."
           caption="Loading panchanga data"
         />
         <Card
-          title="MASA-MONTH"
+          title="MASA—LUNAR MONTH"
           mainText="Loading..."
           caption="Loading panchanga data"
         />
@@ -66,12 +67,12 @@ function Pachanga({
       <View style={panchangaStyles.container}>
         <Card title="TITHI—LUNAR DAY" mainText="Error" caption={error} />
         <Card
-          title="VARA—DAY OF THE WEEK"
+          title="VAARA—DAY OF THE WEEK"
           mainText="Error"
           caption="Could not load panchanga data"
         />
         <Card
-          title="MASA-MONTH"
+          title="MASA—LUNAR MONTH"
           mainText="Error"
           caption="Could not load panchanga data"
         />
@@ -93,14 +94,16 @@ function Pachanga({
           onClick={onTithiClick}
         />
         <Card
-          title="VARA—DAY OF THE WEEK"
+          title="VAARA—DAY OF THE WEEK"
           mainText="No Data"
           caption={`No data for ${dateStr}`}
+          onClick={onVaraClick}
         />
         <Card
-          title="MASA-MONTH"
+          title="MASA—LUNAR MONTH"
           mainText="No Data"
           caption={`No data for ${dateStr}`}
+          onClick={onMasaClick}
         />
       </View>
     );
@@ -114,18 +117,15 @@ function Pachanga({
     ? formatTithiChangeTime(currentTithi, nextTithi)
     : "";
 
-  // Map tithi name to enum for the icon based on paksha
-  const tithiEnum = mapTithiToEnum(currentTithi.name, panchangaData.paksha);
-
   // Get the month name from the selected date
   const selectedDate = new Date(selectedDay);
-  const monthName = selectedDate.toLocaleString("default", { month: "long" });
+  const gregorianMonth = selectedDate.toLocaleString("default", { month: "long" });
 
   return (
     <View style={panchangaStyles.container}>
       <Card
         title="TITHI—LUNAR DAY"
-        icon={<MoonPhase tithi={tithiEnum} width={28} height={28} />}
+        icon={<MoonPhase tithi={currentTithi.enum} width={28} height={28} />}
         mainText={currentTithi.name}
         caption={tithiChangeCaption}
         onClick={onTithiClick}
@@ -139,9 +139,9 @@ function Pachanga({
       />
 
       <Card
-        title="MASA-MONTH"
+        title="MASA—LUNAR MONTH"
         mainText={panchangaData.masa.purnima}
-        caption={monthName}
+        caption={gregorianMonth}
         onClick={onMasaClick}
       />
     </View>
@@ -160,9 +160,7 @@ type HomeProps = {
 
 export function Home({ actions }: HomeProps) {
   const [selectedDay, setSelectedDay] = useState(truncateToDay(Date.now()));
-  const [panchangaData, setPanchangaData] = useState<PanchangaData | null>(
-    null
-  );
+  const [panchangaData, setPanchangaData] = useState<PanchangaData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -217,14 +215,16 @@ export function Home({ actions }: HomeProps) {
   return (
     <>
       <WeekCalendar selectedDay={selectedDay} onSelectDay={setSelectedDay} />
-      <Button 
-        title="Clear All Notifications" 
-        onPress={cancelAllNotifications}
-      />
-      <Button 
-        title="Test Notifications" 
-        onPress={handleTestNotifications}
-      />
+      <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginVertical: 8 }}>
+        <Button 
+          title="Clear Notifications" 
+          onPress={cancelAllNotifications}
+        />
+        <Button 
+          title="Test Notifications" 
+          onPress={handleTestNotifications}
+        />
+      </View>
       <Pachanga
         onTithiClick={actions.onTithiClick}
         onVaraClick={actions.onVaraClick}

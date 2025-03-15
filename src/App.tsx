@@ -16,7 +16,6 @@ import {
   Inter_800ExtraBold,
   Inter_900Black,
 } from "@expo-google-fonts/inter";
-import { loadPanchangaData } from "./util/panchanga";
 import { setupNotificationListeners } from "./util/notifications";
 
 // Preload assets
@@ -27,14 +26,6 @@ const preloadAssets = async () => {
     require("./assets/newspaper.png"),
     require("./assets/bell.png"),
   ]);
-
-  // Preload panchanga data separately
-  try {
-    await loadPanchangaData();
-    console.log("Panchanga data loaded successfully");
-  } catch (error) {
-    console.error("Failed to preload panchanga data:", error);
-  }
 };
 
 SplashScreen.preventAutoHideAsync();
