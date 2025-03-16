@@ -6,7 +6,7 @@ import { Pachanga } from "../panchanga";
 
 type HomeActions = {
   onTithiClick?: () => void;
-  onVaraClick?: () => void;
+  onVaaraClick?: () => void;
   onMasaClick?: () => void;
 };
 
@@ -22,7 +22,7 @@ export function Home({ actions }: HomeProps) {
       <WeekCalendar selectedDay={selectedDay} onSelectDay={setSelectedDay} />
       <Pachanga
         onTithiClick={actions.onTithiClick}
-        onVaraClick={actions.onVaraClick}
+        onVaaraClick={actions.onVaaraClick}
         onMasaClick={actions.onMasaClick}
         selectedDay={selectedDay}
       />
