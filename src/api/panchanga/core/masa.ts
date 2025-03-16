@@ -4,15 +4,15 @@ const LAGNA_INTERVAL_ARC_SECONDS = toArcSeconds(30);
 
 const MASA_NAMES = [
     "Chaitra",
-    "Vaishakha",
+    "Vaisakha",
     "Jyeshtha",
     "Ashadha",
     "Shravana",
     "Bhadrapada",
-    "Ashvija",
+    "Ashwin",
     "Kartika",
-    "Margashira",
-    "Pushya",
+    "Margashirsha",
+    "Pausha",
     "Magha",
     "Phalguna"
 ];

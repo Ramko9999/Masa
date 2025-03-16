@@ -18,5 +18,5 @@ const ST_AUGUSTINE: Location = {
 
 export function getLocation(): Location {
     // bangalore
-    return ST_AUGUSTINE;
+    return BANGALORE;
 }

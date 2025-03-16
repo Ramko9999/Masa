@@ -12,7 +12,7 @@ API_URL = "https://api.production.dharmayana.in/v1/panchanga/details"
 # Hardcoded location (Bangalore)
 LATITUDE = 12.972
 LONGITUDE = 77.594
-OUTPUT_FILE = "panchanga_2025.json"
+OUTPUT_FILE = "panchanga_2025_original.json"
 DAILY_OUTPUT_DIR = "panchanga_daily"
 RETRY_DELAY = 5  # seconds between retries
 MAX_RETRIES = 3  # maximum number of retries per day

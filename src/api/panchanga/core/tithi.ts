@@ -3,12 +3,12 @@ import * as Astronomy from "astronomy-engine";
 import { addDays, generateHourlyOffsets } from "../../../util/date";
 
 const TITHI_NAMES = [
-  "Shukla Prathama",
+  "Shukla Pratipada",
   "Shukla Dwitiya",
   "Shukla Tritiya",
   "Shukla Chaturthi",
   "Shukla Panchami",
-  "Shukla Sashti",
+  "Shukla Shashti",
   "Shukla Saptami",
   "Shukla Ashtami",
   "Shukla Navami",
@@ -23,7 +23,7 @@ const TITHI_NAMES = [
   "Krishna Tritiya",
   "Krishna Chaturthi",
   "Krishna Panchami",
-  "Krishna Sashti",
+  "Krishna Shashti",
   "Krishna Saptami",
   "Krishna Ashtami",
   "Krishna Navami",
