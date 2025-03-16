@@ -154,5 +154,5 @@ export function compute(day: number, sunrise: number): TithiInterval[] {
     });
   }
 
-  return tithis.filter(({ endDate }) => endDate >= sunrise);
+  return tithis.filter(({ endDate }) => endDate >= sunrise).map((tithi) => ({ ...tithi, karana: tithi.karana.filter(({ endDate }) => endDate >= sunrise) }))
 }
