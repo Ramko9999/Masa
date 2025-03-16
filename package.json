@@ -21,7 +21,6 @@
     "expo": "~52.0.11",
     "expo-asset": "~11.0.1",
     "expo-blur": "~14.0.3",
-    "expo-dev-client": "~5.0.12",
     "expo-notifications": "~0.29.13",
     "expo-splash-screen": "~0.29.13",
     "expo-system-ui": "~4.0.4",

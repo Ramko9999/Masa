@@ -2,7 +2,7 @@ import React from "react";
 import Svg, { Circle, Path, G } from "react-native-svg";
 import { ViewStyle } from "react-native";
 import { useGetColor } from "../theme/color";
-import { Tithi } from "../util/panchanga";
+import { TithiInterval } from "../api/panchanga/core/tithi";
 
 export interface MoonProps {
   className?: string;
@@ -200,42 +200,45 @@ const WaningCrescent2 = (props: MoonProps) => (
   </Moon>
 );
 
-// This mapping is not complete and is inaccurate. 
-// TODO: Make this more accurate. 
-const tithiToPhaseComponent: Record<Tithi, React.FC<MoonProps>> = {
-  [Tithi.amavasya]: NewMoon,
-  [Tithi.shukla_pratipada]: WaxingCrescent1,
-  [Tithi.shukla_dwitiya]: WaxingCrescent2,
-  [Tithi.shukla_tritiya]: WaxingCrescent3,
-  [Tithi.shukla_chaturthi]: FirstQuarter,
-  [Tithi.shukla_panchami]: WaxingGibbous1,
-  [Tithi.shukla_shashthi]: WaxingGibbous2,
-  [Tithi.shukla_saptami]: WaxingGibbous2,
-  [Tithi.shukla_ashtami]: WaxingGibbous3,
-  [Tithi.shukla_navami]: WaxingGibbous3,
-  [Tithi.shukla_dashami]: WaxingGibbous3,
-  [Tithi.shukla_ekadashi]: WaxingGibbous3,
-  [Tithi.shukla_dwadashi]: WaxingGibbous3,
-  [Tithi.shukla_trayodashi]: WaxingGibbous3,
-  [Tithi.shukla_chaturdashi]: WaxingGibbous3,
-  [Tithi.purnima]: FullMoon,
-  [Tithi.krishna_pratipada]: WaningGibbous1,
-  [Tithi.krishna_dwitiya]: WaningGibbous2,
-  [Tithi.krishna_tritiya]: WaningGibbous2,
-  [Tithi.krishna_chaturthi]: WaningGibbous3,
-  [Tithi.krishna_panchami]: WaningGibbous3,
-  [Tithi.krishna_shashthi]: WaningGibbous3,
-  [Tithi.krishna_saptami]: LastQuarter,
-  [Tithi.krishna_ashtami]: WaningCrescent1,
-  [Tithi.krishna_navami]: WaningCrescent1,
-  [Tithi.krishna_dashami]: WaningCrescent1,
-  [Tithi.krishna_ekadashi]: WaningCrescent1,
-  [Tithi.krishna_dwadashi]: WaningCrescent2,
-  [Tithi.krishna_trayodashi]: WaningCrescent2,
-  [Tithi.krishna_chaturdashi]: WaningCrescent2,
-};
+// This mapping is not complete and is inaccurate.
+// TODO: Make this more accurate.
+const PHASE_COMPONENTS = [
+  NewMoon,
+  WaxingCrescent1,
+  WaxingCrescent2,
+  WaxingCrescent3,
+  FirstQuarter,
+  WaxingGibbous1,
+  WaxingGibbous2,
+  WaxingGibbous2,
+  WaxingGibbous3,
+  WaxingGibbous3,
+  WaxingGibbous3,
+  WaxingGibbous3,
+  WaxingGibbous3,
+  WaxingGibbous3,
+  WaxingGibbous3,
+  FullMoon,
+  WaningGibbous1,
+  WaningGibbous2,
+  WaningGibbous2,
+  WaningGibbous3,
+  WaningGibbous3,
+  WaningGibbous3,
+  LastQuarter,
+  WaningCrescent1,
+  WaningCrescent1,
+  WaningCrescent1,
+  WaningCrescent1,
+  WaningCrescent2,
+  WaningCrescent2,
+  WaningCrescent2,
+];
 
-export const MoonPhase = ({ tithi, ...props }: { tithi: Tithi } & MoonProps) => {
-  const PhaseComponent = tithiToPhaseComponent[tithi];
+export const MoonPhase = ({
+  tithi,
+  ...props
+}: { tithi: TithiInterval } & MoonProps) => {
+  const PhaseComponent = PHASE_COMPONENTS[tithi.index];
   return <PhaseComponent {...props} />;
 };

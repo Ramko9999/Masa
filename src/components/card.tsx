@@ -12,12 +12,12 @@ const styles = StyleSheet.create({
   cardContainer: {
     width: "100%",
     flexDirection: "column",
-    paddingVertical: 15,
+    paddingVertical: "2%",
     backgroundColor: "white",
   },
   cardTitle: {
     fontSize: 16,
-    paddingBottom: 8,
+    paddingBottom: "1%",
     letterSpacing: 1,
     textTransform: "uppercase",
     color: useGetColor("text-primary-tint-1"),
