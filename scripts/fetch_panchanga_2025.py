@@ -2,23 +2,29 @@
 import requests
 import json
 import time
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timedelta
 import os
 import random
+import pytz
 
 # Configuration
 API_URL = "https://api.production.dharmayana.in/v1/panchanga/details"
-LATITUDE = 23.41667
-LONGITUDE = 75.5
+# Hardcoded location (Bangalore)
+LATITUDE = 12.972
+LONGITUDE = 77.594
 OUTPUT_FILE = "panchanga_2025.json"
 DAILY_OUTPUT_DIR = "panchanga_daily"
 RETRY_DELAY = 5  # seconds between retries
 MAX_RETRIES = 3  # maximum number of retries per day
 RATE_LIMIT_DELAY = 2  # seconds between successful requests
 
-# Function to get the UTC Unix timestamp for midnight of a given date
+# Bangalore timezone (Asia/Kolkata for Indian Standard Time)
+BANGALORE_TZ = pytz.timezone('Asia/Kolkata')
+
+# Function to get the Unix timestamp for midnight of a given date in Bangalore timezone
 def get_midnight_timestamp(year, month, day):
-    dt = datetime(year, month, day, tzinfo=timezone.utc)
+    # Create datetime at midnight in Bangalore timezone
+    dt = BANGALORE_TZ.localize(datetime(year, month, day, 0, 0, 0))
     return int(dt.timestamp())
 
 # Function to fetch panchanga data for a specific timestamp with retry logic
@@ -61,8 +67,8 @@ def save_daily_data(timestamp, data, directory=DAILY_OUTPUT_DIR):
     # Create directory if it doesn't exist
     os.makedirs(directory, exist_ok=True)
     
-    # Convert timestamp to date string for filename
-    date_str = datetime.fromtimestamp(timestamp, tz=timezone.utc).strftime("%Y-%m-%d")
+    # Convert timestamp to date string for filename (in Bangalore timezone)
+    date_str = datetime.fromtimestamp(timestamp, tz=BANGALORE_TZ).strftime("%Y-%m-%d")
     filename = os.path.join(directory, f"panchanga_{date_str}.json")
     
     with open(filename, 'w', encoding='utf-8') as f:
@@ -96,7 +102,7 @@ def fetch_data_for_2025():
     # Load or initialize the dataset
     dataset = load_existing_dataset()
     
-    # Get all days in 2025
+    # Get all days in 2025 (in Bangalore timezone)
     start_date = datetime(2025, 1, 1)
     end_date = datetime(2025, 12, 31)
     current_date = start_date
@@ -109,7 +115,7 @@ def fetch_data_for_2025():
     
     try:
         while current_date <= end_date:
-            # Get midnight timestamp for the current date (UTC)
+            # Get midnight timestamp for the current date (Bangalore timezone)
             timestamp = get_midnight_timestamp(current_date.year, current_date.month, current_date.day)
             
             # Format date as YYYY-MM-DD for display
