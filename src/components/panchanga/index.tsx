@@ -9,7 +9,7 @@ import { MoonPhase } from "../moon-phase";
 const panchangaStyles = StyleSheet.create({
   container: {
     paddingHorizontal: "3%",
-    paddingVertical: "2%"
+    paddingVertical: "2%",
   },
 });
 
@@ -32,8 +32,10 @@ export function Pachanga({
   onKaranaClick,
   selectedDay,
 }: PachangaProps) {
-
-  const { tithi, nakshatra, yoga, vaara, masa } = computePanchanga(truncateToDay(selectedDay), getLocation());
+  const { tithi, nakshatra, yoga, vaara, masa } = computePanchanga(
+    truncateToDay(selectedDay),
+    getLocation()
+  );
 
   const karana = tithi[0].karana;
 
@@ -67,7 +69,7 @@ export function Pachanga({
 
       <Card
         title="VAARA—DAY OF THE WEEK"
-        mainText={vaara}
+        mainText={vaara.name}
         onClick={onVaaraClick}
       />
 

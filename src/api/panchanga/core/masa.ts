@@ -2,6 +2,21 @@ import { getSolarLongitude, adjustForAyanamsa, toArcSeconds, getNewMoonOccurrenc
 
 const LAGNA_INTERVAL_ARC_SECONDS = toArcSeconds(30);
 
+export const enum MasaIndex {
+    Chaitra = 0,
+    Vaisakha = 1,
+    Jyeshtha = 2,
+    Ashadha = 3,
+    Shravana = 4,
+    Bhadrapada = 5,
+    Ashwin = 6,
+    Kartika = 7,
+    Margashirsha = 8,
+    Pausha = 9,
+    Magha = 10,
+    Phalguna = 11
+}
+
 const MASA_NAMES = [
     "Chaitra",
     "Vaisakha",
@@ -18,7 +33,7 @@ const MASA_NAMES = [
 ];
 
 export type Masa = {
-    index: number;
+    index: MasaIndex;
     isLeap: boolean;
     name: string;
 }

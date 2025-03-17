@@ -6,11 +6,13 @@ import { Tabs } from "../components/util/tab-bar";
 import { Home } from "../components/home";
 import { BlurView } from "expo-blur";
 import { TithiInfoSheet } from "../components/sheets";
+import { Upcoming } from "./upcoming";
 
 const rootStyles = StyleSheet.create({
   container: {
     height: "100%",
     width: "100%",
+    paddingBottom: 50,
   },
   tabs: {
     height: "10%",
@@ -35,15 +37,21 @@ export function Root() {
         {currentRoute === "home" && (
           <Home actions={{ onTithiClick: () => setShowTithiSheet(true) }} />
         )}
+        {currentRoute === "upcoming" && <Upcoming />}
       </ScrollView>
+
       <BlurView
         style={rootStyles.tabs}
         tint="light"
         intensity={50}
         experimentalBlurMethod="dimezisBlurView"
       >
-        <Tabs currentRoute="home" onClick={() => {}} />
+        <Tabs
+          currentRoute={currentRoute}
+          onClick={(route) => setCurrentRoute(route)}
+        />
       </BlurView>
+
       <TithiInfoSheet
         show={showTithiSheet}
         onHide={() => setShowTithiSheet(false)}

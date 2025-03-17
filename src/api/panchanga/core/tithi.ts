@@ -2,6 +2,38 @@ import { inverseLagrangianInterpolation, toArcSeconds } from "../util";
 import * as Astronomy from "astronomy-engine";
 import { addDays, generateHourlyOffsets } from "../../../util/date";
 
+export const enum TithiIndex {
+  ShuklaPratipada = 0,
+  ShuklaDwitiya = 1,
+  ShuklaTritiya = 2,
+  ShuklaChaturthi = 3,
+  ShuklaPanchami = 4,
+  ShuklaShashti = 5,
+  ShuklaSaptami = 6,
+  ShuklaAshtami = 7,
+  ShuklaNavami = 8,
+  ShuklaDashami = 9,
+  ShuklaEkadashi = 10,
+  ShuklaDwadashi = 11,
+  ShuklaTrayodashi = 12,
+  ShuklaChaturdashi = 13,
+  Purnima = 14,
+  KrishnaPratipada = 15,
+  KrishnaDwitiya = 16,
+  KrishnaTritiya = 17,
+  KrishnaChaturthi = 18,
+  KrishnaPanchami = 19,
+  KrishnaShashti = 20,
+  KrishnaSaptami = 21,
+  KrishnaAshtami = 22,
+  KrishnaNavami = 23,
+  KrishnaDashami = 24,
+  KrishnaEkadashi = 25,
+  KrishnaDwadashi = 26,
+  KrishnaTrayodashi = 27,
+  KrishnaChaturdashi = 28,
+  Amavasya = 29,
+}
 const TITHI_NAMES = [
   "Shukla Pratipada",
   "Shukla Dwitiya",
@@ -39,8 +71,8 @@ const NON_RECURRING_KARANAS = {
   KIMSTUGHNA: "Kimstughna",
   CATUSHPADA: "Catushpada",
   NAGA: "Naga",
-  SHAKUNI: "Shakuni"
-}
+  SHAKUNI: "Shakuni",
+};
 
 const RECURRING_KARANAS = [
   "Bava",
@@ -59,12 +91,12 @@ type KaranaInterval = {
   startDate: number;
   endDate: number;
   name: string;
-}
+};
 
 export type TithiInterval = {
   startDate: number;
   endDate: number;
-  index: number;
+  index: TithiIndex;
   name: string;
   karana: KaranaInterval[];
 };
@@ -86,7 +118,7 @@ function getKarana(tithiIndex: number, forFirstHalf: boolean): string {
     return NON_RECURRING_KARANAS.SHAKUNI;
   }
 
-  const karanaPosition = (tithiIndex * 2 + (forFirstHalf ? 0 : 1)) - 1;
+  const karanaPosition = tithiIndex * 2 + (forFirstHalf ? 0 : 1) - 1;
   return RECURRING_KARANAS[karanaPosition % RECURRING_KARANAS.length];
 }
 
@@ -95,30 +127,60 @@ function tithiFunc(offset: number) {
 }
 
 function getTithiStart(date: number, moonPhase: number) {
-  const expectedMoonPhase = Math.floor(moonPhase / TITHI_INTERVAL_ARC_SECONDS) * TITHI_INTERVAL_ARC_SECONDS;
-  return Math.floor(inverseLagrangianInterpolation(generateHourlyOffsets(date, -6, 6), tithiFunc, expectedMoonPhase));
+  const expectedMoonPhase =
+    Math.floor(moonPhase / TITHI_INTERVAL_ARC_SECONDS) *
+    TITHI_INTERVAL_ARC_SECONDS;
+  return Math.floor(
+    inverseLagrangianInterpolation(
+      generateHourlyOffsets(date, -6, 6),
+      tithiFunc,
+      expectedMoonPhase
+    )
+  );
 }
 
 function getTithiEnd(date: number, moonPhase: number) {
-  const expectedMoonPhase = Math.ceil(moonPhase / TITHI_INTERVAL_ARC_SECONDS) * TITHI_INTERVAL_ARC_SECONDS;
-  return Math.floor(inverseLagrangianInterpolation(generateHourlyOffsets(date, 6, 6), tithiFunc, expectedMoonPhase));
+  const expectedMoonPhase =
+    Math.ceil(moonPhase / TITHI_INTERVAL_ARC_SECONDS) *
+    TITHI_INTERVAL_ARC_SECONDS;
+  return Math.floor(
+    inverseLagrangianInterpolation(
+      generateHourlyOffsets(date, 6, 6),
+      tithiFunc,
+      expectedMoonPhase
+    )
+  );
 }
 
-function computeKarana({ startDate, endDate, index }: { startDate: number, endDate: number, index: number }): KaranaInterval[] {
+function computeKarana({
+  startDate,
+  endDate,
+  index,
+}: {
+  startDate: number;
+  endDate: number;
+  index: TithiIndex;
+}): KaranaInterval[] {
   const midMoonPhase = (index + 0.5) * TITHI_INTERVAL_ARC_SECONDS;
-  const tithiMid = Math.floor(inverseLagrangianInterpolation(generateHourlyOffsets(startDate, 4, 6), tithiFunc, midMoonPhase));
+  const tithiMid = Math.floor(
+    inverseLagrangianInterpolation(
+      generateHourlyOffsets(startDate, 4, 6),
+      tithiFunc,
+      midMoonPhase
+    )
+  );
 
   return [
     {
       startDate: startDate,
       endDate: tithiMid,
-      name: getKarana(index, true)
+      name: getKarana(index, true),
     },
     {
       startDate: tithiMid,
       endDate: endDate,
-      name: getKarana(index, false)
-    }
+      name: getKarana(index, false),
+    },
   ];
 }
 
@@ -127,7 +189,8 @@ export function compute(day: number, sunrise: number): TithiInterval[] {
   const nextDay = addDays(day, 1);
   const moonPhase = tithiFunc(day);
 
-  let currentTithiIndex = (Math.floor(moonPhase / TITHI_INTERVAL_ARC_SECONDS)) % 30;
+  let currentTithiIndex =
+    Math.floor(moonPhase / TITHI_INTERVAL_ARC_SECONDS) % 30;
   let currentTithiStart = getTithiStart(day, moonPhase);
   let currentTithiEnd = getTithiEnd(day, moonPhase);
 
@@ -137,22 +200,38 @@ export function compute(day: number, sunrise: number): TithiInterval[] {
       endDate: currentTithiEnd,
       index: currentTithiIndex,
       name: TITHI_NAMES[currentTithiIndex],
-      karana: computeKarana({ startDate: currentTithiStart, endDate: currentTithiEnd, index: currentTithiIndex })
+      karana: computeKarana({
+        startDate: currentTithiStart,
+        endDate: currentTithiEnd,
+        index: currentTithiIndex,
+      }),
     },
   ];
 
   while (currentTithiEnd < nextDay) {
     currentTithiStart = currentTithiEnd;
     currentTithiIndex = (currentTithiIndex + 1) % 30;
-    currentTithiEnd = getTithiEnd(currentTithiStart, currentTithiIndex * TITHI_INTERVAL_ARC_SECONDS + ARC_SECONDS_PADDING);
+    currentTithiEnd = getTithiEnd(
+      currentTithiStart,
+      currentTithiIndex * TITHI_INTERVAL_ARC_SECONDS + ARC_SECONDS_PADDING
+    );
     tithis.push({
       startDate: currentTithiStart,
       endDate: currentTithiEnd,
       index: currentTithiIndex,
       name: TITHI_NAMES[currentTithiIndex],
-      karana: computeKarana({ startDate: currentTithiStart, endDate: currentTithiEnd, index: currentTithiIndex })
+      karana: computeKarana({
+        startDate: currentTithiStart,
+        endDate: currentTithiEnd,
+        index: currentTithiIndex,
+      }),
     });
   }
 
-  return tithis.filter(({ endDate }) => endDate >= sunrise).map((tithi) => ({ ...tithi, karana: tithi.karana.filter(({ endDate }) => endDate >= sunrise) }))
+  return tithis
+    .filter(({ endDate }) => endDate >= sunrise)
+    .map((tithi) => ({
+      ...tithi,
+      karana: tithi.karana.filter(({ endDate }) => endDate >= sunrise),
+    }));
 }
