@@ -60,9 +60,7 @@ const VELOCITY_THRESHOLD = 1000;
 
 export const BottomSheet = forwardRef<BottomSheetRef, BottomSheetProps>(
   ({ show, onHide, children, contentHeight, contentStyle }, ref) => {
-    const insets = useSafeAreaInsets();
-
-    const maxTranslation = contentHeight + insets.bottom;
+    const maxTranslation = contentHeight;
 
     const lastTranslation = useSharedValue(0);
     const totalTranslation = useSharedValue(maxTranslation);
@@ -131,7 +129,7 @@ export const BottomSheet = forwardRef<BottomSheetRef, BottomSheetProps>(
                 sheetStyles.content,
                 contentStyle,
                 contentAnimatedStyle,
-                { height: contentHeight, paddingBottom: insets.bottom },
+                { height: contentHeight },
               ]}
             >
               {children}

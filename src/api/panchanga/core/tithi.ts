@@ -34,7 +34,8 @@ export const enum TithiIndex {
   KrishnaChaturdashi = 28,
   Amavasya = 29,
 }
-const TITHI_NAMES = [
+
+export const TITHI_NAMES = [
   "Shukla Pratipada",
   "Shukla Dwitiya",
   "Shukla Tritiya",
