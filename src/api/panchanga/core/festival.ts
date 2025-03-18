@@ -76,7 +76,7 @@ const FESTIVAL_RULES: FestivalRule[] = [
       "This festival marks the sun's transition into Capricorn, symbolizing longer days and the harvest season, a day to seek blessings for abundance and prosperity.",
     celebration:
       "Taking holy baths, flying kites, eating sesame and jaggery sweets, and performing charity.",
-    image: "sankranti.png",
+    image: "makar-sankranti.png",
     rule: {
       type: RuleType.Solar,
       day: 13,
@@ -203,7 +203,7 @@ const FESTIVAL_RULES: FestivalRule[] = [
       "Honors snake gods for protection and prosperity, a day to offer prayers and rituals to ward off evil and ensure well-being.",
     celebration:
       "Fasting, performing special pujas, offering milk to snake idols, and joining cultural events and processions.",
-    image: "naga-panchami-shukla.png",
+    image: "naga-panchami.png",
     rule: {
       type: RuleType.Lunar,
       tithiIndex: TithiIndex.ShuklaPanchami,
@@ -217,7 +217,7 @@ const FESTIVAL_RULES: FestivalRule[] = [
       "Honors snake gods for protection and prosperity, a day to offer prayers and rituals to ward off evil and ensure well-being.",
     celebration:
       "Fasting, performing special pujas, offering milk to snake idols, and joining cultural events and processions.",
-    image: "naga-panchami-krishna.png",
+    image: "naga-panchami.png",
     rule: {
       type: RuleType.Lunar,
       tithiIndex: TithiIndex.KrishnaPanchami,
@@ -264,20 +264,6 @@ const FESTIVAL_RULES: FestivalRule[] = [
       type: RuleType.Lunar,
       tithiIndex: TithiIndex.ShuklaChaturthi,
       masaIndex: MasaIndex.Bhadrapada,
-    },
-  },
-  {
-    name: FestivalName.NavaratriStart,
-    caption: "Nine Nights of the Divine Mother",
-    description:
-      "A nine-night festival honoring Durga's forms, celebrating her power and victory over evil, a time for spiritual practices and festivities.",
-    celebration:
-      "Performing nightly pujas for Durga's forms, joining garba and dandiya dances, and fasting or observing partial fasts.",
-    image: "navaratri-start.png",
-    rule: {
-      type: RuleType.Lunar,
-      tithiIndex: TithiIndex.ShuklaPratipada,
-      masaIndex: MasaIndex.Ashwin,
     },
   },
   {
