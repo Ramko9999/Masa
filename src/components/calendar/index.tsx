@@ -136,6 +136,7 @@ const calendarTitleStyles = StyleSheet.create({
   container: {
     ...StyleUtils.flexRow(),
     justifyContent: "space-between",
+    alignItems: "flex-end",
     paddingBottom: "2%",
   },
   date: {
@@ -151,17 +152,17 @@ type CalendarTitleProps = {
 function CalendarTitle({ day }: CalendarTitleProps) {
   return (
     <View style={calendarTitleStyles.container}>
-      <Text large extrabold>
+      <Text large bold>
         {DAYS_OF_WEEK[new Date(day).getDay()]}
       </Text>
       <View style={calendarTitleStyles.date}>
-        <Text tint1 bold>
+        <Text tint1 semibold>
           {new Intl.DateTimeFormat("en-US", { month: "long" }).format(
             new Date(day)
           )}{" "}
           {new Date(day).getDate().toString().padStart(2, "0")}
         </Text>
-        <Text tint2 bold>
+        <Text tint2 semibold>
           {new Date(day).getFullYear()}
         </Text>
       </View>
