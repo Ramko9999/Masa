@@ -23,8 +23,8 @@ const preloadAssets = async () => {
   // Load image assets
   await Asset.loadAsync([
     ...NavigationAssets,
-    require("./assets/newspaper.png"),
-    require("./assets/bell.png"),
+    require("../assets/tithi/new-moon-bg-removed.png"),
+    require("../assets/tithi/moon.jpg"),
   ]);
 };
 

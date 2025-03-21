@@ -3,92 +3,91 @@ import { StyleSheet, useWindowDimensions, View, Image } from "react-native";
 import { ImageBackground } from "../info/util";
 import { tintColor } from "../../../util/color";
 import { Text } from "../../../theme";
-import { AllMoonPhasesBackground } from "./tithi";
+import { KrishnaPakshaBackground, ShuklaPakshaBackground, TithiProgressBackground, TransitioningMoonBackground } from "./tithi";
+import { StyleUtils } from "../../../theme/style-utils";
 
 export type InfoSlide = {
-  image: React.ReactNode;
+  background: React.ReactNode;
   backgroundColor: string;
   textWrapColor: string;
-  description: React.ReactNode
-}
+  description: React.ReactNode;
+};
 
 const infoSlideTextStyles = StyleSheet.create({
   base: {
     color: "white",
-    fontSize: 16
+    fontSize: 16,
   },
   italic: {
-    fontStyle: "italic"
-  }
-})
+    fontStyle: "italic",
+  },
+});
 
 function Sig({ children }: { children: React.ReactNode }) {
-  return <Text style={[infoSlideTextStyles.base, infoSlideTextStyles.italic]} bold>{children}</Text>;
+  return (
+    <Text style={[infoSlideTextStyles.base, infoSlideTextStyles.italic]} bold>
+      {children}
+    </Text>
+  );
 }
 
 function Base({ children }: { children: React.ReactNode }) {
   return <Text style={infoSlideTextStyles.base}>{children}</Text>;
 }
 
-const moonStyles = StyleSheet.create({
-  container: {
-    overflow: "hidden",
-    width: 50,
-    height: 50,
-  },
-  shadow: {
-    position: "absolute",
-    left: 3,
-    top: 3,
-    width: 45,
-    height: 45,
-    borderRadius: 25,
-    transform: [{translateX: -20}]
-  }
-})
-
-type MoonProps = {
-  shadow: number,
-  shadowFillColor: string;
-}
-
-function Moon({shadow, shadowFillColor}: MoonProps) {
-  return (<View style={moonStyles.container}>
-    <Image resizeMode="contain" style={{width: 50, height: 50}} source={require("../../../assets/image/tithi/new-moon-bg-removed.png")} />
-    <View style={[moonStyles.shadow, {backgroundColor: shadowFillColor}]} />
-  </View>)
-}
-
-function ShuklaPakshaBackground() {
-  const {width, height} = useWindowDimensions();
-  return (<View style={{width, height: height * 0.25, backgroundColor: "#151515"}}>
-    <Moon shadow={0} shadowFillColor={"#151515"} />
-  </View>)
-}
-
 export const TITHI_INFO_SLIDES: InfoSlide[] = [
   {
-    image: <ImageBackground image={require("../../../assets/image/tithi/moon.jpg")} />,
+    background: (
+      <ImageBackground image={require("../../../../assets/tithi/moon.jpg")} />
+    ),
     backgroundColor: "#151515",
     textWrapColor: tintColor("#151515"),
-    description: <Base><Sig>Tithi</Sig> is a lunar day defined by the Moon's angle with the Sun. A Tithi occupies 12 degrees of this angle.</Base>
+    description: (
+      <Base>
+        <Sig>Tithi</Sig> is a lunar day defined by the Moon's angle with the
+        Sun. A tithi's duration is how long it takes the Moon to travel 12 degrees along this angle.
+      </Base>
+    ),
   },
   {
-    image: <AllMoonPhasesBackground />,
+    background: <TransitioningMoonBackground />,
     backgroundColor: "#151515",
     textWrapColor: tintColor("#151515"),
-    description: <Base>A lunar month consists of 30 Tithis. The first 15th correspond to <Sig>Shukla Paksha</Sig> and the last 15th correspond to <Sig>Krishna Paksha</Sig>.</Base>
+    description: <Base>A lunar month consists of 30 Tithis.</Base>,
   },
   {
-    image: <ShuklaPakshaBackground />,
+    background: <ShuklaPakshaBackground />,
     backgroundColor: "#151515",
     textWrapColor: tintColor("#151515"),
-    description: <Base>Shukla Paksha is when the moon waxes from new moon to full moon.</Base>
+    description: (
+      <Base>
+        The first 15 tithis correspond to Shukla Paksha which is the waxing phase of the moon.
+      </Base>
+    ),
   },
   {
-    image: <ImageBackground image={require("../../../assets/image/tithi/moon.jpg")} />,
+    background: <KrishnaPakshaBackground />,
     backgroundColor: "#151515",
     textWrapColor: tintColor("#151515"),
-    description: <Base>Krishna Paksha is when the moon wanes from full moon to new moon.</Base>
+    description: (
+      <View style={{ ...StyleUtils.flexColumn(10) }}>
+        <Base>
+          The last 15 tithis correspond to Krishna Paksha which is the waning phase of the moon.
+        </Base>
+        <Base>
+          The tithi names from Pratipada to Chaturdashi are used in both pakshas.
+        </Base>
+      </View>
+    ),
+  },
+  {
+    background: <TithiProgressBackground />,
+    backgroundColor: "#151515",
+    textWrapColor: tintColor("#151515"),
+    description: (
+      <Base>
+        We are in the current tithi.
+      </Base>
+    ),
   }
-]
+];

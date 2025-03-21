@@ -1,10 +1,10 @@
-import { View, Text } from "../../../theme";
-import { InfoSlide } from "./config";
+import { View } from "../../../theme";
 import { FlatList, StyleSheet, useWindowDimensions, ViewabilityConfig } from "react-native";
 import { StyleUtils } from "../../../theme/style-utils";
 import { Pagination } from "../../util/pagination-indicator";
 import { useCallback, useState } from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { InfoSlide } from "./util";
 
 const slideStyles = StyleSheet.create({
     container: {
@@ -30,10 +30,10 @@ const slideStyles = StyleSheet.create({
     }
 });
 
-function Slide({ image, backgroundColor, textWrapColor, description }: InfoSlide) {
+function Slide({ background, backgroundColor, textWrapColor, description }: InfoSlide) {
     return (
         <View style={[slideStyles.container, { backgroundColor }]}>
-            {image}
+            {background}
             <View style={[slideStyles.explanation, { backgroundColor: textWrapColor }]}>
                 {description}
             </View>
@@ -54,13 +54,11 @@ const slideShowStyles = StyleSheet.create({
     }
 });
 
-
-const SLIDE_SHOW_GAP = 10;
-
 type SlideShowProps = {
     slides: InfoSlide[]
 }
 
+// todo: issues with flatlist on android
 export function SlideShow({ slides }: SlideShowProps) {
     const [slideIndex, setSlideIndex] = useState(0);
     const insets = useSafeAreaInsets();

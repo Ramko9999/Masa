@@ -7,7 +7,7 @@ import {
 } from "react-native";
 import { StyleUtils } from "../../theme/style-utils";
 import { BottomSheet } from "../util/sheet";
-import { TITHI_INFO_SLIDES } from "./info/config";
+import { SLIDES as TITHI_SLIDES } from "./info/tithi";
 import { SlideShow } from "./info";
 
 const miniSheetDraggerStyles = StyleSheet.create({
@@ -48,7 +48,7 @@ function MiniSheet({ show, onHide, children, contentStyle }: MiniSheetProps) {
     <BottomSheet
       show={show}
       onHide={onHide}
-      contentHeight={height * 0.40}
+      contentHeight={height * 0.5}
       contentStyle={{ ...miniSheetStyles.container, ...contentStyle }}
     >
       {children}
@@ -92,8 +92,8 @@ export function TithiInfoSheet({ show, onHide }: InfoSheetProps) {
         backgroundColor: "white",
       }}
     >
-      <View style={[infoSheetStyles.container]}>
-        <SlideShow slides={TITHI_INFO_SLIDES} />
+      <View style={infoSheetStyles.container}>
+        <SlideShow slides={TITHI_SLIDES} />
       </View>
     </MiniSheet>
   );
