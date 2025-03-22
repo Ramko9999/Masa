@@ -63,9 +63,11 @@ def compare_events(original_events: list, computed_events: list, results: dict, 
 
 def compare_day(original_day: dict, computed_day: dict, results: dict, date: str):
     """Compare all aspects of a single day"""
-    if original_day["masa"] != computed_day["masa"]:
-        print(f"Masa mismatch on {date}: Original={original_day['masa']}, Computed={computed_day['masa']}")
-        results["masa_mismatches"] += 1
+    # Check masa mismatches
+    for masa_type in ['amanta', 'purnima']:
+        if original_day["masa"][masa_type] != computed_day["masa"][masa_type]:
+            print(f"Masa mismatch on {date} ({masa_type}): Original={original_day['masa'][masa_type]}, Computed={computed_day['masa'][masa_type]}")
+            results["masa_mismatches"] += 1
 
     compare_times(original_day["sunrise"], computed_day["sunrise"], results, "sunrise")
     

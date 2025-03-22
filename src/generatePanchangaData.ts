@@ -82,7 +82,10 @@ function generatePanchangaData() {
       })),
       vaara: panchanga.vaara,
       sunrise: toUTC(panchanga.sunrise),
-      masa: panchanga.masa.name,
+      masa: {
+        amanta: panchanga.masa.amanta.name,
+        purnima: panchanga.masa.purnimanta.name,
+      },
     };
   }
 

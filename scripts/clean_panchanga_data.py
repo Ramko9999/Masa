@@ -111,9 +111,7 @@ def clean_panchanga_data():
             sunrise = format_timestamp(day_data["sun"]["rise"])
         
         # Extract masa (lunar month)
-        masa = ""
-        if "masa" in day_data and "amanta" in day_data["masa"]:
-            masa = day_data["masa"]["amanta"]
+        masa = day_data["masa"]
         
         # Add the cleaned data for this day
         cleaned_data["daily_data"][formatted_timestamp] = {

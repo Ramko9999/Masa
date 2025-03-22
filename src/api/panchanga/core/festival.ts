@@ -337,13 +337,13 @@ function isFestival(
   if (rule.type === RuleType.Lunar) {
     return (
       tithi.some((t) => t.index === rule.tithiIndex) &&
-      masa.index === rule.masaIndex
+      masa.purnimanta.index === rule.masaIndex
     );
   } else if (rule.type === RuleType.Solar) {
     const month = date.getMonth();
     const day = date.getDate();
     return (
-      rule.day === day && rule.month === month && rule.masaIndex === masa.index
+      rule.day === day && rule.month === month && rule.masaIndex === masa.purnimanta.index
     );
   }
 

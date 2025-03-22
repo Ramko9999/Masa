@@ -75,7 +75,7 @@ export function Pachanga({
 
       <Card
         title="MASA—LUNAR MONTH"
-        mainText={masa.name}
+        mainText={masa.purnimanta.name}
         onClick={onMasaClick}
       />
     </View>
