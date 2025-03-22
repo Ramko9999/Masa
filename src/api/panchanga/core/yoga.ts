@@ -3,6 +3,8 @@ import {
   getLunarLongitude,
   getSolarLongitude,
   inverseLagrangianInterpolation,
+  makeDecreasingAnglesNonCircular,
+  makeIncreasingAnglesNonCircular,
   toArcSeconds,
   TOTAL_ARC_SECONDS,
 } from "../util";
@@ -76,7 +78,6 @@ export type YogaInterval = {
 };
 
 const YOGA_INTERVAL_ARC_SECONDS = toArcSeconds(360 / 27);
-const ARC_SECONDS_PADDING = 10;
 
 function yogaFunc(date: number) {
   const lunarLongitude = adjustForAyanamsa(date, getLunarLongitude(date));
@@ -88,24 +89,31 @@ function getYogaStart(date: number, yogaLongitude: number) {
   const expectedYogaLongitude =
     Math.floor(yogaLongitude / YOGA_INTERVAL_ARC_SECONDS) *
     YOGA_INTERVAL_ARC_SECONDS;
+  const offsets = generateHourlyOffsets(date, -6, 6);
   return Math.floor(
     inverseLagrangianInterpolation(
-      generateHourlyOffsets(date, -6, 6),
-      yogaFunc,
+      offsets,
+      makeDecreasingAnglesNonCircular(offsets.map(yogaFunc)),
       expectedYogaLongitude
     )
   );
 }
 
-function getYogaEnd(date: number, yogaLongitude: number) {
-  const expectedYogaLongitude =
-    Math.ceil(yogaLongitude / YOGA_INTERVAL_ARC_SECONDS) *
-    YOGA_INTERVAL_ARC_SECONDS;
+function getYogaEnd(currentYogaIndex: number, currentYogaStartDate: number) {
+
+  const currentYogaBegin = currentYogaIndex * YOGA_INTERVAL_ARC_SECONDS;
+  const nextOffsets = generateHourlyOffsets(currentYogaStartDate, 6, 5, true);
+  const angles = makeIncreasingAnglesNonCircular([
+    currentYogaBegin,
+    ...nextOffsets.map(yogaFunc),
+  ]);
+  const offsets = [currentYogaStartDate, ...nextOffsets];
+
   return Math.floor(
     inverseLagrangianInterpolation(
-      generateHourlyOffsets(date, 6, 6),
-      yogaFunc,
-      expectedYogaLongitude
+      offsets,
+      angles,
+      currentYogaBegin + YOGA_INTERVAL_ARC_SECONDS
     )
   );
 }
@@ -115,32 +123,30 @@ export function compute(day: number, sunrise: number): YogaInterval[] {
   const nextDay = addDays(day, 1);
   const yogaLongitude = yogaFunc(day);
 
-  let currentYogaIndex = Math.floor(yogaLongitude / YOGA_INTERVAL_ARC_SECONDS);
-  let currentYogaStart = getYogaStart(day, yogaLongitude);
-  let currentYogaEnd = getYogaEnd(day, yogaLongitude);
+  const currentYogaIndex = Math.floor(yogaLongitude / YOGA_INTERVAL_ARC_SECONDS);
+  const currentYogaStart = getYogaStart(day, yogaLongitude);
 
-  const yogas: YogaInterval[] = [
-    {
-      startDate: currentYogaStart,
-      endDate: currentYogaEnd,
-      index: currentYogaIndex,
-      name: YOGA_NAMES[currentYogaIndex],
-    },
-  ];
+  let currentYoga = getYogaInterval(currentYogaStart, currentYogaIndex);
 
-  while (currentYogaEnd < nextDay) {
-    currentYogaStart = currentYogaEnd;
-    currentYogaIndex = (currentYogaIndex + 1) % 27;
-    const expectedLongitude =
-      currentYogaIndex * YOGA_INTERVAL_ARC_SECONDS + ARC_SECONDS_PADDING;
-    currentYogaEnd = getYogaEnd(currentYogaStart, expectedLongitude);
-    yogas.push({
-      startDate: currentYogaStart,
-      endDate: currentYogaEnd,
-      index: currentYogaIndex,
-      name: YOGA_NAMES[currentYogaIndex],
-    });
+  const yogas: YogaInterval[] = [currentYoga];
+
+  while (currentYoga.endDate < nextDay) {
+    currentYoga = getYogaInterval(
+      currentYoga.endDate,
+      (currentYoga.index + 1) % 27
+    );
+    yogas.push({ ...currentYoga });
   }
 
   return yogas.filter(({ endDate }) => endDate >= sunrise);
+}
+
+function getYogaInterval(startDate: number, yogaIndex: number) {
+  const endDate = getYogaEnd(yogaIndex, startDate);
+  return {
+    startDate,
+    endDate,
+    index: yogaIndex,
+    name: YOGA_NAMES[yogaIndex],
+  };
 }

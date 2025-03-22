@@ -2,7 +2,10 @@ import {
   adjustForAyanamsa,
   getLunarLongitude,
   inverseLagrangianInterpolation,
+  makeDecreasingAnglesNonCircular,
+  makeIncreasingAnglesNonCircular,
   toArcSeconds,
+  TOTAL_ARC_SECONDS,
 } from "../util";
 import { addDays, generateHourlyOffsets } from "../../../util/date";
 
@@ -74,7 +77,6 @@ export type NakshatraInterval = {
 };
 
 const NAKSHATRA_INTERVAL_ARC_SECONDS = toArcSeconds(360 / 27);
-const ARC_SECONDS_PADDING = 10;
 
 function nakshatraFunc(offset: number) {
   return adjustForAyanamsa(offset, getLunarLongitude(offset));
@@ -84,24 +86,41 @@ function getNakshatraStart(date: number, lunarLongitude: number) {
   const expectedLongitude =
     Math.floor(lunarLongitude / NAKSHATRA_INTERVAL_ARC_SECONDS) *
     NAKSHATRA_INTERVAL_ARC_SECONDS;
+
+  const offsets = generateHourlyOffsets(date, -6, 6);
   return Math.floor(
     inverseLagrangianInterpolation(
-      generateHourlyOffsets(date, -6, 6),
-      nakshatraFunc,
+      offsets,
+      makeDecreasingAnglesNonCircular(offsets.map(nakshatraFunc)),
       expectedLongitude
     )
   );
 }
 
-function getNakshatraEnd(date: number, lunarLongitude: number) {
-  const expectedLongitude =
-    Math.ceil(lunarLongitude / NAKSHATRA_INTERVAL_ARC_SECONDS) *
-    NAKSHATRA_INTERVAL_ARC_SECONDS;
+function getNakshatraEnd(
+  currentNakshatraIndex: number,
+  currentNakshatraStartDate: number
+) {
+  const currentNakshatraBegin =
+    (currentNakshatraIndex * NAKSHATRA_INTERVAL_ARC_SECONDS) %
+    TOTAL_ARC_SECONDS;
+
+  const nextOffsets = generateHourlyOffsets(
+    currentNakshatraStartDate,
+    6,
+    5,
+    true
+  );
+  const angles = makeIncreasingAnglesNonCircular([
+    currentNakshatraBegin,
+    ...nextOffsets.map(nakshatraFunc),
+  ]);
+  const offsets = [currentNakshatraStartDate, ...nextOffsets];
   return Math.floor(
     inverseLagrangianInterpolation(
-      generateHourlyOffsets(date, 6, 6),
-      nakshatraFunc,
-      expectedLongitude
+      offsets,
+      angles,
+      currentNakshatraBegin + NAKSHATRA_INTERVAL_ARC_SECONDS
     )
   );
 }
@@ -114,32 +133,30 @@ export function compute(day: number, sunrise: number): NakshatraInterval[] {
     lunarLongitude / NAKSHATRA_INTERVAL_ARC_SECONDS
   );
   let currentNakshatraStart = getNakshatraStart(day, lunarLongitude);
-  let currentNakshatraEnd = getNakshatraEnd(day, lunarLongitude);
+  let currentNakshatra = getNakshatraInterval(
+    currentNakshatraStart,
+    currentNakshatraIndex
+  );
 
-  const nakshatras: NakshatraInterval[] = [
-    {
-      startDate: currentNakshatraStart,
-      endDate: currentNakshatraEnd,
-      index: currentNakshatraIndex,
-      name: NAKSHATRA_NAMES[currentNakshatraIndex],
-    },
-  ];
+  const nakshatras: NakshatraInterval[] = [currentNakshatra];
 
-  while (currentNakshatraEnd < nextDay) {
-    currentNakshatraStart = currentNakshatraEnd;
-    currentNakshatraIndex = (currentNakshatraIndex + 1) % 27;
-    currentNakshatraEnd = getNakshatraEnd(
-      currentNakshatraStart,
-      currentNakshatraIndex * NAKSHATRA_INTERVAL_ARC_SECONDS +
-        ARC_SECONDS_PADDING
+  while (currentNakshatra.endDate < nextDay) {
+    currentNakshatra = getNakshatraInterval(
+      currentNakshatra.endDate,
+      (currentNakshatra.index + 1) % 27
     );
-    nakshatras.push({
-      startDate: currentNakshatraStart,
-      endDate: currentNakshatraEnd,
-      index: currentNakshatraIndex,
-      name: NAKSHATRA_NAMES[currentNakshatraIndex],
-    });
+    nakshatras.push({ ...currentNakshatra });
   }
 
   return nakshatras.filter(({ endDate }) => endDate >= sunrise);
+}
+
+function getNakshatraInterval(startDate: number, nakshatraIndex: number) {
+  const endDate = getNakshatraEnd(nakshatraIndex, startDate);
+  return {
+    startDate,
+    endDate,
+    index: nakshatraIndex,
+    name: NAKSHATRA_NAMES[nakshatraIndex],
+  };
 }

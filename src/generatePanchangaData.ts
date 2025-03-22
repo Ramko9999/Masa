@@ -6,20 +6,16 @@ import { join, dirname } from "path";
 import { TithiInterval } from "./api/panchanga/core/tithi";
 import { NakshatraInterval } from "./api/panchanga/core/nakshatra";
 import { YogaInterval } from "./api/panchanga/core/yoga";
-function toIST(timestamp: number): string {
-  return new Date(timestamp)
-    .toLocaleString("en-US", {
-      timeZone: "Asia/Kolkata",
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-      hour12: false,
-    })
-    .replace(/(\d+)\/(\d+)\/(\d+)/, "$3-$1-$2")
-    .replace(", ", " ");
+function toUTC(timestamp: number): string {
+  const date = new Date(timestamp);
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  const hour = (date.getHours() % 12 || 12).toString().padStart(2, "0");
+  const minute = String(date.getMinutes()).padStart(2, "0");
+  const ampm = date.getHours() >= 12 ? "PM" : "AM";
+
+  return `${year}-${month}-${day} ${hour}:${minute} ${ampm}`;
 }
 
 // Function to generate Unix timestamps for each day in 2025 at midnight IST
@@ -56,7 +52,7 @@ function ensureDirectoryExists(filePath: string): void {
 }
 
 // Main function to compute panchanga data for each day
-async function generatePanchangaData() {
+function generatePanchangaData() {
   const timestamps = generateTimestampsFor2025IST();
   const panchangaData: Record<string, any> = {};
 
@@ -65,34 +61,33 @@ async function generatePanchangaData() {
   console.log(`Last timestamp: ${timestamps[timestamps.length - 1]}`);
 
   for (const timestamp of timestamps) {
-    const panchanga = await computePanchanga(timestamp, getLocation());
+    console.log(`Generating data for ${toUTC(timestamp)}`);
+    const panchanga = computePanchanga(timestamp, getLocation());
 
-    panchangaData[toIST(timestamp)] = {
+    panchangaData[toUTC(timestamp)] = {
       tithi: panchanga.tithi.map((t: TithiInterval) => ({
         name: t.name,
-        start_time: toIST(t.startDate),
-        end_time: toIST(t.endDate),
+        start_time: toUTC(t.startDate),
+        end_time: toUTC(t.endDate),
       })),
       nakshatra: panchanga.nakshatra.map((n: NakshatraInterval) => ({
         name: n.name,
-        start_time: toIST(n.startDate),
-        end_time: toIST(n.endDate),
+        start_time: toUTC(n.startDate),
+        end_time: toUTC(n.endDate),
       })),
       yoga: panchanga.yoga.map((y: YogaInterval) => ({
         name: y.name,
-        start_time: toIST(y.startDate),
-        end_time: toIST(y.endDate),
+        start_time: toUTC(y.startDate),
+        end_time: toUTC(y.endDate),
       })),
       vaara: panchanga.vaara,
-      sunrise: toIST(panchanga.sunrise),
-      masa: panchanga.masa.name
+      sunrise: toUTC(panchanga.sunrise),
+      masa: panchanga.masa.name,
     };
   }
 
   // Define the output file path
-  const outputPath = join(
-    "./scripts/panchanga_2025_computed.json"
-  );
+  const outputPath = join("../scripts/panchanga_2025_computed.json");
 
   // Ensure the directory exists
   ensureDirectoryExists(outputPath);
@@ -106,5 +101,5 @@ async function generatePanchangaData() {
   console.log(`Panchanga data generated and saved to ${outputPath}`);
 }
 
-// Execute the main function
-generatePanchangaData().catch(console.error);
+generatePanchangaData();
+
