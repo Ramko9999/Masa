@@ -37,7 +37,10 @@
         "name": "Budhavaara"
       },
       "sunrise": "2024-12-31 08:11 PM",
-      "masa": "Pausha"
+      "masa": {
+        "amanta": "Pausha",
+        "purnima": "Pausha"
+      }
     },
     "2025-01-01 01:30 PM": {
       "tithi": [
@@ -76,7 +79,10 @@
         "name": "Guruvaara"
       },
       "sunrise": "2025-01-01 08:12 PM",
-      "masa": "Pausha"
+      "masa": {
+        "amanta": "Pausha",
+        "purnima": "Pausha"
+      }
     },
     "2025-01-02 01:30 PM": {
       "tithi": [
@@ -120,7 +126,10 @@
         "name": "Shukravaara"
       },
       "sunrise": "2025-01-02 08:12 PM",
-      "masa": "Pausha"
+      "masa": {
+        "amanta": "Pausha",
+        "purnima": "Pausha"
+      }
     },
     "2025-01-03 01:30 PM": {
       "tithi": [
@@ -164,7 +173,10 @@
         "name": "Shanivaara"
       },
       "sunrise": "2025-01-03 08:12 PM",
-      "masa": "Pausha"
+      "masa": {
+        "amanta": "Pausha",
+        "purnima": "Pausha"
+      }
     },
     "2025-01-04 01:30 PM": {
       "tithi": [
@@ -208,7 +220,10 @@
         "name": "Ravivaara"
       },
       "sunrise": "2025-01-04 08:13 PM",
-      "masa": "Pausha"
+      "masa": {
+        "amanta": "Pausha",
+        "purnima": "Pausha"
+      }
     },
     "2025-01-05 01:30 PM": {
       "tithi": [
@@ -247,7 +262,10 @@
         "name": "Somavaara"
       },
       "sunrise": "2025-01-05 08:13 PM",
-      "masa": "Pausha"
+      "masa": {
+        "amanta": "Pausha",
+        "purnima": "Pausha"
+      }
     },
     "2025-01-06 01:30 PM": {
       "tithi": [
@@ -291,7 +309,10 @@
         "name": "Mangalavaara"
       },
       "sunrise": "2025-01-06 08:13 PM",
-      "masa": "Pausha"
+      "masa": {
+        "amanta": "Pausha",
+        "purnima": "Pausha"
+      }
     },
     "2025-01-07 01:30 PM": {
       "tithi": [
@@ -335,7 +356,10 @@
         "name": "Budhavaara"
       },
       "sunrise": "2025-01-07 08:14 PM",
-      "masa": "Pausha"
+      "masa": {
+        "amanta": "Pausha",
+        "purnima": "Pausha"
+      }
     },
     "2025-01-08 01:30 PM": {
       "tithi": [
@@ -379,7 +403,10 @@
         "name": "Guruvaara"
       },
       "sunrise": "2025-01-08 08:14 PM",
-      "masa": "Pausha"
+      "masa": {
+        "amanta": "Pausha",
+        "purnima": "Pausha"
+      }
     },
     "2025-01-09 01:30 PM": {
       "tithi": [
@@ -423,7 +450,10 @@
         "name": "Shukravaara"
       },
       "sunrise": "2025-01-09 08:14 PM",
-      "masa": "Pausha"
+      "masa": {
+        "amanta": "Pausha",
+        "purnima": "Pausha"
+      }
     },
     "2025-01-10 01:30 PM": {
       "tithi": [
@@ -467,7 +497,10 @@
         "name": "Shanivaara"
       },
       "sunrise": "2025-01-10 08:14 PM",
-      "masa": "Pausha"
+      "masa": {
+        "amanta": "Pausha",
+        "purnima": "Pausha"
+      }
     },
     "2025-01-11 01:30 PM": {
       "tithi": [
@@ -506,7 +539,10 @@
         "name": "Ravivaara"
       },
       "sunrise": "2025-01-11 08:15 PM",
-      "masa": "Pausha"
+      "masa": {
+        "amanta": "Pausha",
+        "purnima": "Pausha"
+      }
     },
     "2025-01-12 01:30 PM": {
       "tithi": [
@@ -540,7 +576,10 @@
         "name": "Somavaara"
       },
       "sunrise": "2025-01-12 08:15 PM",
-      "masa": "Pausha"
+      "masa": {
+        "amanta": "Pausha",
+        "purnima": "Pausha"
+      }
     },
     "2025-01-13 01:30 PM": {
       "tithi": [
@@ -574,7 +613,10 @@
         "name": "Mangalavaara"
       },
       "sunrise": "2025-01-13 08:15 PM",
-      "masa": "Pausha"
+      "masa": {
+        "amanta": "Pausha",
+        "purnima": "Magha"
+      }
     },
     "2025-01-14 01:30 PM": {
       "tithi": [
@@ -608,7 +650,10 @@
         "name": "Budhavaara"
       },
       "sunrise": "2025-01-14 08:15 PM",
-      "masa": "Pausha"
+      "masa": {
+        "amanta": "Pausha",
+        "purnima": "Magha"
+      }
     },
     "2025-01-15 01:30 PM": {
       "tithi": [
@@ -642,7 +687,10 @@
         "name": "Guruvaara"
       },
       "sunrise": "2025-01-15 08:15 PM",
-      "masa": "Pausha"
+      "masa": {
+        "amanta": "Pausha",
+        "purnima": "Magha"
+      }
     },
     "2025-01-16 01:30 PM": {
       "tithi": [
@@ -676,7 +724,10 @@
         "name": "Shukravaara"
       },
       "sunrise": "2025-01-16 08:15 PM",
-      "masa": "Pausha"
+      "masa": {
+        "amanta": "Pausha",
+        "purnima": "Magha"
+      }
     },
     "2025-01-17 01:30 PM": {
       "tithi": [
@@ -710,7 +761,10 @@
         "name": "Shanivaara"
       },
       "sunrise": "2025-01-17 08:16 PM",
-      "masa": "Pausha"
+      "masa": {
+        "amanta": "Pausha",
+        "purnima": "Magha"
+      }
     },
     "2025-01-18 01:30 PM": {
       "tithi": [
@@ -749,7 +803,10 @@
         "name": "Ravivaara"
       },
       "sunrise": "2025-01-18 08:16 PM",
-      "masa": "Pausha"
+      "masa": {
+        "amanta": "Pausha",
+        "purnima": "Magha"
+      }
     },
     "2025-01-19 01:30 PM": {
       "tithi": [
@@ -788,7 +845,10 @@
         "name": "Somavaara"
       },
       "sunrise": "2025-01-19 08:16 PM",
-      "masa": "Pausha"
+      "masa": {
+        "amanta": "Pausha",
+        "purnima": "Magha"
+      }
     },
     "2025-01-20 01:30 PM": {
       "tithi": [
@@ -827,7 +887,10 @@
         "name": "Mangalavaara"
       },
       "sunrise": "2025-01-20 08:16 PM",
-      "masa": "Pausha"
+      "masa": {
+        "amanta": "Pausha",
+        "purnima": "Magha"
+      }
     },
     "2025-01-21 01:30 PM": {
       "tithi": [
@@ -861,7 +924,10 @@
         "name": "Budhavaara"
       },
       "sunrise": "2025-01-21 08:16 PM",
-      "masa": "Pausha"
+      "masa": {
+        "amanta": "Pausha",
+        "purnima": "Magha"
+      }
     },
     "2025-01-22 01:30 PM": {
       "tithi": [
@@ -895,7 +961,10 @@
         "name": "Guruvaara"
       },
       "sunrise": "2025-01-22 08:16 PM",
-      "masa": "Pausha"
+      "masa": {
+        "amanta": "Pausha",
+        "purnima": "Magha"
+      }
     },
     "2025-01-23 01:30 PM": {
       "tithi": [
@@ -929,7 +998,10 @@
         "name": "Shukravaara"
       },
       "sunrise": "2025-01-23 08:16 PM",
-      "masa": "Pausha"
+      "masa": {
+        "amanta": "Pausha",
+        "purnima": "Magha"
+      }
     },
     "2025-01-24 01:30 PM": {
       "tithi": [
@@ -968,7 +1040,10 @@
         "name": "Shanivaara"
       },
       "sunrise": "2025-01-24 08:16 PM",
-      "masa": "Pausha"
+      "masa": {
+        "amanta": "Pausha",
+        "purnima": "Magha"
+      }
     },
     "2025-01-25 01:30 PM": {
       "tithi": [
@@ -1007,7 +1082,10 @@
         "name": "Ravivaara"
       },
       "sunrise": "2025-01-25 08:16 PM",
-      "masa": "Pausha"
+      "masa": {
+        "amanta": "Pausha",
+        "purnima": "Magha"
+      }
     },
     "2025-01-26 01:30 PM": {
       "tithi": [
@@ -1046,7 +1124,10 @@
         "name": "Somavaara"
       },
       "sunrise": "2025-01-26 08:16 PM",
-      "masa": "Pausha"
+      "masa": {
+        "amanta": "Pausha",
+        "purnima": "Magha"
+      }
     },
     "2025-01-27 01:30 PM": {
       "tithi": [
@@ -1090,7 +1171,10 @@
         "name": "Mangalavaara"
       },
       "sunrise": "2025-01-27 08:16 PM",
-      "masa": "Pausha"
+      "masa": {
+        "amanta": "Pausha",
+        "purnima": "Magha"
+      }
     },
     "2025-01-28 01:30 PM": {
       "tithi": [
@@ -1134,7 +1218,10 @@
         "name": "Budhavaara"
       },
       "sunrise": "2025-01-28 08:16 PM",
-      "masa": "Pausha"
+      "masa": {
+        "amanta": "Pausha",
+        "purnima": "Magha"
+      }
     },
     "2025-01-29 01:30 PM": {
       "tithi": [
@@ -1178,7 +1265,10 @@
         "name": "Guruvaara"
       },
       "sunrise": "2025-01-29 08:16 PM",
-      "masa": "Magha"
+      "masa": {
+        "amanta": "Magha",
+        "purnima": "Magha"
+      }
     },
     "2025-01-30 01:30 PM": {
       "tithi": [
@@ -1217,7 +1307,10 @@
         "name": "Shukravaara"
       },
       "sunrise": "2025-01-30 08:15 PM",
-      "masa": "Magha"
+      "masa": {
+        "amanta": "Magha",
+        "purnima": "Magha"
+      }
     },
     "2025-01-31 01:30 PM": {
       "tithi": [
@@ -1256,7 +1349,10 @@
         "name": "Shanivaara"
       },
       "sunrise": "2025-01-31 08:15 PM",
-      "masa": "Magha"
+      "masa": {
+        "amanta": "Magha",
+        "purnima": "Magha"
+      }
     },
     "2025-02-01 01:30 PM": {
       "tithi": [
@@ -1295,7 +1391,10 @@
         "name": "Ravivaara"
       },
       "sunrise": "2025-02-01 08:15 PM",
-      "masa": "Magha"
+      "masa": {
+        "amanta": "Magha",
+        "purnima": "Magha"
+      }
     },
     "2025-02-02 01:30 PM": {
       "tithi": [
@@ -1334,7 +1433,10 @@
         "name": "Somavaara"
       },
       "sunrise": "2025-02-02 08:15 PM",
-      "masa": "Magha"
+      "masa": {
+        "amanta": "Magha",
+        "purnima": "Magha"
+      }
     },
     "2025-02-03 01:30 PM": {
       "tithi": [
@@ -1373,7 +1475,10 @@
         "name": "Mangalavaara"
       },
       "sunrise": "2025-02-03 08:15 PM",
-      "masa": "Magha"
+      "masa": {
+        "amanta": "Magha",
+        "purnima": "Magha"
+      }
     },
     "2025-02-04 01:30 PM": {
       "tithi": [
@@ -1412,7 +1517,10 @@
         "name": "Budhavaara"
       },
       "sunrise": "2025-02-04 08:15 PM",
-      "masa": "Magha"
+      "masa": {
+        "amanta": "Magha",
+        "purnima": "Magha"
+      }
     },
     "2025-02-05 01:30 PM": {
       "tithi": [
@@ -1456,7 +1564,10 @@
         "name": "Guruvaara"
       },
       "sunrise": "2025-02-05 08:14 PM",
-      "masa": "Magha"
+      "masa": {
+        "amanta": "Magha",
+        "purnima": "Magha"
+      }
     },
     "2025-02-06 01:30 PM": {
       "tithi": [
@@ -1500,7 +1611,10 @@
         "name": "Shukravaara"
       },
       "sunrise": "2025-02-06 08:14 PM",
-      "masa": "Magha"
+      "masa": {
+        "amanta": "Magha",
+        "purnima": "Magha"
+      }
     },
     "2025-02-07 01:30 PM": {
       "tithi": [
@@ -1544,7 +1658,10 @@
         "name": "Shanivaara"
       },
       "sunrise": "2025-02-07 08:14 PM",
-      "masa": "Magha"
+      "masa": {
+        "amanta": "Magha",
+        "purnima": "Magha"
+      }
     },
     "2025-02-08 01:30 PM": {
       "tithi": [
@@ -1588,7 +1705,10 @@
         "name": "Ravivaara"
       },
       "sunrise": "2025-02-08 08:14 PM",
-      "masa": "Magha"
+      "masa": {
+        "amanta": "Magha",
+        "purnima": "Magha"
+      }
     },
     "2025-02-09 01:30 PM": {
       "tithi": [
@@ -1632,7 +1752,10 @@
         "name": "Somavaara"
       },
       "sunrise": "2025-02-09 08:13 PM",
-      "masa": "Magha"
+      "masa": {
+        "amanta": "Magha",
+        "purnima": "Magha"
+      }
     },
     "2025-02-10 01:30 PM": {
       "tithi": [
@@ -1676,7 +1799,10 @@
         "name": "Mangalavaara"
       },
       "sunrise": "2025-02-10 08:13 PM",
-      "masa": "Magha"
+      "masa": {
+        "amanta": "Magha",
+        "purnima": "Magha"
+      }
     },
     "2025-02-11 01:30 PM": {
       "tithi": [
@@ -1720,7 +1846,10 @@
         "name": "Budhavaara"
       },
       "sunrise": "2025-02-11 08:13 PM",
-      "masa": "Magha"
+      "masa": {
+        "amanta": "Magha",
+        "purnima": "Magha"
+      }
     },
     "2025-02-12 01:30 PM": {
       "tithi": [
@@ -1764,7 +1893,10 @@
         "name": "Guruvaara"
       },
       "sunrise": "2025-02-12 08:12 PM",
-      "masa": "Magha"
+      "masa": {
+        "amanta": "Magha",
+        "purnima": "Phalguna"
+      }
     },
     "2025-02-13 01:30 PM": {
       "tithi": [
@@ -1808,7 +1940,10 @@
         "name": "Shukravaara"
       },
       "sunrise": "2025-02-13 08:12 PM",
-      "masa": "Magha"
+      "masa": {
+        "amanta": "Magha",
+        "purnima": "Phalguna"
+      }
     },
     "2025-02-14 01:30 PM": {
       "tithi": [
@@ -1847,7 +1982,10 @@
         "name": "Shanivaara"
       },
       "sunrise": "2025-02-14 08:12 PM",
-      "masa": "Magha"
+      "masa": {
+        "amanta": "Magha",
+        "purnima": "Phalguna"
+      }
     },
     "2025-02-15 01:30 PM": {
       "tithi": [
@@ -1881,7 +2019,10 @@
         "name": "Ravivaara"
       },
       "sunrise": "2025-02-15 08:11 PM",
-      "masa": "Magha"
+      "masa": {
+        "amanta": "Magha",
+        "purnima": "Phalguna"
+      }
     },
     "2025-02-16 01:30 PM": {
       "tithi": [
@@ -1915,7 +2056,10 @@
         "name": "Somavaara"
       },
       "sunrise": "2025-02-16 08:11 PM",
-      "masa": "Magha"
+      "masa": {
+        "amanta": "Magha",
+        "purnima": "Phalguna"
+      }
     },
     "2025-02-17 01:30 PM": {
       "tithi": [
@@ -1954,7 +2098,10 @@
         "name": "Mangalavaara"
       },
       "sunrise": "2025-02-17 08:10 PM",
-      "masa": "Magha"
+      "masa": {
+        "amanta": "Magha",
+        "purnima": "Phalguna"
+      }
     },
     "2025-02-18 01:30 PM": {
       "tithi": [
@@ -1998,7 +2145,10 @@
         "name": "Budhavaara"
       },
       "sunrise": "2025-02-18 08:10 PM",
-      "masa": "Magha"
+      "masa": {
+        "amanta": "Magha",
+        "purnima": "Phalguna"
+      }
     },
     "2025-02-19 01:30 PM": {
       "tithi": [
@@ -2042,7 +2192,10 @@
         "name": "Guruvaara"
       },
       "sunrise": "2025-02-19 08:09 PM",
-      "masa": "Magha"
+      "masa": {
+        "amanta": "Magha",
+        "purnima": "Phalguna"
+      }
     },
     "2025-02-20 01:30 PM": {
       "tithi": [
@@ -2086,7 +2239,10 @@
         "name": "Shukravaara"
       },
       "sunrise": "2025-02-20 08:09 PM",
-      "masa": "Magha"
+      "masa": {
+        "amanta": "Magha",
+        "purnima": "Phalguna"
+      }
     },
     "2025-02-21 01:30 PM": {
       "tithi": [
@@ -2130,7 +2286,10 @@
         "name": "Shanivaara"
       },
       "sunrise": "2025-02-21 08:09 PM",
-      "masa": "Magha"
+      "masa": {
+        "amanta": "Magha",
+        "purnima": "Phalguna"
+      }
     },
     "2025-02-22 01:30 PM": {
       "tithi": [
@@ -2174,7 +2333,10 @@
         "name": "Ravivaara"
       },
       "sunrise": "2025-02-22 08:08 PM",
-      "masa": "Magha"
+      "masa": {
+        "amanta": "Magha",
+        "purnima": "Phalguna"
+      }
     },
     "2025-02-23 01:30 PM": {
       "tithi": [
@@ -2218,7 +2380,10 @@
         "name": "Somavaara"
       },
       "sunrise": "2025-02-23 08:08 PM",
-      "masa": "Magha"
+      "masa": {
+        "amanta": "Magha",
+        "purnima": "Phalguna"
+      }
     },
     "2025-02-24 01:30 PM": {
       "tithi": [
@@ -2262,7 +2427,10 @@
         "name": "Mangalavaara"
       },
       "sunrise": "2025-02-24 08:07 PM",
-      "masa": "Magha"
+      "masa": {
+        "amanta": "Magha",
+        "purnima": "Phalguna"
+      }
     },
     "2025-02-25 01:30 PM": {
       "tithi": [
@@ -2301,7 +2469,10 @@
         "name": "Budhavaara"
       },
       "sunrise": "2025-02-25 08:07 PM",
-      "masa": "Magha"
+      "masa": {
+        "amanta": "Magha",
+        "purnima": "Phalguna"
+      }
     },
     "2025-02-26 01:30 PM": {
       "tithi": [
@@ -2345,7 +2516,10 @@
         "name": "Guruvaara"
       },
       "sunrise": "2025-02-26 08:06 PM",
-      "masa": "Magha"
+      "masa": {
+        "amanta": "Magha",
+        "purnima": "Phalguna"
+      }
     },
     "2025-02-27 01:30 PM": {
       "tithi": [
@@ -2384,7 +2558,10 @@
         "name": "Shukravaara"
       },
       "sunrise": "2025-02-27 08:06 PM",
-      "masa": "Phalguna"
+      "masa": {
+        "amanta": "Phalguna",
+        "purnima": "Phalguna"
+      }
     },
     "2025-02-28 01:30 PM": {
       "tithi": [
@@ -2423,7 +2600,10 @@
         "name": "Shanivaara"
       },
       "sunrise": "2025-02-28 08:05 PM",
-      "masa": "Phalguna"
+      "masa": {
+        "amanta": "Phalguna",
+        "purnima": "Phalguna"
+      }
     },
     "2025-03-01 01:30 PM": {
       "tithi": [
@@ -2467,7 +2647,10 @@
         "name": "Ravivaara"
       },
       "sunrise": "2025-03-01 08:04 PM",
-      "masa": "Phalguna"
+      "masa": {
+        "amanta": "Phalguna",
+        "purnima": "Phalguna"
+      }
     },
     "2025-03-02 01:30 PM": {
       "tithi": [
@@ -2511,7 +2694,10 @@
         "name": "Somavaara"
       },
       "sunrise": "2025-03-02 08:04 PM",
-      "masa": "Phalguna"
+      "masa": {
+        "amanta": "Phalguna",
+        "purnima": "Phalguna"
+      }
     },
     "2025-03-03 01:30 PM": {
       "tithi": [
@@ -2545,7 +2731,10 @@
         "name": "Mangalavaara"
       },
       "sunrise": "2025-03-03 08:03 PM",
-      "masa": "Phalguna"
+      "masa": {
+        "amanta": "Phalguna",
+        "purnima": "Phalguna"
+      }
     },
     "2025-03-04 01:30 PM": {
       "tithi": [
@@ -2584,7 +2773,10 @@
         "name": "Budhavaara"
       },
       "sunrise": "2025-03-04 08:03 PM",
-      "masa": "Phalguna"
+      "masa": {
+        "amanta": "Phalguna",
+        "purnima": "Phalguna"
+      }
     },
     "2025-03-05 01:30 PM": {
       "tithi": [
@@ -2623,7 +2815,10 @@
         "name": "Guruvaara"
       },
       "sunrise": "2025-03-05 08:02 PM",
-      "masa": "Phalguna"
+      "masa": {
+        "amanta": "Phalguna",
+        "purnima": "Phalguna"
+      }
     },
     "2025-03-06 01:30 PM": {
       "tithi": [
@@ -2667,7 +2862,10 @@
         "name": "Shukravaara"
       },
       "sunrise": "2025-03-06 08:02 PM",
-      "masa": "Phalguna"
+      "masa": {
+        "amanta": "Phalguna",
+        "purnima": "Phalguna"
+      }
     },
     "2025-03-07 01:30 PM": {
       "tithi": [
@@ -2711,7 +2909,10 @@
         "name": "Shanivaara"
       },
       "sunrise": "2025-03-07 08:01 PM",
-      "masa": "Phalguna"
+      "masa": {
+        "amanta": "Phalguna",
+        "purnima": "Phalguna"
+      }
     },
     "2025-03-08 01:30 PM": {
       "tithi": [
@@ -2750,7 +2951,10 @@
         "name": "Ravivaara"
       },
       "sunrise": "2025-03-08 08:00 PM",
-      "masa": "Phalguna"
+      "masa": {
+        "amanta": "Phalguna",
+        "purnima": "Phalguna"
+      }
     },
     "2025-03-09 02:30 PM": {
       "tithi": [
@@ -2789,7 +2993,10 @@
         "name": "Somavaara"
       },
       "sunrise": "2025-03-09 09:00 PM",
-      "masa": "Phalguna"
+      "masa": {
+        "amanta": "Phalguna",
+        "purnima": "Phalguna"
+      }
     },
     "2025-03-10 02:30 PM": {
       "tithi": [
@@ -2828,7 +3035,10 @@
         "name": "Mangalavaara"
       },
       "sunrise": "2025-03-10 08:59 PM",
-      "masa": "Phalguna"
+      "masa": {
+        "amanta": "Phalguna",
+        "purnima": "Phalguna"
+      }
     },
     "2025-03-11 02:30 PM": {
       "tithi": [
@@ -2867,7 +3077,10 @@
         "name": "Budhavaara"
       },
       "sunrise": "2025-03-11 08:59 PM",
-      "masa": "Phalguna"
+      "masa": {
+        "amanta": "Phalguna",
+        "purnima": "Phalguna"
+      }
     },
     "2025-03-12 02:30 PM": {
       "tithi": [
@@ -2906,7 +3119,10 @@
         "name": "Guruvaara"
       },
       "sunrise": "2025-03-12 08:58 PM",
-      "masa": "Phalguna"
+      "masa": {
+        "amanta": "Phalguna",
+        "purnima": "Phalguna"
+      }
     },
     "2025-03-13 02:30 PM": {
       "tithi": [
@@ -2945,7 +3161,10 @@
         "name": "Shukravaara"
       },
       "sunrise": "2025-03-13 08:57 PM",
-      "masa": "Phalguna"
+      "masa": {
+        "amanta": "Phalguna",
+        "purnima": "Phalguna"
+      }
     },
     "2025-03-14 02:30 PM": {
       "tithi": [
@@ -2989,7 +3208,10 @@
         "name": "Shanivaara"
       },
       "sunrise": "2025-03-14 08:57 PM",
-      "masa": "Phalguna"
+      "masa": {
+        "amanta": "Phalguna",
+        "purnima": "Chaitra"
+      }
     },
     "2025-03-15 02:30 PM": {
       "tithi": [
@@ -3033,7 +3255,10 @@
         "name": "Ravivaara"
       },
       "sunrise": "2025-03-15 08:56 PM",
-      "masa": "Phalguna"
+      "masa": {
+        "amanta": "Phalguna",
+        "purnima": "Chaitra"
+      }
     },
     "2025-03-16 02:30 PM": {
       "tithi": [
@@ -3077,7 +3302,10 @@
         "name": "Somavaara"
       },
       "sunrise": "2025-03-16 08:55 PM",
-      "masa": "Phalguna"
+      "masa": {
+        "amanta": "Phalguna",
+        "purnima": "Chaitra"
+      }
     },
     "2025-03-17 02:30 PM": {
       "tithi": [
@@ -3121,7 +3349,10 @@
         "name": "Mangalavaara"
       },
       "sunrise": "2025-03-17 08:55 PM",
-      "masa": "Phalguna"
+      "masa": {
+        "amanta": "Phalguna",
+        "purnima": "Chaitra"
+      }
     },
     "2025-03-18 02:30 PM": {
       "tithi": [
@@ -3160,7 +3391,10 @@
         "name": "Budhavaara"
       },
       "sunrise": "2025-03-18 08:54 PM",
-      "masa": "Phalguna"
+      "masa": {
+        "amanta": "Phalguna",
+        "purnima": "Chaitra"
+      }
     },
     "2025-03-19 02:30 PM": {
       "tithi": [
@@ -3199,7 +3433,10 @@
         "name": "Guruvaara"
       },
       "sunrise": "2025-03-19 08:53 PM",
-      "masa": "Phalguna"
+      "masa": {
+        "amanta": "Phalguna",
+        "purnima": "Chaitra"
+      }
     },
     "2025-03-20 02:30 PM": {
       "tithi": [
@@ -3233,7 +3470,10 @@
         "name": "Shukravaara"
       },
       "sunrise": "2025-03-20 08:53 PM",
-      "masa": "Phalguna"
+      "masa": {
+        "amanta": "Phalguna",
+        "purnima": "Chaitra"
+      }
     },
     "2025-03-21 02:30 PM": {
       "tithi": [
@@ -3267,7 +3507,10 @@
         "name": "Shanivaara"
       },
       "sunrise": "2025-03-21 08:52 PM",
-      "masa": "Phalguna"
+      "masa": {
+        "amanta": "Phalguna",
+        "purnima": "Chaitra"
+      }
     },
     "2025-03-22 02:30 PM": {
       "tithi": [
@@ -3301,7 +3544,10 @@
         "name": "Ravivaara"
       },
       "sunrise": "2025-03-22 08:51 PM",
-      "masa": "Phalguna"
+      "masa": {
+        "amanta": "Phalguna",
+        "purnima": "Chaitra"
+      }
     },
     "2025-03-23 02:30 PM": {
       "tithi": [
@@ -3335,7 +3581,10 @@
         "name": "Somavaara"
       },
       "sunrise": "2025-03-23 08:51 PM",
-      "masa": "Phalguna"
+      "masa": {
+        "amanta": "Phalguna",
+        "purnima": "Chaitra"
+      }
     },
     "2025-03-24 02:30 PM": {
       "tithi": [
@@ -3369,7 +3618,10 @@
         "name": "Mangalavaara"
       },
       "sunrise": "2025-03-24 08:50 PM",
-      "masa": "Phalguna"
+      "masa": {
+        "amanta": "Phalguna",
+        "purnima": "Chaitra"
+      }
     },
     "2025-03-25 02:30 PM": {
       "tithi": [
@@ -3403,7 +3655,10 @@
         "name": "Budhavaara"
       },
       "sunrise": "2025-03-25 08:49 PM",
-      "masa": "Phalguna"
+      "masa": {
+        "amanta": "Phalguna",
+        "purnima": "Chaitra"
+      }
     },
     "2025-03-26 02:30 PM": {
       "tithi": [
@@ -3442,7 +3697,10 @@
         "name": "Guruvaara"
       },
       "sunrise": "2025-03-26 08:49 PM",
-      "masa": "Phalguna"
+      "masa": {
+        "amanta": "Phalguna",
+        "purnima": "Chaitra"
+      }
     },
     "2025-03-27 02:30 PM": {
       "tithi": [
@@ -3481,7 +3739,10 @@
         "name": "Shukravaara"
       },
       "sunrise": "2025-03-27 08:48 PM",
-      "masa": "Phalguna"
+      "masa": {
+        "amanta": "Phalguna",
+        "purnima": "Chaitra"
+      }
     },
     "2025-03-28 02:30 PM": {
       "tithi": [
@@ -3525,7 +3786,10 @@
         "name": "Shanivaara"
       },
       "sunrise": "2025-03-28 08:47 PM",
-      "masa": "Phalguna"
+      "masa": {
+        "amanta": "Phalguna",
+        "purnima": "Chaitra"
+      }
     },
     "2025-03-29 02:30 PM": {
       "tithi": [
@@ -3569,7 +3833,10 @@
         "name": "Ravivaara"
       },
       "sunrise": "2025-03-29 08:47 PM",
-      "masa": "Chaitra"
+      "masa": {
+        "amanta": "Chaitra",
+        "purnima": "Chaitra"
+      }
     },
     "2025-03-30 02:30 PM": {
       "tithi": [
@@ -3613,7 +3880,10 @@
         "name": "Somavaara"
       },
       "sunrise": "2025-03-30 08:46 PM",
-      "masa": "Chaitra"
+      "masa": {
+        "amanta": "Chaitra",
+        "purnima": "Chaitra"
+      }
     },
     "2025-03-31 02:30 PM": {
       "tithi": [
@@ -3652,7 +3922,10 @@
         "name": "Mangalavaara"
       },
       "sunrise": "2025-03-31 08:45 PM",
-      "masa": "Chaitra"
+      "masa": {
+        "amanta": "Chaitra",
+        "purnima": "Chaitra"
+      }
     },
     "2025-04-01 02:30 PM": {
       "tithi": [
@@ -3691,7 +3964,10 @@
         "name": "Budhavaara"
       },
       "sunrise": "2025-04-01 08:45 PM",
-      "masa": "Chaitra"
+      "masa": {
+        "amanta": "Chaitra",
+        "purnima": "Chaitra"
+      }
     },
     "2025-04-02 02:30 PM": {
       "tithi": [
@@ -3735,7 +4011,10 @@
         "name": "Guruvaara"
       },
       "sunrise": "2025-04-02 08:44 PM",
-      "masa": "Chaitra"
+      "masa": {
+        "amanta": "Chaitra",
+        "purnima": "Chaitra"
+      }
     },
     "2025-04-03 02:30 PM": {
       "tithi": [
@@ -3774,7 +4053,10 @@
         "name": "Shukravaara"
       },
       "sunrise": "2025-04-03 08:43 PM",
-      "masa": "Chaitra"
+      "masa": {
+        "amanta": "Chaitra",
+        "purnima": "Chaitra"
+      }
     },
     "2025-04-04 02:30 PM": {
       "tithi": [
@@ -3813,7 +4095,10 @@
         "name": "Shanivaara"
       },
       "sunrise": "2025-04-04 08:43 PM",
-      "masa": "Chaitra"
+      "masa": {
+        "amanta": "Chaitra",
+        "purnima": "Chaitra"
+      }
     },
     "2025-04-05 02:30 PM": {
       "tithi": [
@@ -3852,7 +4137,10 @@
         "name": "Ravivaara"
       },
       "sunrise": "2025-04-05 08:42 PM",
-      "masa": "Chaitra"
+      "masa": {
+        "amanta": "Chaitra",
+        "purnima": "Chaitra"
+      }
     },
     "2025-04-06 02:30 PM": {
       "tithi": [
@@ -3896,7 +4184,10 @@
         "name": "Somavaara"
       },
       "sunrise": "2025-04-06 08:42 PM",
-      "masa": "Chaitra"
+      "masa": {
+        "amanta": "Chaitra",
+        "purnima": "Chaitra"
+      }
     },
     "2025-04-07 02:30 PM": {
       "tithi": [
@@ -3940,7 +4231,10 @@
         "name": "Mangalavaara"
       },
       "sunrise": "2025-04-07 08:41 PM",
-      "masa": "Chaitra"
+      "masa": {
+        "amanta": "Chaitra",
+        "purnima": "Chaitra"
+      }
     },
     "2025-04-08 02:30 PM": {
       "tithi": [
@@ -3984,7 +4278,10 @@
         "name": "Budhavaara"
       },
       "sunrise": "2025-04-08 08:40 PM",
-      "masa": "Chaitra"
+      "masa": {
+        "amanta": "Chaitra",
+        "purnima": "Chaitra"
+      }
     },
     "2025-04-09 02:30 PM": {
       "tithi": [
@@ -4023,7 +4320,10 @@
         "name": "Guruvaara"
       },
       "sunrise": "2025-04-09 08:40 PM",
-      "masa": "Chaitra"
+      "masa": {
+        "amanta": "Chaitra",
+        "purnima": "Chaitra"
+      }
     },
     "2025-04-10 02:30 PM": {
       "tithi": [
@@ -4062,7 +4362,10 @@
         "name": "Shukravaara"
       },
       "sunrise": "2025-04-10 08:39 PM",
-      "masa": "Chaitra"
+      "masa": {
+        "amanta": "Chaitra",
+        "purnima": "Chaitra"
+      }
     },
     "2025-04-11 02:30 PM": {
       "tithi": [
@@ -4101,7 +4404,10 @@
         "name": "Shanivaara"
       },
       "sunrise": "2025-04-11 08:38 PM",
-      "masa": "Chaitra"
+      "masa": {
+        "amanta": "Chaitra",
+        "purnima": "Chaitra"
+      }
     },
     "2025-04-12 02:30 PM": {
       "tithi": [
@@ -4140,7 +4446,10 @@
         "name": "Ravivaara"
       },
       "sunrise": "2025-04-12 08:38 PM",
-      "masa": "Chaitra"
+      "masa": {
+        "amanta": "Chaitra",
+        "purnima": "Vaisakha"
+      }
     },
     "2025-04-13 02:30 PM": {
       "tithi": [
@@ -4179,7 +4488,10 @@
         "name": "Somavaara"
       },
       "sunrise": "2025-04-13 08:37 PM",
-      "masa": "Chaitra"
+      "masa": {
+        "amanta": "Chaitra",
+        "purnima": "Vaisakha"
+      }
     },
     "2025-04-14 02:30 PM": {
       "tithi": [
@@ -4218,7 +4530,10 @@
         "name": "Mangalavaara"
       },
       "sunrise": "2025-04-14 08:37 PM",
-      "masa": "Chaitra"
+      "masa": {
+        "amanta": "Chaitra",
+        "purnima": "Vaisakha"
+      }
     },
     "2025-04-15 02:30 PM": {
       "tithi": [
@@ -4252,7 +4567,10 @@
         "name": "Budhavaara"
       },
       "sunrise": "2025-04-15 08:36 PM",
-      "masa": "Chaitra"
+      "masa": {
+        "amanta": "Chaitra",
+        "purnima": "Vaisakha"
+      }
     },
     "2025-04-16 02:30 PM": {
       "tithi": [
@@ -4286,7 +4604,10 @@
         "name": "Guruvaara"
       },
       "sunrise": "2025-04-16 08:35 PM",
-      "masa": "Chaitra"
+      "masa": {
+        "amanta": "Chaitra",
+        "purnima": "Vaisakha"
+      }
     },
     "2025-04-17 02:30 PM": {
       "tithi": [
@@ -4325,7 +4646,10 @@
         "name": "Shukravaara"
       },
       "sunrise": "2025-04-17 08:35 PM",
-      "masa": "Chaitra"
+      "masa": {
+        "amanta": "Chaitra",
+        "purnima": "Vaisakha"
+      }
     },
     "2025-04-18 02:30 PM": {
       "tithi": [
@@ -4364,7 +4688,10 @@
         "name": "Shanivaara"
       },
       "sunrise": "2025-04-18 08:34 PM",
-      "masa": "Chaitra"
+      "masa": {
+        "amanta": "Chaitra",
+        "purnima": "Vaisakha"
+      }
     },
     "2025-04-19 02:30 PM": {
       "tithi": [
@@ -4403,7 +4730,10 @@
         "name": "Ravivaara"
       },
       "sunrise": "2025-04-19 08:34 PM",
-      "masa": "Chaitra"
+      "masa": {
+        "amanta": "Chaitra",
+        "purnima": "Vaisakha"
+      }
     },
     "2025-04-20 02:30 PM": {
       "tithi": [
@@ -4447,7 +4777,10 @@
         "name": "Somavaara"
       },
       "sunrise": "2025-04-20 08:33 PM",
-      "masa": "Chaitra"
+      "masa": {
+        "amanta": "Chaitra",
+        "purnima": "Vaisakha"
+      }
     },
     "2025-04-21 02:30 PM": {
       "tithi": [
@@ -4491,7 +4824,10 @@
         "name": "Mangalavaara"
       },
       "sunrise": "2025-04-21 08:33 PM",
-      "masa": "Chaitra"
+      "masa": {
+        "amanta": "Chaitra",
+        "purnima": "Vaisakha"
+      }
     },
     "2025-04-22 02:30 PM": {
       "tithi": [
@@ -4535,7 +4871,10 @@
         "name": "Budhavaara"
       },
       "sunrise": "2025-04-22 08:32 PM",
-      "masa": "Chaitra"
+      "masa": {
+        "amanta": "Chaitra",
+        "purnima": "Vaisakha"
+      }
     },
     "2025-04-23 02:30 PM": {
       "tithi": [
@@ -4579,7 +4918,10 @@
         "name": "Guruvaara"
       },
       "sunrise": "2025-04-23 08:32 PM",
-      "masa": "Chaitra"
+      "masa": {
+        "amanta": "Chaitra",
+        "purnima": "Vaisakha"
+      }
     },
     "2025-04-24 02:30 PM": {
       "tithi": [
@@ -4623,7 +4965,10 @@
         "name": "Shukravaara"
       },
       "sunrise": "2025-04-24 08:31 PM",
-      "masa": "Chaitra"
+      "masa": {
+        "amanta": "Chaitra",
+        "purnima": "Vaisakha"
+      }
     },
     "2025-04-25 02:30 PM": {
       "tithi": [
@@ -4667,7 +5012,10 @@
         "name": "Shanivaara"
       },
       "sunrise": "2025-04-25 08:31 PM",
-      "masa": "Chaitra"
+      "masa": {
+        "amanta": "Chaitra",
+        "purnima": "Vaisakha"
+      }
     },
     "2025-04-26 02:30 PM": {
       "tithi": [
@@ -4696,7 +5044,10 @@
         "name": "Ravivaara"
       },
       "sunrise": "2025-04-26 08:30 PM",
-      "masa": "Chaitra"
+      "masa": {
+        "amanta": "Chaitra",
+        "purnima": "Vaisakha"
+      }
     },
     "2025-04-27 02:30 PM": {
       "tithi": [
@@ -4740,7 +5091,10 @@
         "name": "Somavaara"
       },
       "sunrise": "2025-04-27 08:30 PM",
-      "masa": "Vaisakha"
+      "masa": {
+        "amanta": "Vaisakha",
+        "purnima": "Vaisakha"
+      }
     },
     "2025-04-28 02:30 PM": {
       "tithi": [
@@ -4784,7 +5138,10 @@
         "name": "Mangalavaara"
       },
       "sunrise": "2025-04-28 08:29 PM",
-      "masa": "Vaisakha"
+      "masa": {
+        "amanta": "Vaisakha",
+        "purnima": "Vaisakha"
+      }
     },
     "2025-04-29 02:30 PM": {
       "tithi": [
@@ -4828,7 +5185,10 @@
         "name": "Budhavaara"
       },
       "sunrise": "2025-04-29 08:29 PM",
-      "masa": "Vaisakha"
+      "masa": {
+        "amanta": "Vaisakha",
+        "purnima": "Vaisakha"
+      }
     },
     "2025-04-30 02:30 PM": {
       "tithi": [
@@ -4872,7 +5232,10 @@
         "name": "Guruvaara"
       },
       "sunrise": "2025-04-30 08:28 PM",
-      "masa": "Vaisakha"
+      "masa": {
+        "amanta": "Vaisakha",
+        "purnima": "Vaisakha"
+      }
     },
     "2025-05-01 02:30 PM": {
       "tithi": [
@@ -4911,7 +5274,10 @@
         "name": "Shukravaara"
       },
       "sunrise": "2025-05-01 08:28 PM",
-      "masa": "Vaisakha"
+      "masa": {
+        "amanta": "Vaisakha",
+        "purnima": "Vaisakha"
+      }
     },
     "2025-05-02 02:30 PM": {
       "tithi": [
@@ -4950,7 +5316,10 @@
         "name": "Shanivaara"
       },
       "sunrise": "2025-05-02 08:28 PM",
-      "masa": "Vaisakha"
+      "masa": {
+        "amanta": "Vaisakha",
+        "purnima": "Vaisakha"
+      }
     },
     "2025-05-03 02:30 PM": {
       "tithi": [
@@ -4989,7 +5358,10 @@
         "name": "Ravivaara"
       },
       "sunrise": "2025-05-03 08:27 PM",
-      "masa": "Vaisakha"
+      "masa": {
+        "amanta": "Vaisakha",
+        "purnima": "Vaisakha"
+      }
     },
     "2025-05-04 02:30 PM": {
       "tithi": [
@@ -5028,7 +5400,10 @@
         "name": "Somavaara"
       },
       "sunrise": "2025-05-04 08:27 PM",
-      "masa": "Vaisakha"
+      "masa": {
+        "amanta": "Vaisakha",
+        "purnima": "Vaisakha"
+      }
     },
     "2025-05-05 02:30 PM": {
       "tithi": [
@@ -5067,7 +5442,10 @@
         "name": "Mangalavaara"
       },
       "sunrise": "2025-05-05 08:26 PM",
-      "masa": "Vaisakha"
+      "masa": {
+        "amanta": "Vaisakha",
+        "purnima": "Vaisakha"
+      }
     },
     "2025-05-06 02:30 PM": {
       "tithi": [
@@ -5106,7 +5484,10 @@
         "name": "Budhavaara"
       },
       "sunrise": "2025-05-06 08:26 PM",
-      "masa": "Vaisakha"
+      "masa": {
+        "amanta": "Vaisakha",
+        "purnima": "Vaisakha"
+      }
     },
     "2025-05-07 02:30 PM": {
       "tithi": [
@@ -5145,7 +5526,10 @@
         "name": "Guruvaara"
       },
       "sunrise": "2025-05-07 08:26 PM",
-      "masa": "Vaisakha"
+      "masa": {
+        "amanta": "Vaisakha",
+        "purnima": "Vaisakha"
+      }
     },
     "2025-05-08 02:30 PM": {
       "tithi": [
@@ -5179,7 +5563,10 @@
         "name": "Shukravaara"
       },
       "sunrise": "2025-05-08 08:25 PM",
-      "masa": "Vaisakha"
+      "masa": {
+        "amanta": "Vaisakha",
+        "purnima": "Vaisakha"
+      }
     },
     "2025-05-09 02:30 PM": {
       "tithi": [
@@ -5213,7 +5600,10 @@
         "name": "Shanivaara"
       },
       "sunrise": "2025-05-09 08:25 PM",
-      "masa": "Vaisakha"
+      "masa": {
+        "amanta": "Vaisakha",
+        "purnima": "Vaisakha"
+      }
     },
     "2025-05-10 02:30 PM": {
       "tithi": [
@@ -5247,7 +5637,10 @@
         "name": "Ravivaara"
       },
       "sunrise": "2025-05-10 08:25 PM",
-      "masa": "Vaisakha"
+      "masa": {
+        "amanta": "Vaisakha",
+        "purnima": "Vaisakha"
+      }
     },
     "2025-05-11 02:30 PM": {
       "tithi": [
@@ -5286,7 +5679,10 @@
         "name": "Somavaara"
       },
       "sunrise": "2025-05-11 08:25 PM",
-      "masa": "Vaisakha"
+      "masa": {
+        "amanta": "Vaisakha",
+        "purnima": "Vaisakha"
+      }
     },
     "2025-05-12 02:30 PM": {
       "tithi": [
@@ -5320,7 +5716,10 @@
         "name": "Mangalavaara"
       },
       "sunrise": "2025-05-12 08:24 PM",
-      "masa": "Vaisakha"
+      "masa": {
+        "amanta": "Vaisakha",
+        "purnima": "Jyeshtha"
+      }
     },
     "2025-05-13 02:30 PM": {
       "tithi": [
@@ -5359,7 +5758,10 @@
         "name": "Budhavaara"
       },
       "sunrise": "2025-05-13 08:24 PM",
-      "masa": "Vaisakha"
+      "masa": {
+        "amanta": "Vaisakha",
+        "purnima": "Jyeshtha"
+      }
     },
     "2025-05-14 02:30 PM": {
       "tithi": [
@@ -5398,7 +5800,10 @@
         "name": "Guruvaara"
       },
       "sunrise": "2025-05-14 08:24 PM",
-      "masa": "Vaisakha"
+      "masa": {
+        "amanta": "Vaisakha",
+        "purnima": "Jyeshtha"
+      }
     },
     "2025-05-15 02:30 PM": {
       "tithi": [
@@ -5437,7 +5842,10 @@
         "name": "Shukravaara"
       },
       "sunrise": "2025-05-15 08:24 PM",
-      "masa": "Vaisakha"
+      "masa": {
+        "amanta": "Vaisakha",
+        "purnima": "Jyeshtha"
+      }
     },
     "2025-05-16 02:30 PM": {
       "tithi": [
@@ -5476,7 +5884,10 @@
         "name": "Shanivaara"
       },
       "sunrise": "2025-05-16 08:23 PM",
-      "masa": "Vaisakha"
+      "masa": {
+        "amanta": "Vaisakha",
+        "purnima": "Jyeshtha"
+      }
     },
     "2025-05-17 02:30 PM": {
       "tithi": [
@@ -5520,7 +5931,10 @@
         "name": "Ravivaara"
       },
       "sunrise": "2025-05-17 08:23 PM",
-      "masa": "Vaisakha"
+      "masa": {
+        "amanta": "Vaisakha",
+        "purnima": "Jyeshtha"
+      }
     },
     "2025-05-18 02:30 PM": {
       "tithi": [
@@ -5559,7 +5973,10 @@
         "name": "Somavaara"
       },
       "sunrise": "2025-05-18 08:23 PM",
-      "masa": "Vaisakha"
+      "masa": {
+        "amanta": "Vaisakha",
+        "purnima": "Jyeshtha"
+      }
     },
     "2025-05-19 02:30 PM": {
       "tithi": [
@@ -5593,7 +6010,10 @@
         "name": "Mangalavaara"
       },
       "sunrise": "2025-05-19 08:23 PM",
-      "masa": "Vaisakha"
+      "masa": {
+        "amanta": "Vaisakha",
+        "purnima": "Jyeshtha"
+      }
     },
     "2025-05-20 02:30 PM": {
       "tithi": [
@@ -5627,7 +6047,10 @@
         "name": "Budhavaara"
       },
       "sunrise": "2025-05-20 08:23 PM",
-      "masa": "Vaisakha"
+      "masa": {
+        "amanta": "Vaisakha",
+        "purnima": "Jyeshtha"
+      }
     },
     "2025-05-21 02:30 PM": {
       "tithi": [
@@ -5666,7 +6089,10 @@
         "name": "Guruvaara"
       },
       "sunrise": "2025-05-21 08:22 PM",
-      "masa": "Vaisakha"
+      "masa": {
+        "amanta": "Vaisakha",
+        "purnima": "Jyeshtha"
+      }
     },
     "2025-05-22 02:30 PM": {
       "tithi": [
@@ -5710,7 +6136,10 @@
         "name": "Shukravaara"
       },
       "sunrise": "2025-05-22 08:22 PM",
-      "masa": "Vaisakha"
+      "masa": {
+        "amanta": "Vaisakha",
+        "purnima": "Jyeshtha"
+      }
     },
     "2025-05-23 02:30 PM": {
       "tithi": [
@@ -5754,7 +6183,10 @@
         "name": "Shanivaara"
       },
       "sunrise": "2025-05-23 08:22 PM",
-      "masa": "Vaisakha"
+      "masa": {
+        "amanta": "Vaisakha",
+        "purnima": "Jyeshtha"
+      }
     },
     "2025-05-24 02:30 PM": {
       "tithi": [
@@ -5798,7 +6230,10 @@
         "name": "Ravivaara"
       },
       "sunrise": "2025-05-24 08:22 PM",
-      "masa": "Vaisakha"
+      "masa": {
+        "amanta": "Vaisakha",
+        "purnima": "Jyeshtha"
+      }
     },
     "2025-05-25 02:30 PM": {
       "tithi": [
@@ -5842,7 +6277,10 @@
         "name": "Somavaara"
       },
       "sunrise": "2025-05-25 08:22 PM",
-      "masa": "Vaisakha"
+      "masa": {
+        "amanta": "Vaisakha",
+        "purnima": "Jyeshtha"
+      }
     },
     "2025-05-26 02:30 PM": {
       "tithi": [
@@ -5881,7 +6319,10 @@
         "name": "Mangalavaara"
       },
       "sunrise": "2025-05-26 08:22 PM",
-      "masa": "Vaisakha"
+      "masa": {
+        "amanta": "Vaisakha",
+        "purnima": "Jyeshtha"
+      }
     },
     "2025-05-27 02:30 PM": {
       "tithi": [
@@ -5915,7 +6356,10 @@
         "name": "Budhavaara"
       },
       "sunrise": "2025-05-27 08:22 PM",
-      "masa": "Jyeshtha"
+      "masa": {
+        "amanta": "Jyeshtha",
+        "purnima": "Jyeshtha"
+      }
     },
     "2025-05-28 02:30 PM": {
       "tithi": [
@@ -5959,7 +6403,10 @@
         "name": "Guruvaara"
       },
       "sunrise": "2025-05-28 08:22 PM",
-      "masa": "Jyeshtha"
+      "masa": {
+        "amanta": "Jyeshtha",
+        "purnima": "Jyeshtha"
+      }
     },
     "2025-05-29 02:30 PM": {
       "tithi": [
@@ -6003,7 +6450,10 @@
         "name": "Shukravaara"
       },
       "sunrise": "2025-05-29 08:22 PM",
-      "masa": "Jyeshtha"
+      "masa": {
+        "amanta": "Jyeshtha",
+        "purnima": "Jyeshtha"
+      }
     },
     "2025-05-30 02:30 PM": {
       "tithi": [
@@ -6047,7 +6497,10 @@
         "name": "Shanivaara"
       },
       "sunrise": "2025-05-30 08:22 PM",
-      "masa": "Jyeshtha"
+      "masa": {
+        "amanta": "Jyeshtha",
+        "purnima": "Jyeshtha"
+      }
     },
     "2025-05-31 02:30 PM": {
       "tithi": [
@@ -6091,7 +6544,10 @@
         "name": "Ravivaara"
       },
       "sunrise": "2025-05-31 08:22 PM",
-      "masa": "Jyeshtha"
+      "masa": {
+        "amanta": "Jyeshtha",
+        "purnima": "Jyeshtha"
+      }
     },
     "2025-06-01 02:30 PM": {
       "tithi": [
@@ -6135,7 +6591,10 @@
         "name": "Somavaara"
       },
       "sunrise": "2025-06-01 08:22 PM",
-      "masa": "Jyeshtha"
+      "masa": {
+        "amanta": "Jyeshtha",
+        "purnima": "Jyeshtha"
+      }
     },
     "2025-06-02 02:30 PM": {
       "tithi": [
@@ -6174,7 +6633,10 @@
         "name": "Mangalavaara"
       },
       "sunrise": "2025-06-02 08:22 PM",
-      "masa": "Jyeshtha"
+      "masa": {
+        "amanta": "Jyeshtha",
+        "purnima": "Jyeshtha"
+      }
     },
     "2025-06-03 02:30 PM": {
       "tithi": [
@@ -6213,7 +6675,10 @@
         "name": "Budhavaara"
       },
       "sunrise": "2025-06-03 08:22 PM",
-      "masa": "Jyeshtha"
+      "masa": {
+        "amanta": "Jyeshtha",
+        "purnima": "Jyeshtha"
+      }
     },
     "2025-06-04 02:30 PM": {
       "tithi": [
@@ -6247,7 +6712,10 @@
         "name": "Guruvaara"
       },
       "sunrise": "2025-06-04 08:22 PM",
-      "masa": "Jyeshtha"
+      "masa": {
+        "amanta": "Jyeshtha",
+        "purnima": "Jyeshtha"
+      }
     },
     "2025-06-05 02:30 PM": {
       "tithi": [
@@ -6286,7 +6754,10 @@
         "name": "Shukravaara"
       },
       "sunrise": "2025-06-05 08:22 PM",
-      "masa": "Jyeshtha"
+      "masa": {
+        "amanta": "Jyeshtha",
+        "purnima": "Jyeshtha"
+      }
     },
     "2025-06-06 02:30 PM": {
       "tithi": [
@@ -6325,7 +6796,10 @@
         "name": "Shanivaara"
       },
       "sunrise": "2025-06-06 08:22 PM",
-      "masa": "Jyeshtha"
+      "masa": {
+        "amanta": "Jyeshtha",
+        "purnima": "Jyeshtha"
+      }
     },
     "2025-06-07 02:30 PM": {
       "tithi": [
@@ -6369,7 +6843,10 @@
         "name": "Ravivaara"
       },
       "sunrise": "2025-06-07 08:22 PM",
-      "masa": "Jyeshtha"
+      "masa": {
+        "amanta": "Jyeshtha",
+        "purnima": "Jyeshtha"
+      }
     },
     "2025-06-08 02:30 PM": {
       "tithi": [
@@ -6413,7 +6890,10 @@
         "name": "Somavaara"
       },
       "sunrise": "2025-06-08 08:22 PM",
-      "masa": "Jyeshtha"
+      "masa": {
+        "amanta": "Jyeshtha",
+        "purnima": "Jyeshtha"
+      }
     },
     "2025-06-09 02:30 PM": {
       "tithi": [
@@ -6457,7 +6937,10 @@
         "name": "Mangalavaara"
       },
       "sunrise": "2025-06-09 08:22 PM",
-      "masa": "Jyeshtha"
+      "masa": {
+        "amanta": "Jyeshtha",
+        "purnima": "Jyeshtha"
+      }
     },
     "2025-06-10 02:30 PM": {
       "tithi": [
@@ -6501,7 +6984,10 @@
         "name": "Budhavaara"
       },
       "sunrise": "2025-06-10 08:22 PM",
-      "masa": "Jyeshtha"
+      "masa": {
+        "amanta": "Jyeshtha",
+        "purnima": "Jyeshtha"
+      }
     },
     "2025-06-11 02:30 PM": {
       "tithi": [
@@ -6545,7 +7031,10 @@
         "name": "Guruvaara"
       },
       "sunrise": "2025-06-11 08:23 PM",
-      "masa": "Jyeshtha"
+      "masa": {
+        "amanta": "Jyeshtha",
+        "purnima": "Ashadha"
+      }
     },
     "2025-06-12 02:30 PM": {
       "tithi": [
@@ -6589,7 +7078,10 @@
         "name": "Shukravaara"
       },
       "sunrise": "2025-06-12 08:23 PM",
-      "masa": "Jyeshtha"
+      "masa": {
+        "amanta": "Jyeshtha",
+        "purnima": "Ashadha"
+      }
     },
     "2025-06-13 02:30 PM": {
       "tithi": [
@@ -6628,7 +7120,10 @@
         "name": "Shanivaara"
       },
       "sunrise": "2025-06-13 08:23 PM",
-      "masa": "Jyeshtha"
+      "masa": {
+        "amanta": "Jyeshtha",
+        "purnima": "Ashadha"
+      }
     },
     "2025-06-14 02:30 PM": {
       "tithi": [
@@ -6667,7 +7162,10 @@
         "name": "Ravivaara"
       },
       "sunrise": "2025-06-14 08:23 PM",
-      "masa": "Jyeshtha"
+      "masa": {
+        "amanta": "Jyeshtha",
+        "purnima": "Ashadha"
+      }
     },
     "2025-06-15 02:30 PM": {
       "tithi": [
@@ -6706,7 +7204,10 @@
         "name": "Somavaara"
       },
       "sunrise": "2025-06-15 08:23 PM",
-      "masa": "Jyeshtha"
+      "masa": {
+        "amanta": "Jyeshtha",
+        "purnima": "Ashadha"
+      }
     },
     "2025-06-16 02:30 PM": {
       "tithi": [
@@ -6745,7 +7246,10 @@
         "name": "Mangalavaara"
       },
       "sunrise": "2025-06-16 08:23 PM",
-      "masa": "Jyeshtha"
+      "masa": {
+        "amanta": "Jyeshtha",
+        "purnima": "Ashadha"
+      }
     },
     "2025-06-17 02:30 PM": {
       "tithi": [
@@ -6784,7 +7288,10 @@
         "name": "Budhavaara"
       },
       "sunrise": "2025-06-17 08:24 PM",
-      "masa": "Jyeshtha"
+      "masa": {
+        "amanta": "Jyeshtha",
+        "purnima": "Ashadha"
+      }
     },
     "2025-06-18 02:30 PM": {
       "tithi": [
@@ -6823,7 +7330,10 @@
         "name": "Guruvaara"
       },
       "sunrise": "2025-06-18 08:24 PM",
-      "masa": "Jyeshtha"
+      "masa": {
+        "amanta": "Jyeshtha",
+        "purnima": "Ashadha"
+      }
     },
     "2025-06-19 02:30 PM": {
       "tithi": [
@@ -6867,7 +7377,10 @@
         "name": "Shukravaara"
       },
       "sunrise": "2025-06-19 08:24 PM",
-      "masa": "Jyeshtha"
+      "masa": {
+        "amanta": "Jyeshtha",
+        "purnima": "Ashadha"
+      }
     },
     "2025-06-20 02:30 PM": {
       "tithi": [
@@ -6911,7 +7424,10 @@
         "name": "Shanivaara"
       },
       "sunrise": "2025-06-20 08:24 PM",
-      "masa": "Jyeshtha"
+      "masa": {
+        "amanta": "Jyeshtha",
+        "purnima": "Ashadha"
+      }
     },
     "2025-06-21 02:30 PM": {
       "tithi": [
@@ -6950,7 +7466,10 @@
         "name": "Ravivaara"
       },
       "sunrise": "2025-06-21 08:24 PM",
-      "masa": "Jyeshtha"
+      "masa": {
+        "amanta": "Jyeshtha",
+        "purnima": "Ashadha"
+      }
     },
     "2025-06-22 02:30 PM": {
       "tithi": [
@@ -6994,7 +7513,10 @@
         "name": "Somavaara"
       },
       "sunrise": "2025-06-22 08:25 PM",
-      "masa": "Jyeshtha"
+      "masa": {
+        "amanta": "Jyeshtha",
+        "purnima": "Ashadha"
+      }
     },
     "2025-06-23 02:30 PM": {
       "tithi": [
@@ -7038,7 +7560,10 @@
         "name": "Mangalavaara"
       },
       "sunrise": "2025-06-23 08:25 PM",
-      "masa": "Jyeshtha"
+      "masa": {
+        "amanta": "Jyeshtha",
+        "purnima": "Ashadha"
+      }
     },
     "2025-06-24 02:30 PM": {
       "tithi": [
@@ -7077,7 +7602,10 @@
         "name": "Budhavaara"
       },
       "sunrise": "2025-06-24 08:25 PM",
-      "masa": "Jyeshtha"
+      "masa": {
+        "amanta": "Jyeshtha",
+        "purnima": "Ashadha"
+      }
     },
     "2025-06-25 02:30 PM": {
       "tithi": [
@@ -7121,7 +7649,10 @@
         "name": "Guruvaara"
       },
       "sunrise": "2025-06-25 08:25 PM",
-      "masa": "Ashadha"
+      "masa": {
+        "amanta": "Ashadha",
+        "purnima": "Ashadha"
+      }
     },
     "2025-06-26 02:30 PM": {
       "tithi": [
@@ -7165,7 +7696,10 @@
         "name": "Shukravaara"
       },
       "sunrise": "2025-06-26 08:26 PM",
-      "masa": "Ashadha"
+      "masa": {
+        "amanta": "Ashadha",
+        "purnima": "Ashadha"
+      }
     },
     "2025-06-27 02:30 PM": {
       "tithi": [
@@ -7209,7 +7743,10 @@
         "name": "Shanivaara"
       },
       "sunrise": "2025-06-27 08:26 PM",
-      "masa": "Ashadha"
+      "masa": {
+        "amanta": "Ashadha",
+        "purnima": "Ashadha"
+      }
     },
     "2025-06-28 02:30 PM": {
       "tithi": [
@@ -7253,7 +7790,10 @@
         "name": "Ravivaara"
       },
       "sunrise": "2025-06-28 08:26 PM",
-      "masa": "Ashadha"
+      "masa": {
+        "amanta": "Ashadha",
+        "purnima": "Ashadha"
+      }
     },
     "2025-06-29 02:30 PM": {
       "tithi": [
@@ -7297,7 +7837,10 @@
         "name": "Somavaara"
       },
       "sunrise": "2025-06-29 08:26 PM",
-      "masa": "Ashadha"
+      "masa": {
+        "amanta": "Ashadha",
+        "purnima": "Ashadha"
+      }
     },
     "2025-06-30 02:30 PM": {
       "tithi": [
@@ -7341,7 +7884,10 @@
         "name": "Mangalavaara"
       },
       "sunrise": "2025-06-30 08:27 PM",
-      "masa": "Ashadha"
+      "masa": {
+        "amanta": "Ashadha",
+        "purnima": "Ashadha"
+      }
     },
     "2025-07-01 02:30 PM": {
       "tithi": [
@@ -7385,7 +7931,10 @@
         "name": "Budhavaara"
       },
       "sunrise": "2025-07-01 08:27 PM",
-      "masa": "Ashadha"
+      "masa": {
+        "amanta": "Ashadha",
+        "purnima": "Ashadha"
+      }
     },
     "2025-07-02 02:30 PM": {
       "tithi": [
@@ -7429,7 +7978,10 @@
         "name": "Guruvaara"
       },
       "sunrise": "2025-07-02 08:27 PM",
-      "masa": "Ashadha"
+      "masa": {
+        "amanta": "Ashadha",
+        "purnima": "Ashadha"
+      }
     },
     "2025-07-03 02:30 PM": {
       "tithi": [
@@ -7473,7 +8025,10 @@
         "name": "Shukravaara"
       },
       "sunrise": "2025-07-03 08:28 PM",
-      "masa": "Ashadha"
+      "masa": {
+        "amanta": "Ashadha",
+        "purnima": "Ashadha"
+      }
     },
     "2025-07-04 02:30 PM": {
       "tithi": [
@@ -7517,7 +8072,10 @@
         "name": "Shanivaara"
       },
       "sunrise": "2025-07-04 08:28 PM",
-      "masa": "Ashadha"
+      "masa": {
+        "amanta": "Ashadha",
+        "purnima": "Ashadha"
+      }
     },
     "2025-07-05 02:30 PM": {
       "tithi": [
@@ -7561,7 +8119,10 @@
         "name": "Ravivaara"
       },
       "sunrise": "2025-07-05 08:28 PM",
-      "masa": "Ashadha"
+      "masa": {
+        "amanta": "Ashadha",
+        "purnima": "Ashadha"
+      }
     },
     "2025-07-06 02:30 PM": {
       "tithi": [
@@ -7600,7 +8161,10 @@
         "name": "Somavaara"
       },
       "sunrise": "2025-07-06 08:28 PM",
-      "masa": "Ashadha"
+      "masa": {
+        "amanta": "Ashadha",
+        "purnima": "Ashadha"
+      }
     },
     "2025-07-07 02:30 PM": {
       "tithi": [
@@ -7634,7 +8198,10 @@
         "name": "Mangalavaara"
       },
       "sunrise": "2025-07-07 08:29 PM",
-      "masa": "Ashadha"
+      "masa": {
+        "amanta": "Ashadha",
+        "purnima": "Ashadha"
+      }
     },
     "2025-07-08 02:30 PM": {
       "tithi": [
@@ -7668,7 +8235,10 @@
         "name": "Budhavaara"
       },
       "sunrise": "2025-07-08 08:29 PM",
-      "masa": "Ashadha"
+      "masa": {
+        "amanta": "Ashadha",
+        "purnima": "Ashadha"
+      }
     },
     "2025-07-09 02:30 PM": {
       "tithi": [
@@ -7702,7 +8272,10 @@
         "name": "Guruvaara"
       },
       "sunrise": "2025-07-09 08:29 PM",
-      "masa": "Ashadha"
+      "masa": {
+        "amanta": "Ashadha",
+        "purnima": "Ashadha"
+      }
     },
     "2025-07-10 02:30 PM": {
       "tithi": [
@@ -7736,7 +8309,10 @@
         "name": "Shukravaara"
       },
       "sunrise": "2025-07-10 08:29 PM",
-      "masa": "Ashadha"
+      "masa": {
+        "amanta": "Ashadha",
+        "purnima": "Shravana"
+      }
     },
     "2025-07-11 02:30 PM": {
       "tithi": [
@@ -7775,7 +8351,10 @@
         "name": "Shanivaara"
       },
       "sunrise": "2025-07-11 08:30 PM",
-      "masa": "Ashadha"
+      "masa": {
+        "amanta": "Ashadha",
+        "purnima": "Shravana"
+      }
     },
     "2025-07-12 02:30 PM": {
       "tithi": [
@@ -7814,7 +8393,10 @@
         "name": "Ravivaara"
       },
       "sunrise": "2025-07-12 08:30 PM",
-      "masa": "Ashadha"
+      "masa": {
+        "amanta": "Ashadha",
+        "purnima": "Shravana"
+      }
     },
     "2025-07-13 02:30 PM": {
       "tithi": [
@@ -7853,7 +8435,10 @@
         "name": "Somavaara"
       },
       "sunrise": "2025-07-13 08:30 PM",
-      "masa": "Ashadha"
+      "masa": {
+        "amanta": "Ashadha",
+        "purnima": "Shravana"
+      }
     },
     "2025-07-14 02:30 PM": {
       "tithi": [
@@ -7897,7 +8482,10 @@
         "name": "Mangalavaara"
       },
       "sunrise": "2025-07-14 08:31 PM",
-      "masa": "Ashadha"
+      "masa": {
+        "amanta": "Ashadha",
+        "purnima": "Shravana"
+      }
     },
     "2025-07-15 02:30 PM": {
       "tithi": [
@@ -7936,7 +8524,10 @@
         "name": "Budhavaara"
       },
       "sunrise": "2025-07-15 08:31 PM",
-      "masa": "Ashadha"
+      "masa": {
+        "amanta": "Ashadha",
+        "purnima": "Shravana"
+      }
     },
     "2025-07-16 02:30 PM": {
       "tithi": [
@@ -7975,7 +8566,10 @@
         "name": "Guruvaara"
       },
       "sunrise": "2025-07-16 08:31 PM",
-      "masa": "Ashadha"
+      "masa": {
+        "amanta": "Ashadha",
+        "purnima": "Shravana"
+      }
     },
     "2025-07-17 02:30 PM": {
       "tithi": [
@@ -8014,7 +8608,10 @@
         "name": "Shukravaara"
       },
       "sunrise": "2025-07-17 08:31 PM",
-      "masa": "Ashadha"
+      "masa": {
+        "amanta": "Ashadha",
+        "purnima": "Shravana"
+      }
     },
     "2025-07-18 02:30 PM": {
       "tithi": [
@@ -8048,7 +8645,10 @@
         "name": "Shanivaara"
       },
       "sunrise": "2025-07-18 08:32 PM",
-      "masa": "Ashadha"
+      "masa": {
+        "amanta": "Ashadha",
+        "purnima": "Shravana"
+      }
     },
     "2025-07-19 02:30 PM": {
       "tithi": [
@@ -8092,7 +8692,10 @@
         "name": "Ravivaara"
       },
       "sunrise": "2025-07-19 08:32 PM",
-      "masa": "Ashadha"
+      "masa": {
+        "amanta": "Ashadha",
+        "purnima": "Shravana"
+      }
     },
     "2025-07-20 02:30 PM": {
       "tithi": [
@@ -8136,7 +8739,10 @@
         "name": "Somavaara"
       },
       "sunrise": "2025-07-20 08:32 PM",
-      "masa": "Ashadha"
+      "masa": {
+        "amanta": "Ashadha",
+        "purnima": "Shravana"
+      }
     },
     "2025-07-21 02:30 PM": {
       "tithi": [
@@ -8180,7 +8786,10 @@
         "name": "Mangalavaara"
       },
       "sunrise": "2025-07-21 08:32 PM",
-      "masa": "Ashadha"
+      "masa": {
+        "amanta": "Ashadha",
+        "purnima": "Shravana"
+      }
     },
     "2025-07-22 02:30 PM": {
       "tithi": [
@@ -8219,7 +8828,10 @@
         "name": "Budhavaara"
       },
       "sunrise": "2025-07-22 08:33 PM",
-      "masa": "Ashadha"
+      "masa": {
+        "amanta": "Ashadha",
+        "purnima": "Shravana"
+      }
     },
     "2025-07-23 02:30 PM": {
       "tithi": [
@@ -8258,7 +8870,10 @@
         "name": "Guruvaara"
       },
       "sunrise": "2025-07-23 08:33 PM",
-      "masa": "Ashadha"
+      "masa": {
+        "amanta": "Ashadha",
+        "purnima": "Shravana"
+      }
     },
     "2025-07-24 02:30 PM": {
       "tithi": [
@@ -8302,7 +8917,10 @@
         "name": "Shukravaara"
       },
       "sunrise": "2025-07-24 08:33 PM",
-      "masa": "Shravana"
+      "masa": {
+        "amanta": "Shravana",
+        "purnima": "Shravana"
+      }
     },
     "2025-07-25 02:30 PM": {
       "tithi": [
@@ -8341,7 +8959,10 @@
         "name": "Shanivaara"
       },
       "sunrise": "2025-07-25 08:33 PM",
-      "masa": "Shravana"
+      "masa": {
+        "amanta": "Shravana",
+        "purnima": "Shravana"
+      }
     },
     "2025-07-26 02:30 PM": {
       "tithi": [
@@ -8380,7 +9001,10 @@
         "name": "Ravivaara"
       },
       "sunrise": "2025-07-26 08:34 PM",
-      "masa": "Shravana"
+      "masa": {
+        "amanta": "Shravana",
+        "purnima": "Shravana"
+      }
     },
     "2025-07-27 02:30 PM": {
       "tithi": [
@@ -8419,7 +9043,10 @@
         "name": "Somavaara"
       },
       "sunrise": "2025-07-27 08:34 PM",
-      "masa": "Shravana"
+      "masa": {
+        "amanta": "Shravana",
+        "purnima": "Shravana"
+      }
     },
     "2025-07-28 02:30 PM": {
       "tithi": [
@@ -8453,7 +9080,10 @@
         "name": "Mangalavaara"
       },
       "sunrise": "2025-07-28 08:34 PM",
-      "masa": "Shravana"
+      "masa": {
+        "amanta": "Shravana",
+        "purnima": "Shravana"
+      }
     },
     "2025-07-29 02:30 PM": {
       "tithi": [
@@ -8487,7 +9117,10 @@
         "name": "Budhavaara"
       },
       "sunrise": "2025-07-29 08:34 PM",
-      "masa": "Shravana"
+      "masa": {
+        "amanta": "Shravana",
+        "purnima": "Shravana"
+      }
     },
     "2025-07-30 02:30 PM": {
       "tithi": [
@@ -8516,7 +9149,10 @@
         "name": "Guruvaara"
       },
       "sunrise": "2025-07-30 08:35 PM",
-      "masa": "Shravana"
+      "masa": {
+        "amanta": "Shravana",
+        "purnima": "Shravana"
+      }
     },
     "2025-07-31 02:30 PM": {
       "tithi": [
@@ -8545,7 +9181,10 @@
         "name": "Shukravaara"
       },
       "sunrise": "2025-07-31 08:35 PM",
-      "masa": "Shravana"
+      "masa": {
+        "amanta": "Shravana",
+        "purnima": "Shravana"
+      }
     },
     "2025-08-01 02:30 PM": {
       "tithi": [
@@ -8579,7 +9218,10 @@
         "name": "Shanivaara"
       },
       "sunrise": "2025-08-01 08:35 PM",
-      "masa": "Shravana"
+      "masa": {
+        "amanta": "Shravana",
+        "purnima": "Shravana"
+      }
     },
     "2025-08-02 02:30 PM": {
       "tithi": [
@@ -8623,7 +9265,10 @@
         "name": "Ravivaara"
       },
       "sunrise": "2025-08-02 08:35 PM",
-      "masa": "Shravana"
+      "masa": {
+        "amanta": "Shravana",
+        "purnima": "Shravana"
+      }
     },
     "2025-08-03 02:30 PM": {
       "tithi": [
@@ -8667,7 +9312,10 @@
         "name": "Somavaara"
       },
       "sunrise": "2025-08-03 08:35 PM",
-      "masa": "Shravana"
+      "masa": {
+        "amanta": "Shravana",
+        "purnima": "Shravana"
+      }
     },
     "2025-08-04 02:30 PM": {
       "tithi": [
@@ -8711,7 +9359,10 @@
         "name": "Mangalavaara"
       },
       "sunrise": "2025-08-04 08:36 PM",
-      "masa": "Shravana"
+      "masa": {
+        "amanta": "Shravana",
+        "purnima": "Shravana"
+      }
     },
     "2025-08-05 02:30 PM": {
       "tithi": [
@@ -8755,7 +9406,10 @@
         "name": "Budhavaara"
       },
       "sunrise": "2025-08-05 08:36 PM",
-      "masa": "Shravana"
+      "masa": {
+        "amanta": "Shravana",
+        "purnima": "Shravana"
+      }
     },
     "2025-08-06 02:30 PM": {
       "tithi": [
@@ -8799,7 +9453,10 @@
         "name": "Guruvaara"
       },
       "sunrise": "2025-08-06 08:36 PM",
-      "masa": "Shravana"
+      "masa": {
+        "amanta": "Shravana",
+        "purnima": "Shravana"
+      }
     },
     "2025-08-07 02:30 PM": {
       "tithi": [
@@ -8838,7 +9495,10 @@
         "name": "Shukravaara"
       },
       "sunrise": "2025-08-07 08:36 PM",
-      "masa": "Shravana"
+      "masa": {
+        "amanta": "Shravana",
+        "purnima": "Shravana"
+      }
     },
     "2025-08-08 02:30 PM": {
       "tithi": [
@@ -8877,7 +9537,10 @@
         "name": "Shanivaara"
       },
       "sunrise": "2025-08-08 08:36 PM",
-      "masa": "Shravana"
+      "masa": {
+        "amanta": "Shravana",
+        "purnima": "Shravana"
+      }
     },
     "2025-08-09 02:30 PM": {
       "tithi": [
@@ -8921,7 +9584,10 @@
         "name": "Ravivaara"
       },
       "sunrise": "2025-08-09 08:36 PM",
-      "masa": "Shravana"
+      "masa": {
+        "amanta": "Shravana",
+        "purnima": "Bhadrapada"
+      }
     },
     "2025-08-10 02:30 PM": {
       "tithi": [
@@ -8965,7 +9631,10 @@
         "name": "Somavaara"
       },
       "sunrise": "2025-08-10 08:36 PM",
-      "masa": "Shravana"
+      "masa": {
+        "amanta": "Shravana",
+        "purnima": "Bhadrapada"
+      }
     },
     "2025-08-11 02:30 PM": {
       "tithi": [
@@ -9009,7 +9678,10 @@
         "name": "Mangalavaara"
       },
       "sunrise": "2025-08-11 08:37 PM",
-      "masa": "Shravana"
+      "masa": {
+        "amanta": "Shravana",
+        "purnima": "Bhadrapada"
+      }
     },
     "2025-08-12 02:30 PM": {
       "tithi": [
@@ -9053,7 +9725,10 @@
         "name": "Budhavaara"
       },
       "sunrise": "2025-08-12 08:37 PM",
-      "masa": "Shravana"
+      "masa": {
+        "amanta": "Shravana",
+        "purnima": "Bhadrapada"
+      }
     },
     "2025-08-13 02:30 PM": {
       "tithi": [
@@ -9092,7 +9767,10 @@
         "name": "Guruvaara"
       },
       "sunrise": "2025-08-13 08:37 PM",
-      "masa": "Shravana"
+      "masa": {
+        "amanta": "Shravana",
+        "purnima": "Bhadrapada"
+      }
     },
     "2025-08-14 02:30 PM": {
       "tithi": [
@@ -9136,7 +9814,10 @@
         "name": "Shukravaara"
       },
       "sunrise": "2025-08-14 08:37 PM",
-      "masa": "Shravana"
+      "masa": {
+        "amanta": "Shravana",
+        "purnima": "Bhadrapada"
+      }
     },
     "2025-08-15 02:30 PM": {
       "tithi": [
@@ -9175,7 +9856,10 @@
         "name": "Shanivaara"
       },
       "sunrise": "2025-08-15 08:37 PM",
-      "masa": "Shravana"
+      "masa": {
+        "amanta": "Shravana",
+        "purnima": "Bhadrapada"
+      }
     },
     "2025-08-16 02:30 PM": {
       "tithi": [
@@ -9209,7 +9893,10 @@
         "name": "Ravivaara"
       },
       "sunrise": "2025-08-16 08:37 PM",
-      "masa": "Shravana"
+      "masa": {
+        "amanta": "Shravana",
+        "purnima": "Bhadrapada"
+      }
     },
     "2025-08-17 02:30 PM": {
       "tithi": [
@@ -9248,7 +9935,10 @@
         "name": "Somavaara"
       },
       "sunrise": "2025-08-17 08:37 PM",
-      "masa": "Shravana"
+      "masa": {
+        "amanta": "Shravana",
+        "purnima": "Bhadrapada"
+      }
     },
     "2025-08-18 02:30 PM": {
       "tithi": [
@@ -9287,7 +9977,10 @@
         "name": "Mangalavaara"
       },
       "sunrise": "2025-08-18 08:37 PM",
-      "masa": "Shravana"
+      "masa": {
+        "amanta": "Shravana",
+        "purnima": "Bhadrapada"
+      }
     },
     "2025-08-19 02:30 PM": {
       "tithi": [
@@ -9326,7 +10019,10 @@
         "name": "Budhavaara"
       },
       "sunrise": "2025-08-19 08:37 PM",
-      "masa": "Shravana"
+      "masa": {
+        "amanta": "Shravana",
+        "purnima": "Bhadrapada"
+      }
     },
     "2025-08-20 02:30 PM": {
       "tithi": [
@@ -9365,7 +10061,10 @@
         "name": "Guruvaara"
       },
       "sunrise": "2025-08-20 08:38 PM",
-      "masa": "Shravana"
+      "masa": {
+        "amanta": "Shravana",
+        "purnima": "Bhadrapada"
+      }
     },
     "2025-08-21 02:30 PM": {
       "tithi": [
@@ -9404,7 +10103,10 @@
         "name": "Shukravaara"
       },
       "sunrise": "2025-08-21 08:38 PM",
-      "masa": "Shravana"
+      "masa": {
+        "amanta": "Shravana",
+        "purnima": "Bhadrapada"
+      }
     },
     "2025-08-22 02:30 PM": {
       "tithi": [
@@ -9443,7 +10145,10 @@
         "name": "Shanivaara"
       },
       "sunrise": "2025-08-22 08:38 PM",
-      "masa": "Shravana"
+      "masa": {
+        "amanta": "Shravana",
+        "purnima": "Bhadrapada"
+      }
     },
     "2025-08-23 02:30 PM": {
       "tithi": [
@@ -9482,7 +10187,10 @@
         "name": "Ravivaara"
       },
       "sunrise": "2025-08-23 08:38 PM",
-      "masa": "Bhadrapada"
+      "masa": {
+        "amanta": "Bhadrapada",
+        "purnima": "Bhadrapada"
+      }
     },
     "2025-08-24 02:30 PM": {
       "tithi": [
@@ -9521,7 +10229,10 @@
         "name": "Somavaara"
       },
       "sunrise": "2025-08-24 08:38 PM",
-      "masa": "Bhadrapada"
+      "masa": {
+        "amanta": "Bhadrapada",
+        "purnima": "Bhadrapada"
+      }
     },
     "2025-08-25 02:30 PM": {
       "tithi": [
@@ -9560,7 +10271,10 @@
         "name": "Mangalavaara"
       },
       "sunrise": "2025-08-25 08:38 PM",
-      "masa": "Bhadrapada"
+      "masa": {
+        "amanta": "Bhadrapada",
+        "purnima": "Bhadrapada"
+      }
     },
     "2025-08-26 02:30 PM": {
       "tithi": [
@@ -9599,7 +10313,10 @@
         "name": "Budhavaara"
       },
       "sunrise": "2025-08-26 08:38 PM",
-      "masa": "Bhadrapada"
+      "masa": {
+        "amanta": "Bhadrapada",
+        "purnima": "Bhadrapada"
+      }
     },
     "2025-08-27 02:30 PM": {
       "tithi": [
@@ -9643,7 +10360,10 @@
         "name": "Guruvaara"
       },
       "sunrise": "2025-08-27 08:38 PM",
-      "masa": "Bhadrapada"
+      "masa": {
+        "amanta": "Bhadrapada",
+        "purnima": "Bhadrapada"
+      }
     },
     "2025-08-28 02:30 PM": {
       "tithi": [
@@ -9687,7 +10407,10 @@
         "name": "Shukravaara"
       },
       "sunrise": "2025-08-28 08:38 PM",
-      "masa": "Bhadrapada"
+      "masa": {
+        "amanta": "Bhadrapada",
+        "purnima": "Bhadrapada"
+      }
     },
     "2025-08-29 02:30 PM": {
       "tithi": [
@@ -9731,7 +10454,10 @@
         "name": "Shanivaara"
       },
       "sunrise": "2025-08-29 08:38 PM",
-      "masa": "Bhadrapada"
+      "masa": {
+        "amanta": "Bhadrapada",
+        "purnima": "Bhadrapada"
+      }
     },
     "2025-08-30 02:30 PM": {
       "tithi": [
@@ -9770,7 +10496,10 @@
         "name": "Ravivaara"
       },
       "sunrise": "2025-08-30 08:38 PM",
-      "masa": "Bhadrapada"
+      "masa": {
+        "amanta": "Bhadrapada",
+        "purnima": "Bhadrapada"
+      }
     },
     "2025-08-31 02:30 PM": {
       "tithi": [
@@ -9809,7 +10538,10 @@
         "name": "Somavaara"
       },
       "sunrise": "2025-08-31 08:38 PM",
-      "masa": "Bhadrapada"
+      "masa": {
+        "amanta": "Bhadrapada",
+        "purnima": "Bhadrapada"
+      }
     },
     "2025-09-01 02:30 PM": {
       "tithi": [
@@ -9848,7 +10580,10 @@
         "name": "Mangalavaara"
       },
       "sunrise": "2025-09-01 08:38 PM",
-      "masa": "Bhadrapada"
+      "masa": {
+        "amanta": "Bhadrapada",
+        "purnima": "Bhadrapada"
+      }
     },
     "2025-09-02 02:30 PM": {
       "tithi": [
@@ -9887,7 +10622,10 @@
         "name": "Budhavaara"
       },
       "sunrise": "2025-09-02 08:38 PM",
-      "masa": "Bhadrapada"
+      "masa": {
+        "amanta": "Bhadrapada",
+        "purnima": "Bhadrapada"
+      }
     },
     "2025-09-03 02:30 PM": {
       "tithi": [
@@ -9926,7 +10664,10 @@
         "name": "Guruvaara"
       },
       "sunrise": "2025-09-03 08:38 PM",
-      "masa": "Bhadrapada"
+      "masa": {
+        "amanta": "Bhadrapada",
+        "purnima": "Bhadrapada"
+      }
     },
     "2025-09-04 02:30 PM": {
       "tithi": [
@@ -9965,7 +10706,10 @@
         "name": "Shukravaara"
       },
       "sunrise": "2025-09-04 08:38 PM",
-      "masa": "Bhadrapada"
+      "masa": {
+        "amanta": "Bhadrapada",
+        "purnima": "Bhadrapada"
+      }
     },
     "2025-09-05 02:30 PM": {
       "tithi": [
@@ -10004,7 +10748,10 @@
         "name": "Shanivaara"
       },
       "sunrise": "2025-09-05 08:38 PM",
-      "masa": "Bhadrapada"
+      "masa": {
+        "amanta": "Bhadrapada",
+        "purnima": "Bhadrapada"
+      }
     },
     "2025-09-06 02:30 PM": {
       "tithi": [
@@ -10048,7 +10795,10 @@
         "name": "Ravivaara"
       },
       "sunrise": "2025-09-06 08:38 PM",
-      "masa": "Bhadrapada"
+      "masa": {
+        "amanta": "Bhadrapada",
+        "purnima": "Bhadrapada"
+      }
     },
     "2025-09-07 02:30 PM": {
       "tithi": [
@@ -10092,7 +10842,10 @@
         "name": "Somavaara"
       },
       "sunrise": "2025-09-07 08:38 PM",
-      "masa": "Bhadrapada"
+      "masa": {
+        "amanta": "Bhadrapada",
+        "purnima": "Ashwin"
+      }
     },
     "2025-09-08 02:30 PM": {
       "tithi": [
@@ -10136,7 +10889,10 @@
         "name": "Mangalavaara"
       },
       "sunrise": "2025-09-08 08:38 PM",
-      "masa": "Bhadrapada"
+      "masa": {
+        "amanta": "Bhadrapada",
+        "purnima": "Ashwin"
+      }
     },
     "2025-09-09 02:30 PM": {
       "tithi": [
@@ -10180,7 +10936,10 @@
         "name": "Budhavaara"
       },
       "sunrise": "2025-09-09 08:38 PM",
-      "masa": "Bhadrapada"
+      "masa": {
+        "amanta": "Bhadrapada",
+        "purnima": "Ashwin"
+      }
     },
     "2025-09-10 02:30 PM": {
       "tithi": [
@@ -10224,7 +10983,10 @@
         "name": "Guruvaara"
       },
       "sunrise": "2025-09-10 08:38 PM",
-      "masa": "Bhadrapada"
+      "masa": {
+        "amanta": "Bhadrapada",
+        "purnima": "Ashwin"
+      }
     },
     "2025-09-11 02:30 PM": {
       "tithi": [
@@ -10268,7 +11030,10 @@
         "name": "Shukravaara"
       },
       "sunrise": "2025-09-11 08:38 PM",
-      "masa": "Bhadrapada"
+      "masa": {
+        "amanta": "Bhadrapada",
+        "purnima": "Ashwin"
+      }
     },
     "2025-09-12 02:30 PM": {
       "tithi": [
@@ -10312,7 +11077,10 @@
         "name": "Shanivaara"
       },
       "sunrise": "2025-09-12 08:38 PM",
-      "masa": "Bhadrapada"
+      "masa": {
+        "amanta": "Bhadrapada",
+        "purnima": "Ashwin"
+      }
     },
     "2025-09-13 02:30 PM": {
       "tithi": [
@@ -10351,7 +11119,10 @@
         "name": "Ravivaara"
       },
       "sunrise": "2025-09-13 08:38 PM",
-      "masa": "Bhadrapada"
+      "masa": {
+        "amanta": "Bhadrapada",
+        "purnima": "Ashwin"
+      }
     },
     "2025-09-14 02:30 PM": {
       "tithi": [
@@ -10385,7 +11156,10 @@
         "name": "Somavaara"
       },
       "sunrise": "2025-09-14 08:38 PM",
-      "masa": "Bhadrapada"
+      "masa": {
+        "amanta": "Bhadrapada",
+        "purnima": "Ashwin"
+      }
     },
     "2025-09-15 02:30 PM": {
       "tithi": [
@@ -10419,7 +11193,10 @@
         "name": "Mangalavaara"
       },
       "sunrise": "2025-09-15 08:38 PM",
-      "masa": "Bhadrapada"
+      "masa": {
+        "amanta": "Bhadrapada",
+        "purnima": "Ashwin"
+      }
     },
     "2025-09-16 02:30 PM": {
       "tithi": [
@@ -10463,7 +11240,10 @@
         "name": "Budhavaara"
       },
       "sunrise": "2025-09-16 08:38 PM",
-      "masa": "Bhadrapada"
+      "masa": {
+        "amanta": "Bhadrapada",
+        "purnima": "Ashwin"
+      }
     },
     "2025-09-17 02:30 PM": {
       "tithi": [
@@ -10507,7 +11287,10 @@
         "name": "Guruvaara"
       },
       "sunrise": "2025-09-17 08:38 PM",
-      "masa": "Bhadrapada"
+      "masa": {
+        "amanta": "Bhadrapada",
+        "purnima": "Ashwin"
+      }
     },
     "2025-09-18 02:30 PM": {
       "tithi": [
@@ -10551,7 +11334,10 @@
         "name": "Shukravaara"
       },
       "sunrise": "2025-09-18 08:38 PM",
-      "masa": "Bhadrapada"
+      "masa": {
+        "amanta": "Bhadrapada",
+        "purnima": "Ashwin"
+      }
     },
     "2025-09-19 02:30 PM": {
       "tithi": [
@@ -10590,7 +11376,10 @@
         "name": "Shanivaara"
       },
       "sunrise": "2025-09-19 08:38 PM",
-      "masa": "Bhadrapada"
+      "masa": {
+        "amanta": "Bhadrapada",
+        "purnima": "Ashwin"
+      }
     },
     "2025-09-20 02:30 PM": {
       "tithi": [
@@ -10629,7 +11418,10 @@
         "name": "Ravivaara"
       },
       "sunrise": "2025-09-20 08:38 PM",
-      "masa": "Bhadrapada"
+      "masa": {
+        "amanta": "Bhadrapada",
+        "purnima": "Ashwin"
+      }
     },
     "2025-09-21 02:30 PM": {
       "tithi": [
@@ -10668,7 +11460,10 @@
         "name": "Somavaara"
       },
       "sunrise": "2025-09-21 08:38 PM",
-      "masa": "Ashwin"
+      "masa": {
+        "amanta": "Ashwin",
+        "purnima": "Ashwin"
+      }
     },
     "2025-09-22 02:30 PM": {
       "tithi": [
@@ -10707,7 +11502,10 @@
         "name": "Mangalavaara"
       },
       "sunrise": "2025-09-22 08:38 PM",
-      "masa": "Ashwin"
+      "masa": {
+        "amanta": "Ashwin",
+        "purnima": "Ashwin"
+      }
     },
     "2025-09-23 02:30 PM": {
       "tithi": [
@@ -10746,7 +11544,10 @@
         "name": "Budhavaara"
       },
       "sunrise": "2025-09-23 08:38 PM",
-      "masa": "Ashwin"
+      "masa": {
+        "amanta": "Ashwin",
+        "purnima": "Ashwin"
+      }
     },
     "2025-09-24 02:30 PM": {
       "tithi": [
@@ -10790,7 +11591,10 @@
         "name": "Guruvaara"
       },
       "sunrise": "2025-09-24 08:38 PM",
-      "masa": "Ashwin"
+      "masa": {
+        "amanta": "Ashwin",
+        "purnima": "Ashwin"
+      }
     },
     "2025-09-25 02:30 PM": {
       "tithi": [
@@ -10834,7 +11638,10 @@
         "name": "Shukravaara"
       },
       "sunrise": "2025-09-25 08:38 PM",
-      "masa": "Ashwin"
+      "masa": {
+        "amanta": "Ashwin",
+        "purnima": "Ashwin"
+      }
     },
     "2025-09-26 02:30 PM": {
       "tithi": [
@@ -10873,7 +11680,10 @@
         "name": "Shanivaara"
       },
       "sunrise": "2025-09-26 08:38 PM",
-      "masa": "Ashwin"
+      "masa": {
+        "amanta": "Ashwin",
+        "purnima": "Ashwin"
+      }
     },
     "2025-09-27 02:30 PM": {
       "tithi": [
@@ -10907,7 +11717,10 @@
         "name": "Ravivaara"
       },
       "sunrise": "2025-09-27 08:38 PM",
-      "masa": "Ashwin"
+      "masa": {
+        "amanta": "Ashwin",
+        "purnima": "Ashwin"
+      }
     },
     "2025-09-28 02:30 PM": {
       "tithi": [
@@ -10941,7 +11754,10 @@
         "name": "Somavaara"
       },
       "sunrise": "2025-09-28 08:38 PM",
-      "masa": "Ashwin"
+      "masa": {
+        "amanta": "Ashwin",
+        "purnima": "Ashwin"
+      }
     },
     "2025-09-29 02:30 PM": {
       "tithi": [
@@ -10980,7 +11796,10 @@
         "name": "Mangalavaara"
       },
       "sunrise": "2025-09-29 08:38 PM",
-      "masa": "Ashwin"
+      "masa": {
+        "amanta": "Ashwin",
+        "purnima": "Ashwin"
+      }
     },
     "2025-09-30 02:30 PM": {
       "tithi": [
@@ -11019,7 +11838,10 @@
         "name": "Budhavaara"
       },
       "sunrise": "2025-09-30 08:38 PM",
-      "masa": "Ashwin"
+      "masa": {
+        "amanta": "Ashwin",
+        "purnima": "Ashwin"
+      }
     },
     "2025-10-01 02:30 PM": {
       "tithi": [
@@ -11063,7 +11885,10 @@
         "name": "Guruvaara"
       },
       "sunrise": "2025-10-01 08:38 PM",
-      "masa": "Ashwin"
+      "masa": {
+        "amanta": "Ashwin",
+        "purnima": "Ashwin"
+      }
     },
     "2025-10-02 02:30 PM": {
       "tithi": [
@@ -11107,7 +11932,10 @@
         "name": "Shukravaara"
       },
       "sunrise": "2025-10-02 08:38 PM",
-      "masa": "Ashwin"
+      "masa": {
+        "amanta": "Ashwin",
+        "purnima": "Ashwin"
+      }
     },
     "2025-10-03 02:30 PM": {
       "tithi": [
@@ -11151,7 +11979,10 @@
         "name": "Shanivaara"
       },
       "sunrise": "2025-10-03 08:39 PM",
-      "masa": "Ashwin"
+      "masa": {
+        "amanta": "Ashwin",
+        "purnima": "Ashwin"
+      }
     },
     "2025-10-04 02:30 PM": {
       "tithi": [
@@ -11195,7 +12026,10 @@
         "name": "Ravivaara"
       },
       "sunrise": "2025-10-04 08:39 PM",
-      "masa": "Ashwin"
+      "masa": {
+        "amanta": "Ashwin",
+        "purnima": "Ashwin"
+      }
     },
     "2025-10-05 02:30 PM": {
       "tithi": [
@@ -11239,7 +12073,10 @@
         "name": "Somavaara"
       },
       "sunrise": "2025-10-05 08:39 PM",
-      "masa": "Ashwin"
+      "masa": {
+        "amanta": "Ashwin",
+        "purnima": "Ashwin"
+      }
     },
     "2025-10-06 02:30 PM": {
       "tithi": [
@@ -11278,7 +12115,10 @@
         "name": "Mangalavaara"
       },
       "sunrise": "2025-10-06 08:39 PM",
-      "masa": "Ashwin"
+      "masa": {
+        "amanta": "Ashwin",
+        "purnima": "Ashwin"
+      }
     },
     "2025-10-07 02:30 PM": {
       "tithi": [
@@ -11312,7 +12152,10 @@
         "name": "Budhavaara"
       },
       "sunrise": "2025-10-07 08:39 PM",
-      "masa": "Ashwin"
+      "masa": {
+        "amanta": "Ashwin",
+        "purnima": "Kartika"
+      }
     },
     "2025-10-08 02:30 PM": {
       "tithi": [
@@ -11356,7 +12199,10 @@
         "name": "Guruvaara"
       },
       "sunrise": "2025-10-08 08:39 PM",
-      "masa": "Ashwin"
+      "masa": {
+        "amanta": "Ashwin",
+        "purnima": "Kartika"
+      }
     },
     "2025-10-09 02:30 PM": {
       "tithi": [
@@ -11400,7 +12246,10 @@
         "name": "Shukravaara"
       },
       "sunrise": "2025-10-09 08:39 PM",
-      "masa": "Ashwin"
+      "masa": {
+        "amanta": "Ashwin",
+        "purnima": "Kartika"
+      }
     },
     "2025-10-10 02:30 PM": {
       "tithi": [
@@ -11444,7 +12293,10 @@
         "name": "Shanivaara"
       },
       "sunrise": "2025-10-10 08:39 PM",
-      "masa": "Ashwin"
+      "masa": {
+        "amanta": "Ashwin",
+        "purnima": "Kartika"
+      }
     },
     "2025-10-11 02:30 PM": {
       "tithi": [
@@ -11488,7 +12340,10 @@
         "name": "Ravivaara"
       },
       "sunrise": "2025-10-11 08:39 PM",
-      "masa": "Ashwin"
+      "masa": {
+        "amanta": "Ashwin",
+        "purnima": "Kartika"
+      }
     },
     "2025-10-12 02:30 PM": {
       "tithi": [
@@ -11532,7 +12387,10 @@
         "name": "Somavaara"
       },
       "sunrise": "2025-10-12 08:39 PM",
-      "masa": "Ashwin"
+      "masa": {
+        "amanta": "Ashwin",
+        "purnima": "Kartika"
+      }
     },
     "2025-10-13 02:30 PM": {
       "tithi": [
@@ -11571,7 +12429,10 @@
         "name": "Mangalavaara"
       },
       "sunrise": "2025-10-13 08:39 PM",
-      "masa": "Ashwin"
+      "masa": {
+        "amanta": "Ashwin",
+        "purnima": "Kartika"
+      }
     },
     "2025-10-14 02:30 PM": {
       "tithi": [
@@ -11610,7 +12471,10 @@
         "name": "Budhavaara"
       },
       "sunrise": "2025-10-14 08:39 PM",
-      "masa": "Ashwin"
+      "masa": {
+        "amanta": "Ashwin",
+        "purnima": "Kartika"
+      }
     },
     "2025-10-15 02:30 PM": {
       "tithi": [
@@ -11649,7 +12513,10 @@
         "name": "Guruvaara"
       },
       "sunrise": "2025-10-15 08:40 PM",
-      "masa": "Ashwin"
+      "masa": {
+        "amanta": "Ashwin",
+        "purnima": "Kartika"
+      }
     },
     "2025-10-16 02:30 PM": {
       "tithi": [
@@ -11688,7 +12555,10 @@
         "name": "Shukravaara"
       },
       "sunrise": "2025-10-16 08:40 PM",
-      "masa": "Ashwin"
+      "masa": {
+        "amanta": "Ashwin",
+        "purnima": "Kartika"
+      }
     },
     "2025-10-17 02:30 PM": {
       "tithi": [
@@ -11727,7 +12597,10 @@
         "name": "Shanivaara"
       },
       "sunrise": "2025-10-17 08:40 PM",
-      "masa": "Ashwin"
+      "masa": {
+        "amanta": "Ashwin",
+        "purnima": "Kartika"
+      }
     },
     "2025-10-18 02:30 PM": {
       "tithi": [
@@ -11766,7 +12639,10 @@
         "name": "Ravivaara"
       },
       "sunrise": "2025-10-18 08:40 PM",
-      "masa": "Ashwin"
+      "masa": {
+        "amanta": "Ashwin",
+        "purnima": "Kartika"
+      }
     },
     "2025-10-19 02:30 PM": {
       "tithi": [
@@ -11805,7 +12681,10 @@
         "name": "Somavaara"
       },
       "sunrise": "2025-10-19 08:40 PM",
-      "masa": "Ashwin"
+      "masa": {
+        "amanta": "Ashwin",
+        "purnima": "Kartika"
+      }
     },
     "2025-10-20 02:30 PM": {
       "tithi": [
@@ -11844,7 +12723,10 @@
         "name": "Mangalavaara"
       },
       "sunrise": "2025-10-20 08:40 PM",
-      "masa": "Ashwin"
+      "masa": {
+        "amanta": "Ashwin",
+        "purnima": "Kartika"
+      }
     },
     "2025-10-21 02:30 PM": {
       "tithi": [
@@ -11878,7 +12760,10 @@
         "name": "Budhavaara"
       },
       "sunrise": "2025-10-21 08:40 PM",
-      "masa": "Kartika"
+      "masa": {
+        "amanta": "Kartika",
+        "purnima": "Kartika"
+      }
     },
     "2025-10-22 02:30 PM": {
       "tithi": [
@@ -11912,7 +12797,10 @@
         "name": "Guruvaara"
       },
       "sunrise": "2025-10-22 08:41 PM",
-      "masa": "Kartika"
+      "masa": {
+        "amanta": "Kartika",
+        "purnima": "Kartika"
+      }
     },
     "2025-10-23 02:30 PM": {
       "tithi": [
@@ -11941,7 +12829,10 @@
         "name": "Shukravaara"
       },
       "sunrise": "2025-10-23 08:41 PM",
-      "masa": "Kartika"
+      "masa": {
+        "amanta": "Kartika",
+        "purnima": "Kartika"
+      }
     },
     "2025-10-24 02:30 PM": {
       "tithi": [
@@ -11975,7 +12866,10 @@
         "name": "Shanivaara"
       },
       "sunrise": "2025-10-24 08:41 PM",
-      "masa": "Kartika"
+      "masa": {
+        "amanta": "Kartika",
+        "purnima": "Kartika"
+      }
     },
     "2025-10-25 02:30 PM": {
       "tithi": [
@@ -12014,7 +12908,10 @@
         "name": "Ravivaara"
       },
       "sunrise": "2025-10-25 08:41 PM",
-      "masa": "Kartika"
+      "masa": {
+        "amanta": "Kartika",
+        "purnima": "Kartika"
+      }
     },
     "2025-10-26 02:30 PM": {
       "tithi": [
@@ -12053,7 +12950,10 @@
         "name": "Somavaara"
       },
       "sunrise": "2025-10-26 08:42 PM",
-      "masa": "Kartika"
+      "masa": {
+        "amanta": "Kartika",
+        "purnima": "Kartika"
+      }
     },
     "2025-10-27 02:30 PM": {
       "tithi": [
@@ -12097,7 +12997,10 @@
         "name": "Mangalavaara"
       },
       "sunrise": "2025-10-27 08:42 PM",
-      "masa": "Kartika"
+      "masa": {
+        "amanta": "Kartika",
+        "purnima": "Kartika"
+      }
     },
     "2025-10-28 02:30 PM": {
       "tithi": [
@@ -12141,7 +13044,10 @@
         "name": "Budhavaara"
       },
       "sunrise": "2025-10-28 08:42 PM",
-      "masa": "Kartika"
+      "masa": {
+        "amanta": "Kartika",
+        "purnima": "Kartika"
+      }
     },
     "2025-10-29 02:30 PM": {
       "tithi": [
@@ -12185,7 +13091,10 @@
         "name": "Guruvaara"
       },
       "sunrise": "2025-10-29 08:42 PM",
-      "masa": "Kartika"
+      "masa": {
+        "amanta": "Kartika",
+        "purnima": "Kartika"
+      }
     },
     "2025-10-30 02:30 PM": {
       "tithi": [
@@ -12224,7 +13133,10 @@
         "name": "Shukravaara"
       },
       "sunrise": "2025-10-30 08:43 PM",
-      "masa": "Kartika"
+      "masa": {
+        "amanta": "Kartika",
+        "purnima": "Kartika"
+      }
     },
     "2025-10-31 02:30 PM": {
       "tithi": [
@@ -12263,7 +13175,10 @@
         "name": "Shanivaara"
       },
       "sunrise": "2025-10-31 08:43 PM",
-      "masa": "Kartika"
+      "masa": {
+        "amanta": "Kartika",
+        "purnima": "Kartika"
+      }
     },
     "2025-11-01 02:30 PM": {
       "tithi": [
@@ -12307,7 +13222,10 @@
         "name": "Ravivaara"
       },
       "sunrise": "2025-11-01 08:43 PM",
-      "masa": "Kartika"
+      "masa": {
+        "amanta": "Kartika",
+        "purnima": "Kartika"
+      }
     },
     "2025-11-02 01:30 PM": {
       "tithi": [
@@ -12346,7 +13264,10 @@
         "name": "Somavaara"
       },
       "sunrise": "2025-11-02 07:43 PM",
-      "masa": "Kartika"
+      "masa": {
+        "amanta": "Kartika",
+        "purnima": "Kartika"
+      }
     },
     "2025-11-03 01:30 PM": {
       "tithi": [
@@ -12390,7 +13311,10 @@
         "name": "Mangalavaara"
       },
       "sunrise": "2025-11-03 07:44 PM",
-      "masa": "Kartika"
+      "masa": {
+        "amanta": "Kartika",
+        "purnima": "Kartika"
+      }
     },
     "2025-11-04 01:30 PM": {
       "tithi": [
@@ -12434,7 +13358,10 @@
         "name": "Budhavaara"
       },
       "sunrise": "2025-11-04 07:44 PM",
-      "masa": "Kartika"
+      "masa": {
+        "amanta": "Kartika",
+        "purnima": "Kartika"
+      }
     },
     "2025-11-05 01:30 PM": {
       "tithi": [
@@ -12478,7 +13405,10 @@
         "name": "Guruvaara"
       },
       "sunrise": "2025-11-05 07:44 PM",
-      "masa": "Kartika"
+      "masa": {
+        "amanta": "Kartika",
+        "purnima": "Margashirsha"
+      }
     },
     "2025-11-06 01:30 PM": {
       "tithi": [
@@ -12517,7 +13447,10 @@
         "name": "Shukravaara"
       },
       "sunrise": "2025-11-06 07:45 PM",
-      "masa": "Kartika"
+      "masa": {
+        "amanta": "Kartika",
+        "purnima": "Margashirsha"
+      }
     },
     "2025-11-07 01:30 PM": {
       "tithi": [
@@ -12561,7 +13494,10 @@
         "name": "Shanivaara"
       },
       "sunrise": "2025-11-07 07:45 PM",
-      "masa": "Kartika"
+      "masa": {
+        "amanta": "Kartika",
+        "purnima": "Margashirsha"
+      }
     },
     "2025-11-08 01:30 PM": {
       "tithi": [
@@ -12600,7 +13536,10 @@
         "name": "Ravivaara"
       },
       "sunrise": "2025-11-08 07:45 PM",
-      "masa": "Kartika"
+      "masa": {
+        "amanta": "Kartika",
+        "purnima": "Margashirsha"
+      }
     },
     "2025-11-09 01:30 PM": {
       "tithi": [
@@ -12639,7 +13578,10 @@
         "name": "Somavaara"
       },
       "sunrise": "2025-11-09 07:46 PM",
-      "masa": "Kartika"
+      "masa": {
+        "amanta": "Kartika",
+        "purnima": "Margashirsha"
+      }
     },
     "2025-11-10 01:30 PM": {
       "tithi": [
@@ -12683,7 +13625,10 @@
         "name": "Mangalavaara"
       },
       "sunrise": "2025-11-10 07:46 PM",
-      "masa": "Kartika"
+      "masa": {
+        "amanta": "Kartika",
+        "purnima": "Margashirsha"
+      }
     },
     "2025-11-11 01:30 PM": {
       "tithi": [
@@ -12727,7 +13672,10 @@
         "name": "Budhavaara"
       },
       "sunrise": "2025-11-11 07:47 PM",
-      "masa": "Kartika"
+      "masa": {
+        "amanta": "Kartika",
+        "purnima": "Margashirsha"
+      }
     },
     "2025-11-12 01:30 PM": {
       "tithi": [
@@ -12771,7 +13719,10 @@
         "name": "Guruvaara"
       },
       "sunrise": "2025-11-12 07:47 PM",
-      "masa": "Kartika"
+      "masa": {
+        "amanta": "Kartika",
+        "purnima": "Margashirsha"
+      }
     },
     "2025-11-13 01:30 PM": {
       "tithi": [
@@ -12810,7 +13761,10 @@
         "name": "Shukravaara"
       },
       "sunrise": "2025-11-13 07:47 PM",
-      "masa": "Kartika"
+      "masa": {
+        "amanta": "Kartika",
+        "purnima": "Margashirsha"
+      }
     },
     "2025-11-14 01:30 PM": {
       "tithi": [
@@ -12844,7 +13798,10 @@
         "name": "Shanivaara"
       },
       "sunrise": "2025-11-14 07:48 PM",
-      "masa": "Kartika"
+      "masa": {
+        "amanta": "Kartika",
+        "purnima": "Margashirsha"
+      }
     },
     "2025-11-15 01:30 PM": {
       "tithi": [
@@ -12878,7 +13835,10 @@
         "name": "Ravivaara"
       },
       "sunrise": "2025-11-15 07:48 PM",
-      "masa": "Kartika"
+      "masa": {
+        "amanta": "Kartika",
+        "purnima": "Margashirsha"
+      }
     },
     "2025-11-16 01:30 PM": {
       "tithi": [
@@ -12912,7 +13872,10 @@
         "name": "Somavaara"
       },
       "sunrise": "2025-11-16 07:49 PM",
-      "masa": "Kartika"
+      "masa": {
+        "amanta": "Kartika",
+        "purnima": "Margashirsha"
+      }
     },
     "2025-11-17 01:30 PM": {
       "tithi": [
@@ -12951,7 +13914,10 @@
         "name": "Mangalavaara"
       },
       "sunrise": "2025-11-17 07:49 PM",
-      "masa": "Kartika"
+      "masa": {
+        "amanta": "Kartika",
+        "purnima": "Margashirsha"
+      }
     },
     "2025-11-18 01:30 PM": {
       "tithi": [
@@ -12995,7 +13961,10 @@
         "name": "Budhavaara"
       },
       "sunrise": "2025-11-18 07:49 PM",
-      "masa": "Kartika"
+      "masa": {
+        "amanta": "Kartika",
+        "purnima": "Margashirsha"
+      }
     },
     "2025-11-19 01:30 PM": {
       "tithi": [
@@ -13039,7 +14008,10 @@
         "name": "Guruvaara"
       },
       "sunrise": "2025-11-19 07:50 PM",
-      "masa": "Kartika"
+      "masa": {
+        "amanta": "Kartika",
+        "purnima": "Margashirsha"
+      }
     },
     "2025-11-20 01:30 PM": {
       "tithi": [
@@ -13083,7 +14055,10 @@
         "name": "Shukravaara"
       },
       "sunrise": "2025-11-20 07:50 PM",
-      "masa": "Margashirsha"
+      "masa": {
+        "amanta": "Margashirsha",
+        "purnima": "Margashirsha"
+      }
     },
     "2025-11-21 01:30 PM": {
       "tithi": [
@@ -13127,7 +14102,10 @@
         "name": "Shanivaara"
       },
       "sunrise": "2025-11-21 07:51 PM",
-      "masa": "Margashirsha"
+      "masa": {
+        "amanta": "Margashirsha",
+        "purnima": "Margashirsha"
+      }
     },
     "2025-11-22 01:30 PM": {
       "tithi": [
@@ -13171,7 +14149,10 @@
         "name": "Ravivaara"
       },
       "sunrise": "2025-11-22 07:51 PM",
-      "masa": "Margashirsha"
+      "masa": {
+        "amanta": "Margashirsha",
+        "purnima": "Margashirsha"
+      }
     },
     "2025-11-23 01:30 PM": {
       "tithi": [
@@ -13215,7 +14196,10 @@
         "name": "Somavaara"
       },
       "sunrise": "2025-11-23 07:52 PM",
-      "masa": "Margashirsha"
+      "masa": {
+        "amanta": "Margashirsha",
+        "purnima": "Margashirsha"
+      }
     },
     "2025-11-24 01:30 PM": {
       "tithi": [
@@ -13259,7 +14243,10 @@
         "name": "Mangalavaara"
       },
       "sunrise": "2025-11-24 07:52 PM",
-      "masa": "Margashirsha"
+      "masa": {
+        "amanta": "Margashirsha",
+        "purnima": "Margashirsha"
+      }
     },
     "2025-11-25 01:30 PM": {
       "tithi": [
@@ -13293,7 +14280,10 @@
         "name": "Budhavaara"
       },
       "sunrise": "2025-11-25 07:53 PM",
-      "masa": "Margashirsha"
+      "masa": {
+        "amanta": "Margashirsha",
+        "purnima": "Margashirsha"
+      }
     },
     "2025-11-26 01:30 PM": {
       "tithi": [
@@ -13327,7 +14317,10 @@
         "name": "Guruvaara"
       },
       "sunrise": "2025-11-26 07:53 PM",
-      "masa": "Margashirsha"
+      "masa": {
+        "amanta": "Margashirsha",
+        "purnima": "Margashirsha"
+      }
     },
     "2025-11-27 01:30 PM": {
       "tithi": [
@@ -13361,7 +14354,10 @@
         "name": "Shukravaara"
       },
       "sunrise": "2025-11-27 07:54 PM",
-      "masa": "Margashirsha"
+      "masa": {
+        "amanta": "Margashirsha",
+        "purnima": "Margashirsha"
+      }
     },
     "2025-11-28 01:30 PM": {
       "tithi": [
@@ -13400,7 +14396,10 @@
         "name": "Shanivaara"
       },
       "sunrise": "2025-11-28 07:54 PM",
-      "masa": "Margashirsha"
+      "masa": {
+        "amanta": "Margashirsha",
+        "purnima": "Margashirsha"
+      }
     },
     "2025-11-29 01:30 PM": {
       "tithi": [
@@ -13439,7 +14438,10 @@
         "name": "Ravivaara"
       },
       "sunrise": "2025-11-29 07:55 PM",
-      "masa": "Margashirsha"
+      "masa": {
+        "amanta": "Margashirsha",
+        "purnima": "Margashirsha"
+      }
     },
     "2025-11-30 01:30 PM": {
       "tithi": [
@@ -13478,7 +14480,10 @@
         "name": "Somavaara"
       },
       "sunrise": "2025-11-30 07:56 PM",
-      "masa": "Margashirsha"
+      "masa": {
+        "amanta": "Margashirsha",
+        "purnima": "Margashirsha"
+      }
     },
     "2025-12-01 01:30 PM": {
       "tithi": [
@@ -13522,7 +14527,10 @@
         "name": "Mangalavaara"
       },
       "sunrise": "2025-12-01 07:56 PM",
-      "masa": "Margashirsha"
+      "masa": {
+        "amanta": "Margashirsha",
+        "purnima": "Margashirsha"
+      }
     },
     "2025-12-02 01:30 PM": {
       "tithi": [
@@ -13566,7 +14574,10 @@
         "name": "Budhavaara"
       },
       "sunrise": "2025-12-02 07:57 PM",
-      "masa": "Margashirsha"
+      "masa": {
+        "amanta": "Margashirsha",
+        "purnima": "Margashirsha"
+      }
     },
     "2025-12-03 01:30 PM": {
       "tithi": [
@@ -13610,7 +14621,10 @@
         "name": "Guruvaara"
       },
       "sunrise": "2025-12-03 07:57 PM",
-      "masa": "Margashirsha"
+      "masa": {
+        "amanta": "Margashirsha",
+        "purnima": "Margashirsha"
+      }
     },
     "2025-12-04 01:30 PM": {
       "tithi": [
@@ -13649,7 +14663,10 @@
         "name": "Shukravaara"
       },
       "sunrise": "2025-12-04 07:58 PM",
-      "masa": "Margashirsha"
+      "masa": {
+        "amanta": "Margashirsha",
+        "purnima": "Pausha"
+      }
     },
     "2025-12-05 01:30 PM": {
       "tithi": [
@@ -13693,7 +14710,10 @@
         "name": "Shanivaara"
       },
       "sunrise": "2025-12-05 07:58 PM",
-      "masa": "Margashirsha"
+      "masa": {
+        "amanta": "Margashirsha",
+        "purnima": "Pausha"
+      }
     },
     "2025-12-06 01:30 PM": {
       "tithi": [
@@ -13732,7 +14752,10 @@
         "name": "Ravivaara"
       },
       "sunrise": "2025-12-06 07:59 PM",
-      "masa": "Margashirsha"
+      "masa": {
+        "amanta": "Margashirsha",
+        "purnima": "Pausha"
+      }
     },
     "2025-12-07 01:30 PM": {
       "tithi": [
@@ -13771,7 +14794,10 @@
         "name": "Somavaara"
       },
       "sunrise": "2025-12-07 07:59 PM",
-      "masa": "Margashirsha"
+      "masa": {
+        "amanta": "Margashirsha",
+        "purnima": "Pausha"
+      }
     },
     "2025-12-08 01:30 PM": {
       "tithi": [
@@ -13810,7 +14836,10 @@
         "name": "Mangalavaara"
       },
       "sunrise": "2025-12-08 08:00 PM",
-      "masa": "Margashirsha"
+      "masa": {
+        "amanta": "Margashirsha",
+        "purnima": "Pausha"
+      }
     },
     "2025-12-09 01:30 PM": {
       "tithi": [
@@ -13849,7 +14878,10 @@
         "name": "Budhavaara"
       },
       "sunrise": "2025-12-09 08:00 PM",
-      "masa": "Margashirsha"
+      "masa": {
+        "amanta": "Margashirsha",
+        "purnima": "Pausha"
+      }
     },
     "2025-12-10 01:30 PM": {
       "tithi": [
@@ -13888,7 +14920,10 @@
         "name": "Guruvaara"
       },
       "sunrise": "2025-12-10 08:01 PM",
-      "masa": "Margashirsha"
+      "masa": {
+        "amanta": "Margashirsha",
+        "purnima": "Pausha"
+      }
     },
     "2025-12-11 01:30 PM": {
       "tithi": [
@@ -13927,7 +14962,10 @@
         "name": "Shukravaara"
       },
       "sunrise": "2025-12-11 08:02 PM",
-      "masa": "Margashirsha"
+      "masa": {
+        "amanta": "Margashirsha",
+        "purnima": "Pausha"
+      }
     },
     "2025-12-12 01:30 PM": {
       "tithi": [
@@ -13966,7 +15004,10 @@
         "name": "Shanivaara"
       },
       "sunrise": "2025-12-12 08:02 PM",
-      "masa": "Margashirsha"
+      "masa": {
+        "amanta": "Margashirsha",
+        "purnima": "Pausha"
+      }
     },
     "2025-12-13 01:30 PM": {
       "tithi": [
@@ -14010,7 +15051,10 @@
         "name": "Ravivaara"
       },
       "sunrise": "2025-12-13 08:03 PM",
-      "masa": "Margashirsha"
+      "masa": {
+        "amanta": "Margashirsha",
+        "purnima": "Pausha"
+      }
     },
     "2025-12-14 01:30 PM": {
       "tithi": [
@@ -14054,7 +15098,10 @@
         "name": "Somavaara"
       },
       "sunrise": "2025-12-14 08:03 PM",
-      "masa": "Margashirsha"
+      "masa": {
+        "amanta": "Margashirsha",
+        "purnima": "Pausha"
+      }
     },
     "2025-12-15 01:30 PM": {
       "tithi": [
@@ -14098,7 +15145,10 @@
         "name": "Mangalavaara"
       },
       "sunrise": "2025-12-15 08:04 PM",
-      "masa": "Margashirsha"
+      "masa": {
+        "amanta": "Margashirsha",
+        "purnima": "Pausha"
+      }
     },
     "2025-12-16 01:30 PM": {
       "tithi": [
@@ -14137,7 +15187,10 @@
         "name": "Budhavaara"
       },
       "sunrise": "2025-12-16 08:04 PM",
-      "masa": "Margashirsha"
+      "masa": {
+        "amanta": "Margashirsha",
+        "purnima": "Pausha"
+      }
     },
     "2025-12-17 01:30 PM": {
       "tithi": [
@@ -14176,7 +15229,10 @@
         "name": "Guruvaara"
       },
       "sunrise": "2025-12-17 08:05 PM",
-      "masa": "Margashirsha"
+      "masa": {
+        "amanta": "Margashirsha",
+        "purnima": "Pausha"
+      }
     },
     "2025-12-18 01:30 PM": {
       "tithi": [
@@ -14215,7 +15271,10 @@
         "name": "Shukravaara"
       },
       "sunrise": "2025-12-18 08:05 PM",
-      "masa": "Margashirsha"
+      "masa": {
+        "amanta": "Margashirsha",
+        "purnima": "Pausha"
+      }
     },
     "2025-12-19 01:30 PM": {
       "tithi": [
@@ -14254,7 +15313,10 @@
         "name": "Shanivaara"
       },
       "sunrise": "2025-12-19 08:06 PM",
-      "masa": "Margashirsha"
+      "masa": {
+        "amanta": "Margashirsha",
+        "purnima": "Pausha"
+      }
     },
     "2025-12-20 01:30 PM": {
       "tithi": [
@@ -14293,7 +15355,10 @@
         "name": "Ravivaara"
       },
       "sunrise": "2025-12-20 08:06 PM",
-      "masa": "Pausha"
+      "masa": {
+        "amanta": "Pausha",
+        "purnima": "Pausha"
+      }
     },
     "2025-12-21 01:30 PM": {
       "tithi": [
@@ -14332,7 +15397,10 @@
         "name": "Somavaara"
       },
       "sunrise": "2025-12-21 08:07 PM",
-      "masa": "Pausha"
+      "masa": {
+        "amanta": "Pausha",
+        "purnima": "Pausha"
+      }
     },
     "2025-12-22 01:30 PM": {
       "tithi": [
@@ -14371,7 +15439,10 @@
         "name": "Mangalavaara"
       },
       "sunrise": "2025-12-22 08:07 PM",
-      "masa": "Pausha"
+      "masa": {
+        "amanta": "Pausha",
+        "purnima": "Pausha"
+      }
     },
     "2025-12-23 01:30 PM": {
       "tithi": [
@@ -14415,7 +15486,10 @@
         "name": "Budhavaara"
       },
       "sunrise": "2025-12-23 08:08 PM",
-      "masa": "Pausha"
+      "masa": {
+        "amanta": "Pausha",
+        "purnima": "Pausha"
+      }
     },
     "2025-12-24 01:30 PM": {
       "tithi": [
@@ -14459,7 +15533,10 @@
         "name": "Guruvaara"
       },
       "sunrise": "2025-12-24 08:08 PM",
-      "masa": "Pausha"
+      "masa": {
+        "amanta": "Pausha",
+        "purnima": "Pausha"
+      }
     },
     "2025-12-25 01:30 PM": {
       "tithi": [
@@ -14503,7 +15580,10 @@
         "name": "Shukravaara"
       },
       "sunrise": "2025-12-25 08:09 PM",
-      "masa": "Pausha"
+      "masa": {
+        "amanta": "Pausha",
+        "purnima": "Pausha"
+      }
     },
     "2025-12-26 01:30 PM": {
       "tithi": [
@@ -14547,7 +15627,10 @@
         "name": "Shanivaara"
       },
       "sunrise": "2025-12-26 08:09 PM",
-      "masa": "Pausha"
+      "masa": {
+        "amanta": "Pausha",
+        "purnima": "Pausha"
+      }
     },
     "2025-12-27 01:30 PM": {
       "tithi": [
@@ -14591,7 +15674,10 @@
         "name": "Ravivaara"
       },
       "sunrise": "2025-12-27 08:10 PM",
-      "masa": "Pausha"
+      "masa": {
+        "amanta": "Pausha",
+        "purnima": "Pausha"
+      }
     },
     "2025-12-28 01:30 PM": {
       "tithi": [
@@ -14635,7 +15721,10 @@
         "name": "Somavaara"
       },
       "sunrise": "2025-12-28 08:10 PM",
-      "masa": "Pausha"
+      "masa": {
+        "amanta": "Pausha",
+        "purnima": "Pausha"
+      }
     },
     "2025-12-29 01:30 PM": {
       "tithi": [
@@ -14669,7 +15758,10 @@
         "name": "Mangalavaara"
       },
       "sunrise": "2025-12-29 08:10 PM",
-      "masa": "Pausha"
+      "masa": {
+        "amanta": "Pausha",
+        "purnima": "Pausha"
+      }
     },
     "2025-12-30 01:30 PM": {
       "tithi": [
@@ -14703,7 +15795,10 @@
         "name": "Budhavaara"
       },
       "sunrise": "2025-12-30 08:11 PM",
-      "masa": "Pausha"
+      "masa": {
+        "amanta": "Pausha",
+        "purnima": "Pausha"
+      }
     },
     "2025-12-31 01:30 PM": {
       "tithi": [
@@ -14747,7 +15842,10 @@
         "name": "Guruvaara"
       },
       "sunrise": "2025-12-31 08:11 PM",
-      "masa": "Pausha"
+      "masa": {
+        "amanta": "Pausha",
+        "purnima": "Pausha"
+      }
     }
   }
 }

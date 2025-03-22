@@ -3,6 +3,7 @@ import {
   adjustForAyanamsa,
   toArcSeconds,
   getNewMoonOccurrence,
+  getFullMoonOccurrence,
 } from "../util";
 
 const LAGNA_INTERVAL_ARC_SECONDS = toArcSeconds(30);
@@ -37,10 +38,15 @@ const MASA_NAMES = [
   "Phalguna",
 ];
 
-export type Masa = {
+type CalendarUnawareMasa = {
   index: MasaIndex;
-  isLeap: boolean;
   name: string;
+  isLeap: boolean;
+};
+
+export type Masa = {
+  amanta: CalendarUnawareMasa;
+  purnimanta: CalendarUnawareMasa;
 };
 
 function getLagnaIndex(day: number): number {
@@ -57,7 +63,7 @@ function getMasaName(index: number, isLeap: boolean) {
   return isLeap ? `Adhika ${name}` : name;
 }
 
-export function compute(sunrise: number): Masa {
+function computeAmantaMasa(sunrise: number): CalendarUnawareMasa {
   const lastNewMoon = getNewMoonOccurrence(sunrise, true);
   const nextNewMoon = getNewMoonOccurrence(sunrise, false);
 
@@ -65,12 +71,38 @@ export function compute(sunrise: number): Masa {
   const nextSolarMonth = getLagnaIndex(nextNewMoon);
 
   const isLeap = lastSolarMonth === nextSolarMonth;
-
-  const trueSolarMonth = (lastSolarMonth + 1) % 12;
+  const masaIndex = (lastSolarMonth + 1) % 12;
 
   return {
-    index: trueSolarMonth,
-    name: getMasaName(trueSolarMonth, isLeap),
+    index: masaIndex,
+    name: getMasaName(masaIndex, isLeap),
     isLeap: isLeap,
+  };
+}
+
+function computePurnimantaMasa(sunrise: number): CalendarUnawareMasa {
+  const lastFullMoon = getFullMoonOccurrence(sunrise, true);
+  const nextFullMoon = getFullMoonOccurrence(sunrise, false);
+
+  const lastSolarMonth = getLagnaIndex(lastFullMoon);
+  const nextSolarMonth = getLagnaIndex(nextFullMoon);
+
+  const isLeap = lastSolarMonth === nextSolarMonth;
+  const masaIndex = (lastSolarMonth + 2) % 12;
+
+  return {
+    index: masaIndex,
+    name: getMasaName(masaIndex, isLeap),
+    isLeap: isLeap,
+  };
+}
+
+export function compute(sunrise: number): Masa {
+  const amanta = computeAmantaMasa(sunrise);
+  const purnimanta = computePurnimantaMasa(sunrise);
+
+  return {
+    amanta,
+    purnimanta
   };
 }

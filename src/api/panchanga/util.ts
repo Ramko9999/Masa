@@ -3,7 +3,7 @@ import { Location } from "./location";
 import { positiveModulo } from "../../util/math";
 
 export const TOTAL_ARC_SECONDS = 3600 * 360;
-const NEW_MOON_SEARCH_DAYS = 30;
+const MOON_SEARCH_DAYS = 30;
 
 function approximateAyanamsa(day: number) {
   const yearInProgress = (day - new Date(new Date(day).getFullYear(), 0, 0).valueOf()) / (1000 * 3600 * 24 * 365)
@@ -80,7 +80,7 @@ export function getNewMoonOccurrence(
   const newMoonTime = Astronomy.SearchMoonPhase(
     newMoonPhase,
     new Date(anchorDay),
-    lookForPreviousNewMoon ? -1 * NEW_MOON_SEARCH_DAYS : NEW_MOON_SEARCH_DAYS
+    lookForPreviousNewMoon ? -1 * MOON_SEARCH_DAYS : MOON_SEARCH_DAYS
   );
 
   if (!newMoonTime) {
@@ -92,6 +92,28 @@ export function getNewMoonOccurrence(
   }
 
   return newMoonTime.date.valueOf();
+}
+
+export function getFullMoonOccurrence(
+  anchorDay: number,
+  lookForPreviousFullMoon: boolean
+): number {
+  const fullMoonPhase = 180;
+  const fullMoonTime = Astronomy.SearchMoonPhase(
+    fullMoonPhase,
+    new Date(anchorDay),
+    lookForPreviousFullMoon ? -1 * MOON_SEARCH_DAYS : MOON_SEARCH_DAYS
+  );
+
+  if (!fullMoonTime) {
+    throw new Error(
+      `Could not find ${
+        lookForPreviousFullMoon ? "previous" : "next"
+      } full moon from ${new Date(anchorDay)}. This is unexpected.`
+    );
+  }
+
+  return fullMoonTime.date.valueOf();
 }
 
 export function adjustForAyanamsa(day: number, longitudeInArcSeconds: number) {
