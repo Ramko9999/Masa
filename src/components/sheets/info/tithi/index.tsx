@@ -201,14 +201,5 @@ export const SLIDES: InfoSlide[] = [
         </Base>
       </View>
     ),
-  },
-  {
-    background: <TithiProgressBackground />,
-    ...commonSlideProps,
-    description: (
-      <Base>
-        We are in the current tithi.
-      </Base>
-    ),
   }
 ];

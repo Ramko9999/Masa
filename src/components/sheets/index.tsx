@@ -29,7 +29,8 @@ function MiniSheetDragger() {
 
 const miniSheetStyles = StyleSheet.create({
   container: {
-    borderRadius: 20,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
     flex: 1,
     overflow: "hidden",
   },
@@ -81,7 +82,7 @@ type InfoSheetProps = {
 };
 
 export function TithiInfoSheet({ show, onHide }: InfoSheetProps) {
-  const { width, height } = useWindowDimensions();
+
 
   return (
     <MiniSheet
