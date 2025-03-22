@@ -39,6 +39,7 @@
   "devDependencies": {
     "@babel/core": "^7.20.0",
     "@types/react": "~18.3.12",
+    "ts-node": "^10.9.2",
     "typescript": "^5.7.2"
   },
   "private": true

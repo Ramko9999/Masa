@@ -1,4 +1,10 @@
-import { inverseLagrangianInterpolation, toArcSeconds } from "../util";
+import {
+  inverseLagrangianInterpolation,
+  makeDecreasingAnglesNonCircular,
+  makeIncreasingAnglesNonCircular,
+  toArcSeconds,
+  TOTAL_ARC_SECONDS,
+} from "../util";
 import * as Astronomy from "astronomy-engine";
 import { addDays, generateHourlyOffsets } from "../../../util/date";
 
@@ -86,7 +92,6 @@ const RECURRING_KARANAS = [
 ];
 
 const TITHI_INTERVAL_ARC_SECONDS = toArcSeconds(12);
-const ARC_SECONDS_PADDING = 10;
 
 type KaranaInterval = {
   startDate: number;
@@ -131,42 +136,47 @@ function getTithiStart(date: number, moonPhase: number) {
   const expectedMoonPhase =
     Math.floor(moonPhase / TITHI_INTERVAL_ARC_SECONDS) *
     TITHI_INTERVAL_ARC_SECONDS;
+
+  const offsets = generateHourlyOffsets(date, -6, 6);
+  const angles = makeDecreasingAnglesNonCircular(
+    offsets.map((offset) => tithiFunc(offset))
+  );
+  return Math.floor(
+    inverseLagrangianInterpolation(offsets, angles, expectedMoonPhase)
+  );
+}
+
+function getTithiEnd(currentTithiIndex: number, currentTithiStartDate: number) {
+  const tithiBeginPhase =
+    (currentTithiIndex * TITHI_INTERVAL_ARC_SECONDS) % TOTAL_ARC_SECONDS;
+
+  const nextOffsets = generateHourlyOffsets(currentTithiStartDate, 6, 5, true);
+  const angles = makeIncreasingAnglesNonCircular([
+    tithiBeginPhase,
+    ...nextOffsets.map(tithiFunc),
+  ]);
+  const offsets = [currentTithiStartDate, ...nextOffsets];
+
   return Math.floor(
     inverseLagrangianInterpolation(
-      generateHourlyOffsets(date, -6, 6),
-      tithiFunc,
-      expectedMoonPhase
+      offsets,
+      angles,
+      tithiBeginPhase + TITHI_INTERVAL_ARC_SECONDS
     )
   );
 }
 
-function getTithiEnd(date: number, moonPhase: number) {
-  const expectedMoonPhase =
-    Math.ceil(moonPhase / TITHI_INTERVAL_ARC_SECONDS) *
-    TITHI_INTERVAL_ARC_SECONDS;
-  return Math.floor(
-    inverseLagrangianInterpolation(
-      generateHourlyOffsets(date, 6, 6),
-      tithiFunc,
-      expectedMoonPhase
-    )
-  );
-}
-
-function computeKarana({
-  startDate,
-  endDate,
-  index,
-}: {
-  startDate: number;
-  endDate: number;
-  index: TithiIndex;
-}): KaranaInterval[] {
+function computeKarana(
+  startDate: number,
+  endDate: number,
+  index: number
+): KaranaInterval[] {
   const midMoonPhase = (index + 0.5) * TITHI_INTERVAL_ARC_SECONDS;
+  const offsets = generateHourlyOffsets(startDate, 4, 4);
   const tithiMid = Math.floor(
     inverseLagrangianInterpolation(
-      generateHourlyOffsets(startDate, 4, 6),
-      tithiFunc,
+      offsets,
+      offsets.map(tithiFunc),
       midMoonPhase
     )
   );
@@ -185,7 +195,6 @@ function computeKarana({
   ];
 }
 
-// todo: might need to handle special case when moonphase is exactly that of a tithi start/end
 export function compute(day: number, sunrise: number): TithiInterval[] {
   const nextDay = addDays(day, 1);
   const moonPhase = tithiFunc(day);
@@ -193,46 +202,29 @@ export function compute(day: number, sunrise: number): TithiInterval[] {
   let currentTithiIndex =
     Math.floor(moonPhase / TITHI_INTERVAL_ARC_SECONDS) % 30;
   let currentTithiStart = getTithiStart(day, moonPhase);
-  let currentTithiEnd = getTithiEnd(day, moonPhase);
 
-  const tithis = [
-    {
-      startDate: currentTithiStart,
-      endDate: currentTithiEnd,
-      index: currentTithiIndex,
-      name: TITHI_NAMES[currentTithiIndex],
-      karana: computeKarana({
-        startDate: currentTithiStart,
-        endDate: currentTithiEnd,
-        index: currentTithiIndex,
-      }),
-    },
-  ];
+  let currentTithi = getTithiInterval(currentTithiStart, currentTithiIndex);
 
-  while (currentTithiEnd < nextDay) {
-    currentTithiStart = currentTithiEnd;
-    currentTithiIndex = (currentTithiIndex + 1) % 30;
-    currentTithiEnd = getTithiEnd(
-      currentTithiStart,
-      currentTithiIndex * TITHI_INTERVAL_ARC_SECONDS + ARC_SECONDS_PADDING
+  const tithis: TithiInterval[] = [currentTithi];
+
+  while (currentTithi.endDate < nextDay) {
+    currentTithi = getTithiInterval(
+      currentTithi.endDate,
+      (currentTithi.index + 1) % 30
     );
-    tithis.push({
-      startDate: currentTithiStart,
-      endDate: currentTithiEnd,
-      index: currentTithiIndex,
-      name: TITHI_NAMES[currentTithiIndex],
-      karana: computeKarana({
-        startDate: currentTithiStart,
-        endDate: currentTithiEnd,
-        index: currentTithiIndex,
-      }),
-    });
+    tithis.push({...currentTithi});
   }
 
-  return tithis
-    .filter(({ endDate }) => endDate >= sunrise)
-    .map((tithi) => ({
-      ...tithi,
-      karana: tithi.karana.filter(({ endDate }) => endDate >= sunrise),
-    }));
+  return tithis.filter(({ endDate }) => endDate >= sunrise);
+}
+
+function getTithiInterval(startDate: number, tithiIndex: number) {
+  const endDate = getTithiEnd(tithiIndex, startDate);
+  return {
+    startDate,
+    endDate,
+    index: tithiIndex,
+    name: TITHI_NAMES[tithiIndex],
+    karana: computeKarana(startDate, endDate, tithiIndex),
+  };
 }

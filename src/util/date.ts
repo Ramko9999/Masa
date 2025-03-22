@@ -10,10 +10,16 @@ export function addHours(timestamp: number, hours: number) {
   return date.valueOf();
 }
 
-export function generateHourlyOffsets(timestamp: number, offset: number, total: number): number[] {
+export function generateHourlyOffsets(
+  timestamp: number,
+  offset: number,
+  total: number,
+  excludeFirst: boolean = false
+): number[] {
   let offsets = [];
   for (let i = 0; i < total; i++) {
-    offsets.push(addHours(timestamp, i * offset));
+    const currentOffset = (i + (excludeFirst ? 1 : 0)) * offset;
+    offsets.push(addHours(timestamp, currentOffset));
   }
   return offsets;
 }
@@ -42,7 +48,9 @@ export function getHumanReadableDate(timestamp: number) {
   const truncatedTime = truncateToDay(timestamp);
 
   const time = new Date(timestamp).toLocaleTimeString("default", {
-    hour: 'numeric', minute: '2-digit', hour12: true
+    hour: "numeric",
+    minute: "2-digit",
+    hour12: true,
   });
 
   let date;

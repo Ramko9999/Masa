@@ -2,25 +2,22 @@
 import json
 import os
 from datetime import datetime
-import pytz
 
 # Configuration
-INPUT_FILE = "scripts/panchanga_2025_original.json"
-OUTPUT_FILE = "scripts/panchanga_2025_original_clean.json"
+INPUT_FILE = "./panchanga_2025_original.json"
+OUTPUT_FILE = "./panchanga_2025_original_clean.json"
 
 # Bangalore timezone
-BANGALORE_TZ = pytz.timezone('Asia/Kolkata')
-
 def format_timestamp(timestamp):
     """Convert millisecond timestamp to formatted datetime string in Bangalore time"""
     if not timestamp:
         return ""
     
     # Convert to datetime in Bangalore timezone
-    dt = datetime.fromtimestamp(timestamp, BANGALORE_TZ)
+    dt = datetime.fromtimestamp(timestamp)
     
     # Format as string (YYYY-MM-DD HH:MM:SS)
-    return dt.strftime("%Y-%m-%d %H:%M:%S")
+    return dt.strftime("%Y-%m-%d %I:%M %p")
 
 def clean_panchanga_data():
     # Check if input file exists
@@ -115,8 +112,8 @@ def clean_panchanga_data():
         
         # Extract masa (lunar month)
         masa = ""
-        if "masa" in day_data and "purnima" in day_data["masa"]:
-            masa = day_data["masa"]["purnima"]
+        if "masa" in day_data and "amanta" in day_data["masa"]:
+            masa = day_data["masa"]["amanta"]
         
         # Add the cleaned data for this day
         cleaned_data["daily_data"][formatted_timestamp] = {

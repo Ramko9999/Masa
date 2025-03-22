@@ -6,8 +6,9 @@ export const TOTAL_ARC_SECONDS = 3600 * 360;
 const NEW_MOON_SEARCH_DAYS = 30;
 
 function approximateAyanamsa(day: number) {
-  const year = new Date(day).getFullYear();
-  return (year - 285) * 50;
+  const yearInProgress = (day - new Date(new Date(day).getFullYear(), 0, 0).valueOf()) / (1000 * 3600 * 24 * 365)
+  const year = new Date(day).getFullYear() + yearInProgress;
+  return Math.floor((year - 285) * 50);
 }
 
 export function getSunrise(
@@ -32,11 +33,10 @@ export function getSunrise(
 
 export function inverseLagrangianInterpolation(
   offsets: number[],
-  func: (offset: number) => number,
+  yPoints: number[],
   expectedY: number
 ): number {
   const xPoints = offsets;
-  const yPoints = offsets.map(func);
 
   if (xPoints.length !== yPoints.length || xPoints.length < 2) {
     throw new Error(
@@ -70,27 +70,59 @@ export function getLunarLongitude(day: number) {
   return (getSolarLongitude(day) + phase) % TOTAL_ARC_SECONDS;
 }
 
-export function getNewMoonOccurrence(anchorDay: number, lookForPreviousNewMoon: boolean): number {
+export function getNewMoonOccurrence(
+  anchorDay: number,
+  lookForPreviousNewMoon: boolean
+): number {
   const newMoonPhase = 0;
-  
+
   // Search for the new moon in the specified direction
   const newMoonTime = Astronomy.SearchMoonPhase(
-      newMoonPhase,
-      new Date(anchorDay),
-      lookForPreviousNewMoon ? -1 * NEW_MOON_SEARCH_DAYS : NEW_MOON_SEARCH_DAYS
+    newMoonPhase,
+    new Date(anchorDay),
+    lookForPreviousNewMoon ? -1 * NEW_MOON_SEARCH_DAYS : NEW_MOON_SEARCH_DAYS
   );
 
   if (!newMoonTime) {
-      throw new Error(`Could not find ${lookForPreviousNewMoon ? 'previous' : 'next'} new moon from ${new Date(anchorDay)}. This is unexpected.`);
+    throw new Error(
+      `Could not find ${
+        lookForPreviousNewMoon ? "previous" : "next"
+      } new moon from ${new Date(anchorDay)}. This is unexpected.`
+    );
   }
 
   return newMoonTime.date.valueOf();
 }
 
 export function adjustForAyanamsa(day: number, longitudeInArcSeconds: number) {
-  return positiveModulo(longitudeInArcSeconds - approximateAyanamsa(day), TOTAL_ARC_SECONDS);
+  return positiveModulo(
+    longitudeInArcSeconds - approximateAyanamsa(day),
+    TOTAL_ARC_SECONDS
+  );
 }
 
 export function toArcSeconds(degree: number) {
   return degree * 3600;
+}
+
+export function toDegrees(arcSeconds: number) {
+  return arcSeconds / 3600;
+}
+
+export function makeIncreasingAnglesNonCircular(angles: number[]) {
+  for (let i = 0; i < angles.length - 1; i++) {
+    if (angles[i + 1] < angles[i]) {
+      angles[i + 1] += toArcSeconds(360);
+    }
+  }
+  return angles;
+}
+
+export function makeDecreasingAnglesNonCircular(angles: number[]) {
+  for (let i = 0; i < angles.length - 1; i++) {
+    if (angles[i + 1] > angles[i]) {
+      angles[i + 1] -= toArcSeconds(360);
+    }
+  }
+  return angles;
 }

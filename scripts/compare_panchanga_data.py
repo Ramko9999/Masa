@@ -1,12 +1,19 @@
 #!/usr/bin/env python3
 import json
-from datetime import datetime
+from datetime import datetime, timedelta
 import statistics
 from collections import defaultdict
 
 def parse_timestamp(timestamp_str):
     """Parse timestamp string to datetime object"""
-    return datetime.strptime(timestamp_str, "%Y-%m-%d %H:%M:%S")
+    return datetime.strptime(timestamp_str, "%Y-%m-%d %I:%M %p")
+
+def normalize_tithi(tithi: str):
+    if tithi == "Shukla Purnima" or tithi == "Krishna Purnima":
+        return "Purnima"
+    if tithi == "Krishna Amavasya" or tithi == "Shukla Amavasya":
+        return "Amavasya"
+    return tithi
 
 def calculate_time_difference_minutes(time1_str, time2_str):
     """Calculate absolute difference between two timestamps in minutes"""
@@ -19,251 +26,105 @@ def calculate_time_difference_minutes(time1_str, time2_str):
     diff_seconds = abs((time2 - time1).total_seconds())
     return diff_seconds / 60  # Convert to minutes
 
+def compare_times(original_time: str, computed_time: str, results: dict, category: str):
+    """Compare two times and update results"""
+    diff = calculate_time_difference_minutes(original_time, computed_time)
+    results[category]["differences"].append(diff)
+    results[category]["max_diff"] = max(results[category]["max_diff"], diff)
+
+def compare_event(original_event: dict, computed_event: dict, results: dict, category: str):
+    """Compare start and end times for a single event"""
+    compare_times(original_event["start_time"], computed_event["start_time"], results, category)
+    compare_times(original_event["end_time"], computed_event["end_time"], results, category)
+
+def compare_events(original_events: list, computed_events: list, results: dict, category: str, date: str):
+    """Compare lists of events (tithi/nakshatra/yoga)"""
+    base_date = parse_timestamp(date)
+    next_day = base_date + timedelta(days=1)
+
+
+    original_events = list(filter(lambda x: parse_timestamp(x["start_time"]) < next_day, original_events))
+    original_events.sort(key=lambda x: parse_timestamp(x["start_time"]))
+
+    orig_event_names = [normalize_tithi(e["name"]) for e in original_events]
+    comp_event_names = [e["name"] for e in computed_events]
+    if not set(orig_event_names).issubset(set(comp_event_names)):
+        print(f"Names mismatch for {category} on {date}: Original {orig_event_names}, Computed {comp_event_names}")
+        return
+    
+    for orig_event in original_events:            
+        matching_events = [
+            comp_event for comp_event in computed_events 
+            if comp_event["name"] == orig_event["name"]
+        ]
+            
+        for comp_event in matching_events:
+            compare_event(orig_event, comp_event, results, category)
+
+def compare_day(original_day: dict, computed_day: dict, results: dict, date: str):
+    """Compare all aspects of a single day"""
+    if original_day["masa"] != computed_day["masa"]:
+        print(f"Masa mismatch on {date}: Original={original_day['masa']}, Computed={computed_day['masa']}")
+        results["masa_mismatches"] += 1
+
+    compare_times(original_day["sunrise"], computed_day["sunrise"], results, "sunrise")
+    
+    for category in ["tithi", "nakshatra", "yoga"]:
+        compare_events(original_day[category], computed_day[category], results, category, date)
+
 def main():
     # Load the JSON files
-    with open("scripts/panchanga_2025_original_clean.json", "r") as f:
+    with open("./panchanga_2025_original_clean.json", "r") as f:
         original_data = json.load(f)
     
-    with open("scripts/panchanga_2025_computed.json", "r") as f:
+    with open("./panchanga_2025_computed.json", "r") as f:
         computed_data = json.load(f)
     
-    # Initialize result dictionaries
+    # Initialize result dictionary
     results = {
-        "tithi": {"differences": [], "max_diff": 0, "avg_diff": 0},
-        "nakshatra": {"differences": [], "max_diff": 0, "avg_diff": 0},
-        "yoga": {"differences": [], "max_diff": 0, "avg_diff": 0},
-        "sunrise": {"differences": [], "max_diff": 0, "avg_diff": 0}
+        category: {"differences": [], "max_diff": 0, "avg_diff": 0}
+        for category in ["tithi", "nakshatra", "yoga", "sunrise"]
     }
+    results["masa_mismatches"] = 0  # Add counter for masa mismatches
     
-    # Track dates with large differences (> 15 minutes)
-    large_diffs = {
-        "tithi": defaultdict(list),
-        "nakshatra": defaultdict(list),
-        "yoga": defaultdict(list),
-        "sunrise": defaultdict(list)
-    }
+    # Compare each day
+    for date, original_day in list(original_data["daily_data"].items()):
+        if date in computed_data["daily_data"]:
+            compare_day(original_day, computed_data["daily_data"][date], results, date)
     
-    # Iterate through each day in the original data
-    for date, original_day in original_data["daily_data"].items():
-        # Skip if date not in computed data
-        if date not in computed_data["daily_data"]:
-            continue
-        
-        computed_day = computed_data["daily_data"][date]
-        date_short = date.split()[0]  # Extract just the date part (YYYY-MM-DD)
-        
-        # Compare sunrise times
-        if original_day.get("sunrise") and computed_day.get("sunrise"):
-            diff = calculate_time_difference_minutes(
-                original_day["sunrise"], computed_day["sunrise"]
-            )
-            if diff is not None:
-                results["sunrise"]["differences"].append(diff)
-                results["sunrise"]["max_diff"] = max(results["sunrise"]["max_diff"], diff)
-                
-                # Record large differences
-                if diff > 15:
-                    large_diffs["sunrise"][date_short].append({
-                        "original": original_day["sunrise"],
-                        "computed": computed_day["sunrise"],
-                        "diff_minutes": diff
-                    })
-        
-        # Compare tithis
-        if original_day.get("tithi") and computed_day.get("tithi"):
-            for orig_tithi in original_day["tithi"]:
-                # Find matching tithi in computed data
-                matching_tithis = [
-                    comp_tithi for comp_tithi in computed_day["tithi"] 
-                    if comp_tithi["name"] == orig_tithi["name"]
-                ]
-                
-                for comp_tithi in matching_tithis:
-                    # Compare start times
-                    if orig_tithi.get("start_time") and comp_tithi.get("start_time"):
-                        start_diff = calculate_time_difference_minutes(
-                            orig_tithi["start_time"], comp_tithi["start_time"]
-                        )
-                        if start_diff is not None:
-                            results["tithi"]["differences"].append(start_diff)
-                            results["tithi"]["max_diff"] = max(results["tithi"]["max_diff"], start_diff)
-                            
-                            # Record large differences
-                            if start_diff > 15:
-                                large_diffs["tithi"][date_short].append({
-                                    "name": orig_tithi["name"],
-                                    "type": "start_time",
-                                    "original": orig_tithi["start_time"],
-                                    "computed": comp_tithi["start_time"],
-                                    "diff_minutes": start_diff
-                                })
-                    
-                    # Compare end times
-                    if orig_tithi.get("end_time") and comp_tithi.get("end_time"):
-                        end_diff = calculate_time_difference_minutes(
-                            orig_tithi["end_time"], comp_tithi["end_time"]
-                        )
-                        if end_diff is not None:
-                            results["tithi"]["differences"].append(end_diff)
-                            results["tithi"]["max_diff"] = max(results["tithi"]["max_diff"], end_diff)
-                            
-                            # Record large differences
-                            if end_diff > 15:
-                                large_diffs["tithi"][date_short].append({
-                                    "name": orig_tithi["name"],
-                                    "type": "end_time",
-                                    "original": orig_tithi["end_time"],
-                                    "computed": comp_tithi["end_time"],
-                                    "diff_minutes": end_diff
-                                })
-        
-        # Compare nakshatras
-        if original_day.get("nakshatra") and computed_day.get("nakshatra"):
-            for orig_nakshatra in original_day["nakshatra"]:
-                # Find matching nakshatra in computed data
-                matching_nakshatras = [
-                    comp_nakshatra for comp_nakshatra in computed_day["nakshatra"] 
-                    if comp_nakshatra["name"] == orig_nakshatra["name"]
-                ]
-                
-                for comp_nakshatra in matching_nakshatras:
-                    # Compare start times
-                    if orig_nakshatra.get("start_time") and comp_nakshatra.get("start_time"):
-                        start_diff = calculate_time_difference_minutes(
-                            orig_nakshatra["start_time"], comp_nakshatra["start_time"]
-                        )
-                        if start_diff is not None:
-                            results["nakshatra"]["differences"].append(start_diff)
-                            results["nakshatra"]["max_diff"] = max(results["nakshatra"]["max_diff"], start_diff)
-                            
-                            # Record large differences
-                            if start_diff > 15:
-                                large_diffs["nakshatra"][date_short].append({
-                                    "name": orig_nakshatra["name"],
-                                    "type": "start_time",
-                                    "original": orig_nakshatra["start_time"],
-                                    "computed": comp_nakshatra["start_time"],
-                                    "diff_minutes": start_diff
-                                })
-                    
-                    # Compare end times
-                    if orig_nakshatra.get("end_time") and comp_nakshatra.get("end_time"):
-                        end_diff = calculate_time_difference_minutes(
-                            orig_nakshatra["end_time"], comp_nakshatra["end_time"]
-                        )
-                        if end_diff is not None:
-                            results["nakshatra"]["differences"].append(end_diff)
-                            results["nakshatra"]["max_diff"] = max(results["nakshatra"]["max_diff"], end_diff)
-                            
-                            # Record large differences
-                            if end_diff > 15:
-                                large_diffs["nakshatra"][date_short].append({
-                                    "name": orig_nakshatra["name"],
-                                    "type": "end_time",
-                                    "original": orig_nakshatra["end_time"],
-                                    "computed": comp_nakshatra["end_time"],
-                                    "diff_minutes": end_diff
-                                })
-        
-        # Compare yogas
-        if original_day.get("yoga") and computed_day.get("yoga"):
-            for orig_yoga in original_day["yoga"]:
-                # Find matching yoga in computed data
-                matching_yogas = [
-                    comp_yoga for comp_yoga in computed_day["yoga"] 
-                    if comp_yoga["name"] == orig_yoga["name"]
-                ]
-                
-                for comp_yoga in matching_yogas:
-                    # Compare start times
-                    if orig_yoga.get("start_time") and comp_yoga.get("start_time"):
-                        start_diff = calculate_time_difference_minutes(
-                            orig_yoga["start_time"], comp_yoga["start_time"]
-                        )
-                        if start_diff is not None:
-                            results["yoga"]["differences"].append(start_diff)
-                            results["yoga"]["max_diff"] = max(results["yoga"]["max_diff"], start_diff)
-                            
-                            # Record large differences
-                            if start_diff > 15:
-                                large_diffs["yoga"][date_short].append({
-                                    "name": orig_yoga["name"],
-                                    "type": "start_time",
-                                    "original": orig_yoga["start_time"],
-                                    "computed": comp_yoga["start_time"],
-                                    "diff_minutes": start_diff
-                                })
-                    
-                    # Compare end times
-                    if orig_yoga.get("end_time") and comp_yoga.get("end_time"):
-                        end_diff = calculate_time_difference_minutes(
-                            orig_yoga["end_time"], comp_yoga["end_time"]
-                        )
-                        if end_diff is not None:
-                            results["yoga"]["differences"].append(end_diff)
-                            results["yoga"]["max_diff"] = max(results["yoga"]["max_diff"], end_diff)
-                            
-                            # Record large differences
-                            if end_diff > 15:
-                                large_diffs["yoga"][date_short].append({
-                                    "name": orig_yoga["name"],
-                                    "type": "end_time",
-                                    "original": orig_yoga["end_time"],
-                                    "computed": comp_yoga["end_time"],
-                                    "diff_minutes": end_diff
-                                })
-    
-    # Calculate averages
-    for category in results:
+    # Calculate statistics
+    for category in ["tithi", "nakshatra", "yoga", "sunrise"]:
         if results[category]["differences"]:
             results[category]["avg_diff"] = statistics.mean(results[category]["differences"])
             results[category]["median_diff"] = statistics.median(results[category]["differences"])
-    
     # Print results
+    print_results(results)
+
+def print_results(results: dict):
+    """Print comparison results"""
     print("Comparison of Original vs Computed Panchanga Data for 2025")
     print("=" * 70)
     
+
+    print("Masa mismatches: ", results["masa_mismatches"])
+
     for category in ["tithi", "nakshatra", "yoga", "sunrise"]:
         diffs = results[category]["differences"]
-        if diffs:
-            print(f"\n{category.capitalize()} Comparison:")
-            print(f"  Total comparisons: {len(diffs)}")
-            print(f"  Maximum difference: {results[category]['max_diff']:.2f} minutes")
-            print(f"  Average difference: {results[category]['avg_diff']:.2f} minutes")
-            print(f"  Median difference: {results[category]['median_diff']:.2f} minutes")
+        print(f"\n{category.capitalize()} Comparison:")
+        print(f"  Total comparisons: {len(diffs)}")
+        print(f"  Maximum difference: {results[category]['max_diff']:.2f} minutes")
+        print(f"  Average difference: {results[category]['avg_diff']:.2f} minutes")
+        print(f"  Median difference: {results[category]['median_diff']:.2f} minutes")
             
-            # Calculate distribution of differences
-            under_5min = sum(1 for d in diffs if d < 5)
-            under_15min = sum(1 for d in diffs if 5 <= d < 15)
-            under_30min = sum(1 for d in diffs if 15 <= d < 30)
-            under_60min = sum(1 for d in diffs if 30 <= d < 60)
-            over_60min = sum(1 for d in diffs if d >= 60)
+        # Print distribution
+        ranges = [(0, 5), (5, 15), (15, 30), (30, 60), (60, float('inf'))]
+        labels = ["< 5", "5-15", "15-30", "30-60", "> 60"]
             
-            print("  Distribution of differences:")
-            print(f"    < 5 minutes: {under_5min} ({under_5min/len(diffs)*100:.1f}%)")
-            print(f"    5-15 minutes: {under_15min} ({under_15min/len(diffs)*100:.1f}%)")
-            print(f"    15-30 minutes: {under_30min} ({under_30min/len(diffs)*100:.1f}%)")
-            print(f"    30-60 minutes: {under_60min} ({under_60min/len(diffs)*100:.1f}%)")
-            print(f"    > 60 minutes: {over_60min} ({over_60min/len(diffs)*100:.1f}%)")
-        else:
-            print(f"\n{category.capitalize()}: No matching data found for comparison")
-    
-    # Print dates with large differences
-    print("\n\nDates with Large Differences (> 15 minutes):")
-    print("=" * 70)
-    
-    for category in ["tithi", "nakshatra", "yoga", "sunrise"]:
-        if large_diffs[category]:
-            print(f"\n{category.capitalize()} Large Differences:")
-            for date, diff_list in sorted(large_diffs[category].items()):
-                print(f"  Date: {date}")
-                for diff_info in diff_list:
-                    if category == "sunrise":
-                        print(f"    Sunrise - Original: {diff_info['original']}, Computed: {diff_info['computed']}, Diff: {diff_info['diff_minutes']:.2f} minutes")
-                    else:
-                        print(f"    {diff_info['name']} ({diff_info['type']}) - Original: {diff_info['original']}, Computed: {diff_info['computed']}, Diff: {diff_info['diff_minutes']:.2f} minutes")
-        else:
-            print(f"\n{category.capitalize()}: No large differences found")
+        print(f"{category.capitalize()} distribution of differences:")
+        for (start, end), label in zip(ranges, labels):
+            count = sum(1 for d in diffs if start <= d < end)
+            percentage = (count / len(diffs)) * 100
+            print(f"    {label} minutes: {count} ({percentage:.1f}%)")
 
 if __name__ == "__main__":
     main() 
