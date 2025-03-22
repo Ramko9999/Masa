@@ -1,6 +1,5 @@
 import { Pressable, StyleSheet, ViewStyle } from "react-native";
 import { forwardRef, useEffect, useImperativeHandle } from "react";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Animated, {
   interpolateColor,
   runOnJS,

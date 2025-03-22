@@ -1,10 +1,11 @@
 import { View } from "../../../theme";
-import { FlatList, StyleSheet, useWindowDimensions, ViewabilityConfig } from "react-native";
+import { StyleSheet, useWindowDimensions, ViewabilityConfig } from "react-native";
 import { StyleUtils } from "../../../theme/style-utils";
 import { Pagination } from "../../util/pagination-indicator";
 import { useCallback, useState } from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { InfoSlide } from "./util";
+import { FlatList } from "react-native-gesture-handler";
 
 const slideStyles = StyleSheet.create({
     container: {
@@ -50,7 +51,7 @@ const slideShowStyles = StyleSheet.create({
     pagination: {
         position: "absolute",
         width: "100%",
-        
+
     }
 });
 
@@ -83,6 +84,8 @@ export function SlideShow({ slides }: SlideShowProps) {
     return (
         <>
             <FlatList
+                bounces={false}
+                overScrollMode="never"
                 horizontal
                 pagingEnabled
                 showsHorizontalScrollIndicator={false}
