@@ -4,18 +4,6 @@ import * as SplashScreen from "expo-splash-screen";
 import * as React from "react";
 import { Navigation } from "./layout";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import {
-  useFonts,
-  Inter_100Thin,
-  Inter_200ExtraLight,
-  Inter_300Light,
-  Inter_400Regular,
-  Inter_500Medium,
-  Inter_600SemiBold,
-  Inter_700Bold,
-  Inter_800ExtraBold,
-  Inter_900Black,
-} from "@expo-google-fonts/inter";
 import { setupNotificationListeners } from "./util/notifications";
 
 // Preload assets
@@ -39,18 +27,6 @@ export function App() {
     };
   }, []);
 
-  let [fontsLoaded] = useFonts({
-    Inter_100Thin,
-    Inter_200ExtraLight,
-    Inter_300Light,
-    Inter_400Regular,
-    Inter_500Medium,
-    Inter_600SemiBold,
-    Inter_700Bold,
-    Inter_800ExtraBold,
-    Inter_900Black,
-  });
-
   const [assetsLoaded, setAssetsLoaded] = React.useState(false);
 
   // Load assets
@@ -69,12 +45,12 @@ export function App() {
 
   // Hide splash screen when everything is loaded
   React.useEffect(() => {
-    if (fontsLoaded && assetsLoaded) {
+    if (assetsLoaded) {
       SplashScreen.hideAsync();
     }
-  }, [fontsLoaded, assetsLoaded]);
+  }, [assetsLoaded]);
 
-  if (!fontsLoaded || !assetsLoaded) {
+  if (!assetsLoaded) {
     return null;
   }
 

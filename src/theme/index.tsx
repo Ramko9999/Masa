@@ -57,29 +57,29 @@ function getFontColor({ primary, tint1, tint2 }: TextColorProps) {
   return "text-primary";
 }
 
-function getFontFamily({ thin, extralight, light, regular, medium, semibold, bold, extrabold, black }: TextWeightProps) {
+function getFontWeight({ thin, extralight, light, regular, medium, semibold, bold, extrabold, black }: TextWeightProps) {
   if (thin) {
-    return "Inter_100Thin";
+    return "100";
   } else if (extralight) {
-    return "Inter_200ExtraLight";
+    return "200";
   } else if (light) {
-    return "Inter_300Light";
+    return "300";
   } else if (regular) {
-    return "Inter_400Regular";
+    return "400";
   } else if (medium) {
-    return "Inter_500Medium";
+    return "500";
   } else if (semibold) {
-    return "Inter_600SemiBold";
+    return "600";
   } else if (bold) {
-    return "Inter_700Bold";
+    return "700";
   } else if (extrabold) {
-    return "Inter_800ExtraBold";
+    return "800";
   } else if (black) {
-    return "Inter_900Black";
+    return "900";
   }
 
   // default return regular weight
-  return "Inter_400Regular";
+  return "400";
 }
 
 export function Text(props: TextProps) {
@@ -91,7 +91,7 @@ export function Text(props: TextProps) {
         {
           fontSize: getFontSize(props),
           color,
-          fontFamily: getFontFamily(props),
+          fontWeight: getFontWeight(props),
         },
         style,
       ]}
