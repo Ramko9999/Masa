@@ -39,7 +39,7 @@ export const enum NakshatraIndex {
   Revati = 26,
 }
 
-const NAKSHATRA_NAMES = [
+export const NAKSHATRA_NAMES = [
   "Ashwini",
   "Bharani",
   "Krittika",
