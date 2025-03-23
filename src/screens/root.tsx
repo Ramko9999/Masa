@@ -69,9 +69,7 @@ export function Root() {
   }, []);
 
   if (location === null) {
-    return (
-      <LocationPermission onLocationSet={onLocationSet} />
-    );
+    return <LocationPermission onLocationSet={onLocationSet} />;
   }
 
   return (
