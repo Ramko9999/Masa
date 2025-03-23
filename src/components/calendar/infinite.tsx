@@ -1,4 +1,4 @@
-import { View } from "../../theme";
+import { View } from "@/theme";
 import { useRef, useState } from "react";
 import { FlatList, useWindowDimensions } from "react-native";
 import React from "react";

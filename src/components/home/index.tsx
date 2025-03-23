@@ -1,8 +1,8 @@
-import { truncateToDay } from "../../util/date";
+import { truncateToDay } from "@/util/date";
 import { useState } from "react";
-import { WeekCalendar } from "../calendar";
+import { WeekCalendar } from "@/components/calendar";
 import React from "react";
-import { Pachanga } from "../panchanga";
+import { Pachanga } from "@/components/panchanga";
 
 type HomeActions = {
   onTithiClick?: () => void;

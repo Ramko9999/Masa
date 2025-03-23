@@ -1,6 +1,6 @@
 import { StyleSheet, useWindowDimensions } from "react-native";
-import { View, Text } from "../../../../theme";
-import { StyleUtils } from "../../../../theme/style-utils";
+import { View, Text } from "@/theme";
+import { StyleUtils } from "@/theme/style-utils";
 import Animated, {
   useSharedValue,
   withTiming,
@@ -11,11 +11,11 @@ import Animated, {
   FadeIn,
 } from "react-native-reanimated";
 import React, { useEffect, useState } from "react";
-import { tintColor } from "../../../../util/color";
-import { AnimatedMoonInPhase, MoonInPhase } from "./util";
-import { positiveModulo } from "../../../../util/math";
-import { TITHI_NAMES } from "../../../../api/panchanga/core/tithi";
-import { ImageBackground, Base, Sig, InfoSlide } from "../util";
+import { tintColor } from "@/util/color";
+import { AnimatedMoonInPhase, MoonInPhase } from "@/components/sheets/info/tithi/util";
+import { positiveModulo } from "@/util/math";
+import { TITHI_NAMES } from "@/api/panchanga/core/tithi";
+import { ImageBackground, Base, Sig, InfoSlide } from "@/components/sheets/info/util";
 
 
 function getTithiIndexFromMoonPhase(phase: number) {

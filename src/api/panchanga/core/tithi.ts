@@ -4,9 +4,9 @@ import {
   makeIncreasingAnglesNonCircular,
   toArcSeconds,
   TOTAL_ARC_SECONDS,
-} from "../util";
+} from "@/api/panchanga/util";
 import * as Astronomy from "astronomy-engine";
-import { addDays, generateHourlyOffsets } from "../../../util/date";
+import { addDays, generateHourlyOffsets } from "@/util/date";
 
 export const enum TithiIndex {
   ShuklaPratipada = 0,

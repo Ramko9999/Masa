@@ -4,9 +4,9 @@ import {
   TouchableOpacity,
   useWindowDimensions,
 } from "react-native";
-import { View, Text } from "../theme";
-import { useGetColor } from "../theme/color";
-import { DashedBorder } from "./util/dashed-border";
+import { View, Text } from "@/theme";
+import { AppColor, useGetColor } from "@/theme/color";
+import { DashedBorder } from "@/components/util/dashed-border";
 
 const styles = StyleSheet.create({
   cardContainer: {
@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     paddingBottom: "1%",
     letterSpacing: 1,
     textTransform: "uppercase",
-    color: useGetColor("text-primary-tint-1"),
+    color: useGetColor(AppColor.tint),
   },
   mainContainer: {
     flexDirection: "row",
@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
   caption: {
     fontSize: 16,
     lineHeight: 24,
-    color: useGetColor("text-primary-tint-1"),
+    color: useGetColor(AppColor.tint),
   },
 });
 
@@ -48,7 +48,7 @@ type CardProps = {
 
 export function Card({ title, icon, mainText, caption, onClick }: CardProps) {
   const { width } = useWindowDimensions();
-  const color = useGetColor("text-primary-tint-2");
+  const color = useGetColor(AppColor.tint);
 
   return (
     <TouchableOpacity onPress={onClick}>

@@ -1,5 +1,5 @@
 import { Image, ImageSourcePropType, StyleSheet, useWindowDimensions } from "react-native";
-import { Text } from "../../../theme";
+import { Text } from "@/theme";
 
 const imageBackgroundStyles = StyleSheet.create({
     container: {

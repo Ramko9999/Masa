@@ -1,6 +1,6 @@
 
-import { View } from "../../theme";
-import { StyleUtils } from "../../theme/style-utils";
+import { View } from "@/theme";
+import { StyleUtils } from "@/theme/style-utils";
 import { StyleSheet } from "react-native";
 
 const paginationDotStyles = StyleSheet.create({

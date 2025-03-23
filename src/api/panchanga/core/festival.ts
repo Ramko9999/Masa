@@ -1,5 +1,5 @@
-import { TithiInterval, TithiIndex } from "./tithi";
-import { Masa, MasaIndex } from "./masa";
+import { TithiInterval, TithiIndex } from "@/api/panchanga/core/tithi";
+import { Masa, MasaIndex } from "@/api/panchanga/core/masa";
 
 enum RuleType {
   Lunar = "lunar",

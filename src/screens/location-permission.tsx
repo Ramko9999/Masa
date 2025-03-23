@@ -10,10 +10,10 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as Location from "expo-location";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useGetColor } from "../theme/color";
+import { AppColor, useGetColor } from "@/theme/color";
 import { Navigation } from "lucide-react-native";
-import { Text } from "../theme/index";
-import { StyleUtils } from "../theme/style-utils";
+import { Text } from "@/theme/index";
+import { StyleUtils } from "@/theme/style-utils";
 
 const LOCATION_STORAGE_KEY = "user_location";
 
@@ -79,7 +79,6 @@ export function LocationScreen({
         "Error",
         "Sorry, unable to get your location. Please try again."
       );
-      console.log(error);
     } finally {
       setIsLoading(false);
     }
@@ -87,7 +86,7 @@ export function LocationScreen({
 
   return (
     <SafeAreaView
-      style={[styles.container, { backgroundColor: useGetColor("background") }]}
+      style={[styles.container, { backgroundColor: useGetColor(AppColor.background) }]}
     >
       <View style={styles.content}>
         <Text large bold>
@@ -102,8 +101,8 @@ export function LocationScreen({
           onPress={getCurrentLocation}
         >
           <Navigation
-            stroke={useGetColor("background")}
-            fill={useGetColor("background")}
+            stroke={useGetColor(AppColor.background)}
+            fill={useGetColor(AppColor.background)}
             width={20}
             height={20}
           />
@@ -115,7 +114,7 @@ export function LocationScreen({
         {isLoading && (
           <ActivityIndicator
             size="large"
-            color={useGetColor("primary")}
+            color={useGetColor(AppColor.primary)}
             style={styles.loader}
           />
         )}
@@ -146,10 +145,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 16,
     borderRadius: 8,
-    backgroundColor: useGetColor("primary"),
+    backgroundColor: useGetColor(AppColor.primary),
   },
   locationButtonText: {
-    color: useGetColor("background"),
+    color: useGetColor(AppColor.background),
   },
   loader: {
     marginTop: 24,

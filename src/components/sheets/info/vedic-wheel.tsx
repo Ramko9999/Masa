@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { View, Dimensions } from "react-native";
 import Svg, { Circle, Path, G, Line } from "react-native-svg";
-import { Text } from "../../../theme/index";
+import { Text } from "@/theme";
 
 interface VedicWheelProps {
   size?: number;

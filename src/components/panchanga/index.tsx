@@ -1,10 +1,10 @@
 import { StyleSheet } from "react-native";
-import { computePanchanga } from "../../api/panchanga";
-import { getHumanReadableDate, truncateToDay } from "../../util/date";
-import { getLocation } from "../../api/panchanga/location";
-import { View } from "../../theme";
-import { Card } from "../card";
-import { MoonPhase } from "../moon-phase";
+import { computePanchanga } from "@/api/panchanga";
+import { getHumanReadableDate, truncateToDay } from "@/util/date";
+import { getLocation } from "@/api/panchanga/location";
+import { View } from "@/theme";
+import { Card } from "@/components/card";
+import { MoonPhase } from "@/components/moon-phase";
 
 const panchangaStyles = StyleSheet.create({
   container: {

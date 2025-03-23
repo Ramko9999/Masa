@@ -1,15 +1,15 @@
 import React from "react";
-import { View } from "../../../theme";
+import { View } from "@/theme";
 import {
   StyleSheet,
   useWindowDimensions,
   ViewabilityConfig,
 } from "react-native";
-import { StyleUtils } from "../../../theme/style-utils";
-import { Pagination } from "../../util/pagination-indicator";
+import { StyleUtils } from "@/theme/style-utils";
+import { Pagination } from "@/components/util/pagination-indicator";
 import { useCallback, useState } from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { InfoSlide } from "./util";
+import { InfoSlide } from "@/components/sheets/info/util";
 import { FlatList } from "react-native-gesture-handler";
 
 

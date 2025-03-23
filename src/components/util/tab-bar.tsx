@@ -1,7 +1,7 @@
 import React from "react";
 import { View, TouchableOpacity, StyleSheet } from "react-native";
-import { StyleUtils } from "../../theme/style-utils";
-import { useGetColor } from "../../theme/color";
+import { StyleUtils } from "@/theme/style-utils";
+import { AppColor, useGetColor } from "@/theme/color";
 import { LucideBolt, LucideCalendar, LucideHome } from "lucide-react-native";
 
 const tabStyles = StyleSheet.create({
@@ -23,12 +23,12 @@ function UpcomingTab({ onPress }: TabProps) {
       <View
         style={[
           tabStyles.container,
-          { backgroundColor: useGetColor("button-background") },
+          { backgroundColor: useGetColor(AppColor.primary) },
         ]}
       >
         <LucideBolt
           size={24}
-          color={useGetColor("button-text")}
+          color={useGetColor(AppColor.background)}
           strokeWidth={2}
         />
       </View>
@@ -42,12 +42,12 @@ function CalendarTab({ onPress }: TabProps) {
       <View
         style={[
           tabStyles.container,
-          { backgroundColor: useGetColor("button-background") },
+          { backgroundColor: useGetColor(AppColor.primary) },
         ]}
       >
         <LucideCalendar
           size={24}
-          color={useGetColor("button-text")}
+          color={useGetColor(AppColor.background)}
           strokeWidth={2}
         />
       </View>
@@ -61,12 +61,12 @@ function HomeTab({ onPress }: TabProps) {
       <View
         style={[
           tabStyles.container,
-          { backgroundColor: useGetColor("button-background") },
+          { backgroundColor: useGetColor(AppColor.primary) },
         ]}
       >
         <LucideHome
           size={24}
-          color={useGetColor("button-text")}
+          color={useGetColor(AppColor.background)}
           strokeWidth={2}
         />
       </View>

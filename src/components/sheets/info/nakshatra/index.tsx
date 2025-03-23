@@ -1,9 +1,9 @@
-import { StyleUtils } from "../../../../theme/style-utils";
+import { StyleUtils } from "@/theme/style-utils";
 import { View } from "react-native";
-import { tintColor } from "../../../../util/color";
-import { Base, ImageBackground, InfoSlide } from "../util";
-import VedicWheel from "../vedic-wheel";
-import { NAKSHATRA_NAMES } from "../../../../api/panchanga/core/nakshatra";
+import { tintColor } from "@/util/color";
+import { Base, ImageBackground, InfoSlide } from "@/components/sheets/info/util";
+import VedicWheel from "@/components/sheets/info/vedic-wheel";
+import { NAKSHATRA_NAMES } from "@/api/panchanga/core/nakshatra";
 
 const commonSlideProps = {
   backgroundColor: "#151515",

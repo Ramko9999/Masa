@@ -4,25 +4,25 @@ import {
   useWindowDimensions,
 } from "react-native";
 import React, { useEffect } from "react";
-import { StyleUtils } from "../../theme/style-utils";
-import { View, Text } from "../../theme";
+import { StyleUtils } from "@/theme/style-utils";
+import { View, Text } from "@/theme";
 import {
   addDays,
   generateEnclosingWeek,
   removeDays,
   truncateToDay,
-} from "../../util/date";
+} from "@/util/date";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { useGetColor } from "../../theme/color";
+import { AppColor, useGetColor } from "@/theme/color";
 import Animated, {
   interpolateColor,
   useAnimatedStyle,
   useSharedValue,
   withTiming,
 } from "react-native-reanimated";
-import { convertHexToRGBA } from "../../util/color";
-import { ArrayUtils } from "../../util/array";
-import { InfiniteCalendar, PAGE_LOAD_SIZE } from "./infinite";
+import { convertHexToRGBA } from "@/util/color";
+import { ArrayUtils } from "@/util/array";
+import { InfiniteCalendar, PAGE_LOAD_SIZE } from "@/components/calendar/infinite";
 
 const DAYS_OF_WEEK_ABBR = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
 const DAYS_OF_WEEK = [
@@ -56,11 +56,11 @@ type DayProps = {
 };
 
 function Day({ day, isSelected, isToday, onClick }: DayProps) {
-  const textPrimary = useGetColor("text-primary");
-  const textPrimaryTint1 = useGetColor("text-primary-tint-1");
-  const textPrimaryTint2 = useGetColor("text-primary-tint-2");
+  const textPrimary = useGetColor(AppColor.primary);
+  const textPrimaryTint1 = useGetColor(AppColor.tint);
+  const textPrimaryTint2 = useGetColor(AppColor.tint);
   const selectedBorderColor = convertHexToRGBA(textPrimaryTint2, 0.4);
-  const secondary = useGetColor("secondary");
+  const secondary = useGetColor(AppColor.accent);
   const selectionAnimation = useSharedValue(isSelected ? 1 : 0);
 
   useEffect(() => {
@@ -156,13 +156,13 @@ function CalendarTitle({ day }: CalendarTitleProps) {
         {DAYS_OF_WEEK[new Date(day).getDay()]}
       </Text>
       <View style={calendarTitleStyles.date}>
-        <Text tint1 semibold>
+        <Text tint semibold>
           {new Intl.DateTimeFormat("en-US", { month: "long" }).format(
             new Date(day)
           )}{" "}
           {new Date(day).getDate().toString().padStart(2, "0")}
         </Text>
-        <Text tint2 semibold>
+        <Text tint semibold>
           {new Date(day).getFullYear()}
         </Text>
       </View>

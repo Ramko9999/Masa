@@ -3,7 +3,7 @@ import {
   StaticParamList,
 } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import { Root } from "../screens/root";
+import { Root } from "@/screens/root";
 
 const RootStack = createStackNavigator({
   screens: {

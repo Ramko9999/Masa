@@ -7,8 +7,8 @@ import {
   makeIncreasingAnglesNonCircular,
   toArcSeconds,
   TOTAL_ARC_SECONDS,
-} from "../util";
-import { addDays, generateHourlyOffsets } from "../../../util/date";
+} from "@/api/panchanga/util";
+import { addDays, generateHourlyOffsets } from "@/util/date";
 
 const enum YogaIndex {
   Vishkambha = 0,

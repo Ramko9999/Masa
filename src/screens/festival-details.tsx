@@ -6,9 +6,9 @@ import {
   StatusBar,
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { View, Text } from "../theme";
-import { useGetColor } from "../theme/color";
-import { Festival } from "../api/panchanga/core/festival";
+import { View, Text } from "@/theme";
+import { AppColor, useGetColor } from "@/theme/color";
+import { Festival } from "@/api/panchanga/core/festival";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Ionicons } from "@expo/vector-icons";
 
@@ -48,7 +48,7 @@ export function FestivalDetails({ festival, onGoBack }: FestivalDetailsProps) {
     <View
       style={{
         flex: 1,
-        backgroundColor: useGetColor("background"),
+        backgroundColor: useGetColor(AppColor.background),
       }}
     >
       {/* Status bar with transparent background */}
@@ -93,7 +93,7 @@ export function FestivalDetails({ festival, onGoBack }: FestivalDetailsProps) {
             <Text extrabold>{festival.name}</Text>
             <Text
               style={{
-                color: useGetColor("text-primary-tint-2"),
+                color: useGetColor(AppColor.tint),
                 marginBottom: spacing,
               }}
               semibold

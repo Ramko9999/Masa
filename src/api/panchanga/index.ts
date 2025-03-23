@@ -1,12 +1,12 @@
-import { Location } from "./location";
-import * as Yoga from "./core/yoga";
-import * as Tithi from "./core/tithi";
-import * as Nakshatra from "./core/nakshatra";
-import * as Vaara from "./core/vaara";
-import * as Masa from "./core/masa";
-import * as Festival from "./core/festival";
-import { getSunrise } from "./util";
-import { truncateToDay } from "../../util/date";
+import { Location } from "@/api/panchanga/location";
+import * as Yoga from "@/api/panchanga/core/yoga";
+import * as Tithi from "@/api/panchanga/core/tithi";
+import * as Nakshatra from "@/api/panchanga/core/nakshatra";
+import * as Vaara from "@/api/panchanga/core/vaara";
+import * as Masa from "@/api/panchanga/core/masa";
+import * as Festival from "@/api/panchanga/core/festival";
+import { getSunrise } from "@/api/panchanga/util";
+import { truncateToDay } from "@/util/date";
 
 export type Panchanga = {
   tithi: Tithi.TithiInterval[];

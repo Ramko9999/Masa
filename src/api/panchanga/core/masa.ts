@@ -4,7 +4,7 @@ import {
   toArcSeconds,
   getNewMoonOccurrence,
   getFullMoonOccurrence,
-} from "../util";
+} from "@/api/panchanga/util";
 
 const LAGNA_INTERVAL_ARC_SECONDS = toArcSeconds(30);
 

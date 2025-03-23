@@ -1,12 +1,21 @@
 import { Text as DefaultText, View as DefaultView } from "react-native";
 import React from "react";
-import { useGetColor } from "./color";
+import { AppColor, useGetColor } from "@/theme/color";
 
 type TextSizeProps = {
-  xSmall?: boolean;
+  micro?: boolean;
+  xtiny?: boolean;
+  tiny?: boolean;
+  smaller?: boolean;
   small?: boolean;
+  sneutral?: boolean;
   neutral?: boolean;
+  lneutral?: boolean;
+  bneutral?: boolean;
   large?: boolean;
+  larger?: boolean;
+  big?: boolean;
+  bigger?: boolean;
 };
 
 type TextWeightProps = {
@@ -22,9 +31,10 @@ type TextWeightProps = {
 };
 
 type TextColorProps = {
+  background?: boolean;
   primary?: boolean;
-  tint1?: boolean;
-  tint2?: boolean;
+  accent?: boolean;
+  tint?: boolean;
 };
 
 type TextProps = DefaultText["props"] &
@@ -32,35 +42,58 @@ type TextProps = DefaultText["props"] &
   TextColorProps &
   TextWeightProps;
 
-function getFontSize({ xSmall, small, neutral, large }: TextSizeProps) {
-  if (xSmall) {
-    return 12;
-  } else if (small) {
-    return 16;
-  } else if (neutral) {
-    return 20;
-  } else if (large) {
-    return 28;
-  }
+function getFontSize({
+  micro,
+  xtiny,
+  tiny,
+  smaller,
+  small,
+  sneutral,
+  neutral,
+  lneutral,
+  bneutral,
+  large,
+  larger,
+  big,
+  bigger,
+}: TextSizeProps) {
+  if (micro) return 8;
+  if (xtiny) return 9.5;
+  if (tiny) return 11;
+  if (smaller) return 12;
+  if (small) return 13;
+  if (sneutral) return 14;
+  if (neutral) return 15;
+  if (lneutral) return 16;
+  if (bneutral) return 17;
+  if (large) return 18;
+  if (larger) return 20;
+  if (big) return 23;
+  if (bigger) return 26;
 
-  // default return neutral size
-  return 20;
+  return 14;
 }
 
-function getFontColor({ primary, tint1, tint2 }: TextColorProps) {
-  if (primary) {
-    return "text-primary";
-  } else if (tint1) {
-    return "text-primary-tint-1";
-  } else if (tint2) {
-    return "text-primary-tint-2";
-  }
+function getFontColor({ background, primary, accent, tint }: TextColorProps) {
+  if (background) return AppColor.background;
+  if (primary) return AppColor.primary;
+  if (accent) return AppColor.accent;
+  if (tint) return AppColor.tint;
 
-  // default return primary color
-  return "text-primary";
+  return AppColor.primary;
 }
 
-function getFontWeight({ thin, extralight, light, regular, medium, semibold, bold, extrabold, black }: TextWeightProps) {
+function getFontWeight({
+  thin,
+  extralight,
+  light,
+  regular,
+  medium,
+  semibold,
+  bold,
+  extrabold,
+  black,
+}: TextWeightProps) {
   if (thin) {
     return "100";
   } else if (extralight) {
@@ -81,7 +114,6 @@ function getFontWeight({ thin, extralight, light, regular, medium, semibold, bol
     return "900";
   }
 
-  // default return regular weight
   return "400";
 }
 

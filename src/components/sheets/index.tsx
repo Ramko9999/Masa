@@ -1,11 +1,11 @@
-import { View } from "../../theme";
+import { View } from "@/theme";
 import { StyleSheet, useWindowDimensions, ViewStyle } from "react-native";
-import { StyleUtils } from "../../theme/style-utils";
-import { BottomSheet } from "../util/sheet";
-import { SLIDES as TITHI_SLIDES } from "./info/tithi";
-import { SLIDES as YOGA_SLIDES } from "./info/yoga";
-import { SLIDES as NAKSHATRA_SLIDES } from "./info/nakshatra";
-import { SlideShow } from "./info";
+import { StyleUtils } from "@/theme/style-utils";
+import { BottomSheet } from "@/components/util/sheet";
+import { SLIDES as TITHI_SLIDES } from "@/components/sheets/info/tithi";
+import { SLIDES as YOGA_SLIDES } from "@/components/sheets/info/yoga";
+import { SLIDES as NAKSHATRA_SLIDES } from "@/components/sheets/info/nakshatra";
+import { SlideShow } from "@/components/sheets/info";
 
 const miniSheetDraggerStyles = StyleSheet.create({
   container: {

@@ -1,8 +1,8 @@
 import React from "react";
 import Svg, { Circle, Path, G } from "react-native-svg";
 import { ViewStyle } from "react-native";
-import { useGetColor } from "../theme/color";
-import { TithiInterval } from "../api/panchanga/core/tithi";
+import { AppColor, useGetColor } from "@/theme/color";
+import { TithiInterval } from "@/api/panchanga/core/tithi";
 
 export interface MoonProps {
   className?: string;
@@ -13,7 +13,7 @@ export interface MoonProps {
   scale?: number;
 }
 
-const fillColor = useGetColor("secondary");
+const fillColor = useGetColor(AppColor.accent);
 
 const Moon = ({
   style,

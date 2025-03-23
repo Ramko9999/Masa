@@ -1,6 +1,6 @@
 import * as Astronomy from "astronomy-engine";
-import { Location } from "./location";
-import { positiveModulo } from "../../util/math";
+import { Location } from "@/api/panchanga/location";
+import { positiveModulo } from "@/util/math";
 
 export const TOTAL_ARC_SECONDS = 3600 * 360;
 const MOON_SEARCH_DAYS = 30;

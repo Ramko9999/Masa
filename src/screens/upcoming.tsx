@@ -1,17 +1,14 @@
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { View, Text } from "../theme";
-import { useGetColor } from "../theme/color";
-import * as Panchanga from "../api/panchanga";
-import { getLocation } from "../api/panchanga/location";
-import { STATIC_FESTIVALS, Festival } from "../api/panchanga/core/festival";
+import { View, Text } from "@/theme";
+import { AppColor, useGetColor } from "@/theme/color";
+import { STATIC_FESTIVALS, Festival } from "@/api/panchanga/core/festival";
 import { useWindowDimensions, TouchableOpacity } from "react-native";
 import Animated, {
   SharedValue,
   useAnimatedScrollHandler,
   useSharedValue,
 } from "react-native-reanimated";
-import { useNavigation } from "@react-navigation/native";
-import { StackNavigationProp } from "@react-navigation/stack";
+
 
 const festivalImages: Record<string, any> = {
   "makar-sankranti.png": require("../../assets/festivals/makar-sankranti.png"),
@@ -35,8 +32,6 @@ const festivalImages: Record<string, any> = {
 
 function AnimatedCard({
   festival,
-  index,
-  scrollY,
   itemSize,
   spacing,
   onPress,
@@ -78,10 +73,10 @@ function AnimatedCard({
         />
         <View style={{ gap: spacing / 2 }}>
           <Text bold>{festival.name}</Text>
-          <Text numberOfLines={1} style={{ color: useGetColor("text-primary") }}>
+          <Text numberOfLines={1} style={{ color: useGetColor(AppColor.primary) }}>
             {festival.caption}
           </Text>
-          <Text bold small style={{ color: useGetColor("text-primary-tint-1") }}>
+          <Text bold small style={{ color: useGetColor(AppColor.tint) }}>
             {festival.date.toLocaleDateString("en-US", {
                 weekday: "long",
                 year: "numeric",
@@ -154,7 +149,7 @@ export function Upcoming({
     <View
       style={{
         flex: 1,
-        backgroundColor: useGetColor("background"),
+        backgroundColor: useGetColor(AppColor.background),
         paddingTop: insets.top + width * 0.05, // 5% of screen width
       }}
     >

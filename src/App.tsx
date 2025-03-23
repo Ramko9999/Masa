@@ -2,9 +2,9 @@ import { Assets as NavigationAssets } from "@react-navigation/elements";
 import { Asset } from "expo-asset";
 import * as SplashScreen from "expo-splash-screen";
 import * as React from "react";
-import { Navigation } from "./layout";
+import { Navigation } from "@/layout";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { setupNotificationListeners } from "./util/notifications";
+import { setupNotificationListeners } from "@/util/notifications";
 
 // Preload assets
 const preloadAssets = async () => {

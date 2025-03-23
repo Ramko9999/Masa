@@ -1,19 +1,19 @@
 import { useState, useEffect } from "react";
 import { ScrollView, StyleSheet } from "react-native";
 import React from "react";
-import { useGetColor } from "../theme/color";
-import { Tabs } from "../components/util/tab-bar";
-import { Home } from "../components/home";
+import { AppColor, useGetColor } from "@/theme/color";
+import { Tabs } from "@/components/util/tab-bar";
+import { Home } from "@/components/home";
 import { BlurView } from "expo-blur";
 import {
   NakshatraInfoSheet,
   TithiInfoSheet,
   YogaInfoSheet,
-} from "../components/sheets";
-import { Upcoming } from "./upcoming";
-import { FestivalDetails } from "./festival-details";
-import { Festival } from "../api/panchanga/core/festival";
-import { LocationScreen } from "./location-permission";
+} from "@/components/sheets";
+import { Upcoming } from "@/screens/upcoming";
+import { FestivalDetails } from "@/screens/festival-details";
+import { Festival } from "@/api/panchanga/core/festival";
+import { LocationScreen } from "@/screens/location-permission";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const rootStyles = StyleSheet.create({
@@ -97,7 +97,7 @@ export function Root() {
       {currentRoute === "home" && (
         <ScrollView
           style={[
-            { backgroundColor: useGetColor("background") },
+            { backgroundColor: useGetColor(AppColor.background) },
             rootStyles.container,
           ]}
         >
