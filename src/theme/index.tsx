@@ -14,6 +14,7 @@ type TextSizeProps = {
   larger?: boolean;
   big?: boolean;
   bigger?: boolean;
+  huge?: boolean;
 };
 
 type TextWeightProps = {
@@ -52,6 +53,7 @@ function getFontSize({
   larger,
   big,
   bigger,
+  huge,
 }: TextSizeProps) {
   if (micro) return 8;
   if (xtiny) return 9.5;
@@ -64,6 +66,7 @@ function getFontSize({
   if (larger) return 20;
   if (big) return 23;
   if (bigger) return 26;
+  if (huge) return 32;
 
   return 14;
 }

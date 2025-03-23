@@ -2,14 +2,14 @@ import { useState, useEffect } from "react";
 import { ScrollView, StyleSheet } from "react-native";
 import React from "react";
 import { AppColor, useGetColor } from "@/theme/color";
-import { Tabs } from "@/components/util/tab-bar";
+import { FloatingButton } from "@/components/util/floating-button";
 import { Home } from "@/components/home";
-import { BlurView } from "expo-blur";
 import {
   NakshatraInfoSheet,
   TithiInfoSheet,
   YogaInfoSheet,
 } from "@/components/sheets";
+import { View } from "@/theme/index";
 import { Upcoming } from "@/screens/upcoming";
 import { FestivalDetails } from "@/screens/festival-details";
 import { Festival } from "@/api/panchanga/core/festival";
@@ -21,13 +21,15 @@ const rootStyles = StyleSheet.create({
   container: {
     height: "100%",
     width: "100%",
-    paddingBottom: 50,
+    backgroundColor: useGetColor(AppColor.background),
   },
-  tabs: {
-    height: "10%",
+  floatingButton: {
     position: "absolute",
-    bottom: 0,
-    width: "100%",
+    bottom: 20,
+    left: 0,
+    right: 0,
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
 
@@ -75,12 +77,7 @@ export function Root() {
   return (
     <>
       {currentRoute === "home" && (
-        <ScrollView
-          style={[
-            { backgroundColor: useGetColor(AppColor.background) },
-            rootStyles.container,
-          ]}
-        >
+        <ScrollView style={rootStyles.container}>
           <Home
             actions={{
               onTithiClick: () => setShowTithiSheet(true),
@@ -95,25 +92,13 @@ export function Root() {
         <Upcoming onFestivalPress={navigateToFestivalDetails} />
       )}
 
-      {currentRoute === "festival-details" && selectedFestival && (
-        <FestivalDetails
-          festival={selectedFestival}
-          onGoBack={goBackFromFestivalDetails}
-        />
-      )}
-
       {currentRoute !== "festival-details" && currentRoute !== "location" && (
-        <BlurView
-          style={rootStyles.tabs}
-          tint="light"
-          intensity={50}
-          experimentalBlurMethod="dimezisBlurView"
-        >
-          <Tabs
-            currentRoute={currentRoute}
-            onClick={(route) => setCurrentRoute(route)}
-          />
-        </BlurView>
+        <FloatingButton
+          onClick={(newRoute) => {
+            setCurrentRoute(newRoute);
+          }}
+          currentRoute={currentRoute}
+        />
       )}
 
       <TithiInfoSheet

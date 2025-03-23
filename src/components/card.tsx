@@ -1,79 +1,70 @@
 import React from "react";
-import {
-  StyleSheet,
-  TouchableOpacity,
-  useWindowDimensions,
-} from "react-native";
+import { StyleSheet, TouchableOpacity } from "react-native";
 import { View, Text } from "@/theme";
 import { AppColor, useGetColor } from "@/theme/color";
-import { DashedBorder } from "@/components/util/dashed-border";
-
+import { StyleUtils } from "@/theme/style-utils";
 const styles = StyleSheet.create({
   cardContainer: {
+    ...StyleUtils.flexColumn(8),
     width: "100%",
-    flexDirection: "column",
     paddingVertical: "2%",
-    backgroundColor: "white",
-  },
-  cardTitle: {
-    fontSize: 16,
-    paddingBottom: "1%",
-    letterSpacing: 1,
-    textTransform: "uppercase",
-    color: useGetColor(AppColor.tint),
   },
   mainContainer: {
-    flexDirection: "row",
+    ...StyleUtils.flexRow(10),
     alignItems: "center",
-    gap: 10,
   },
-  mainText: {
-    fontSize: 32,
-    lineHeight: 38,
-  },
-  caption: {
-    fontSize: 16,
-    lineHeight: 24,
-    color: useGetColor(AppColor.tint),
+  titleContainer: {
+    ...StyleUtils.flexRow(),
+    justifyContent: "space-between",
+    alignItems: "center",
+    borderBottomWidth: 1,
+    paddingBottom: "1%",
+    borderColor: useGetColor(AppColor.tint),
   },
 });
 
 type CardProps = {
   title: string;
   icon?: React.ReactNode;
-  mainText: string;
+  mainText?: string;
   caption?: string;
   onClick?: () => void;
+  showExplainCaption?: boolean;
+  children?: React.ReactNode;
 };
 
-export function Card({ title, icon, mainText, caption, onClick }: CardProps) {
-  const { width } = useWindowDimensions();
-  const color = useGetColor(AppColor.tint);
-
+export function Card({
+  title,
+  icon,
+  mainText,
+  caption,
+  onClick,
+  showExplainCaption,
+  children,
+}: CardProps) {
   return (
-    <TouchableOpacity onPress={onClick}>
-      <DashedBorder
-        width={width * 0.94} // Adjust based on your padding
-        color={color}
-        dashLength={4}
-        dashGap={8}
-        strokeWidth={2}
-      />
+    <TouchableOpacity onPress={onClick} disabled={!onClick}>
       <View style={styles.cardContainer}>
-        <Text black style={styles.cardTitle}>
-          {title}
-        </Text>
+        <View style={styles.titleContainer}>
+          <Text bold tint large>
+            {title}
+          </Text>
+          {showExplainCaption && (
+            <Text bold accent>
+              What is this?
+            </Text>
+          )}
+        </View>
         <View style={styles.mainContainer}>
           {icon}
-          <Text bold style={styles.mainText}>
-            {mainText}
-          </Text>
+          {mainText && (
+            <Text bold huge>
+              {mainText}
+            </Text>
+          )}
         </View>
-        {caption && (
-          <Text semibold style={styles.caption}>
-            {caption}
-          </Text>
-        )}
+        {caption && <Text neutral>{caption}</Text>}
+        {children}
       </View>
     </TouchableOpacity>
   );

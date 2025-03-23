@@ -6,7 +6,9 @@ export const TOTAL_ARC_SECONDS = 3600 * 360;
 const MOON_SEARCH_DAYS = 30;
 
 function approximateAyanamsa(day: number) {
-  const yearInProgress = (day - new Date(new Date(day).getFullYear(), 0, 0).valueOf()) / (1000 * 3600 * 24 * 365)
+  const yearInProgress =
+    (day - new Date(new Date(day).getFullYear(), 0, 0).valueOf()) /
+    (1000 * 3600 * 24 * 365);
   const year = new Date(day).getFullYear() + yearInProgress;
   return Math.floor((year - 285) * 50);
 }
@@ -18,6 +20,66 @@ export function getSunrise(
   const observer = new Astronomy.Observer(latitude, longitude, 0);
   const search = Astronomy.SearchRiseSet(
     Astronomy.Body.Sun,
+    observer,
+    1,
+    new Date(day),
+    1
+  );
+
+  if (!search) {
+    throw new Error("Sunrise not found");
+  }
+
+  return search.date.valueOf();
+}
+
+export function getSunset(
+  day: number,
+  { latitude, longitude }: Location
+): number {
+  const observer = new Astronomy.Observer(latitude, longitude, 0);
+  const search = Astronomy.SearchRiseSet(
+    Astronomy.Body.Sun,
+    observer,
+    -1,
+    new Date(day),
+    1
+  );
+
+  if (!search) {
+    throw new Error("Sunset not found");
+  }
+
+  return search.date.valueOf();
+}
+
+export function getMoonrise(
+  day: number,
+  { latitude, longitude }: Location
+): number {
+  const observer = new Astronomy.Observer(latitude, longitude, 0);
+  const search = Astronomy.SearchRiseSet(
+    Astronomy.Body.Moon,
+    observer,
+    1,
+    new Date(day),
+    1
+  );
+
+  if (!search) {
+    throw new Error("Sunrise not found");
+  }
+
+  return search.date.valueOf();
+}
+
+export function getMoonset(
+  day: number,
+  { latitude, longitude }: Location
+): number {
+  const observer = new Astronomy.Observer(latitude, longitude, 0);
+  const search = Astronomy.SearchRiseSet(
+    Astronomy.Body.Moon,
     observer,
     1,
     new Date(day),

@@ -125,8 +125,9 @@ const styles = StyleSheet.create({
   locationButton: {
     ...StyleUtils.flexRow(8),
     alignItems: "center",
-    padding: 16,
-    borderRadius: 8,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderRadius: 4,
     backgroundColor: useGetColor(AppColor.primary),
   },
   loader: {

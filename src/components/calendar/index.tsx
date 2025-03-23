@@ -57,9 +57,8 @@ type DayProps = {
 
 function Day({ day, isSelected, isToday, onClick }: DayProps) {
   const textPrimary = useGetColor(AppColor.primary);
-  const textPrimaryTint1 = useGetColor(AppColor.tint);
-  const textPrimaryTint2 = useGetColor(AppColor.tint);
-  const selectedBorderColor = convertHexToRGBA(textPrimaryTint2, 0.4);
+  const textPrimaryTint = useGetColor(AppColor.tint);
+  const selectedBorderColor = convertHexToRGBA(textPrimaryTint, 0.4);
   const secondary = useGetColor(AppColor.accent);
   const selectionAnimation = useSharedValue(isSelected ? 1 : 0);
 
@@ -85,14 +84,14 @@ function Day({ day, isSelected, isToday, onClick }: DayProps) {
       }}
     >
       <Animated.View style={[dayStyles.container, animatedBorderStyle]}>
-        <Text style={[{ color: isSelected ? textPrimary : textPrimaryTint2 }]}>
+        <Text style={[{ color: isSelected ? textPrimary : textPrimaryTint }]}>
           {new Date(day).getDate()}
         </Text>
         <Text
           small
           black
           style={{
-            color: isSelected ? secondary : textPrimaryTint1,
+            color: isSelected ? secondary : textPrimaryTint,
           }}
         >
           {DAYS_OF_WEEK_ABBR[new Date(day).getDay()]}
@@ -136,7 +135,7 @@ const calendarTitleStyles = StyleSheet.create({
   container: {
     ...StyleUtils.flexRow(),
     justifyContent: "space-between",
-    alignItems: "flex-end",
+    alignItems: "center",
     paddingBottom: "2%",
   },
   date: {
@@ -152,17 +151,17 @@ type CalendarTitleProps = {
 function CalendarTitle({ day }: CalendarTitleProps) {
   return (
     <View style={calendarTitleStyles.container}>
-      <Text large bold>
+      <Text huge bold>
         {DAYS_OF_WEEK[new Date(day).getDay()]}
       </Text>
       <View style={calendarTitleStyles.date}>
-        <Text tint semibold>
+        <Text tint semibold big>
           {new Intl.DateTimeFormat("en-US", { month: "long" }).format(
             new Date(day)
           )}{" "}
           {new Date(day).getDate().toString().padStart(2, "0")}
         </Text>
-        <Text tint semibold>
+        <Text tint semibold big>
           {new Date(day).getFullYear()}
         </Text>
       </View>

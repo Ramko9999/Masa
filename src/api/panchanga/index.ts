@@ -5,7 +5,12 @@ import * as Nakshatra from "@/api/panchanga/core/nakshatra";
 import * as Vaara from "@/api/panchanga/core/vaara";
 import * as Masa from "@/api/panchanga/core/masa";
 import * as Festival from "@/api/panchanga/core/festival";
-import { getSunrise } from "@/api/panchanga/util";
+import {
+  getMoonrise,
+  getMoonset,
+  getSunrise,
+  getSunset,
+} from "@/api/panchanga/util";
 import { truncateToDay } from "@/util/date";
 
 export type Panchanga = {
@@ -17,10 +22,16 @@ export type Panchanga = {
   festivals: Festival.Festival[];
   day: number;
   sunrise: number;
+  sunset: number;
+  moonrise: number;
+  moonset: number;
 };
 
 export function computePanchanga(day: number, location: Location): Panchanga {
   const sunrise = getSunrise(day, location);
+  const sunset = getSunset(day, location);
+  const moonrise = getMoonrise(day, location);
+  const moonset = getMoonset(day, location);
   const tithi = Tithi.compute(day, sunrise);
   const nakshatra = Nakshatra.compute(day, sunrise);
   const yoga = Yoga.compute(day, sunrise);
@@ -37,6 +48,9 @@ export function computePanchanga(day: number, location: Location): Panchanga {
     masa,
     festivals,
     sunrise,
+    sunset,
+    moonrise,
+    moonset,
   };
 }
 
