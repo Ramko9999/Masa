@@ -40,7 +40,7 @@ const enum YogaIndex {
   Vaidhriti = 26,
 }
 
-const YOGA_NAMES = [
+export const YOGA_NAMES = [
   "Vishkambha",
   "Preeti",
   "Ayushman",
