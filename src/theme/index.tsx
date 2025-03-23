@@ -3,6 +3,7 @@ import React from "react";
 import { useGetColor } from "./color";
 
 type TextSizeProps = {
+  xSmall?: boolean;
   small?: boolean;
   neutral?: boolean;
   large?: boolean;
@@ -31,13 +32,15 @@ type TextProps = DefaultText["props"] &
   TextColorProps &
   TextWeightProps;
 
-function getFontSize({ small, neutral, large }: TextSizeProps) {
-  if (small) {
+function getFontSize({ xSmall, small, neutral, large }: TextSizeProps) {
+  if (xSmall) {
     return 12;
+  } else if (small) {
+    return 16;
   } else if (neutral) {
     return 20;
   } else if (large) {
-    return 42;
+    return 28;
   }
 
   // default return neutral size

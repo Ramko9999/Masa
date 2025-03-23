@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ScrollView, StyleSheet } from "react-native";
 import React from "react";
 import { useGetColor } from "../theme/color";
@@ -9,6 +9,8 @@ import { TithiInfoSheet } from "../components/sheets";
 import { Upcoming } from "./upcoming";
 import { FestivalDetails } from "./festival-details";
 import { Festival } from "../api/panchanga/core/festival";
+import { LocationScreen } from "./location-permission";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const rootStyles = StyleSheet.create({
   container: {
@@ -24,25 +26,68 @@ const rootStyles = StyleSheet.create({
   },
 });
 
-export function Root() {
-  const [currentRoute, setCurrentRoute] = useState("home");
-  const [showTithiSheet, setShowTithiSheet] = useState(false);
-  const [selectedFestival, setSelectedFestival] = useState<Festival | null>(null);
+const LOCATION_STORAGE_KEY = "user_location";
 
-  // Function to navigate to festival details
+export function Root() {
+  const [currentRoute, setCurrentRoute] = useState("location");
+  const [showTithiSheet, setShowTithiSheet] = useState(false);
+  const [selectedFestival, setSelectedFestival] = useState<Festival | null>(
+    null
+  );
+  const [userLocation, setUserLocation] = useState<{
+    latitude: number;
+    longitude: number;
+  } | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const checkSavedLocation = async () => {
+      try {
+        const savedLocationJson = await AsyncStorage.getItem(
+          LOCATION_STORAGE_KEY
+        );
+
+        if (savedLocationJson) {
+          const savedLocation = JSON.parse(savedLocationJson);
+          setUserLocation(savedLocation);
+          setCurrentRoute("home");
+        }
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    checkSavedLocation();
+  }, []);
+
+  const handleLocationSet = (location: {
+    latitude: number;
+    longitude: number;
+  }) => {
+    setUserLocation(location);
+    setCurrentRoute("home");
+  };
+
   const navigateToFestivalDetails = (festival: Festival) => {
     setSelectedFestival(festival);
     setCurrentRoute("festival-details");
   };
 
-  // Function to go back from festival details
   const goBackFromFestivalDetails = () => {
     setCurrentRoute("upcoming");
     setSelectedFestival(null);
   };
 
+  if (isLoading) {
+    return null;
+  }
+
   return (
     <>
+      {currentRoute === "location" && (
+        <LocationScreen onLocationSet={handleLocationSet} />
+      )}
+
       {currentRoute === "home" && (
         <ScrollView
           style={[
@@ -59,13 +104,13 @@ export function Root() {
       )}
 
       {currentRoute === "festival-details" && selectedFestival && (
-        <FestivalDetails 
-          festival={selectedFestival} 
-          onGoBack={goBackFromFestivalDetails} 
+        <FestivalDetails
+          festival={selectedFestival}
+          onGoBack={goBackFromFestivalDetails}
         />
       )}
 
-      {currentRoute !== "festival-details" && (
+      {currentRoute !== "festival-details" && currentRoute !== "location" && (
         <BlurView
           style={rootStyles.tabs}
           tint="light"
