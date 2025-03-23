@@ -6,6 +6,8 @@ import { Pachanga } from "../panchanga";
 
 type HomeActions = {
   onTithiClick?: () => void;
+  onYogaClick?: () => void;
+  onNakshatraClick?: () => void;
   onVaaraClick?: () => void;
   onMasaClick?: () => void;
 };
@@ -23,7 +25,9 @@ export function Home({ actions }: HomeProps) {
       <Pachanga
         onTithiClick={actions.onTithiClick}
         onVaaraClick={actions.onVaaraClick}
+        onYogaClick={actions.onYogaClick}
         onMasaClick={actions.onMasaClick}
+        onNakshatraClick={actions.onNakshatraClick}
         selectedDay={selectedDay}
       />
     </>

@@ -5,7 +5,11 @@ import { useGetColor } from "../theme/color";
 import { Tabs } from "../components/util/tab-bar";
 import { Home } from "../components/home";
 import { BlurView } from "expo-blur";
-import { TithiInfoSheet } from "../components/sheets";
+import {
+  NakshatraInfoSheet,
+  TithiInfoSheet,
+  YogaInfoSheet,
+} from "../components/sheets";
 import { Upcoming } from "./upcoming";
 import { FestivalDetails } from "./festival-details";
 import { Festival } from "../api/panchanga/core/festival";
@@ -31,6 +35,8 @@ const LOCATION_STORAGE_KEY = "user_location";
 export function Root() {
   const [currentRoute, setCurrentRoute] = useState("location");
   const [showTithiSheet, setShowTithiSheet] = useState(false);
+  const [showYogaSheet, setShowYogaSheet] = useState(false);
+  const [showNakshatraSheet, setShowNakshatraSheet] = useState(false);
   const [selectedFestival, setSelectedFestival] = useState<Festival | null>(
     null
   );
@@ -95,7 +101,13 @@ export function Root() {
             rootStyles.container,
           ]}
         >
-          <Home actions={{ onTithiClick: () => setShowTithiSheet(true) }} />
+          <Home
+            actions={{
+              onTithiClick: () => setShowTithiSheet(true),
+              onYogaClick: () => setShowYogaSheet(true),
+              onNakshatraClick: () => setShowNakshatraSheet(true),
+            }}
+          />
         </ScrollView>
       )}
 
@@ -127,6 +139,14 @@ export function Root() {
       <TithiInfoSheet
         show={showTithiSheet}
         onHide={() => setShowTithiSheet(false)}
+      />
+      <YogaInfoSheet
+        show={showYogaSheet}
+        onHide={() => setShowYogaSheet(false)}
+      />
+      <NakshatraInfoSheet
+        show={showNakshatraSheet}
+        onHide={() => setShowNakshatraSheet(false)}
       />
     </>
   );

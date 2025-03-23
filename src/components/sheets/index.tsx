@@ -1,13 +1,10 @@
-import { Text, View } from "../../theme";
-import {
-  StyleSheet,
-  useWindowDimensions,
-  Image,
-  ViewStyle,
-} from "react-native";
+import { View } from "../../theme";
+import { StyleSheet, useWindowDimensions, ViewStyle } from "react-native";
 import { StyleUtils } from "../../theme/style-utils";
 import { BottomSheet } from "../util/sheet";
 import { SLIDES as TITHI_SLIDES } from "./info/tithi";
+import { SLIDES as YOGA_SLIDES } from "./info/yoga";
+import { SLIDES as NAKSHATRA_SLIDES } from "./info/nakshatra";
 import { SlideShow } from "./info";
 
 const miniSheetDraggerStyles = StyleSheet.create({
@@ -81,9 +78,11 @@ type InfoSheetProps = {
   onHide: () => void;
 };
 
-export function TithiInfoSheet({ show, onHide }: InfoSheetProps) {
-
-
+function InfoSheetWrapper({
+  show,
+  onHide,
+  children,
+}: InfoSheetProps & { children: React.ReactNode }) {
   return (
     <MiniSheet
       show={show}
@@ -93,9 +92,31 @@ export function TithiInfoSheet({ show, onHide }: InfoSheetProps) {
         backgroundColor: "white",
       }}
     >
-      <View style={infoSheetStyles.container}>
-        <SlideShow slides={TITHI_SLIDES} />
-      </View>
+      <View style={infoSheetStyles.container}>{children}</View>
     </MiniSheet>
+  );
+}
+
+export function TithiInfoSheet({ show, onHide }: InfoSheetProps) {
+  return (
+    <InfoSheetWrapper show={show} onHide={onHide}>
+      <SlideShow slides={TITHI_SLIDES} />
+    </InfoSheetWrapper>
+  );
+}
+
+export function YogaInfoSheet({ show, onHide }: InfoSheetProps) {
+  return (
+    <InfoSheetWrapper show={show} onHide={onHide}>
+      <SlideShow slides={YOGA_SLIDES} />
+    </InfoSheetWrapper>
+  );
+}
+
+export function NakshatraInfoSheet({ show, onHide }: InfoSheetProps) {
+  return (
+    <InfoSheetWrapper show={show} onHide={onHide}>
+      <SlideShow slides={NAKSHATRA_SLIDES} />
+    </InfoSheetWrapper>
   );
 }
