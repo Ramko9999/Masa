@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import {
-  View,
   StyleSheet,
   TouchableOpacity,
   Alert,
@@ -8,32 +7,34 @@ import {
   Linking,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import * as Location from "expo-location";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as ExpoLocation from "expo-location";
+import { Location } from "@/api/panchanga/location";
 import { AppColor, useGetColor } from "@/theme/color";
 import { Navigation } from "lucide-react-native";
-import { Text } from "@/theme/index";
+import { Text, View } from "@/theme/index";
 import { StyleUtils } from "@/theme/style-utils";
+import { setLocation } from "@/store/location";
 
-const LOCATION_STORAGE_KEY = "user_location";
+type LocationPermissionProps = {
+  onLocationSet: (location: Location) => void;
+};
 
-export function LocationScreen({
-  onLocationSet,
-}: {
-  onLocationSet: (location: { latitude: number; longitude: number }) => void;
-}) {
+export function LocationPermission({ onLocationSet }: LocationPermissionProps) {
   const [isLoading, setIsLoading] = useState(false);
 
   const openSettings = () => {
     Linking.openSettings();
   };
 
-  const saveAndSetLocation = async (location: {
-    latitude: number;
-    longitude: number;
-  }) => {
-    await AsyncStorage.setItem(LOCATION_STORAGE_KEY, JSON.stringify(location));
-    onLocationSet(location);
+  const showLocationPermissionAlert = () => {
+    Alert.alert(
+      "Location Access Needed",
+      "It looks like location access is currently disabled. Please enable location access in your device settings to use the app.",
+      [
+        { text: "Not Now", style: "cancel" },
+        { text: "Open Settings", onPress: openSettings },
+      ]
+    );
   };
 
   const getCurrentLocation = async () => {
@@ -41,39 +42,29 @@ export function LocationScreen({
 
     try {
       const { status: currentStatus } =
-        await Location.getForegroundPermissionsAsync();
+        await ExpoLocation.getForegroundPermissionsAsync();
 
-      if (currentStatus === "denied") {
-        Alert.alert(
-          "Location Access Needed",
-          "It looks like location access is currently disabled. To get the most accurate calendar information for your area, please enable location access in your device settings.",
-          [
-            { text: "Not Now", style: "cancel" },
-            { text: "Open Settings", onPress: openSettings },
-          ]
-        );
+      if (currentStatus === ExpoLocation.PermissionStatus.DENIED) {
+        showLocationPermissionAlert();
         setIsLoading(false);
         return;
       }
 
-      const { status } = await Location.requestForegroundPermissionsAsync();
+      const { status } = await ExpoLocation.requestForegroundPermissionsAsync();
 
-      if (status !== "granted") {
-        Alert.alert(
-          "Location Access Needed",
-          "We need your location to provide accurate Hindu calendar information for your area.",
-          [{ text: "OK" }]
-        );
+      if (status !== ExpoLocation.PermissionStatus.GRANTED) {
+        showLocationPermissionAlert();
         setIsLoading(false);
         return;
       }
 
-      const location = await Location.getCurrentPositionAsync({
-        accuracy: Location.Accuracy.Balanced,
+      const location = await ExpoLocation.getCurrentPositionAsync({
+        accuracy: ExpoLocation.Accuracy.Balanced,
       });
       const { latitude, longitude } = location.coords;
 
-      await saveAndSetLocation({ latitude, longitude });
+      await setLocation({ latitude, longitude });
+      onLocationSet({ latitude, longitude });
     } catch (error) {
       Alert.alert(
         "Error",
@@ -85,17 +76,8 @@ export function LocationScreen({
   };
 
   return (
-    <SafeAreaView
-      style={[styles.container, { backgroundColor: useGetColor(AppColor.background) }]}
-    >
+    <SafeAreaView style={styles.container}>
       <View style={styles.content}>
-        <Text large bold>
-          Welcome to Masa
-        </Text>
-        <Text small>
-          To provide you with the most accurate calendar information for your
-          area, we need to know your location.
-        </Text>
         <TouchableOpacity
           style={styles.locationButton}
           onPress={getCurrentLocation}
@@ -106,11 +88,10 @@ export function LocationScreen({
             width={20}
             height={20}
           />
-          <Text small semibold style={styles.locationButtonText}>
+          <Text neutral semibold background>
             Use Current Location
           </Text>
         </TouchableOpacity>
-
         {isLoading && (
           <ActivityIndicator
             size="large"
@@ -118,7 +99,7 @@ export function LocationScreen({
             style={styles.loader}
           />
         )}
-        <Text small style={styles.infoText}>
+        <Text neutral style={styles.infoText}>
           Your location helps us calculate the correct dates and times for
           important Hindu festivals, auspicious days, and other calendar
           elements specific to your region.
@@ -131,6 +112,7 @@ export function LocationScreen({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: useGetColor(AppColor.background),
   },
   content: {
     ...StyleUtils.flexColumn(16),
@@ -146,9 +128,6 @@ const styles = StyleSheet.create({
     padding: 16,
     borderRadius: 8,
     backgroundColor: useGetColor(AppColor.primary),
-  },
-  locationButtonText: {
-    color: useGetColor(AppColor.background),
   },
   loader: {
     marginTop: 24,

@@ -13,8 +13,9 @@ import {
 import { Upcoming } from "@/screens/upcoming";
 import { FestivalDetails } from "@/screens/festival-details";
 import { Festival } from "@/api/panchanga/core/festival";
-import { LocationScreen } from "@/screens/location-permission";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Location } from "@/api/panchanga/location";
+import { LocationPermission } from "@/screens/location-permission";
+import { getLocation } from "@/store/location";
 
 const rootStyles = StyleSheet.create({
   container: {
@@ -30,49 +31,15 @@ const rootStyles = StyleSheet.create({
   },
 });
 
-const LOCATION_STORAGE_KEY = "user_location";
-
 export function Root() {
-  const [currentRoute, setCurrentRoute] = useState("location");
+  const [currentRoute, setCurrentRoute] = useState("home");
   const [showTithiSheet, setShowTithiSheet] = useState(false);
   const [showYogaSheet, setShowYogaSheet] = useState(false);
   const [showNakshatraSheet, setShowNakshatraSheet] = useState(false);
   const [selectedFestival, setSelectedFestival] = useState<Festival | null>(
     null
   );
-  const [userLocation, setUserLocation] = useState<{
-    latitude: number;
-    longitude: number;
-  } | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const checkSavedLocation = async () => {
-      try {
-        const savedLocationJson = await AsyncStorage.getItem(
-          LOCATION_STORAGE_KEY
-        );
-
-        if (savedLocationJson) {
-          const savedLocation = JSON.parse(savedLocationJson);
-          setUserLocation(savedLocation);
-          setCurrentRoute("home");
-        }
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    checkSavedLocation();
-  }, []);
-
-  const handleLocationSet = (location: {
-    latitude: number;
-    longitude: number;
-  }) => {
-    setUserLocation(location);
-    setCurrentRoute("home");
-  };
+  const [location, setLocation] = useState<Location | null>(null);
 
   const navigateToFestivalDetails = (festival: Festival) => {
     setSelectedFestival(festival);
@@ -84,16 +51,31 @@ export function Root() {
     setSelectedFestival(null);
   };
 
-  if (isLoading) {
-    return null;
+  const onLocationSet = (location: Location) => {
+    setLocation(location);
+    setCurrentRoute("home");
+  };
+
+  useEffect(() => {
+    const fetchLocation = async () => {
+      try {
+        const location = await getLocation();
+        setLocation(location);
+      } catch (error) {
+        setLocation(null);
+      }
+    };
+    fetchLocation();
+  }, []);
+
+  if (location === null) {
+    return (
+      <LocationPermission onLocationSet={onLocationSet} />
+    );
   }
 
   return (
     <>
-      {currentRoute === "location" && (
-        <LocationScreen onLocationSet={handleLocationSet} />
-      )}
-
       {currentRoute === "home" && (
         <ScrollView
           style={[

@@ -1,5 +1,5 @@
-import { Text as DefaultText, View as DefaultView } from "react-native";
 import React from "react";
+import { Text as DefaultText, View as DefaultView } from "react-native";
 import { AppColor, useGetColor } from "@/theme/color";
 
 type TextSizeProps = {
@@ -10,8 +10,6 @@ type TextSizeProps = {
   small?: boolean;
   sneutral?: boolean;
   neutral?: boolean;
-  lneutral?: boolean;
-  bneutral?: boolean;
   large?: boolean;
   larger?: boolean;
   big?: boolean;
@@ -50,8 +48,6 @@ function getFontSize({
   small,
   sneutral,
   neutral,
-  lneutral,
-  bneutral,
   large,
   larger,
   big,
@@ -63,9 +59,7 @@ function getFontSize({
   if (smaller) return 12;
   if (small) return 13;
   if (sneutral) return 14;
-  if (neutral) return 15;
-  if (lneutral) return 16;
-  if (bneutral) return 17;
+  if (neutral) return 16;
   if (large) return 18;
   if (larger) return 20;
   if (big) return 23;
@@ -140,3 +134,4 @@ export const View = React.forwardRef(
     return <DefaultView ref={ref} {...props} />;
   }
 );
+
