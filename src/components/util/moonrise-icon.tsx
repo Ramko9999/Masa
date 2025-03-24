@@ -10,7 +10,7 @@ interface MoonriseIconProps {
 export const MoonriseIcon: React.FC<MoonriseIconProps> = ({
   width = 24,
   height = 24,
-  fill = "white",
+  fill = "#01A9FF",
 }) => {
   return (
     <Svg width={width} height={height} viewBox="0 0 24 24" fill={fill}>

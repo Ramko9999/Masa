@@ -21,6 +21,18 @@ const panchangaStyles = StyleSheet.create({
     paddingVertical: "4%",
     marginBottom: "10%",
   },
+  rowContainer: {
+    flexDirection: "row",
+    gap: 25,
+  },
+  iconTextContainer: {
+    flexDirection: "row",
+    alignItems: "flex-end",
+    gap: 6,
+  },
+  upperCaseText: {
+    textTransform: "uppercase",
+  },
 });
 
 type PachangaProps = {
@@ -57,16 +69,14 @@ export function Pachanga({
   return (
     <View style={panchangaStyles.container}>
       <Card title="VAARA—DAY OF THE WEEK" mainText={vaara.name}>
-        <View style={{ flexDirection: "row", gap: 25 }}>
+        <View style={panchangaStyles.rowContainer}>
           <View>
             <Text bold tint>
               Sunrise
             </Text>
-            <View
-              style={{ flexDirection: "row", alignItems: "flex-end", gap: 6 }}
-            >
-              <SunriseIcon fill="#FFBF00" />
-              <Text style={{ textTransform: "uppercase" }}>
+            <View style={panchangaStyles.iconTextContainer}>
+              <SunriseIcon />
+              <Text style={panchangaStyles.upperCaseText}>
                 {getHumanReadableTime(sunrise)}
               </Text>
             </View>
@@ -75,26 +85,22 @@ export function Pachanga({
             <Text bold tint>
               Moonrise
             </Text>
-            <View
-              style={{ flexDirection: "row", alignItems: "flex-end", gap: 6 }}
-            >
-              <MoonriseIcon fill={useGetColor(AppColor.accent)} />
-              <Text style={{ textTransform: "uppercase" }}>
+            <View style={panchangaStyles.iconTextContainer}>
+              <MoonriseIcon />
+              <Text style={panchangaStyles.upperCaseText}>
                 {getHumanReadableTime(moonset)}
               </Text>
             </View>
           </View>
         </View>
-        <View style={{ flexDirection: "row", gap: 25 }}>
+        <View style={panchangaStyles.rowContainer}>
           <View>
             <Text bold tint>
               Sunset
             </Text>
-            <View
-              style={{ flexDirection: "row", alignItems: "flex-end", gap: 6 }}
-            >
-              <SunsetIcon fill="#FFBF00" />
-              <Text style={{ textTransform: "uppercase" }}>
+            <View style={panchangaStyles.iconTextContainer}>
+              <SunsetIcon />
+              <Text style={panchangaStyles.upperCaseText}>
                 {getHumanReadableTime(sunset)}
               </Text>
             </View>
@@ -103,11 +109,9 @@ export function Pachanga({
             <Text bold tint>
               Moonset
             </Text>
-            <View
-              style={{ flexDirection: "row", alignItems: "flex-end", gap: 6 }}
-            >
-              <MoonsetIcon fill={useGetColor(AppColor.accent)} />
-              <Text style={{ textTransform: "uppercase" }}>
+            <View style={panchangaStyles.iconTextContainer}>
+              <MoonsetIcon />
+              <Text style={panchangaStyles.upperCaseText}>
                 {getHumanReadableTime(moonset)}
               </Text>
             </View>

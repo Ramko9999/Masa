@@ -10,7 +10,7 @@ interface SunsetIconProps {
 export const SunsetIcon: React.FC<SunsetIconProps> = ({
   width = 24,
   height = 24,
-  fill = "white",
+  fill = "#EE9321",
 }) => {
   return (
     <Svg

@@ -10,7 +10,7 @@ interface SunriseIconProps {
 export const SunriseIcon: React.FC<SunriseIconProps> = ({
   width = 24,
   height = 24,
-  fill = "white",
+  fill = "#E9B824",
 }) => {
   return (
     <Svg
