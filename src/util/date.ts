@@ -68,7 +68,11 @@ export function getHumanReadableDate(timestamp: number) {
   return `${date} ${time}`;
 }
 
-export function getHumanReadableTime(timestamp: number) {
+export function getHumanReadableTime(timestamp: number | null) {
+  if (timestamp === null) {
+    return "N/A";
+  }
+
   return new Date(timestamp).toLocaleTimeString("default", {
     hour: "numeric",
     minute: "2-digit",

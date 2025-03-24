@@ -14,6 +14,7 @@ import { Festival } from "@/api/panchanga/core/festival";
 import { Location } from "@/api/panchanga/location";
 import { LocationPermission } from "@/screens/location-permission";
 import { getLocation } from "@/store/location";
+import { FestivalDetails } from "./festival-details";
 
 const rootStyles = StyleSheet.create({
   container: {
@@ -40,6 +41,7 @@ export function Root() {
     null
   );
   const [location, setLocation] = useState<Location | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   const navigateToFestivalDetails = (festival: Festival) => {
     setSelectedFestival(festival);
@@ -61,12 +63,18 @@ export function Root() {
       try {
         const location = await getLocation();
         setLocation(location);
+        setIsLoading(false);
       } catch (error) {
         setLocation(null);
+        setIsLoading(false);
       }
     };
     fetchLocation();
   }, []);
+
+  if (isLoading) {
+    return null;
+  }
 
   if (location === null) {
     return <LocationPermission onLocationSet={onLocationSet} />;
@@ -86,7 +94,17 @@ export function Root() {
         )}
 
         {currentRoute === "upcoming-festivals" && (
-          <UpcomingFestivals onFestivalPress={navigateToFestivalDetails} />
+          <UpcomingFestivals
+            onFestivalPress={navigateToFestivalDetails}
+            location={location}
+          />
+        )}
+
+        {currentRoute === "festival-details" && selectedFestival !== null && (
+          <FestivalDetails
+            festival={selectedFestival}
+            onGoBack={goBackFromFestivalDetails}
+          />
         )}
       </ScrollView>
 

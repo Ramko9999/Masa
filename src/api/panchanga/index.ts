@@ -21,10 +21,10 @@ export type Panchanga = {
   vaara: Vaara.Vaara;
   festivals: Festival.Festival[];
   day: number;
-  sunrise: number;
-  sunset: number;
-  moonrise: number;
-  moonset: number;
+  sunrise: number | null;
+  sunset: number | null;
+  moonrise: number | null;
+  moonset: number | null;
 };
 
 export function computePanchanga(day: number, location: Location): Panchanga {

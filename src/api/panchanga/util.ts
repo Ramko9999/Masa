@@ -27,7 +27,11 @@ export function getSunrise(
   );
 
   if (!search) {
-    throw new Error("Sunrise not found");
+    throw new Error(
+      `Sunrise not found for ${new Date(
+        day
+      ).toLocaleDateString()}, location: ${latitude}, ${longitude}`
+    );
   }
 
   return search.date.valueOf();
@@ -36,7 +40,7 @@ export function getSunrise(
 export function getSunset(
   day: number,
   { latitude, longitude }: Location
-): number {
+): number | null {
   const observer = new Astronomy.Observer(latitude, longitude, 0);
   const search = Astronomy.SearchRiseSet(
     Astronomy.Body.Sun,
@@ -47,7 +51,7 @@ export function getSunset(
   );
 
   if (!search) {
-    throw new Error("Sunset not found");
+    return null;
   }
 
   return search.date.valueOf();
@@ -56,7 +60,7 @@ export function getSunset(
 export function getMoonrise(
   day: number,
   { latitude, longitude }: Location
-): number {
+): number | null {
   const observer = new Astronomy.Observer(latitude, longitude, 0);
   const search = Astronomy.SearchRiseSet(
     Astronomy.Body.Moon,
@@ -67,7 +71,7 @@ export function getMoonrise(
   );
 
   if (!search) {
-    throw new Error("Sunrise not found");
+    return null;
   }
 
   return search.date.valueOf();
@@ -76,18 +80,18 @@ export function getMoonrise(
 export function getMoonset(
   day: number,
   { latitude, longitude }: Location
-): number {
+): number | null {
   const observer = new Astronomy.Observer(latitude, longitude, 0);
   const search = Astronomy.SearchRiseSet(
     Astronomy.Body.Moon,
     observer,
-    1,
+    -1,
     new Date(day),
     1
   );
 
   if (!search) {
-    throw new Error("Sunrise not found");
+    return null;
   }
 
   return search.date.valueOf();
