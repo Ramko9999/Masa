@@ -9,9 +9,7 @@ import {
   TithiInfoSheet,
   YogaInfoSheet,
 } from "@/components/sheets";
-import { View } from "@/theme/index";
-import { Upcoming } from "@/screens/upcoming";
-import { FestivalDetails } from "@/screens/festival-details";
+import { UpcomingFestivals } from "@/screens/upcoming-festivals";
 import { Festival } from "@/api/panchanga/core/festival";
 import { Location } from "@/api/panchanga/location";
 import { LocationPermission } from "@/screens/location-permission";
@@ -49,7 +47,7 @@ export function Root() {
   };
 
   const goBackFromFestivalDetails = () => {
-    setCurrentRoute("upcoming");
+    setCurrentRoute("upcoming-festivals");
     setSelectedFestival(null);
   };
 
@@ -76,8 +74,8 @@ export function Root() {
 
   return (
     <>
-      {currentRoute === "home" && (
-        <ScrollView style={rootStyles.container}>
+      <ScrollView style={rootStyles.container}>
+        {currentRoute === "home" && (
           <Home
             actions={{
               onTithiClick: () => setShowTithiSheet(true),
@@ -85,12 +83,12 @@ export function Root() {
               onNakshatraClick: () => setShowNakshatraSheet(true),
             }}
           />
-        </ScrollView>
-      )}
+        )}
 
-      {currentRoute === "upcoming" && (
-        <Upcoming onFestivalPress={navigateToFestivalDetails} />
-      )}
+        {currentRoute === "upcoming-festivals" && (
+          <UpcomingFestivals onFestivalPress={navigateToFestivalDetails} />
+        )}
+      </ScrollView>
 
       {currentRoute !== "festival-details" && currentRoute !== "location" && (
         <FloatingButton

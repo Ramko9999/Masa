@@ -8,28 +8,18 @@ import {
 import { getLocation } from "@/api/panchanga/location";
 import { Text, View } from "@/theme";
 import { Card } from "@/components/card";
-import { MoonPhase } from "@/components/moon-phase";
 import { StyleUtils } from "@/theme/style-utils";
-import { ChevronDown, ChevronUp } from "lucide-react-native";
+import { SunriseIcon } from "@/components/util/sunrise-icon";
 import { AppColor, useGetColor } from "@/theme/color";
+import { SunsetIcon } from "../util/sunset-icon";
+import { MoonriseIcon } from "../util/moonrise-icon";
+import { MoonsetIcon } from "../util/moonset-icon";
 
 const panchangaStyles = StyleSheet.create({
   container: {
     paddingHorizontal: "3%",
     paddingVertical: "4%",
     marginBottom: "10%",
-  },
-  labelRow: {
-    ...StyleUtils.flexRow(),
-    width: "100%",
-    justifyContent: "space-between",
-  },
-  riseAndSetLabel: {
-    width: "30%",
-  },
-  riseAndSetTimeLabel: {
-    ...StyleUtils.flexRow(),
-    alignItems: "center",
   },
 });
 
@@ -67,36 +57,65 @@ export function Pachanga({
   return (
     <View style={panchangaStyles.container}>
       <Card title="VAARA—DAY OF THE WEEK" mainText={vaara.name}>
-        <View style={panchangaStyles.labelRow}>
-          <Text bold style={panchangaStyles.riseAndSetLabel}>
-            ☀️ Sun
-          </Text>
-          <View style={panchangaStyles.riseAndSetTimeLabel}>
-            <ChevronUp fill={useGetColor(AppColor.accent)} />
-            <Text>{getHumanReadableTime(sunrise)}</Text>
+        <View style={{ flexDirection: "row", gap: 25 }}>
+          <View>
+            <Text bold tint>
+              Sunrise
+            </Text>
+            <View
+              style={{ flexDirection: "row", alignItems: "flex-end", gap: 6 }}
+            >
+              <SunriseIcon fill="#FFBF00" />
+              <Text style={{ textTransform: "uppercase" }}>
+                {getHumanReadableTime(sunrise)}
+              </Text>
+            </View>
           </View>
-          <View style={panchangaStyles.riseAndSetTimeLabel}>
-            <ChevronDown fill={useGetColor(AppColor.accent)} />
-            <Text>{getHumanReadableTime(sunset)}</Text>
+          <View>
+            <Text bold tint>
+              Moonrise
+            </Text>
+            <View
+              style={{ flexDirection: "row", alignItems: "flex-end", gap: 6 }}
+            >
+              <MoonriseIcon fill={useGetColor(AppColor.accent)} />
+              <Text style={{ textTransform: "uppercase" }}>
+                {getHumanReadableTime(moonset)}
+              </Text>
+            </View>
           </View>
         </View>
-        <View style={panchangaStyles.labelRow}>
-          <Text bold style={panchangaStyles.riseAndSetLabel}>
-            🌖 Moon
-          </Text>
-          <View style={panchangaStyles.riseAndSetTimeLabel}>
-            <ChevronUp fill={useGetColor(AppColor.accent)} />
-            <Text>{getHumanReadableTime(moonrise)}</Text>
+        <View style={{ flexDirection: "row", gap: 25 }}>
+          <View>
+            <Text bold tint>
+              Sunset
+            </Text>
+            <View
+              style={{ flexDirection: "row", alignItems: "flex-end", gap: 6 }}
+            >
+              <SunsetIcon fill="#FFBF00" />
+              <Text style={{ textTransform: "uppercase" }}>
+                {getHumanReadableTime(sunset)}
+              </Text>
+            </View>
           </View>
-          <View style={panchangaStyles.riseAndSetTimeLabel}>
-            <ChevronDown fill={useGetColor(AppColor.accent)} />
-            <Text>{getHumanReadableTime(moonset)}</Text>
+          <View>
+            <Text bold tint>
+              Moonset
+            </Text>
+            <View
+              style={{ flexDirection: "row", alignItems: "flex-end", gap: 6 }}
+            >
+              <MoonsetIcon fill={useGetColor(AppColor.accent)} />
+              <Text style={{ textTransform: "uppercase" }}>
+                {getHumanReadableTime(moonset)}
+              </Text>
+            </View>
           </View>
         </View>
       </Card>
       <Card
         title="TITHI—LUNAR DAY"
-        icon={<MoonPhase tithi={tithi[0]} width={28} height={28} />}
         mainText={tithi[0].name}
         caption={`until ${getHumanReadableDate(tithi[0].endDate)}`}
         onClick={onTithiClick}
@@ -117,12 +136,12 @@ export function Pachanga({
         showExplainCaption
       />
       <Card title="MASA—LUNAR MONTH" onClick={onMasaClick} showExplainCaption>
-        <View style={panchangaStyles.labelRow}>
+        <View>
           <Text semibold big>
             Purnimanta — {masa.purnimanta.name}
           </Text>
         </View>
-        <View style={panchangaStyles.labelRow}>
+        <View>
           <Text semibold big>
             Amanta — {masa.amanta.name}
           </Text>

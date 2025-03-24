@@ -22,7 +22,10 @@ import Animated, {
 } from "react-native-reanimated";
 import { convertHexToRGBA } from "@/util/color";
 import { ArrayUtils } from "@/util/array";
-import { InfiniteCalendar, PAGE_LOAD_SIZE } from "@/components/calendar/infinite";
+import {
+  InfiniteCalendar,
+  PAGE_LOAD_SIZE,
+} from "@/components/calendar/infinite";
 
 const DAYS_OF_WEEK_ABBR = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
 const DAYS_OF_WEEK = [
@@ -59,7 +62,6 @@ function Day({ day, isSelected, isToday, onClick }: DayProps) {
   const textPrimary = useGetColor(AppColor.primary);
   const textPrimaryTint = useGetColor(AppColor.tint);
   const selectedBorderColor = convertHexToRGBA(textPrimaryTint, 0.4);
-  const secondary = useGetColor(AppColor.accent);
   const selectionAnimation = useSharedValue(isSelected ? 1 : 0);
 
   useEffect(() => {
@@ -91,7 +93,7 @@ function Day({ day, isSelected, isToday, onClick }: DayProps) {
           small
           black
           style={{
-            color: isSelected ? secondary : textPrimaryTint,
+            color: isSelected ? textPrimary : textPrimaryTint,
           }}
         >
           {DAYS_OF_WEEK_ABBR[new Date(day).getDay()]}

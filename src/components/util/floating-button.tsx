@@ -15,11 +15,11 @@ export function FloatingButton({ currentRoute, onClick }: FloatingButtonProps) {
       <View style={styles.container}>
         <TouchableOpacity
           onPress={() => {
-            currentRoute === "upcoming" ? onClick("home") : onClick("upcoming");
+            currentRoute === "upcoming-festivals" ? onClick("home") : onClick("upcoming-festivals");
           }}
         >
           <Text semibold background>
-            {currentRoute === "upcoming" ? "Home" : "Upcoming Festivals"}
+            {currentRoute === "upcoming-festivals" ? "Home" : "Upcoming Festivals"}
           </Text>
         </TouchableOpacity>
       </View>

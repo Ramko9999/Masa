@@ -5,12 +5,12 @@ import { AppColor, useGetColor } from "@/theme/color";
 import { StyleUtils } from "@/theme/style-utils";
 const styles = StyleSheet.create({
   cardContainer: {
-    ...StyleUtils.flexColumn(8),
+    ...StyleUtils.flexColumn(4),
     width: "100%",
     paddingVertical: "2%",
   },
   mainContainer: {
-    ...StyleUtils.flexRow(10),
+    ...StyleUtils.flexRow(5),
     alignItems: "center",
   },
   titleContainer: {
@@ -18,14 +18,12 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     borderBottomWidth: 1,
-    paddingBottom: "1%",
     borderColor: useGetColor(AppColor.tint),
   },
 });
 
 type CardProps = {
   title: string;
-  icon?: React.ReactNode;
   mainText?: string;
   caption?: string;
   onClick?: () => void;
@@ -35,7 +33,6 @@ type CardProps = {
 
 export function Card({
   title,
-  icon,
   mainText,
   caption,
   onClick,
@@ -46,19 +43,18 @@ export function Card({
     <TouchableOpacity onPress={onClick} disabled={!onClick}>
       <View style={styles.cardContainer}>
         <View style={styles.titleContainer}>
-          <Text bold tint large>
+          <Text bold tint neutral>
             {title}
           </Text>
           {showExplainCaption && (
-            <Text bold accent>
+            <Text bold>
               What is this?
             </Text>
           )}
         </View>
         <View style={styles.mainContainer}>
-          {icon}
           {mainText && (
-            <Text bold huge>
+            <Text bold big>
               {mainText}
             </Text>
           )}
