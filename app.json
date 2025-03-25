@@ -4,7 +4,6 @@
     "slug": "masa",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "scheme": "masa",
@@ -14,12 +13,18 @@
       "entitlements": {
         "com.apple.security.application-groups": "group.com.anonymous.masa"
       },
-      "bundleIdentifier": "com.anonymous.masa"
+      "bundleIdentifier": "com.anonymous.masa",
+      "icon": {
+        "light": "./assets/logo/ios/light.png",
+        "dark": "./assets/logo/ios/dark.png",
+        "tinted": "./assets/logo/ios/tinted.png"
+      }
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "foregroundImage": "./assets/logo/android/adaptive.png",
+        "monochromeImage": "./assets/logo/android/adaptive.png",
+        "backgroundColor": "#000000"
       },
       "package": "com.anonymous.masa"
     },
