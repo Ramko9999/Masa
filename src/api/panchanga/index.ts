@@ -37,7 +37,7 @@ export function computePanchanga(day: number, location: Location): Panchanga {
   const yoga = Yoga.compute(day, sunrise);
   const vaara = Vaara.compute(day);
   const masa = Masa.compute(sunrise);
-  const festivals = Festival.compute(day, tithi, masa);
+  const festivals = Festival.compute(day, tithi, masa, sunrise);
 
   return {
     tithi,
