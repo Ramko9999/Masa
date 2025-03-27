@@ -5,15 +5,13 @@ import {
   getHumanReadableTime,
   truncateToDay,
 } from "@/util/date";
-import { getLocation } from "@/api/panchanga/location";
 import { Text, View } from "@/theme";
 import { Card } from "@/components/card";
-import { StyleUtils } from "@/theme/style-utils";
 import { SunriseIcon } from "@/components/util/sunrise-icon";
-import { AppColor, useGetColor } from "@/theme/color";
 import { SunsetIcon } from "../util/sunset-icon";
 import { MoonriseIcon } from "../util/moonrise-icon";
 import { MoonsetIcon } from "../util/moonset-icon";
+import { useLocation } from "@/context/location";
 
 const panchangaStyles = StyleSheet.create({
   container: {
@@ -45,6 +43,8 @@ type PachangaProps = {
   selectedDay: number;
 };
 
+
+// todo: verify moon rise and set times
 export function Pachanga({
   onTithiClick,
   onNakshatraClick,
@@ -54,6 +54,9 @@ export function Pachanga({
   onKaranaClick,
   selectedDay,
 }: PachangaProps) {
+
+  const { location } = useLocation();
+
   const {
     tithi,
     nakshatra,
@@ -64,7 +67,7 @@ export function Pachanga({
     sunset,
     moonrise,
     moonset,
-  } = computePanchanga(truncateToDay(selectedDay), getLocation());
+  } = computePanchanga(truncateToDay(selectedDay), location!);
 
   return (
     <View style={panchangaStyles.container}>
@@ -88,7 +91,7 @@ export function Pachanga({
             <View style={panchangaStyles.iconTextContainer}>
               <MoonriseIcon />
               <Text style={panchangaStyles.upperCaseText}>
-                {getHumanReadableTime(moonset)}
+                {getHumanReadableTime(moonrise)}
               </Text>
             </View>
           </View>

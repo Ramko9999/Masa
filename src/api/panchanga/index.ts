@@ -1,4 +1,4 @@
-import { Location } from "@/api/panchanga/location";
+import { Location } from "@/api/location";
 import * as Yoga from "@/api/panchanga/core/yoga";
 import * as Tithi from "@/api/panchanga/core/tithi";
 import * as Nakshatra from "@/api/panchanga/core/nakshatra";

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { ScrollView, StyleSheet } from "react-native";
 import React from "react";
 import { AppColor, useGetColor } from "@/theme/color";
@@ -11,9 +11,6 @@ import {
 } from "@/components/sheets";
 import { UpcomingFestivals } from "@/screens/upcoming-festivals";
 import { Festival } from "@/api/panchanga/core/festival";
-import { Location } from "@/api/panchanga/location";
-import { LocationPermission } from "@/screens/location-permission";
-import { getLocation } from "@/store/location";
 import { FestivalDetails } from "./festival-details";
 
 const rootStyles = StyleSheet.create({
@@ -40,8 +37,6 @@ export function Root() {
   const [selectedFestival, setSelectedFestival] = useState<Festival | null>(
     null
   );
-  const [location, setLocation] = useState<Location | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
 
   const navigateToFestivalDetails = (festival: Festival) => {
     setSelectedFestival(festival);
@@ -52,33 +47,6 @@ export function Root() {
     setCurrentRoute("upcoming-festivals");
     setSelectedFestival(null);
   };
-
-  const onLocationSet = (location: Location) => {
-    setLocation(location);
-    setCurrentRoute("home");
-  };
-
-  useEffect(() => {
-    const fetchLocation = async () => {
-      try {
-        const location = await getLocation();
-        setLocation(location);
-        setIsLoading(false);
-      } catch (error) {
-        setLocation(null);
-        setIsLoading(false);
-      }
-    };
-    fetchLocation();
-  }, []);
-
-  if (isLoading) {
-    return null;
-  }
-
-  if (location === null) {
-    return <LocationPermission onLocationSet={onLocationSet} />;
-  }
 
   return (
     <>
