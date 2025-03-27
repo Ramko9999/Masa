@@ -11,6 +11,8 @@ import {
   generateEnclosingWeek,
   removeDays,
   truncateToDay,
+  DAYS_OF_WEEK_ABBR,
+  DAYS_OF_WEEK,
 } from "@/util/date";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { AppColor, useGetColor } from "@/theme/color";
@@ -26,17 +28,6 @@ import {
   InfiniteCalendar,
   PAGE_LOAD_SIZE,
 } from "@/components/calendar/infinite";
-
-const DAYS_OF_WEEK_ABBR = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
-const DAYS_OF_WEEK = [
-  "Sunday",
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
-];
 
 const dayStyles = StyleSheet.create({
   container: {
