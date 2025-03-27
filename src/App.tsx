@@ -2,10 +2,10 @@ import { Assets as NavigationAssets } from "@react-navigation/elements";
 import { Asset } from "expo-asset";
 import * as SplashScreen from "expo-splash-screen";
 import * as React from "react";
-import { Navigation } from "@/layout";
+import { Layout } from "@/layout";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { setupNotificationListeners } from "@/util/notifications";
-
+import { LocationProvider } from "@/context/location";
 // Preload assets
 const preloadAssets = async () => {
   // Load image assets
@@ -55,8 +55,10 @@ export function App() {
   }
 
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
-      <Navigation />
+    <GestureHandlerRootView>
+      <LocationProvider>
+        <Layout />
+      </LocationProvider>
     </GestureHandlerRootView>
   );
 }
