@@ -12,6 +12,7 @@ import {
 import { UpcomingFestivals } from "@/screens/upcoming-festivals";
 import { Festival } from "@/api/panchanga/core/festival";
 import { FestivalDetails } from "./festival-details";
+import { useLocation } from "@/context/location";
 
 const rootStyles = StyleSheet.create({
   container: {
@@ -37,6 +38,7 @@ export function Root() {
   const [selectedFestival, setSelectedFestival] = useState<Festival | null>(
     null
   );
+  const { location } = useLocation();
 
   const navigateToFestivalDetails = (festival: Festival) => {
     setSelectedFestival(festival);
@@ -64,7 +66,7 @@ export function Root() {
         {currentRoute === "upcoming-festivals" && (
           <UpcomingFestivals
             onFestivalPress={navigateToFestivalDetails}
-            location={location}
+            location={location!}
           />
         )}
 
