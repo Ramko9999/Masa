@@ -4,7 +4,10 @@ import {
   toArcSeconds,
   getNewMoonOccurrence,
   getFullMoonOccurrence,
+  getSunrise,
 } from "@/api/panchanga/util";
+import { Location } from "@/api/location";
+import { addDays } from "@/util/date";
 
 const LAGNA_INTERVAL_ARC_SECONDS = toArcSeconds(30);
 
@@ -80,21 +83,26 @@ function computeAmantaMasa(sunrise: number): CalendarUnawareMasa {
   };
 }
 
+function getPurnimantaMasaFromMoonOccurence(
+  lastFullMoonOccuredAt: number,
+  nextFullMoonOccuredAt: number
+): CalendarUnawareMasa {
+  const lastSolarMonth = getLagnaIndex(lastFullMoonOccuredAt);
+  const nextSolarMonth = getLagnaIndex(nextFullMoonOccuredAt);
+
+  const isLeap = lastSolarMonth === nextSolarMonth;
+  const index = (lastSolarMonth + 2) % 12;
+  return {
+    index,
+    isLeap,
+    name: getMasaName(index, isLeap),
+  };
+}
+
 function computePurnimantaMasa(sunrise: number): CalendarUnawareMasa {
   const lastFullMoon = getFullMoonOccurrence(sunrise, true);
   const nextFullMoon = getFullMoonOccurrence(sunrise, false);
-
-  const lastSolarMonth = getLagnaIndex(lastFullMoon);
-  const nextSolarMonth = getLagnaIndex(nextFullMoon);
-
-  const isLeap = lastSolarMonth === nextSolarMonth;
-  const masaIndex = (lastSolarMonth + 2) % 12;
-
-  return {
-    index: masaIndex,
-    name: getMasaName(masaIndex, isLeap),
-    isLeap: isLeap,
-  };
+  return getPurnimantaMasaFromMoonOccurence(lastFullMoon, nextFullMoon);
 }
 
 export function compute(sunrise: number): Masa {
@@ -103,6 +111,44 @@ export function compute(sunrise: number): Masa {
 
   return {
     amanta,
-    purnimanta
+    purnimanta,
   };
+}
+
+export function getPurnimantaMasaCalendarForYear(
+  year: number,
+  location: Location
+) {
+  const firstDay = new Date(year, 0, 1);
+  const nextYear = new Date(year + 1, 0, 1);
+  const firstSunrise = getSunrise(firstDay.valueOf(), location);
+
+  const lastFullMoon = getFullMoonOccurrence(firstSunrise, true);
+  const nextFullMoon = getFullMoonOccurrence(firstSunrise, false);
+  const masa = getPurnimantaMasaFromMoonOccurence(lastFullMoon, nextFullMoon);
+
+  let currentMasaInterval = {
+    startDate: lastFullMoon,
+    endDate: nextFullMoon,
+    ...masa,
+  };
+  const masaIntervals = [currentMasaInterval];
+
+  while (currentMasaInterval.endDate < nextYear.valueOf()) {
+    const nextFullMoon = getFullMoonOccurrence(
+      addDays(currentMasaInterval.endDate, 3), // padding to get the next full moon
+      false
+    );
+    currentMasaInterval = {
+      startDate: currentMasaInterval.endDate,
+      endDate: nextFullMoon,
+      ...getPurnimantaMasaFromMoonOccurence(
+        currentMasaInterval.endDate,
+        nextFullMoon
+      ),
+    };
+    masaIntervals.push(currentMasaInterval);
+  }
+
+  return masaIntervals;
 }
