@@ -6,7 +6,7 @@ import {
 } from "react-native";
 import { StyleUtils } from "@/theme/style-utils";
 import { Location } from "@/api/location";
-import { upcomingFestivals } from "@/api/panchanga";
+import { getUpcomingFestivals } from "@/api/panchanga";
 import { truncateToDay } from "@/util/date";
 import { Card } from "@/components/card";
 const upcomingFestivalsStyles = StyleSheet.create({
@@ -28,7 +28,7 @@ export function UpcomingFestivals({
   location: Location;
 }) {
   const insets = useSafeAreaInsets();
-  const festivals = upcomingFestivals(truncateToDay(Date.now()), location);
+  const festivals = getUpcomingFestivals(truncateToDay(Date.now()), location);
 
   return (
     <View

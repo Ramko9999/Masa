@@ -182,6 +182,17 @@ export function getFullMoonOccurrence(
   return fullMoonTime.date.valueOf();
 }
 
+export function getMoonPhaseOccurence(anchorDay: number, phaseInArcSeconds: number){
+  const phaseDegrees = toDegrees(phaseInArcSeconds);
+  const moonPhase = Astronomy.SearchMoonPhase(phaseDegrees, new Date(anchorDay), MOON_SEARCH_DAYS);
+
+  if(!moonPhase){
+    throw new Error(`Could not find moon phase ${phaseDegrees} on ${new Date(anchorDay)}. This is unexpected.`);
+  }
+
+  return moonPhase.date.valueOf();
+}
+
 export function adjustForAyanamsa(day: number, longitudeInArcSeconds: number) {
   return positiveModulo(
     longitudeInArcSeconds - approximateAyanamsa(day),

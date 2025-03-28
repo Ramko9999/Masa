@@ -43,6 +43,16 @@ export function removeDays(timestamp: number, days: number) {
   return addDays(timestamp, -1 * days);
 }
 
+export function getDatesBetween(startTimestamp: number, endTimestamp: number) {
+  const dates = [];
+  const startTruncated = truncateToDay(startTimestamp);
+  const endTruncated = truncateToDay(endTimestamp);
+  for(let i = startTruncated; i <= endTruncated; i = addDays(i, 1)){
+    dates.push(i);
+  }
+  return dates;
+}
+
 export function getHumanReadableDate(timestamp: number) {
   const today = truncateToDay(Date.now());
   const truncatedTime = truncateToDay(timestamp);
