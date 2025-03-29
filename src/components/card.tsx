@@ -43,23 +43,23 @@ export function Card({
     <TouchableOpacity onPress={onClick} disabled={!onClick}>
       <View style={styles.cardContainer}>
         <View style={styles.titleContainer}>
-          <Text bold tint neutral>
+          <Text bold tint sneutral>
             {title}
           </Text>
           {showExplainCaption && (
-            <Text bold>
+            <Text smaller accent>
               What is this?
             </Text>
           )}
         </View>
         <View style={styles.mainContainer}>
           {mainText && (
-            <Text bold big>
+            <Text bold larger>
               {mainText}
             </Text>
           )}
         </View>
-        {caption && <Text neutral>{caption}</Text>}
+        {caption && <Text sneutral>{caption}</Text>}
         {children}
       </View>
     </TouchableOpacity>

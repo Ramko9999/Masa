@@ -4,11 +4,11 @@ import {
   useWindowDimensions,
   Image,
   StatusBar,
+  Pressable,
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { View, Text } from "@/theme";
 import { AppColor, useGetColor } from "@/theme/color";
-import { TouchableOpacity } from "react-native-gesture-handler";
 import { Ionicons } from "@expo/vector-icons";
 import { RootStackParamList } from "@/layout/types";
 import { StackScreenProps } from "@react-navigation/stack";
@@ -70,7 +70,7 @@ export function FestivalDetails({ navigation, route }: FestivalDetailsProps) {
           left: spacing * 3,
         }]}
       >
-        <TouchableOpacity
+        <Pressable
           onPress={navigation.goBack}
           style={{
             backgroundColor: "rgba(0, 0, 0, 0.5)",
@@ -79,7 +79,7 @@ export function FestivalDetails({ navigation, route }: FestivalDetailsProps) {
           }}
         >
           <Ionicons name="arrow-back" size={24} color="white" />
-        </TouchableOpacity>
+        </Pressable>
       </View>
 
       <ScrollView
@@ -97,14 +97,12 @@ export function FestivalDetails({ navigation, route }: FestivalDetailsProps) {
         />
         <View style={{ padding: spacing * 3 }}>
           <View>
-            <Text extrabold>{festival.name}</Text>
+            <Text bold larger>{festival.name}</Text>
             <Text
               style={{
-                color: useGetColor(AppColor.tint),
                 marginBottom: spacing,
               }}
-              semibold
-              neutral
+              bold tint sneutral
             >
               {new Date(festival.date).toLocaleDateString("en-US", {
                 weekday: "long",
@@ -116,11 +114,11 @@ export function FestivalDetails({ navigation, route }: FestivalDetailsProps) {
           </View>
           <View style={{ gap: spacing }}>
             <Text medium>About this festival</Text>
-            <Text small medium>
+            <Text small>
               {festival.description}
             </Text>
             <Text medium>How to celebrate?</Text>
-            <Text small medium>
+            <Text small>
               {festival.celebration}
             </Text>
           </View>

@@ -43,7 +43,6 @@ type PachangaProps = {
   selectedDay: number;
 };
 
-
 // todo: verify moon rise and set times
 export function Pachanga({
   onTithiClick,
@@ -54,7 +53,6 @@ export function Pachanga({
   onKaranaClick,
   selectedDay,
 }: PachangaProps) {
-
   const { location } = useLocation();
 
   const {
@@ -74,7 +72,7 @@ export function Pachanga({
       <Card title="VAARA—DAY OF THE WEEK" mainText={vaara.name}>
         <View style={panchangaStyles.rowContainer}>
           <View>
-            <Text bold tint>
+            <Text semibold tint>
               Sunrise
             </Text>
             <View style={panchangaStyles.iconTextContainer}>
@@ -85,7 +83,7 @@ export function Pachanga({
             </View>
           </View>
           <View>
-            <Text bold tint>
+            <Text semibold tint>
               Moonrise
             </Text>
             <View style={panchangaStyles.iconTextContainer}>
@@ -98,7 +96,7 @@ export function Pachanga({
         </View>
         <View style={panchangaStyles.rowContainer}>
           <View>
-            <Text bold tint>
+            <Text semibold tint>
               Sunset
             </Text>
             <View style={panchangaStyles.iconTextContainer}>
@@ -109,7 +107,7 @@ export function Pachanga({
             </View>
           </View>
           <View>
-            <Text bold tint>
+            <Text semibold tint>
               Moonset
             </Text>
             <View style={panchangaStyles.iconTextContainer}>
@@ -144,14 +142,14 @@ export function Pachanga({
       />
       <Card title="MASA—LUNAR MONTH" onClick={onMasaClick} showExplainCaption>
         <View>
-          <Text semibold large>
+          <Text semibold larger>
             Purnimanta — {masa.purnimanta.name}
-          </Text>
-        </View>
+            </Text>
+          </View>
         <View>
-          <Text semibold large>
+          <Text semibold larger>
             Amanta — {masa.amanta.name}
-          </Text>
+            </Text>
         </View>
       </Card>
     </View>

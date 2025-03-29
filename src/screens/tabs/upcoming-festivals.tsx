@@ -52,7 +52,7 @@ export function UpcomingFestivals({
                 { paddingTop: insets.top + 20 },
             ]}
         >
-            <Text bold huge>
+            <Text huge bold>
                 Upcoming Festivals
             </Text>
             <ScrollView contentContainerStyle={[upcomingFestivalsStyles.festivalsContainer, { paddingBottom: insets.bottom + 20 }]} showsVerticalScrollIndicator={false}>

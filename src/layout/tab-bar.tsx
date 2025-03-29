@@ -1,78 +1,81 @@
 import React from "react";
 import { View, Text } from "@/theme/index";
-import { StyleSheet, TouchableOpacity } from "react-native";
+import { Pressable, StyleSheet } from "react-native";
 import { BottomTabBarProps } from "@react-navigation/bottom-tabs";
 import { AppColor, useGetColor } from "@/theme/color";
-import { StyleUtils } from "@/theme/style-utils";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
+export const CustomTabBar = ({ state, navigation }: BottomTabBarProps) => {
+  const insets = useSafeAreaInsets();
+  return (
+    <View style={[styles.wrapper, { paddingBottom: insets.bottom + 20 }]}>
+      <View style={styles.container}>
+        {state.routes.map((route, index) => {
+          const isFocused = state.index === index;
 
-const customTabBarStyles = StyleSheet.create({
-    wrapper: {
-        position: "absolute",
-        bottom: 0,
-        left: 0,
-        right: 0,
-        alignItems: "center",
-        justifyContent: "center",
-        backgroundColor: 'transparent',
-        width: "100%",
-    },
-    container: {
-        ...StyleUtils.flexRow(8),
-        paddingVertical: 8,
-        paddingHorizontal: 12,
-        borderRadius: 4,
-        backgroundColor: useGetColor(AppColor.primary),
-    },
-    tab: {
-        paddingHorizontal: 12,
-        paddingVertical: 6,
-        borderRadius: 4,
-    },
-    tabText: {
-        fontSize: 14,
-        color: useGetColor(AppColor.background),
-    },
+          const onPress = () => {
+            const event = navigation.emit({
+              type: "tabPress",
+              target: route.key,
+              canPreventDefault: true,
+            });
+
+            if (!isFocused && !event.defaultPrevented) {
+              navigation.navigate(route.name);
+            }
+          };
+
+          return (
+            <Pressable
+              key={index}
+              onPress={onPress}
+              style={[styles.tab, isFocused && styles.activeTab]}
+            >
+              <Text
+                semibold
+                small
+                style={[styles.tabText, isFocused && styles.activeTabText]}
+              >
+                {route.name === "home" ? "Home" : "Upcoming Festivals"}
+              </Text>
+            </Pressable>
+          );
+        })}
+      </View>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  wrapper: {
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    right: 0,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  container: {
+    flexDirection: "row",
+    borderRadius: 30,
+    alignItems: "center",
+    justifyContent: "space-between",
+    padding: 2,
+    backgroundColor: useGetColor(AppColor.tint),
+  },
+  tab: {
+    borderRadius: 30,
+    alignItems: "center",
+    paddingVertical: 4,
+    paddingHorizontal: 12,
+  },
+  activeTab: {
+    backgroundColor: useGetColor(AppColor.primary),
+  },
+  tabText: {
+    color: useGetColor(AppColor.background),
+  },
+  activeTabText: {
+    color: useGetColor(AppColor.background),
+  },
 });
-
-export function CustomTabBar({ state, navigation, descriptors }: BottomTabBarProps) {
-    const insets = useSafeAreaInsets();
-    const currentRoute = state.routes[state.index].name;
-
-    const getTargetRoute = () => {
-        return currentRoute === "home" ? "upcoming_festivals" : "home";
-    };
-
-    const handlePress = () => {
-        navigation.navigate(getTargetRoute());
-    };
-
-    const getButtonText = () => {
-        return currentRoute === "home" ? "Upcoming Festivals" : "Home";
-    };
-
-    return (
-        <View
-            style={[
-                customTabBarStyles.wrapper,
-                { paddingBottom: insets.bottom + 20 }
-            ]}
-        >
-            <View style={customTabBarStyles.container}>
-                <TouchableOpacity
-                    onPress={handlePress}
-                    style={customTabBarStyles.tab}
-                >
-                    <Text
-                        semibold
-                        background
-                        style={customTabBarStyles.tabText}
-                    >
-                        {getButtonText()}
-                    </Text>
-                </TouchableOpacity>
-            </View>
-        </View>
-    );
-}
