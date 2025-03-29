@@ -14,15 +14,7 @@ export const CustomTabBar = ({ state, navigation }: BottomTabBarProps) => {
           const isFocused = state.index === index;
 
           const onPress = () => {
-            const event = navigation.emit({
-              type: "tabPress",
-              target: route.key,
-              canPreventDefault: true,
-            });
-
-            if (!isFocused && !event.defaultPrevented) {
-              navigation.navigate(route.name);
-            }
+            navigation.navigate(route.name);
           };
 
           return (
