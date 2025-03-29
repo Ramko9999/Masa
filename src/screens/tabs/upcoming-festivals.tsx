@@ -45,17 +45,18 @@ export function UpcomingFestivals({
         navigation.navigate("festival_details", { festival });
     }
 
+    // todo: fix scroll view
     return (
         <View
             style={[
                 upcomingFestivalsStyles.container,
-                { paddingTop: insets.top + 20 },
+                { paddingTop: insets.top + 20, paddingBottom: insets.bottom + 20 },
             ]}
         >
             <Text huge bold>
                 Upcoming Festivals
             </Text>
-            <ScrollView contentContainerStyle={[upcomingFestivalsStyles.festivalsContainer, { paddingBottom: insets.bottom + 20 }]} showsVerticalScrollIndicator={false}>
+            <ScrollView contentContainerStyle={[upcomingFestivalsStyles.festivalsContainer]} showsVerticalScrollIndicator={false}>
                 {festivals.map((festival, index) => (
                     <Card
                         key={`${festival.name}-${index}`}
