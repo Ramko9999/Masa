@@ -1,11 +1,20 @@
-import { TithiInterval, TithiIndex } from "@/api/panchanga/core/tithi";
-import { Masa, MasaIndex } from "@/api/panchanga/core/masa";
+import {
+  TithiInterval,
+  TithiIndex,
+  searchForTithi,
+} from "@/api/panchanga/core/tithi";
+import {
+  Masa,
+  MasaIndex,
+  getPurnimantaMasaCalendarForYear,
+} from "@/api/panchanga/core/masa";
+import { Location } from "@/api/location";
+import { getDatesBetween } from "@/util/date";
+import { getSunrise } from "../util";
 
 enum RuleType {
   Lunar = "lunar",
   Solar = "solar",
-  Nakshatra = "nakshatra",
-  Relative = "relative",
 }
 
 type LunarRule = {
@@ -21,19 +30,13 @@ type SolarRule = {
   masaIndex: MasaIndex;
 };
 
-type RelativeRule = {
-  type: RuleType.Relative;
-  relativeTo: FestivalName;
-  offset: number; // Days before (negative) or after (positive)
-};
-
 type FestivalRule = {
   name: FestivalName;
   caption: string;
   description: string;
   celebration: string;
   image: string;
-  rule: LunarRule | SolarRule | RelativeRule;
+  rule: LunarRule | SolarRule;
 };
 
 export enum FestivalName {
@@ -69,21 +72,6 @@ export enum FestivalName {
 }
 
 const FESTIVAL_RULES: FestivalRule[] = [
-  {
-    name: FestivalName.MakarSankranti,
-    caption: "Embracing the Sun's New Journey",
-    description:
-      "This festival marks the sun's transition into Capricorn, symbolizing longer days and the harvest season, a day to seek blessings for abundance and prosperity.",
-    celebration:
-      "Taking holy baths, flying kites, eating sesame and jaggery sweets, and performing charity.",
-    image: "makar-sankranti.png",
-    rule: {
-      type: RuleType.Solar,
-      day: 13,
-      month: 0,
-      masaIndex: MasaIndex.Chaitra,
-    },
-  },
   {
     name: FestivalName.VasantPanchami,
     caption: "A Celebration of Knowledge and Wisdom",
@@ -330,7 +318,7 @@ export type Festival = Omit<FestivalRule, "rule"> & {
 
 function isFestival(
   date: Date,
-  rule: LunarRule | SolarRule | RelativeRule,
+  rule: LunarRule | SolarRule,
   tithi: TithiInterval[],
   masa: Masa,
   sunrise: number
@@ -374,4 +362,44 @@ export function compute(
   }
 
   return festivals;
+}
+
+// todo: add makar sankranti
+export function getLunarFestivals(anchorDay: number, location: Location) {
+  const start = Date.now();
+  const year = new Date(anchorDay).getFullYear();
+  const purnimantaMasaCalendar = getPurnimantaMasaCalendarForYear(
+    year,
+    location
+  );
+
+  const lunarRuledFestivals = FESTIVAL_RULES.filter(
+    (f) => f.rule.type === RuleType.Lunar
+  );
+
+  const lunarFestivals = lunarRuledFestivals.flatMap((festival) => {
+    const lunarRule = festival.rule as LunarRule;
+    const relevantMasas = purnimantaMasaCalendar.filter(
+      ({ index }) => index === lunarRule.masaIndex
+    );
+    return relevantMasas.flatMap((masa) => {
+      const festivals: Festival[] = [];
+      const tithi = searchForTithi(masa.startDate, lunarRule.tithiIndex);
+      const tithiDates = getDatesBetween(tithi.startDate, tithi.endDate);
+      for (const date of tithiDates) {
+        const sunrise = getSunrise(date, location);
+        // assign the festival whose first day's sunrise is after the tithi's start date
+        if (tithi.startDate <= sunrise) {
+          festivals.push({ ...festival, date: new Date(date) });
+          break
+        }
+      }
+      return festivals;
+    });
+  });
+
+  console.log(
+    `[UPCOMING FESTIVALS] Time taken: ${(Date.now() - start) / 1000}s`
+  );
+  return lunarFestivals;
 }

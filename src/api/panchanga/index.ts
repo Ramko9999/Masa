@@ -11,7 +11,6 @@ import {
   getSunrise,
   getSunset,
 } from "@/api/panchanga/util";
-import { truncateToDay } from "@/util/date";
 
 export type Panchanga = {
   tithi: Tithi.TithiInterval[];
@@ -54,18 +53,6 @@ export function computePanchanga(day: number, location: Location): Panchanga {
   };
 }
 
-export function upcomingFestivals(day: number, location: Location) {
-  const currentDate = new Date(day);
-  const endDate = new Date(currentDate.getFullYear(), 11, 31);
-
-  const festivals: Festival.Festival[] = [];
-
-  while (currentDate < endDate) {
-    const currentDateMs = truncateToDay(currentDate.getTime());
-    const panchanga = computePanchanga(currentDateMs, location);
-    festivals.push(...panchanga.festivals);
-    currentDate.setDate(currentDate.getDate() + 1);
-  }
-
-  return festivals.sort((a, b) => a.date.getTime() - b.date.getTime());
+export function getUpcomingFestivals(anchorDay: number, location: Location) {
+  return Festival.getLunarFestivals(anchorDay, location);
 }

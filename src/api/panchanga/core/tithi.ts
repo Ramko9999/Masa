@@ -1,4 +1,5 @@
 import {
+  getMoonPhaseOccurence,
   inverseLagrangianInterpolation,
   makeDecreasingAnglesNonCircular,
   makeIncreasingAnglesNonCircular,
@@ -212,13 +213,13 @@ export function compute(day: number, sunrise: number): TithiInterval[] {
       currentTithi.endDate,
       (currentTithi.index + 1) % 30
     );
-    tithis.push({...currentTithi});
+    tithis.push({ ...currentTithi });
   }
 
   return tithis.filter(({ endDate }) => endDate >= sunrise);
 }
 
-function getTithiInterval(startDate: number, tithiIndex: number) {
+function getTithiInterval(startDate: number, tithiIndex: number): TithiInterval {
   const endDate = getTithiEnd(tithiIndex, startDate);
   return {
     startDate,
@@ -227,4 +228,12 @@ function getTithiInterval(startDate: number, tithiIndex: number) {
     name: TITHI_NAMES[tithiIndex],
     karana: computeKarana(startDate, endDate, tithiIndex),
   };
+}
+
+export function searchForTithi(since: number, tithiIndex: number) {
+  const tithiStart = getMoonPhaseOccurence(
+    since,
+    tithiIndex * TITHI_INTERVAL_ARC_SECONDS
+  );
+  return getTithiInterval(tithiStart, tithiIndex);
 }
