@@ -8,6 +8,8 @@ const styles = StyleSheet.create({
     ...StyleUtils.flexColumn(4),
     width: "100%",
     paddingVertical: "2%",
+    borderColor: useGetColor(AppColor.border),
+    borderTopWidth: 1,
   },
   mainContainer: {
     ...StyleUtils.flexRow(5),
@@ -16,9 +18,7 @@ const styles = StyleSheet.create({
   titleContainer: {
     ...StyleUtils.flexRow(),
     justifyContent: "space-between",
-    alignItems: "center",
-    borderBottomWidth: 1,
-    borderColor: useGetColor(AppColor.tint),
+    alignItems: "center"
   },
 });
 

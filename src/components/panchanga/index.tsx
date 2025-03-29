@@ -144,12 +144,12 @@ export function Pachanga({
       />
       <Card title="MASA—LUNAR MONTH" onClick={onMasaClick} showExplainCaption>
         <View>
-          <Text semibold big>
+          <Text semibold large>
             Purnimanta — {masa.purnimanta.name}
           </Text>
         </View>
         <View>
-          <Text semibold big>
+          <Text semibold large>
             Amanta — {masa.amanta.name}
           </Text>
         </View>

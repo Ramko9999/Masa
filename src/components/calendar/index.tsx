@@ -52,7 +52,7 @@ type DayProps = {
 function Day({ day, isSelected, isToday, onClick }: DayProps) {
   const textPrimary = useGetColor(AppColor.primary);
   const textPrimaryTint = useGetColor(AppColor.tint);
-  const selectedBorderColor = convertHexToRGBA(textPrimaryTint, 0.4);
+  const selectedBorderColor = useGetColor(AppColor.border);
   const selectionAnimation = useSharedValue(isSelected ? 1 : 0);
 
   useEffect(() => {
@@ -82,7 +82,7 @@ function Day({ day, isSelected, isToday, onClick }: DayProps) {
         </Text>
         <Text
           small
-          black
+          bold
           style={{
             color: isSelected ? textPrimary : textPrimaryTint,
           }}
