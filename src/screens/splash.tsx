@@ -38,9 +38,9 @@ export function Splash({ navigation }: SplashProps) {
     const onAnimationComplete = () => {
         if (shouldAnimateLogo) {
             if (hasLocationPermission) {
-                navigation.navigate("root");
+                navigation.replace("tabs", { screen: "home" });
             } else {
-                navigation.navigate("location_permission");
+                navigation.replace("location_permission");
             }
         }
     }

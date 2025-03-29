@@ -8,9 +8,11 @@ import {
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { View, Text } from "@/theme";
 import { AppColor, useGetColor } from "@/theme/color";
-import { Festival } from "@/api/panchanga/core/festival";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Ionicons } from "@expo/vector-icons";
+import { RootStackParamList } from "@/layout/types";
+import { StackScreenProps } from "@react-navigation/stack";
+import { StyleSheet } from "react-native";
 
 // Import the same festival images from upcoming.tsx
 const festivalImages: Record<string, any> = {
@@ -33,38 +35,43 @@ const festivalImages: Record<string, any> = {
   "diwali.png": require("../../assets/festivals/diwali.png"),
 };
 
-type FestivalDetailsProps = {
-  festival: Festival;
-  onGoBack: () => void;
-};
+const festivalDetailsStyles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: useGetColor(AppColor.background),
+  },
+  back: {
+    position: "absolute",
+    zIndex: 10
+  }
+});
 
-export function FestivalDetails({ festival, onGoBack }: FestivalDetailsProps) {
+type FestivalDetailsProps = StackScreenProps<RootStackParamList, "festival_details">
+
+export function FestivalDetails({ navigation, route }: FestivalDetailsProps) {
+  const { festival } = route.params;
   const insets = useSafeAreaInsets();
   const { width, height } = useWindowDimensions();
   const spacing = width * 0.02;
   const imageHeight = height * 0.6;
 
+  // todo: only add the scroll view to the text and not the image
+  // todo: seeing the back button jarringly move from top to bottom on initial render
   return (
     <View
-      style={{
-        flex: 1,
-        backgroundColor: useGetColor(AppColor.background),
-      }}
+      style={festivalDetailsStyles.container}
     >
-      {/* Status bar with transparent background */}
       <StatusBar translucent backgroundColor="transparent" />
 
       {/* Back button overlay - fixed position */}
       <View
-        style={{
-          position: "absolute",
+        style={[festivalDetailsStyles.back, {
           top: insets.top + spacing,
           left: spacing * 3,
-          zIndex: 10,
-        }}
+        }]}
       >
         <TouchableOpacity
-          onPress={onGoBack}
+          onPress={navigation.goBack}
           style={{
             backgroundColor: "rgba(0, 0, 0, 0.5)",
             borderRadius: 20,
@@ -99,7 +106,7 @@ export function FestivalDetails({ festival, onGoBack }: FestivalDetailsProps) {
               semibold
               neutral
             >
-              {festival.date.toLocaleDateString("en-US", {
+              {new Date(festival.date).toLocaleDateString("en-US", {
                 weekday: "long",
                 year: "numeric",
                 month: "long",
