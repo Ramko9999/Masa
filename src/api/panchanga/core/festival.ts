@@ -313,7 +313,7 @@ const FESTIVAL_RULES: FestivalRule[] = [
 ];
 
 export type Festival = Omit<FestivalRule, "rule"> & {
-  date: Date;
+  date: number;
 };
 
 function isFestival(
@@ -357,7 +357,7 @@ export function compute(
   for (const festival of FESTIVAL_RULES) {
     if (isFestival(date, festival.rule, tithi, masa, sunrise)) {
       const { rule, ...festivalWithoutRule } = festival;
-      festivals.push({ ...festivalWithoutRule, date });
+      festivals.push({ ...festivalWithoutRule, date: day });
     }
   }
 
@@ -390,8 +390,8 @@ export function getLunarFestivals(anchorDay: number, location: Location) {
         const sunrise = getSunrise(date, location);
         // assign the festival whose first day's sunrise is after the tithi's start date
         if (tithi.startDate <= sunrise) {
-          festivals.push({ ...festival, date: new Date(date) });
-          break
+          festivals.push({ ...festival, date });
+          break;
         }
       }
       return festivals;

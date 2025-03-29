@@ -66,7 +66,7 @@ export function LocationPermission({ navigation }: LocationPermissionProps) {
         if (permission.granted) {
             const location = await readDeviceLocation();
             setLocation(location);
-            navigation.navigate("root");
+            navigation.replace("tabs", { screen: "home" });
         } else {
             showLocationPermissionDisabledAlert();
         }
