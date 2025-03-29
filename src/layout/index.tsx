@@ -10,6 +10,7 @@ import { UpcomingFestivals } from "@/screens/tabs/upcoming-festivals";
 import { FestivalDetails } from "@/screens/festival-details";
 import { Home } from "@/screens/tabs/home";
 import { CustomTabBar } from './tab-bar';
+import { SystemBars } from "react-native-edge-to-edge";
 
 const Stack = createStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator<TabParamList>();
@@ -51,6 +52,7 @@ export function Layout() {
         <Stack.Screen name="festival_details" component={FestivalDetails} />
         <Stack.Screen name="location_permission" component={LocationPermission} />
       </Stack.Navigator>
+      <SystemBars style="dark" />
     </NavigationContainer>
   )
 }

@@ -3,7 +3,6 @@ import {
   ScrollView,
   useWindowDimensions,
   Image,
-  StatusBar,
   Pressable,
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -13,6 +12,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { RootStackParamList } from "@/layout/types";
 import { StackScreenProps } from "@react-navigation/stack";
 import { StyleSheet } from "react-native";
+import { SystemBars } from "react-native-edge-to-edge";
 
 // Import the same festival images from upcoming.tsx
 const festivalImages: Record<string, any> = {
@@ -56,12 +56,11 @@ export function FestivalDetails({ navigation, route }: FestivalDetailsProps) {
   const imageHeight = height * 0.6;
 
   // todo: only add the scroll view to the text and not the image
-  // todo: seeing the back button jarringly move from top to bottom on initial render
   return (
     <View
       style={festivalDetailsStyles.container}
     >
-      <StatusBar translucent backgroundColor="transparent" />
+      <SystemBars style="light" />
 
       {/* Back button overlay - fixed position */}
       <View
