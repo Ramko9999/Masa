@@ -73,21 +73,6 @@ export enum FestivalName {
 
 const FESTIVAL_RULES: FestivalRule[] = [
   {
-    name: FestivalName.MakarSankranti,
-    caption: "Embracing the Sun's New Journey",
-    description:
-      "This festival marks the sun's transition into Capricorn, symbolizing longer days and the harvest season, a day to seek blessings for abundance and prosperity.",
-    celebration:
-      "Taking holy baths, flying kites, eating sesame and jaggery sweets, and performing charity.",
-    image: "makar-sankranti.png",
-    rule: {
-      type: RuleType.Solar,
-      day: 13,
-      month: 0,
-      masaIndex: MasaIndex.Chaitra,
-    },
-  },
-  {
     name: FestivalName.VasantPanchami,
     caption: "A Celebration of Knowledge and Wisdom",
     description:
@@ -335,12 +320,17 @@ function isFestival(
   date: Date,
   rule: LunarRule | SolarRule,
   tithi: TithiInterval[],
-  masa: Masa
+  masa: Masa,
+  sunrise: number
 ) {
   if (rule.type === RuleType.Lunar) {
     return (
-      tithi.some((t) => t.index === rule.tithiIndex) &&
-      masa.purnimanta.index === rule.masaIndex
+      tithi.some(
+        (t) =>
+          t.index === rule.tithiIndex &&
+          t.startDate <= sunrise &&
+          t.endDate >= sunrise
+      ) && masa.purnimanta.index === rule.masaIndex
     );
   } else if (rule.type === RuleType.Solar) {
     const month = date.getMonth();
@@ -355,12 +345,17 @@ function isFestival(
   return false;
 }
 
-export function compute(day: number, tithi: TithiInterval[], masa: Masa) {
+export function compute(
+  day: number,
+  tithi: TithiInterval[],
+  masa: Masa,
+  sunrise: number
+) {
   const date = new Date(day);
   const festivals: Festival[] = [];
 
   for (const festival of FESTIVAL_RULES) {
-    if (isFestival(date, festival.rule, tithi, masa)) {
+    if (isFestival(date, festival.rule, tithi, masa, sunrise)) {
       const { rule, ...festivalWithoutRule } = festival;
       festivals.push({ ...festivalWithoutRule, date });
     }

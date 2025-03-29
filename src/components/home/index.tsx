@@ -3,6 +3,7 @@ import { useState } from "react";
 import { WeekCalendar } from "@/components/calendar";
 import React from "react";
 import { Pachanga } from "@/components/panchanga";
+import { CalendarMonth } from "../calendar/month";
 
 type HomeActions = {
   onTithiClick?: () => void;
@@ -22,6 +23,7 @@ export function Home({ actions }: HomeProps) {
   return (
     <>
       <WeekCalendar selectedDay={selectedDay} onSelectDay={setSelectedDay} />
+      <CalendarMonth />
       <Pachanga
         onTithiClick={actions.onTithiClick}
         onVaaraClick={actions.onVaaraClick}
