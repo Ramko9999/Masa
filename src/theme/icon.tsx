@@ -8,6 +8,8 @@ import Animated, {
     Easing,
     runOnJS,
 } from 'react-native-reanimated';
+import { StyleSheet } from "react-native";
+import { View } from "@/theme";
 
 const LOGO_SVG_XML = `
     <svg
@@ -217,4 +219,25 @@ export function SplashLogo({ shouldAnimate, onAnimationComplete }: SplashLogoPro
                 fill="black" />
         </Svg>
     );
+}
+
+const sheetDraggerStyles = StyleSheet.create({
+    container: {
+        width: 90,
+        height: 4,
+        backgroundColor: "white",
+        borderRadius: 10,
+        position: "absolute",
+        top: 5,
+        left: "50%",
+        transform: [{ translateX: -45 }],
+    },
+});
+
+type SheetDraggerProps = {
+    color?: string;
+}
+
+export function SheetDragger({ color }: SheetDraggerProps) {
+    return <View style={[sheetDraggerStyles.container, { backgroundColor: color }]} />;
 }
