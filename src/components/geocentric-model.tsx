@@ -1,6 +1,12 @@
 import { AppColor, useGetColor } from "@/theme/color";
-import React, { useState } from "react";
-import { View, StyleSheet, Dimensions, Pressable } from "react-native";
+import React from "react";
+import {
+  View,
+  StyleSheet,
+  Dimensions,
+  Pressable,
+  TextInput,
+} from "react-native";
 import Svg, {
   Circle,
   Defs,
@@ -8,9 +14,20 @@ import Svg, {
   Filter,
   Text as SvgText,
 } from "react-native-svg";
-import { Text } from "@/theme/index";
+import { getFontSize, Text } from "@/theme/index";
 import { TITHI_NAMES, TithiIndex } from "@/api/panchanga/core/tithi";
-import { TithiNameToComponent } from "./moon-phase";
+import { MoonPhase } from "./moon-phase";
+import Animated, {
+  useSharedValue,
+  useAnimatedProps,
+  useDerivedValue
+} from "react-native-reanimated";
+
+// Create animated components
+const AnimatedCircle = Animated.createAnimatedComponent(Circle);
+Animated.addWhitelistedNativeProps({ text: true });
+const AnimatedTextInput = Animated.createAnimatedComponent(TextInput);
+const AnimatedMoonPhase = Animated.createAnimatedComponent(MoonPhase);
 
 interface GeocentricModelProps {
   // Optional initial angle for testing
@@ -25,63 +42,111 @@ const GeocentricModel: React.FC<GeocentricModelProps> = ({
   const centerX = size / 2;
   const centerY = size / 2;
 
-  // State to track the simulation time and running state
-  const [time, setTime] = useState(initialAngle);
-  const [isRunning, setIsRunning] = useState(true);
+  // Use shared value for time
+  const time = useSharedValue(initialAngle);
 
-  // Motion constants - updated to realistic proportions
-  // Sun moves ~1° per day (360° in ~365 days)
-  // Moon moves ~13.176° per day relative to fixed stars (360° in ~27.3 days)
-  // For a synodic month (new moon to new moon), moon needs to complete 360° + the degrees sun moved
-  // This is ~29.53 days for a complete cycle of moon phases
-
-  // For simulation purposes:
-  // - 1 second represents 1 day
-  // - Sun moves 1° per "day" (0.1° per animation frame at 10fps)
-  // - Moon moves ~13.176° per "day" relative to the sun (1.3176° per animation frame)
-  //   This gives exactly 30 tithis in 29.53 days (a synodic month)
+  // Motion constants
   const sunSpeed = 0.1; // degrees per animation frame (1° per simulated "day")
   const moonRelativeSpeed = 1.3176; // Updated Moon's speed relative to Sun (13.176° per simulated "day")
   const moonSpeed = sunSpeed + moonRelativeSpeed; // Absolute moon speed
 
-  // Calculate raw angles
-  const sunAngleDeg = (time * sunSpeed) % 360;
-  const moonAngleDeg = (time * moonSpeed) % 360;
+  // Use useDerivedValue to reactively compute values based on time
+  const sunAngleDeg = useDerivedValue(() => (time.value * sunSpeed) % 360);
+  const moonAngleDeg = useDerivedValue(() => (time.value * moonSpeed) % 360);
 
-  // Calculate angles in radians for positioning
-  const sunAngleRad = sunAngleDeg * (Math.PI / 180);
-  const moonAngleRad = moonAngleDeg * (Math.PI / 180);
+  const sunAngleRad = useDerivedValue(
+    () => sunAngleDeg.value * (Math.PI / 180)
+  );
+  const moonAngleRad = useDerivedValue(
+    () => moonAngleDeg.value * (Math.PI / 180)
+  );
 
-  // Calculate positions
-  const sunX = centerX + Math.cos(sunAngleRad) * size * 0.4;
-  const sunY = centerY + Math.sin(sunAngleRad) * size * 0.4;
-  const moonX = centerX + Math.cos(moonAngleRad) * size * 0.2;
-  const moonY = centerY + Math.sin(moonAngleRad) * size * 0.2;
+  // Calculate positions with useDerivedValue
+  const sunX = useDerivedValue(
+    () => centerX + Math.cos(sunAngleRad.value) * size * 0.4
+  );
+  const sunY = useDerivedValue(
+    () => centerY + Math.sin(sunAngleRad.value) * size * 0.4
+  );
+  const moonX = useDerivedValue(
+    () => centerX + Math.cos(moonAngleRad.value) * size * 0.2
+  );
+  const moonY = useDerivedValue(
+    () => centerY + Math.sin(moonAngleRad.value) * size * 0.2
+  );
+  const moonSunAngleDegrees = useDerivedValue(() => {
+    return (moonAngleDeg.value - sunAngleDeg.value + 360) % 360;
+  });
 
-  // Calculate current tithi (0-29)
-  const moonSunAngleDegrees = (moonAngleDeg - sunAngleDeg + 360) % 360;
-  const currentTithiIndex = Math.floor(moonSunAngleDegrees / 12) % 30;
+  // Set up animated props for the sun
+  const sunProps = useAnimatedProps(() => {
+    return {
+      cx: sunX.value,
+      cy: sunY.value,
+    };
+  });
 
-  // Map the calculated tithi index (0-29) to the corresponding TithiIndex enum value
-  // TithiIndex has ShuklaPratipada at 0 and Amavasya at 29
-  let tithiIndexEnum: TithiIndex;
+  // Set up animated props for the moon
+  const moonProps = useAnimatedProps(() => {
+    return {
+      cx: moonX.value,
+      cy: moonY.value,
+    };
+  });
 
-  // This mapping ensures that when angle is near 0, we show Amavasya (which is at TithiIndex.Amavasya = 29)
-  // and for angles closer to 12 degrees, we show ShuklaPratipada (TithiIndex.ShuklaPratipada = 0)
-  if (currentTithiIndex === 0) {
-    tithiIndexEnum = TithiIndex.Amavasya;
-  } else if (currentTithiIndex === 1) {
-    tithiIndexEnum = TithiIndex.ShuklaPratipada;
-  } else {
-    // For other values, we need to subtract 1 since our angle calculation gives index 1 for ShuklaPratipada
-    tithiIndexEnum = (currentTithiIndex - 1) as TithiIndex;
-  }
+  const sunAngleTextProps = useAnimatedProps(() => {
+    return {
+      text: `Sun: ${Math.round(sunAngleDeg.value)}°`,
+      defaultValue: "Sun: 0°",
+    };
+  });
 
-  // Get tithi name from the actual TITHI_NAMES array
-  const tithiName = TITHI_NAMES[tithiIndexEnum];
+  const moonAngleTextProps = useAnimatedProps(() => {
+    return {
+      text: `Moon: ${Math.round(moonAngleDeg.value)}°`,
+      defaultValue: "Moon: 0°",
+    };
+  });
 
-  // Get the correct moon phase component based on the tithi enum
-  const MoonPhaseComponent = TithiNameToComponent[tithiIndexEnum];
+  const tithiIndex = useDerivedValue(() => {
+    const currentTithiIndex = Math.floor(moonSunAngleDegrees.value / 12) % 30;
+    if (currentTithiIndex === 0) {
+      return TithiIndex.Amavasya;
+    } else if (currentTithiIndex === 1) {
+      return TithiIndex.ShuklaPratipada;
+    } else {
+      return (currentTithiIndex - 1) as TithiIndex;
+    }
+  });
+
+  const tithiNameTextProps = useAnimatedProps(() => {
+    return {
+      text: TITHI_NAMES[tithiIndex.value],
+      defaultValue: TITHI_NAMES[TithiIndex.Amavasya],
+    };
+  });
+
+  const handleNext = () => {
+    time.set((value) => {
+      //   return withTiming(value + 10, {
+      //     duration: 2000,
+      //     easing: Easing.in(Easing.bezierFn(0.25, 0.1, 0.25, 1)),
+      //     reduceMotion: ReduceMotion.System,
+      //   });
+      return value + 10;
+    });
+  };
+
+  const handlePrevious = () => {
+    time.set((value) => {
+      //   return withTiming(value - 10, {
+      //     duration: 2000,
+      //     easing: Easing.in(Easing.bezierFn(0.25, 0.1, 0.25, 1)),
+      //     reduceMotion: ReduceMotion.System,
+      //   });
+      return value - 10;
+    });
+  };
 
   return (
     <View style={styles.container}>
@@ -91,7 +156,7 @@ const GeocentricModel: React.FC<GeocentricModelProps> = ({
           cx={centerX}
           cy={centerY}
           r={size * 0.4}
-          stroke="#999"
+          stroke={useGetColor(AppColor.tint)}
           strokeWidth="1"
           strokeDasharray="5,5"
           fill="transparent"
@@ -100,36 +165,28 @@ const GeocentricModel: React.FC<GeocentricModelProps> = ({
           cx={centerX}
           cy={centerY}
           r={size * 0.2}
-          stroke="#999"
+          stroke={useGetColor(AppColor.tint)}
           strokeWidth="1"
           strokeDasharray="5,5"
           fill="transparent"
         />
 
-        {/* Earth, Sun, and Moon */}
-
         {/* Define filters for glow effects */}
         <Defs>
-          {/* Sun glow */}
           <Filter id="sunGlow" x="-50%" y="-50%" width="200%" height="200%">
             <FeGaussianBlur in="SourceGraphic" stdDeviation="3" />
           </Filter>
-
-          {/* Earth glow */}
           <Filter id="earthGlow" x="-50%" y="-50%" width="200%" height="200%">
             <FeGaussianBlur in="SourceGraphic" stdDeviation="2" />
           </Filter>
-
-          {/* Moon glow */}
           <Filter id="moonGlow" x="-50%" y="-50%" width="200%" height="200%">
             <FeGaussianBlur in="SourceGraphic" stdDeviation="1.5" />
           </Filter>
         </Defs>
 
         {/* Background elements for glow */}
-        <Circle
-          cx={sunX}
-          cy={sunY}
+        <AnimatedCircle
+          animatedProps={sunProps}
           r={18}
           fill="orange"
           opacity="0.5"
@@ -143,19 +200,18 @@ const GeocentricModel: React.FC<GeocentricModelProps> = ({
           opacity="0.5"
           filter="url(#earthGlow)"
         />
-        <Circle
-          cx={moonX}
-          cy={moonY}
+        <AnimatedCircle
+          animatedProps={moonProps}
           r={9}
           fill="#999"
           opacity="0.5"
           filter="url(#moonGlow)"
         />
 
-        {/* Main celestial bodies with gradient fills */}
+        {/* Main celestial bodies */}
         <Circle cx={centerX} cy={centerY} r={10} fill="deepskyblue" />
-        <Circle cx={sunX} cy={sunY} r={15} fill="orange" />
-        <Circle cx={moonX} cy={moonY} r={7.5} fill="#999" />
+        <AnimatedCircle animatedProps={sunProps} r={15} fill="orange" />
+        <AnimatedCircle animatedProps={moonProps} r={7.5} fill="#999" />
 
         {/* Degree markings */}
         {[...Array(12)].map((_, i) => {
@@ -177,39 +233,42 @@ const GeocentricModel: React.FC<GeocentricModelProps> = ({
           );
         })}
       </Svg>
-
-      {/* Information section with vertical layout */}
-      <View style={styles.angleInfoContainer}>
-        <Text tint small>{`Sun: ${Math.round(sunAngleDeg)}°`}</Text>
-        <Text tint small>{`Moon: ${Math.round(moonAngleDeg)}°`}</Text>
-        <Text tint small>{`Moon-Sun: ${Math.round(
-          moonSunAngleDegrees
-        )}°`}</Text>
-      </View>
-      <View style={styles.tithiInfoContainer}>
-        {/* Text block first */}
-        <View style={styles.tithiNameContainer}>
-          <Text tint bold neutral>
-            {tithiName}
-          </Text>
-        </View>
-        {/* Moon phase after the text block */}
-        <View style={styles.moonPhaseContainer}>
-          {MoonPhaseComponent && <MoonPhaseComponent width={60} height={60} />}
-        </View>
+      <View style={{ flexDirection: "row", gap: 10 }}>
+        <AnimatedTextInput
+          style={{
+            color: useGetColor(AppColor.tint),
+            fontSize: getFontSize({ small: true }),
+          }}
+          animatedProps={sunAngleTextProps}
+          editable={false}
+        />
+        <AnimatedTextInput
+          style={{
+            color: useGetColor(AppColor.tint),
+            fontSize: getFontSize({ small: true }),
+          }}
+          animatedProps={moonAngleTextProps}
+          editable={false}
+        />
       </View>
       <View>
-        <Pressable
-          onPress={() => setTime((prev) => prev + 10)}
-          style={({ pressed }) => [{ opacity: pressed ? 0.5 : 1 }]}
-        >
-          <Text tint>Next</Text>
-        </Pressable>
-        <Pressable
-          onPress={() => setTime((prev) => prev - 10)}
-          style={({ pressed }) => [{ opacity: pressed ? 0.5 : 1 }]}
-        >
+        <AnimatedTextInput
+          animatedProps={tithiNameTextProps}
+          style={{
+            color: useGetColor(AppColor.tint),
+            fontWeight: "bold",
+            fontSize: getFontSize({ neutral: true }),
+          }}
+          editable={false}
+        />
+        <AnimatedMoonPhase tithiIndex={tithiIndex.value} width={80} height={80} />
+      </View>
+      <View style={styles.controlsContainer}>
+        <Pressable onPress={handlePrevious}>
           <Text tint>Previous</Text>
+        </Pressable>
+        <Pressable onPress={handleNext}>
+          <Text tint>Next</Text>
         </Pressable>
       </View>
     </View>
@@ -223,26 +282,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingVertical: 10,
   },
-  angleInfoContainer: {
+  controlsContainer: {
     flexDirection: "row",
-    gap: 10,
-  },
-  tithiInfoContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 10,
-    width: "100%",
-  },
-  tithiNameContainer: {
-    width: "50%",
-    textAlign: "left",
-    alignItems: "flex-end",
-  },
-  moonPhaseContainer: {
-    width: 80,
-    height: 80,
-    alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "space-between",
+    width: "60%",
+    marginTop: 10,
   },
 });
 

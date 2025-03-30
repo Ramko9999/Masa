@@ -1,4 +1,4 @@
-import React from "react";
+import React, { forwardRef } from "react";
 import Svg, { Circle, Path } from "react-native-svg";
 import { StyleProp, ViewStyle } from "react-native";
 import { TithiIndex } from "@/api/panchanga/core/tithi";
@@ -9,28 +9,49 @@ export interface MoonProps {
   width?: number;
   height?: number;
   style?: StyleProp<ViewStyle>;
+  tithiIndex?: TithiIndex;
 }
 
-export const Moon: React.FC<MoonProps & { children?: React.ReactNode }> = ({
-  width = 96,
-  height = 96,
-  style,
-  children,
-  ...props
-}) => {
-  return (
-    <Svg
-      width={width}
-      height={height}
-      viewBox="0 0 200 200"
-      fill={useGetColor(AppColor.tint)}
-      style={style}
-      {...props}
-    >
-      {children}
-    </Svg>
-  );
-};
+interface MoonPhaseProps extends MoonProps {
+  tithiIndex: TithiIndex;
+}
+
+export const Moon = forwardRef<React.ComponentRef<typeof Svg>, MoonProps & { children?: React.ReactNode }>(
+  ({ width = 96, height = 96, style, children, ...props }, ref) => {
+    return (
+      <Svg
+        ref={ref}
+        width={width}
+        height={height}
+        viewBox="0 0 200 200"
+        fill={useGetColor(AppColor.tint)}
+        style={style}
+        {...props}
+      >
+        {children}
+      </Svg>
+    );
+  }
+);
+
+export const MoonPhase = forwardRef<React.ComponentRef<typeof Svg>, MoonPhaseProps>(
+  ({ tithiIndex, width, height, style, ...props }, ref) => {
+    const Component = TithiNameToComponent[tithiIndex];
+    console.log(tithiIndex, Component);
+    
+    return (
+      <Moon
+        ref={ref}
+        width={width}
+        height={height}
+        style={style}
+        {...props}
+      >
+        <Component />
+      </Moon>
+    );
+  }
+);
 
 export const Tithi1 = (props: MoonProps) => (
   <Moon {...props}>
