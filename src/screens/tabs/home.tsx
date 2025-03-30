@@ -1,26 +1,25 @@
-import { truncateToDay } from "@/util/date";
-import { useState } from "react";
-import { WeekCalendar } from "@/components/calendar";
-import React from "react";
+import { WeekCalendar } from "@/components/calendar/week";
+import React, { useState } from "react";
 import { Pachanga } from "@/components/panchanga";
 import { NakshatraInfoSheet, TithiInfoSheet, YogaInfoSheet } from "@/components/sheets";
+import { useCalendar } from "@/components/calendar/context";
 
 export function Home() {
-    const [selectedDay, setSelectedDay] = useState(truncateToDay(Date.now()));
+    const { selection } = useCalendar();
     const [showTithiSheet, setShowTithiSheet] = useState(false);
     const [showYogaSheet, setShowYogaSheet] = useState(false);
     const [showNakshatraSheet, setShowNakshatraSheet] = useState(false);
 
     return (
         <>
-            <WeekCalendar selectedDay={selectedDay} onSelectDay={setSelectedDay} />
+            <WeekCalendar />
             <Pachanga
                 onTithiClick={() => setShowTithiSheet(true)}
                 onVaaraClick={() => { }}
                 onYogaClick={() => setShowYogaSheet(true)}
                 onMasaClick={() => { }}
                 onNakshatraClick={() => setShowNakshatraSheet(true)}
-                selectedDay={selectedDay}
+                selectedDay={selection.date}
             />
             <TithiInfoSheet
                 show={showTithiSheet}

@@ -47,7 +47,7 @@ export function getDatesBetween(startTimestamp: number, endTimestamp: number) {
   const dates = [];
   const startTruncated = truncateToDay(startTimestamp);
   const endTruncated = truncateToDay(endTimestamp);
-  for(let i = startTruncated; i <= endTruncated; i = addDays(i, 1)){
+  for (let i = startTruncated; i <= endTruncated; i = addDays(i, 1)) {
     dates.push(i);
   }
   return dates;
@@ -112,34 +112,26 @@ export function formatMonthYear(date: Date): string {
 }
 
 /**
- * Check if two dates represent the same day
- */
-export function isSameDay(date1: Date | null, date2: Date | null): boolean {
-  if (!date1 || !date2) return false;
-  return (
-    date1.getDate() === date2.getDate() &&
-    date1.getMonth() === date2.getMonth() &&
-    date1.getFullYear() === date2.getFullYear()
-  );
-}
-
-/**
  * Generate an array representing days in a month with proper padding for calendar display
  */
-export function generateCalendarDays(year: number, month: number): (number | null)[] {
+export function generateCalendarDays(
+  year: number,
+  month: number
+): (number | null)[] {
   const daysInMonth = getDaysInMonth(year, month);
-  const firstDay = getFirstDayOfMonth(year, month);
+  const firstDayOfWeek = getFirstDayOfMonth(year, month);
+  const firstDay = new Date(year, month, 1).valueOf();
 
   const days: (number | null)[] = [];
 
   // Add empty cells for days before the start of the month
-  for (let i = 0; i < firstDay; i++) {
+  for (let i = 0; i < firstDayOfWeek; i++) {
     days.push(null);
   }
 
   // Add days of the month
-  for (let i = 1; i <= daysInMonth; i++) {
-    days.push(i);
+  for (let i = 0; i < daysInMonth; i++) {
+    days.push(addDays(firstDay, i));
   }
 
   // Add empty cells to complete grid if needed
@@ -154,7 +146,9 @@ export function generateCalendarDays(year: number, month: number): (number | nul
 /**
  * Group an array of days into weeks for calendar display
  */
-export function groupIntoWeeks(daysArray: (number | null)[]): (number | null)[][] {
+export function groupIntoWeeks(
+  daysArray: (number | null)[]
+): (number | null)[][] {
   const weeks = [];
   for (let i = 0; i < daysArray.length; i += 7) {
     weeks.push(daysArray.slice(i, i + 7));
@@ -162,7 +156,15 @@ export function groupIntoWeeks(daysArray: (number | null)[]): (number | null)[][
   return weeks;
 }
 
-export const DAYS_OF_WEEK_ABBR = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
+export const DAYS_OF_WEEK_ABBR = [
+  "SUN",
+  "MON",
+  "TUE",
+  "WED",
+  "THU",
+  "FRI",
+  "SAT",
+];
 export const DAYS_OF_WEEK = [
   "Sunday",
   "Monday",
