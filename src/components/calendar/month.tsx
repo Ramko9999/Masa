@@ -259,7 +259,7 @@ export function MonthCalendar({ onFinishDayClick }: MonthCalendarProps) {
   const { selection, setSelection } = useCalendar();
   const [data, _] = useState<MonthData[]>(generateMonthsData(Date.now()));
   const [dataIndex, setDataIndex] = useState(
-    findIndexThatContainsDate(data, Date.now())
+    findIndexThatContainsDate(data, selection.date)
   );
   const flatListRef = useRef<FlatList<MonthData>>(null);
 
