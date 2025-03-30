@@ -175,6 +175,8 @@ const weekCalendarStyles = StyleSheet.create({
     },
 });
 
+
+// todo: make the scrolling smoother on android
 export function WeekCalendar() {
     const insets = useSafeAreaInsets();
     const { width } = useWindowDimensions();
