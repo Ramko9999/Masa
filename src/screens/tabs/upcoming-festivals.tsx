@@ -19,7 +19,7 @@ import { useLocation } from "@/context/location";
 const upcomingFestivalsStyles = StyleSheet.create({
     container: {
         ...StyleUtils.flexColumn(),
-        paddingHorizontal: "3%",
+        paddingHorizontal: "3%"
     },
     festivalsContainer: {
         paddingVertical: "4%",
@@ -52,7 +52,7 @@ export function UpcomingFestivals({
                 { paddingTop: insets.top + 20 },
             ]}
         >
-            <Text huge bold>
+            <Text huge bold style={{ paddingBottom: "2%" }}>
                 Upcoming Festivals
             </Text>
             <ScrollView contentContainerStyle={[upcomingFestivalsStyles.festivalsContainer, { paddingBottom: insets.bottom + 20 }]} showsVerticalScrollIndicator={false}>
