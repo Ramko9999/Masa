@@ -241,3 +241,125 @@ type SheetDraggerProps = {
 export function SheetDragger({ color }: SheetDraggerProps) {
     return <View style={[sheetDraggerStyles.container, { backgroundColor: color }]} />;
 }
+
+
+type RiseSetIconProps = {   
+    width?: number;
+    height?: number;
+    fill?: string;
+}
+
+export const SunsetIcon: React.FC<RiseSetIconProps> = ({
+    width = 24,
+    height = 24,
+    fill = "#EE9321",
+}) => {
+    return (
+      <Svg
+        width={width}
+        height={height}
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke={fill}
+        strokeWidth={2}
+        strokeLinecap="round"   
+        strokeLinejoin="round"
+      >
+        <Path d="M12 10V2" />
+        <Path d="m4.93 10.93 1.41 1.41" />
+        <Path d="M2 18h2" />
+        <Path d="M20 18h2" />
+        <Path d="m19.07 10.93-1.41 1.41" />
+        <Path d="M22 22H2" />
+        <Path d="m16 6-4 4-4-4" />
+        <Path d="M16 18a4 4 0 0 0-8 0" />
+      </Svg>
+    );
+  };
+
+  export const SunriseIcon: React.FC<RiseSetIconProps> = ({
+    width = 24,
+    height = 24,
+    fill = "#E9B824",
+  }) => {
+    return (
+      <Svg
+        width={width}
+        height={height}
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke={fill}
+        strokeWidth={2}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <Path d="M12 2v8" />
+        <Path d="m4.93 10.93 1.41 1.41" />
+        <Path d="M2 18h2" />
+        <Path d="M20 18h2" />
+        <Path d="m19.07 10.93-1.41 1.41" />
+        <Path d="M22 22H2" />
+        <Path d="m8 6 4-4 4 4" />
+        <Path d="M16 18a4 4 0 0 0-8 0" />
+      </Svg>
+    );
+  };
+  
+  export const MoonriseIcon: React.FC<RiseSetIconProps> = ({
+    width = 24,
+    height = 24,
+    fill = "#01A9FF",
+  }) => {
+    return (
+      <Svg width={width} height={height} viewBox="0 0 24 24" fill={fill}>
+        <Path d="M9.36 3.293a1 1 0 0 1 .187 1.157A7.45 7.45 0 0 0 19.55 14.453a1 1 0 0 1 1.343 1.343 9.45 9.45 0 1 1-12.69-12.69 1 1 0 0 1 1.158.187zM6.823 6.67A7.45 7.45 0 0 0 17.33 17.179 9.45 9.45 0 0 1 6.821 6.67z" />
+  
+        <Path
+          d="M17 2v8"
+          stroke={fill}
+          strokeWidth={2}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          fill="none"
+        />
+        <Path
+          d="m13 6 4-4 4 4"
+          stroke={fill}
+          strokeWidth={2}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          fill="none"
+        />
+      </Svg>
+    );
+  };
+  
+  export const MoonsetIcon: React.FC<RiseSetIconProps> = ({
+    width = 24,
+    height = 24,
+    fill = "#6F60C0",
+  }) => {
+    return (
+      <Svg width={width} height={height} viewBox="0 0 24 24" fill={fill}>
+        <Path d="M9.36 3.293a1 1 0 0 1 .187 1.157A7.45 7.45 0 0 0 19.55 14.453a1 1 0 0 1 1.343 1.343 9.45 9.45 0 1 1-12.69-12.69 1 1 0 0 1 1.158.187zM6.823 6.67A7.45 7.45 0 0 0 17.33 17.179 9.45 9.45 0 0 1 6.821 6.67z" />
+  
+        <Path
+          d="M17 12v-8"
+          stroke={fill}
+          strokeWidth={2}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          fill="none"
+        />
+        <Path
+          d="m13 8 4 4 4-4"
+          stroke={fill}
+          strokeWidth={2}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          fill="none"
+        />
+      </Svg>
+    );
+  };
+  

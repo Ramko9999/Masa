@@ -11,4 +11,5 @@ export type RootStackParamList = {
     location_permission: undefined;
     tabs: NavigatorScreenParams<TabParamList>;
     festival_details: { festival: Festival };
+    intro: undefined;
 }

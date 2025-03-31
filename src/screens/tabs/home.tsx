@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Pachanga } from "@/components/panchanga";
 import { NakshatraInfoSheet, TithiInfoSheet, YogaInfoSheet } from "@/components/sheets";
 import { useCalendar } from "@/components/calendar/context";
-import { Intro } from "@/components/models/intro";
+
 export function Home() {
     const { selection } = useCalendar();
     const [showTithiSheet, setShowTithiSheet] = useState(false);
@@ -13,7 +13,6 @@ export function Home() {
     return (
         <>
             <WeekCalendar />
-            <Intro />
             <Pachanga
                 onTithiClick={() => setShowTithiSheet(true)}
                 onVaaraClick={() => { }}

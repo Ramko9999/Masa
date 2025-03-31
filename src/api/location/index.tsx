@@ -1,4 +1,4 @@
-import * as LocationApi from "expo-location";
+import { getForegroundPermissionsAsync, getCurrentPositionAsync, Accuracy, LocationPermissionResponse } from "expo-location";
 
 export type Location = {
     latitude: number;
@@ -10,14 +10,20 @@ export const BANGALORE: Location = {
     longitude: 77.594,
 }
 
-export async function getLocationPermissionStatus(): Promise<LocationApi.LocationPermissionResponse> {
-    return await LocationApi.getForegroundPermissionsAsync();
+async function getLocationPermissionStatus(): Promise<LocationPermissionResponse> {
+    return await getForegroundPermissionsAsync();
 }
 
 // assumes that the permission has already been granted
-export async function readDeviceLocation(): Promise<Location> {
-    const { coords } = await LocationApi.getCurrentPositionAsync({
-        accuracy: LocationApi.Accuracy.Lowest,
+async function readDeviceLocation(): Promise<Location> {
+    const { coords } = await getCurrentPositionAsync({
+        accuracy: Accuracy.Lowest,
     });
     return coords;
+}
+
+
+export const LocationApi = {
+    getLocationPermissionStatus,
+    readDeviceLocation,
 }

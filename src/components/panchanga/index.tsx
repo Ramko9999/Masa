@@ -7,10 +7,7 @@ import {
 } from "@/util/date";
 import { Text, View } from "@/theme";
 import { Card } from "@/components/card";
-import { SunriseIcon } from "@/components/util/sunrise-icon";
-import { SunsetIcon } from "../util/sunset-icon";
-import { MoonriseIcon } from "../util/moonrise-icon";
-import { MoonsetIcon } from "../util/moonset-icon";
+import { SunriseIcon, SunsetIcon, MoonriseIcon, MoonsetIcon } from "@/theme/icon";
 import { useLocation } from "@/context/location";
 
 const panchangaStyles = StyleSheet.create({
