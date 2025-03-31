@@ -1,0 +1,19 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+
+Please refer to the following when creating new React components
+
+1. Each component should have its own stylesheet and props type if it requires styles or/and props. The order of definitions in code should be: stylesheet, props and then the component. The name of the stylesheet should be the components name with the first letter lowercase and with "Styles" postpended. The props type should be the component name with "Props" postpended.
+
+For example, if we created a component <Week/>, its stylesheet would be `weekStyles` and its props type would be `WeekProps`. 
+
+2. Leverage the utilies in [style-utils.tsx](mdc:src/theme/style-utils.tsx) whenever defining flex layouts in the style sheets. 
+
+3. Always use <View/> and <Text/> from  [index.tsx](mdc:src/theme/index.tsx).
+
+4. When specifying fontSize, fontWeight or color for <Text/> try to leverage the premade weights, sizes, and colors in @style-utils.tsx instead of defining a new style with those attributes. For example, if you want to create bold text that is big with the primary color, you can simply add that style via <Text big bold primary/> or whatever the values exist for TextWeightProps, TextSizeProps, TextColorProps.
+
+5. When specifying padding or margins, try to use percentiles instead of absolute values.
