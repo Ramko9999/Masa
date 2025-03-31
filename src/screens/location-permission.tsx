@@ -12,7 +12,7 @@ import { LocationApi } from "@/api/location";
 import { useState } from "react";
 
 const LOCATION_TITLE = "One last thing";
-const LOCATION_SUBTEXT = "Your location helps us calculate the correct calendar elements and festival timings.";
+const LOCATION_SUBTEXT = "We need your location to calculate the correct calendar elements and festival timings for your region.";
 
 const newLocationPermissionStyles = StyleSheet.create({
     container: {
