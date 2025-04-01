@@ -1,7 +1,7 @@
 import {
   NavigationContainer,
 } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Splash } from "@/screens/splash";
 import { RootStackParamList, TabParamList } from "./types";
 import { LocationPermission } from "@/screens/location-permission";
@@ -13,7 +13,7 @@ import { CustomTabBar } from './tab-bar';
 import { SystemBars } from "react-native-edge-to-edge";
 import { Intro } from "@/screens/intro";
 
-const Stack = createStackNavigator<RootStackParamList>();
+const Stack = createNativeStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator<TabParamList>();
 
 function Tabs() {
