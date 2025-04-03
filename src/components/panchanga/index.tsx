@@ -13,7 +13,6 @@ import { useLocation } from "@/context/location";
 const panchangaStyles = StyleSheet.create({
   container: {
     paddingHorizontal: "3%",
-    paddingVertical: "4%",
     marginBottom: "10%",
   },
   rowContainer: {
