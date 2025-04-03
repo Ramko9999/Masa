@@ -7,6 +7,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { setupNotificationListeners } from "@/util/notifications";
 import { LocationProvider } from "@/context/location";
 import { CalendarProvider } from "@/components/calendar";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 // Preload assets
 const preloadAssets = async () => {
   // Load image assets
@@ -56,12 +57,14 @@ export function App() {
   }
 
   return (
-    <GestureHandlerRootView>
-      <LocationProvider>
-        <CalendarProvider>
-          <Layout />
-        </CalendarProvider>
-      </LocationProvider>
-    </GestureHandlerRootView>
+    <SafeAreaProvider>
+      <GestureHandlerRootView>
+        <LocationProvider>
+          <CalendarProvider>
+            <Layout />
+          </CalendarProvider>
+        </LocationProvider>
+      </GestureHandlerRootView>
+    </SafeAreaProvider>
   );
 }

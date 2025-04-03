@@ -1,38 +1,42 @@
 import { WeekCalendar } from "@/components/calendar/week";
 import React, { useState } from "react";
 import { Pachanga } from "@/components/panchanga";
-import { NakshatraInfoSheet, TithiInfoSheet, YogaInfoSheet } from "@/components/sheets";
+import {
+  NakshatraInfoSheet,
+  TithiInfoSheet,
+  YogaInfoSheet,
+} from "@/components/sheets";
 import { useCalendar } from "@/components/calendar/context";
 
 export function Home() {
-    const { selection } = useCalendar();
-    const [showTithiSheet, setShowTithiSheet] = useState(false);
-    const [showYogaSheet, setShowYogaSheet] = useState(false);
-    const [showNakshatraSheet, setShowNakshatraSheet] = useState(false);
+  const { selection } = useCalendar();
+  const [showTithiSheet, setShowTithiSheet] = useState(false);
+  const [showYogaSheet, setShowYogaSheet] = useState(false);
+  const [showNakshatraSheet, setShowNakshatraSheet] = useState(false);
 
-    return (
-        <>
-            <WeekCalendar />
-            <Pachanga
-                onTithiClick={() => setShowTithiSheet(true)}
-                onVaaraClick={() => { }}
-                onYogaClick={() => setShowYogaSheet(true)}
-                onMasaClick={() => { }}
-                onNakshatraClick={() => setShowNakshatraSheet(true)}
-                selectedDay={selection.date}
-            />
-            <TithiInfoSheet
-                show={showTithiSheet}
-                onHide={() => setShowTithiSheet(false)}
-            />
-            <YogaInfoSheet
-                show={showYogaSheet}
-                onHide={() => setShowYogaSheet(false)}
-            />
-            <NakshatraInfoSheet
-                show={showNakshatraSheet}
-                onHide={() => setShowNakshatraSheet(false)}
-            />
-        </>
-    );
+  return (
+    <>
+      <WeekCalendar />
+      <Pachanga
+        onTithiClick={() => setShowTithiSheet(true)}
+        onVaaraClick={() => {}}
+        onYogaClick={() => setShowYogaSheet(true)}
+        onMasaClick={() => {}}
+        onNakshatraClick={() => setShowNakshatraSheet(true)}
+        selectedDay={selection.date}
+      />
+      <TithiInfoSheet
+        show={showTithiSheet}
+        onHide={() => setShowTithiSheet(false)}
+      />
+      <YogaInfoSheet
+        show={showYogaSheet}
+        onHide={() => setShowYogaSheet(false)}
+      />
+      <NakshatraInfoSheet
+        show={showNakshatraSheet}
+        onHide={() => setShowNakshatraSheet(false)}
+      />
+    </>
+  );
 }

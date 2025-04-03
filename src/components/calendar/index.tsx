@@ -1,13 +1,9 @@
-import {
-  StyleSheet,
-} from "react-native";
+import { StyleSheet, useWindowDimensions } from "react-native";
 import React, { useState, useRef } from "react";
-import {
-  truncateToDay,
-} from "@/util/date";
-import { MiniSheet, MiniSheetRef } from "@/components/util/sheet/mini";
+import { truncateToDay } from "@/util/date";
 import { MonthCalendar } from "./month";
 import { CalendarContext, Selection } from "./context";
+import { BottomSheet, BottomSheetRef } from "../util/sheet";
 
 const calendarProviderStyles = StyleSheet.create({
   monthCalendarSheet: {
@@ -15,30 +11,42 @@ const calendarProviderStyles = StyleSheet.create({
     borderTopRightRadius: 20,
     flex: 1,
     overflow: "hidden",
-    backgroundColor: "white"
-  }
-})
+    backgroundColor: "white",
+  },
+});
 
 export function CalendarProvider({ children }: { children: React.ReactNode }) {
   const [selection, setSelection] = useState<Selection>({
     date: truncateToDay(Date.now()),
-    lastEditedBy: "week"
+    lastEditedBy: "week",
   });
-  const miniSheetRef = useRef<MiniSheetRef>(null);
+  const { height } = useWindowDimensions();
+  const bottomSheetRef = useRef<BottomSheetRef>(null);
 
   const [isMonthCalendarOpen, setIsMonthCalendarOpen] = useState(false);
 
   const openMonthCalendar = () => {
     setIsMonthCalendarOpen(true);
-  }
+  };
 
   return (
-    <CalendarContext.Provider value={{ selection, setSelection, openMonthCalendar }}>
+    <CalendarContext.Provider
+      value={{ selection, setSelection, openMonthCalendar }}
+    >
       <>
         {children}
-        <MiniSheet ref={miniSheetRef} show={isMonthCalendarOpen} onHide={() => setIsMonthCalendarOpen(false)} contentStyle={calendarProviderStyles.monthCalendarSheet}>
-          <MonthCalendar onFinishDayClick={() => miniSheetRef.current?.hide()} />
-        </MiniSheet>
+        <BottomSheet
+          ref={bottomSheetRef}
+          show={isMonthCalendarOpen}
+          onHide={() => setIsMonthCalendarOpen(false)}
+          contentStyle={calendarProviderStyles.monthCalendarSheet}
+          contentHeight={height * 0.41}
+          hitslopHeight={height * 0.075}
+        >
+          <MonthCalendar
+            onFinishDayClick={() => bottomSheetRef.current?.hide()}
+          />
+        </BottomSheet>
       </>
     </CalendarContext.Provider>
   );
