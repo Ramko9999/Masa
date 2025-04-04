@@ -41,7 +41,7 @@ type TextProps = DefaultText["props"] &
   TextColorProps &
   TextWeightProps;
 
-function getFontSize({
+export function getFontSize({
   micro,
   xtiny,
   tiny,

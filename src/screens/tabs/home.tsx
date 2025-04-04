@@ -7,10 +7,19 @@ import {
   YogaInfoSheet,
 } from "@/components/sheets";
 import { useCalendar } from "@/components/calendar/context";
+import { CompositeScreenProps } from "@react-navigation/native";
+import { TabParamList } from "@/layout/types";
+import { RootStackParamList } from "@/layout/types";
+import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
+import { StackScreenProps } from "@react-navigation/stack";
 
-export function Home() {
+type HomeProps = CompositeScreenProps<
+  BottomTabScreenProps<TabParamList, "home">,
+  StackScreenProps<RootStackParamList>
+>;
+
+export function Home({ navigation }: HomeProps) {
   const { selection } = useCalendar();
-  const [showTithiSheet, setShowTithiSheet] = useState(false);
   const [showYogaSheet, setShowYogaSheet] = useState(false);
   const [showNakshatraSheet, setShowNakshatraSheet] = useState(false);
 
@@ -18,16 +27,12 @@ export function Home() {
     <>
       <WeekCalendar />
       <Pachanga
-        onTithiClick={() => setShowTithiSheet(true)}
+        onTithiClick={() => navigation.navigate("tithi_info")}
         onVaaraClick={() => {}}
         onYogaClick={() => setShowYogaSheet(true)}
         onMasaClick={() => {}}
         onNakshatraClick={() => setShowNakshatraSheet(true)}
         selectedDay={selection.date}
-      />
-      <TithiInfoSheet
-        show={showTithiSheet}
-        onHide={() => setShowTithiSheet(false)}
       />
       <YogaInfoSheet
         show={showYogaSheet}

@@ -12,4 +12,5 @@ export type RootStackParamList = {
     tabs: NavigatorScreenParams<TabParamList>;
     festival_details: { festival: Festival };
     intro: undefined;
+    tithi_info: undefined;
 }
