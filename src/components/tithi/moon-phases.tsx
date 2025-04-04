@@ -1,11 +1,6 @@
 import React, { forwardRef, useState } from "react";
 import Svg, { Circle, Path } from "react-native-svg";
-import {
-  StyleProp,
-  View,
-  ViewStyle,
-  StyleSheet,
-} from "react-native";
+import { StyleProp, View, ViewStyle, StyleSheet } from "react-native";
 import { TithiIndex, TITHI_NAMES } from "@/api/panchanga/core/tithi";
 import { AppColor } from "@/theme/color";
 import { useGetColor } from "@/theme/color";
@@ -127,6 +122,9 @@ export const MoonSlider = ({ onProgressChange }: MoonSliderProps) => {
           <Animated.View style={[moonSliderStyles.sliderHandle, handleStyle]} />
         </GestureDetector>
       </View>
+      <Text tint tiny style={{ fontStyle: "italic" }}>
+          Use the slider to explore Tithis
+        </Text>
     </View>
   );
 };
