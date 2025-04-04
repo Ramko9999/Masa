@@ -3,7 +3,7 @@ import { View, StyleSheet, SafeAreaView, ScrollView } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Text } from "@/theme";
 import { GeocentricTithi } from "@/components/tithi/geocentric-tithi";
-import { MoonGrid } from "@/components/tithi/moon-phases";
+import { MoonSlider } from "@/components/tithi/moon-phases";
 
 export function TithiInfoPage() {
   const insets = useSafeAreaInsets();
@@ -57,7 +57,7 @@ export function TithiInfoPage() {
           </Text>
           <View style={styles.spacer} />
           <Text style={styles.label}>🌓 Moon Phases</Text>
-          <MoonGrid />
+          <MoonSlider />
         </View>
 
         <View style={styles.section}>

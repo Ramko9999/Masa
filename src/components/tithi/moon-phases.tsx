@@ -1,9 +1,24 @@
-import React, { forwardRef } from "react";
+import React, { forwardRef, useState } from "react";
 import Svg, { Circle, Path } from "react-native-svg";
-import { StyleProp, View, ViewStyle, Text } from "react-native";
+import {
+  StyleProp,
+  View,
+  ViewStyle,
+  StyleSheet,
+} from "react-native";
 import { TithiIndex, TITHI_NAMES } from "@/api/panchanga/core/tithi";
 import { AppColor } from "@/theme/color";
 import { useGetColor } from "@/theme/color";
+import { Gesture, GestureDetector } from "react-native-gesture-handler";
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  runOnJS,
+  withTiming,
+  useDerivedValue,
+  useAnimatedReaction,
+} from "react-native-reanimated";
+import { Text } from "@/theme";
 
 export interface MoonProps {
   width?: number;
@@ -12,46 +27,109 @@ export interface MoonProps {
   tithiIndex: TithiIndex;
 }
 
-export const MoonGrid = () => {
+// Add a type for the component props
+interface MoonSliderProps {
+  onProgressChange?: (progress: number) => void;
+}
+
+const moonSliderStyles = StyleSheet.create({
+  container: {
+    flexDirection: "column",
+    width: "100%",
+    paddingHorizontal: "10%",
+    paddingVertical: 20,
+    gap: 10,
+    alignItems: "center",
+  },
+  sliderTrack: {
+    width: "100%",
+    height: 5,
+    backgroundColor: useGetColor(AppColor.border),
+    borderRadius: 5,
+    justifyContent: "center",
+  },
+  sliderHandle: {
+    backgroundColor: useGetColor(AppColor.tint),
+    width: 10,
+    height: 10,
+    borderRadius: 10,
+    position: "absolute",
+    left: 0,
+    elevation: 2,
+  },
+  moonContainer: {
+    flexDirection: "column",
+    alignItems: "center",
+  },
+});
+
+export const MoonSlider = ({ onProgressChange }: MoonSliderProps) => {
+  const [currentTithiIndex, setCurrentTithiIndex] = useState<TithiIndex>(
+    TithiIndex.ShuklaPratipada
+  );
+
+  const offset = useSharedValue(0);
+  const [trackWidth, setTrackWidth] = useState(100);
+  const handleSize = 10;
+
+  const progress = useDerivedValue(() => {
+    return offset.value / (trackWidth - handleSize);
+  });
+
+  useAnimatedReaction(
+    () => progress.value,
+    (currentProgress) => {
+      // Clamp progress between 0 and 1
+      const clampedProgress = Math.max(0, Math.min(1, currentProgress));
+
+      if (onProgressChange) {
+        runOnJS(onProgressChange)(clampedProgress);
+      }
+
+      // Calculate the tithi index from progress
+      const tithiIndex = Math.floor(clampedProgress * 30);
+      const boundedTithiIndex = Math.min(
+        29,
+        Math.max(0, tithiIndex)
+      ) as TithiIndex;
+
+      runOnJS(setCurrentTithiIndex)(boundedTithiIndex);
+    }
+  );
+
+  const pan = Gesture.Pan().onChange((event) => {
+    const newValue = offset.value + event.changeX;
+    offset.value = Math.max(0, Math.min(trackWidth - handleSize, newValue));
+  });
+
+  const handleStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ translateX: offset.value }],
+    };
+  });
+
   return (
-    <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center' }}>
-      {Object.entries(TITHI_MAP).map(([tithiIndex, _]) => {
-        // Get the name of the tithi from the TITHI_NAMES array
-        const index = Number(tithiIndex);
-        const tithiName = TITHI_NAMES[index];
-        
-        return (
-          <View 
-            key={tithiIndex} 
-            style={{ 
-              width: 70, 
-              height: 70, 
-              alignItems: 'center', 
-              margin: 5 
-            }}
-          >
-            <Moon 
-              tithiIndex={index as TithiIndex} 
-              width={40} 
-              height={40} 
-            />
-            <View style={{ marginTop: 4, alignItems: 'center' }}>
-              <Text 
-                style={{ 
-                  fontSize: 10, 
-                  textAlign: 'center', 
-                  color: useGetColor(AppColor.primary) 
-                }}
-              >
-                {tithiName}
-              </Text>
-            </View>
-          </View>
-        );
-      })}
+    <View style={moonSliderStyles.container}>
+      <View style={moonSliderStyles.moonContainer}>
+        <Moon tithiIndex={currentTithiIndex} width={80} height={80} />
+        <Text tint semibold>
+          {TITHI_NAMES[currentTithiIndex]}
+        </Text>
+      </View>
+      <View
+        style={moonSliderStyles.sliderTrack}
+        onLayout={(event) => {
+          const { width } = event.nativeEvent.layout;
+          setTrackWidth(width);
+        }}
+      >
+        <GestureDetector gesture={pan}>
+          <Animated.View style={[moonSliderStyles.sliderHandle, handleStyle]} />
+        </GestureDetector>
+      </View>
     </View>
   );
-}
+};
 
 export const Moon = forwardRef<
   React.ComponentRef<typeof Svg>,
