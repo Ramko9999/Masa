@@ -8,8 +8,9 @@ import { LocationPermission } from "@/screens/location-permission";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { UpcomingFestivals } from "@/screens/tabs/upcoming-festivals";
 import { FestivalDetails } from "@/screens/festival-details";
+import { TithiInfoPage } from "@/screens/tithi-info";
 import { Home } from "@/screens/tabs/home";
-import { CustomTabBar } from './tab-bar';
+import { CustomTabBar } from "./tab-bar";
 import { SystemBars } from "react-native-edge-to-edge";
 import { Intro } from "@/screens/intro";
 
@@ -20,17 +21,17 @@ function Tabs() {
   return (
     <Tab.Navigator
       initialRouteName="home"
-      tabBar={props => <CustomTabBar {...props} />}
+      tabBar={(props) => <CustomTabBar {...props} />}
       screenOptions={{
         headerShown: false,
-        animation: "shift"
+        animation: "shift",
       }}
     >
       <Tab.Screen
         name="home"
         component={Home}
         options={{
-          title: "Home"
+          title: "Home",
         }}
       />
       <Tab.Screen
@@ -47,14 +48,21 @@ function Tabs() {
 export function Layout() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="splash" screenOptions={{ headerShown: false }}>
+      <Stack.Navigator
+        initialRouteName="splash"
+        screenOptions={{ headerShown: false }}
+      >
         <Stack.Screen name="splash" component={Splash} />
         <Stack.Screen name="tabs" component={Tabs} />
         <Stack.Screen name="festival_details" component={FestivalDetails} />
         <Stack.Screen name="location_permission" component={LocationPermission} />
         <Stack.Screen name="intro" component={Intro} />
+        <Stack.Screen
+          name="tithi_info"
+          component={TithiInfoPage}
+        />
       </Stack.Navigator>
       <SystemBars style="dark" />
     </NavigationContainer>
-  )
+  );
 }
