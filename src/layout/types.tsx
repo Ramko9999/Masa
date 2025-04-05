@@ -13,4 +13,5 @@ export type RootStackParamList = {
     festival_details: { festival: Festival };
     intro: undefined;
     tithi_info: undefined;
+    vaara_info: undefined;
 }

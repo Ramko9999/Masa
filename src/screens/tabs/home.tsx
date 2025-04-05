@@ -28,7 +28,7 @@ export function Home({ navigation }: HomeProps) {
       <WeekCalendar />
       <Pachanga
         onTithiClick={() => navigation.navigate("tithi_info")}
-        onVaaraClick={() => {}}
+        onVaaraClick={() => navigation.navigate("vaara_info")}
         onYogaClick={() => setShowYogaSheet(true)}
         onMasaClick={() => {}}
         onNakshatraClick={() => setShowNakshatraSheet(true)}
