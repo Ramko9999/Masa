@@ -32,12 +32,12 @@ const infoTableStyles = StyleSheet.create({
   },
   header: {
     paddingVertical: 10,
-    paddingHorizontal: 2,
+    paddingHorizontal: 4,
     textAlign: "left",
   },
   cell: {
     paddingVertical: 10,
-    paddingHorizontal: 2,
+    paddingHorizontal: 4,
     textAlign: "left",
   },
 });
