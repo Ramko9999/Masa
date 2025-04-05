@@ -29,37 +29,62 @@ export function VaaraInfoPage() {
           </Text>
           <View style={vaaraInfoStyles.tableContainer}>
             <View style={vaaraInfoStyles.tableRow}>
-              <Text semibold style={[vaaraInfoStyles.tableHeader, { flex: 0.6 }]}>
+              <Text
+                semibold
+                style={[vaaraInfoStyles.tableHeader, { flex: 0.6 }]}
+              >
                 Graha
               </Text>
-              <Text semibold style={[vaaraInfoStyles.tableHeader, { flex: 1.2 }]}>
+              <Text
+                semibold
+                style={[vaaraInfoStyles.tableHeader, { flex: 1.2 }]}
+              >
                 Vaara
               </Text>
-              <Text semibold style={[vaaraInfoStyles.tableHeader, { flex: 1.2 }]}>
+              <Text
+                semibold
+                style={[vaaraInfoStyles.tableHeader, { flex: 1.2 }]}
+              >
                 Represents
               </Text>
             </View>
             <View style={vaaraInfoStyles.tableRow}>
-              <Text style={[vaaraInfoStyles.tableCell, { flex: 0.6 }]}>Sun</Text>
-              <Text style={[vaaraInfoStyles.tableCell, { flex: 1.2 }]}>Ravivaara (Sunday)</Text>
+              <Text style={[vaaraInfoStyles.tableCell, { flex: 0.6 }]}>
+                Sun
+              </Text>
+              <Text style={[vaaraInfoStyles.tableCell, { flex: 1.2 }]}>
+                Ravivaara (Sunday)
+              </Text>
               <Text style={[vaaraInfoStyles.tableCell, { flex: 1.2 }]}>
                 Vitality, Authority, Energy
               </Text>
             </View>
             <View style={vaaraInfoStyles.tableRow}>
-              <Text style={[vaaraInfoStyles.tableCell, { flex: 0.6 }]}>Moon</Text>
-              <Text style={[vaaraInfoStyles.tableCell, { flex: 1.2 }]}>Somavaara (Monday)</Text>
-              <Text style={[vaaraInfoStyles.tableCell, { flex: 1.2 }]}>Emotions, Calmness</Text>
+              <Text style={[vaaraInfoStyles.tableCell, { flex: 0.6 }]}>
+                Moon
+              </Text>
+              <Text style={[vaaraInfoStyles.tableCell, { flex: 1.2 }]}>
+                Somavaara (Monday)
+              </Text>
+              <Text style={[vaaraInfoStyles.tableCell, { flex: 1.2 }]}>
+                Emotions, Calmness
+              </Text>
             </View>
             <View style={vaaraInfoStyles.tableRow}>
-              <Text style={[vaaraInfoStyles.tableCell, { flex: 0.6 }]}>Mars</Text>
+              <Text style={[vaaraInfoStyles.tableCell, { flex: 0.6 }]}>
+                Mars
+              </Text>
               <Text style={[vaaraInfoStyles.tableCell, { flex: 1.2 }]}>
                 Mangalavaara (Tuesday)
               </Text>
-              <Text style={[vaaraInfoStyles.tableCell, { flex: 1.2 }]}>Courage, Strength</Text>
+              <Text style={[vaaraInfoStyles.tableCell, { flex: 1.2 }]}>
+                Courage, Strength
+              </Text>
             </View>
             <View style={vaaraInfoStyles.tableRow}>
-              <Text style={[vaaraInfoStyles.tableCell, { flex: 0.6 }]}>Mercury</Text>
+              <Text style={[vaaraInfoStyles.tableCell, { flex: 0.6 }]}>
+                Mercury
+              </Text>
               <Text style={[vaaraInfoStyles.tableCell, { flex: 1.2 }]}>
                 Budhavaara (Wednesday)
               </Text>
@@ -68,7 +93,9 @@ export function VaaraInfoPage() {
               </Text>
             </View>
             <View style={vaaraInfoStyles.tableRow}>
-              <Text style={[vaaraInfoStyles.tableCell, { flex: 0.6 }]}>Jupiter</Text>
+              <Text style={[vaaraInfoStyles.tableCell, { flex: 0.6 }]}>
+                Jupiter
+              </Text>
               <Text style={[vaaraInfoStyles.tableCell, { flex: 1.2 }]}>
                 Guruvaara (Thursday)
               </Text>
@@ -77,14 +104,20 @@ export function VaaraInfoPage() {
               </Text>
             </View>
             <View style={vaaraInfoStyles.tableRow}>
-              <Text style={[vaaraInfoStyles.tableCell, { flex: 0.6 }]}>Venus</Text>
+              <Text style={[vaaraInfoStyles.tableCell, { flex: 0.6 }]}>
+                Venus
+              </Text>
               <Text style={[vaaraInfoStyles.tableCell, { flex: 1.2 }]}>
                 Shukravaara (Friday)
               </Text>
-              <Text style={[vaaraInfoStyles.tableCell, { flex: 1.2 }]}>Love, Beauty</Text>
+              <Text style={[vaaraInfoStyles.tableCell, { flex: 1.2 }]}>
+                Love, Beauty
+              </Text>
             </View>
             <View style={vaaraInfoStyles.tableRow}>
-              <Text style={[vaaraInfoStyles.tableCell, { flex: 0.6 }]}>Saturn</Text>
+              <Text style={[vaaraInfoStyles.tableCell, { flex: 0.6 }]}>
+                Saturn
+              </Text>
               <Text style={[vaaraInfoStyles.tableCell, { flex: 1.2 }]}>
                 Shanivaara (Saturday)
               </Text>
