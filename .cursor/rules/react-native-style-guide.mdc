@@ -17,3 +17,5 @@ For example, if we created a component <Week/>, its stylesheet would be `weekSty
 4. When specifying fontSize, fontWeight or color for <Text/> try to leverage the premade weights, sizes, and colors in @style-utils.tsx instead of defining a new style with those attributes. For example, if you want to create bold text that is big with the primary color, you can simply add that style via <Text big bold primary/> or whatever the values exist for TextWeightProps, TextSizeProps, TextColorProps.
 
 5. When specifying padding or margins, try to use percentiles instead of absolute values.
+
+6. When working shared values from React Native Reanimated, ensure you access the value of the shared value in the right context and blindly in JS context of the component

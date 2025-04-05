@@ -1,16 +1,19 @@
 import React from "react";
-import { View, StyleSheet, SafeAreaView, ScrollView } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Text } from "@/theme";
 import { GeocentricTithi } from "@/components/tithi/geocentric-tithi";
 import { MoonSlider } from "@/components/tithi/moon-phases";
+import { ScrollView } from "react-native-gesture-handler";
+import { InfoHeader } from "@/components/util/info-header";
 
 export function TithiInfoPage() {
   const insets = useSafeAreaInsets();
 
   return (
-    <SafeAreaView style={[styles.container, { paddingTop: insets.top + 20 }]}>
+    <View style={{ flex: 1, paddingTop: insets.top }}>
       <ScrollView showsVerticalScrollIndicator={false}>
+        <InfoHeader />
         <View style={styles.headerContainer}>
           <Text huge bold>
             Tithi
@@ -36,9 +39,12 @@ export function TithiInfoPage() {
             Tithi along with Masa are fundamental to determine festival dates.
           </Text>
           <View style={styles.spacer} />
-          <View>
-            <GeocentricTithi />
+          <View style={{ alignItems: "center" }}>
+            <Text tiny tint style={{ fontStyle: "italic" }}>
+              Look at how the Tithi changes based on the Sun-Moon angle
+            </Text>
           </View>
+          <GeocentricTithi />
         </View>
 
         <View style={styles.section}>
@@ -79,18 +85,18 @@ export function TithiInfoPage() {
         </View>
         <View style={styles.footer} />
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    paddingHorizontal: "3%",
-  },
   headerContainer: {
+    paddingHorizontal: "3%",
     marginBottom: 20,
+    marginTop: "4%",
   },
   section: {
+    paddingHorizontal: "4%",
     marginBottom: 32,
   },
   sectionTitle: {
@@ -113,6 +119,7 @@ const styles = StyleSheet.create({
     opacity: 0.8,
   },
   footer: {
+    paddingHorizontal: "3%",
     height: 30,
   },
 });
