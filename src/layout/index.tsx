@@ -13,35 +13,38 @@ import { Home } from "@/screens/tabs/home";
 import { CustomTabBar } from "./tab-bar";
 import { SystemBars } from "react-native-edge-to-edge";
 import { Intro } from "@/screens/intro";
+import { TabBarVisibilityProvider } from "@/context/tab-bar-visibility";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator<TabParamList>();
 
 function Tabs() {
   return (
-    <Tab.Navigator
-      initialRouteName="home"
-      tabBar={(props) => <CustomTabBar {...props} />}
-      screenOptions={{
-        headerShown: false,
-        animation: "shift",
-      }}
-    >
-      <Tab.Screen
-        name="home"
-        component={Home}
-        options={{
-          title: "Home",
+    <TabBarVisibilityProvider>
+      <Tab.Navigator
+        initialRouteName="home"
+        tabBar={(props) => <CustomTabBar {...props} />}
+        screenOptions={{
+          headerShown: false,
+          animation: "shift",
         }}
-      />
-      <Tab.Screen
-        name="upcoming_festivals"
-        component={UpcomingFestivals}
-        options={{
-          title: "Upcoming Festivals",
-        }}
-      />
-    </Tab.Navigator>
+      >
+        <Tab.Screen
+          name="home"
+          component={Home}
+          options={{
+            title: "Home",
+          }}
+        />
+        <Tab.Screen
+          name="upcoming_festivals"
+          component={UpcomingFestivals}
+          options={{
+            title: "Upcoming Festivals",
+          }}
+        />
+      </Tab.Navigator>
+    </TabBarVisibilityProvider>
   );
 }
 
