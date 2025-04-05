@@ -17,7 +17,7 @@ export function NakshatraInfoPage() {
           (asterism).
         </InfoParagraph>
         <InfoParagraph>
-          IIn the Hindu Calendar, a Nakshatra is a segment of the Moon's
+          In the Hindu Calendar, a Nakshatra is a segment of the Moon's
           ecliptic orbit.
         </InfoParagraph>
         <InfoParagraph>
