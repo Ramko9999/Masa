@@ -3,11 +3,6 @@ description:
 globs: *.tsx
 alwaysApply: false
 ---
----
-description: 
-globs: *.tsx
-alwaysApply: false
----
 
 Please refer to the following when creating new React components
 
