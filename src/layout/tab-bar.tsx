@@ -1,14 +1,39 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { View, Text } from "@/theme/index";
-import { Pressable, StyleSheet } from "react-native";
+import { Pressable, StyleSheet, Animated } from "react-native";
 import { BottomTabBarProps } from "@react-navigation/bottom-tabs";
 import { AppColor, useGetColor } from "@/theme/color";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useTabBarVisibility } from "@/context/tab-bar-visibility";
 
 export const CustomTabBar = ({ state, navigation }: BottomTabBarProps) => {
   const insets = useSafeAreaInsets();
+  const { isTabBarVisible } = useTabBarVisibility();
+  
+  // Animated value for opacity
+  const opacity = useRef(new Animated.Value(1)).current;
+  
+  // Simple, performant animation
+  useEffect(() => {
+    Animated.timing(opacity, {
+      toValue: isTabBarVisible ? 1 : 0,
+      duration: isTabBarVisible ? 100 : 150, // Fast show, slightly slower hide
+      useNativeDriver: true, // Hardware acceleration
+    }).start();
+  }, [isTabBarVisible, opacity]);
+
   return (
-    <View style={[styles.wrapper, { paddingBottom: insets.bottom + 20 }]}>
+    <Animated.View 
+      style={[
+        styles.wrapper, 
+        { 
+          paddingBottom: insets.bottom + 20,
+          opacity,
+          // Prevent interactions when hidden
+          pointerEvents: isTabBarVisible ? 'auto' : 'none'
+        }
+      ]}
+    >
       <View style={styles.container}>
         {state.routes.map((route, index) => {
           const isFocused = state.index === index;
@@ -34,7 +59,7 @@ export const CustomTabBar = ({ state, navigation }: BottomTabBarProps) => {
           );
         })}
       </View>
-    </View>
+    </Animated.View>
   );
 };
 
@@ -46,6 +71,7 @@ const styles = StyleSheet.create({
     right: 0,
     alignItems: "center",
     justifyContent: "center",
+    zIndex: 1000,
   },
   container: {
     flexDirection: "row",
@@ -54,6 +80,11 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     padding: 2,
     backgroundColor: useGetColor(AppColor.tint),
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   tab: {
     borderRadius: 30,
