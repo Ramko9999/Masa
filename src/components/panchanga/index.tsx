@@ -7,7 +7,12 @@ import {
 } from "@/util/date";
 import { Text, View } from "@/theme";
 import { Card } from "@/components/card";
-import { SunriseIcon, SunsetIcon, MoonriseIcon, MoonsetIcon } from "@/theme/icon";
+import {
+  SunriseIcon,
+  SunsetIcon,
+  MoonriseIcon,
+  MoonsetIcon,
+} from "@/theme/icon";
 import { useLocation } from "@/context/location";
 
 const panchangaStyles = StyleSheet.create({
@@ -65,7 +70,12 @@ export function Pachanga({
 
   return (
     <View style={panchangaStyles.container}>
-      <Card title="VAARA—DAY OF THE WEEK" mainText={vaara.name}>
+      <Card
+        title="VAARA—DAY OF THE WEEK"
+        mainText={vaara.name}
+        showExplainCaption
+        onClick={onVaaraClick}
+      >
         <View style={panchangaStyles.rowContainer}>
           <View>
             <Text semibold tint>
@@ -140,12 +150,12 @@ export function Pachanga({
         <View>
           <Text semibold larger>
             Purnimanta — {masa.purnimanta.name}
-            </Text>
-          </View>
+          </Text>
+        </View>
         <View>
           <Text semibold larger>
             Amanta — {masa.amanta.name}
-            </Text>
+          </Text>
         </View>
       </Card>
     </View>

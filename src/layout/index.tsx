@@ -9,6 +9,8 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { UpcomingFestivals } from "@/screens/tabs/upcoming-festivals";
 import { FestivalDetails } from "@/screens/festival-details";
 import { TithiInfoPage } from "@/screens/tithi-info";
+import { VaaraInfoPage } from "@/screens/vaara-info";
+import { NakshatraInfoPage } from "@/screens/nakshatra-info";
 import { Home } from "@/screens/tabs/home";
 import { CustomTabBar } from "./tab-bar";
 import { SystemBars } from "react-native-edge-to-edge";
@@ -60,6 +62,14 @@ export function Layout() {
         <Stack.Screen
           name="tithi_info"
           component={TithiInfoPage}
+        />
+        <Stack.Screen
+          name="vaara_info"
+          component={VaaraInfoPage}
+        />
+        <Stack.Screen
+          name="nakshatra_info"
+          component={NakshatraInfoPage}
         />
       </Stack.Navigator>
       <SystemBars style="dark" />

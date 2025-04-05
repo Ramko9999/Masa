@@ -21,26 +21,21 @@ type HomeProps = CompositeScreenProps<
 export function Home({ navigation }: HomeProps) {
   const { selection } = useCalendar();
   const [showYogaSheet, setShowYogaSheet] = useState(false);
-  const [showNakshatraSheet, setShowNakshatraSheet] = useState(false);
 
   return (
     <>
       <WeekCalendar />
       <Pachanga
         onTithiClick={() => navigation.navigate("tithi_info")}
-        onVaaraClick={() => {}}
+        onVaaraClick={() => navigation.navigate("vaara_info")}
         onYogaClick={() => setShowYogaSheet(true)}
         onMasaClick={() => {}}
-        onNakshatraClick={() => setShowNakshatraSheet(true)}
+        onNakshatraClick={() => navigation.navigate("nakshatra_info")}
         selectedDay={selection.date}
       />
       <YogaInfoSheet
         show={showYogaSheet}
         onHide={() => setShowYogaSheet(false)}
-      />
-      <NakshatraInfoSheet
-        show={showNakshatraSheet}
-        onHide={() => setShowNakshatraSheet(false)}
       />
     </>
   );
