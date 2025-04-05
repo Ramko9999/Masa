@@ -21,6 +21,8 @@ import { Moon } from "@/components/tithi/moon-phases";
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 const AnimatedTextInput = Animated.createAnimatedComponent(TextInput);
 
+const SUN_RADIUS = 15;
+
 const styles = StyleSheet.create({
   container: {
     width: "100%",
@@ -52,7 +54,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: getFontSize({ neutral: true }),
     textAlign: "center",
-    width: "50%"
+    width: "50%",
   },
 });
 
@@ -154,8 +156,30 @@ export function GeocentricTithi() {
 
   const tithiNameTextProps = useAnimatedProps(() => {
     return {
-      text: TITHI_NAMES[tithiIndex.value],
-      defaultValue: TITHI_NAMES[TithiIndex.Amavasya],
+      text: `${TITHI_NAMES[tithiIndex.value]}`,
+      defaultValue: `${TITHI_NAMES[TithiIndex.Amavasya]}`,
+    };
+  });
+
+  // Calculate the arc path
+  const arcRadius = size * 0.4; // Use the same radius as the orbit
+
+  const arcProps = useAnimatedProps(() => {
+    const circumference = 2 * Math.PI * arcRadius;
+    // Calculate the angle difference
+    let angleDiff = (moonAngleDeg.value - sunAngleDeg.value + 360) % 360;
+
+    // Calculate the arc length based on the angle difference
+    const arcLength = (angleDiff / 360) * circumference - SUN_RADIUS;
+
+    // Calculate the dash offset based on sun position
+
+    const dashOffset =
+      -1 * ((sunAngleDeg.value / 360) * circumference + SUN_RADIUS);
+
+    return {
+      strokeDasharray: `${arcLength} ${circumference - arcLength}`,
+      strokeDashoffset: dashOffset,
     };
   });
 
@@ -189,9 +213,26 @@ export function GeocentricTithi() {
             strokeDasharray="5,5"
             fill="transparent"
           />
+
+          {/* Arc between Sun and Moon */}
+          <AnimatedCircle
+            cx={centerX}
+            cy={centerY}
+            r={arcRadius}
+            stroke="#8A2BE2"
+            strokeWidth={2}
+            fill="none"
+            opacity={0.8}
+            animatedProps={arcProps}
+          />
+
           {/* Celestial bodies */}
           <AnimatedCircle animatedProps={moonProps} r={5} fill="#999" />
-          <AnimatedCircle animatedProps={sunProps} r={15} fill="orange" />
+          <AnimatedCircle
+            animatedProps={sunProps}
+            r={SUN_RADIUS}
+            fill="orange"
+          />
           <Circle cx={earthX} cy={earthY} r={10} fill="deepskyblue" />
           {/* Degree markings */}
           {[...Array(12)].map((_, i) => {
