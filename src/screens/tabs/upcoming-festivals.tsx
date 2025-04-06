@@ -17,10 +17,10 @@ const upcomingFestivalsStyles = StyleSheet.create({
   container: {
     ...StyleUtils.flexColumn(),
     paddingHorizontal: "3%",
-    gap: 30,
+    gap: 20,
   },
   festivalsList: {
-    ...StyleUtils.flexColumn(30),
+    ...StyleUtils.flexColumn(20),
     paddingBottom: "35%",
   },
   festivalHeader: {
@@ -55,10 +55,14 @@ function FestivalItem({ festival, onPress }: FestivalItemProps) {
             { borderBottomColor: useGetColor(AppColor.border) },
           ]}
         >
-          <Text neutral tint semibold>{getHumanReadableDateWithWeekday(festival.date)}</Text>
+          <Text neutral tint semibold>
+            {getHumanReadableDateWithWeekday(festival.date)}
+          </Text>
         </View>
         <View style={upcomingFestivalsStyles.festivalContent}>
-          <Text neutral bold>{festival.name}</Text>
+          <Text large semibold>
+            {festival.name}
+          </Text>
         </View>
       </View>
     </Pressable>

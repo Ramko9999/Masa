@@ -30,6 +30,7 @@ type DynamicRule = {
 
 type FestivalRule = {
   name: FestivalName;
+  alias?: string[];
   caption: string;
   description: string;
   celebration: string;
@@ -92,11 +93,12 @@ function getMakarSankrantiDate(year: number, location: Location) {
 const FESTIVAL_RULES: FestivalRule[] = [
   {
     name: FestivalName.MakarSankranti,
+    alias: ["Pongal"],
     caption: "Embracing the Sun's New Journey",
     description:
-      "This festival marks the sun's transition into Capricorn, symbolizing longer days and the harvest season, a day to seek blessings for abundance and prosperity.",
+      "Makar Sankranti is a festival dedicated to Lord Surya, the Sun God. Signifying the end of winter and the onset of longer, warmer days. It is usually celebrated annually on January 14th (or January 15th in leap years), this day is considered highly auspicious for new beginnings and spiritual practices.",
     celebration:
-      "Taking holy baths, flying kites, eating sesame and jaggery sweets, and performing charity.",
+      "Makar Sankranti is celebrated in different ways across India. Many people wake up early to take a holy dip in rivers, which is believed to cleanse the soul. Prayers are offered to the Sun, thanking it for its light and energy. Families prepare sweets made from sesame seeds and jaggery, which are shared with loved ones to promote harmony and warmth. In places like Gujarat, people fly colorful kites to celebrate the arrival of brighter days. In some regions, people also gather around bonfires, sing songs, and enjoy time together in the spirit of the season.",
     image: "makar-sankranti.png",
     rule: {
       type: RuleType.Dynamic,
@@ -431,49 +433,6 @@ export type Festival = Omit<FestivalRule, "rule"> & {
   date: number;
 };
 
-function isFestival(
-  date: Date,
-  rule: LunarRule,
-  tithi: TithiInterval[],
-  masa: Masa,
-  sunrise: number
-) {
-  if (rule.type === RuleType.Lunar) {
-    return (
-      tithi.some(
-        (t) =>
-          t.index === rule.tithiIndex &&
-          t.startDate <= sunrise &&
-          t.endDate >= sunrise
-      ) && masa.purnimanta.index === rule.masaIndex
-    );
-  }
-
-  return false;
-}
-
-export function compute(
-  day: number,
-  tithi: TithiInterval[],
-  masa: Masa,
-  sunrise: number
-) {
-  const date = new Date(day);
-  const festivals: Festival[] = [];
-
-  for (const festival of FESTIVAL_RULES) {
-    if (
-      festival.rule.type === RuleType.Lunar &&
-      isFestival(date, festival.rule, tithi, masa, sunrise)
-    ) {
-      const { rule, ...festivalWithoutRule } = festival;
-      festivals.push({ ...festivalWithoutRule, date: day });
-    }
-  }
-
-  return festivals;
-}
-
 function getLunarFestivals(anchorDay: number, location: Location) {
   const year = new Date(anchorDay).getFullYear();
   const purnimantaMasaCalendar = getPurnimantaMasaCalendarForYear(
@@ -523,10 +482,46 @@ function getDynamicFestivals(anchorDay: number, location: Location) {
   return festivals;
 }
 
+// Cache for storing festival results
+type CacheKey = string;
+type CacheEntry = {
+  festivals: Festival[];
+};
+
+// In-memory cache
+const festivalsCache = new Map<CacheKey, CacheEntry>();
+
+// Generate a cache key from anchorDay and location
+function generateCacheKey(anchorDay: number, location: Location): CacheKey {
+  // Use day-level precision for the anchorDay (ignore time)
+  const day = truncateToDay(anchorDay);
+  // Create a unique key based on day and location coordinates
+  return `${day}:${location.latitude.toFixed(4)}:${location.longitude.toFixed(
+    4
+  )}`;
+}
+
 export function getUpcomingFestivals(anchorDay: number, location: Location) {
+  // Generate cache key
+  const cacheKey = generateCacheKey(anchorDay, location);
+
+  // Check if we have a cached result
+  const cachedResult = festivalsCache.get(cacheKey);
+  if (cachedResult) {
+    return cachedResult.festivals;
+  }
+
+  // If not cached, calculate festivals
   const lunarFestivals = getLunarFestivals(anchorDay, location);
   const dynamicFestivals = getDynamicFestivals(anchorDay, location);
-  return [...lunarFestivals, ...dynamicFestivals].sort(
+  const festivals = [...lunarFestivals, ...dynamicFestivals].sort(
     (a, b) => a.date - b.date
   );
+
+  // Cache the result
+  festivalsCache.set(cacheKey, {
+    festivals,
+  });
+
+  return festivals;
 }

@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { Pressable, StyleSheet } from "react-native";
 import { computePanchanga } from "@/api/panchanga";
 import {
   getHumanReadableDate,
@@ -16,11 +16,14 @@ import {
 import { useLocation } from "@/context/location";
 import { TithiInterval } from "@/api/panchanga/core/tithi";
 import { NakshatraInterval } from "@/api/panchanga/core/nakshatra";
+import { useNavigation } from "@react-navigation/native";
+import { ChevronRight } from "lucide-react-native";
+import { AppColor, useGetColor } from "@/theme/color";
 
 const panchangaStyles = StyleSheet.create({
   container: {
     paddingHorizontal: "3%",
-    marginBottom: "10%",
+    paddingBottom: "35%",
   },
   rowContainer: {
     flexDirection: "row",
@@ -33,6 +36,11 @@ const panchangaStyles = StyleSheet.create({
   },
   upperCaseText: {
     textTransform: "uppercase",
+  },
+  festivalContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
 });
 
@@ -76,9 +84,19 @@ export function Pachanga({
   selectedDay,
 }: PachangaProps) {
   const { location } = useLocation();
+  const navigation = useNavigation();
 
-  const { tithi, nakshatra, vaara, masa, sunrise, sunset, moonrise, moonset } =
-    computePanchanga(truncateToDay(selectedDay), location!);
+  const {
+    tithi,
+    nakshatra,
+    vaara,
+    masa,
+    sunrise,
+    sunset,
+    moonrise,
+    moonset,
+    festivals,
+  } = computePanchanga(truncateToDay(selectedDay), location!);
 
   return (
     <View style={panchangaStyles.container}>
@@ -168,6 +186,33 @@ export function Pachanga({
           </View>
         </View>
       </Card>
+      {festivals.length && (
+        <Card title="FESTIVALS">
+          <View style={{ flexDirection: "column", gap: 15 }}>
+            {festivals.map((festival, index) => (
+              <Pressable
+                key={`${festival.name}-${index}`}
+                onPress={() =>
+                  /* @ts-ignore */
+                  navigation.navigate("festival_details", { festival })
+                }
+              >
+                <View style={panchangaStyles.festivalContainer}>
+                  <View style={{ flexDirection: "column", gap: 4 }}>
+                    <Text bold larger>
+                      {festival.name}
+                    </Text>
+                    <View>
+                      <Text>{festival.caption}</Text>
+                    </View>
+                  </View>
+                  <ChevronRight size={24} color={useGetColor(AppColor.tint)} />
+                </View>
+              </Pressable>
+            ))}
+          </View>
+        </Card>
+      )}
     </View>
   );
 }
