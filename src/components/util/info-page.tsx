@@ -48,6 +48,10 @@ const infoPageStyles = StyleSheet.create({
   },
   noteContainer: {
     alignItems: "center",
+  },
+  listItem: {
+    marginBottom: 4,
+    lineHeight: 22,
   }
 });
 
@@ -83,6 +87,10 @@ export function InfoVisual({ children, style }: { children: ReactNode, style?: a
 
 export function InfoParagraph({ children, style }: { children: ReactNode, style?: any }) {
   return <Text style={[infoPageStyles.paragraph, style]}>{children}</Text>;
+}
+
+export function InfoListItem({ children, style }: { children: ReactNode, style?: any }) {
+  return <Text style={[infoPageStyles.listItem, style]}>{children}</Text>;
 }
 
 export function InfoSectionTitle({ children, style }: { children: ReactNode, style?: any }) {

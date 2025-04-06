@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export function GeocentricTithi() {
+export function TithiOrbit() {
   const { width } = Dimensions.get("window");
   const size = width * 0.9;
   const centerX = size / 2;

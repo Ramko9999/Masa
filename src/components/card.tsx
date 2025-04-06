@@ -27,7 +27,6 @@ type CardProps = {
   mainText?: string;
   caption?: string;
   onClick?: () => void;
-  showExplainCaption?: boolean;
   children?: React.ReactNode;
 };
 
@@ -36,7 +35,6 @@ export function Card({
   mainText,
   caption,
   onClick,
-  showExplainCaption,
   children,
 }: CardProps) {
   return (
@@ -46,11 +44,6 @@ export function Card({
           <Text bold tint sneutral>
             {title}
           </Text>
-          {showExplainCaption && (
-            <Text smaller accent>
-              What is this?
-            </Text>
-          )}
         </View>
         <View style={styles.mainContainer}>
           {mainText && (

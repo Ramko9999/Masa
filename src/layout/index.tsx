@@ -11,6 +11,7 @@ import { FestivalDetails } from "@/screens/festival-details";
 import { TithiInfoPage } from "@/screens/tithi-info";
 import { VaaraInfoPage } from "@/screens/vaara-info";
 import { NakshatraInfoPage } from "@/screens/nakshatra-info";
+import { MasaInfoPage } from "@/screens/masa-info";
 import { Home } from "@/screens/tabs/home";
 import { CustomTabBar } from "./tab-bar";
 import { SystemBars } from "react-native-edge-to-edge";
@@ -70,6 +71,10 @@ export function Layout() {
         <Stack.Screen
           name="nakshatra_info"
           component={NakshatraInfoPage}
+        />
+        <Stack.Screen
+          name="masa_info"
+          component={MasaInfoPage}
         />
       </Stack.Navigator>
       <SystemBars style="dark" />

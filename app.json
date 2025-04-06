@@ -13,6 +13,9 @@
       "entitlements": {
         "com.apple.security.application-groups": "group.com.anonymous.masa"
       },
+      "infoPlist": {
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "We need your location to calculate the correct calendar elements and festival timings for your region."
+      },
       "bundleIdentifier": "com.anonymous.masa",
       "icon": {
         "light": "./assets/logo/ios/light.png",

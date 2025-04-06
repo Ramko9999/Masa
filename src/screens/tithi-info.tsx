@@ -1,5 +1,5 @@
 import React from "react";
-import { GeocentricTithi } from "@/components/tithi/geocentric-tithi";
+import { TithiOrbit } from "@/components/tithi/orbit";
 import { MoonSlider } from "@/components/tithi/moon-phases";
 import { 
   InfoPage, 
@@ -41,7 +41,7 @@ export function TithiInfoPage() {
           Look at how the Tithi changes based on the Sun-Moon angle
         </InfoNote>
         <InfoSpacer />
-        <GeocentricTithi />
+        <TithiOrbit />
       </InfoVisual>
 
       <InfoSection>

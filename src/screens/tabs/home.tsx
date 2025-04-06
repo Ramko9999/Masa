@@ -2,8 +2,6 @@ import { WeekCalendar } from "@/components/calendar/week";
 import React, { useState } from "react";
 import { Pachanga } from "@/components/panchanga";
 import {
-  NakshatraInfoSheet,
-  TithiInfoSheet,
   YogaInfoSheet,
 } from "@/components/sheets";
 import { useCalendar } from "@/components/calendar/context";
@@ -28,8 +26,7 @@ export function Home({ navigation }: HomeProps) {
       <Pachanga
         onTithiClick={() => navigation.navigate("tithi_info")}
         onVaaraClick={() => navigation.navigate("vaara_info")}
-        onYogaClick={() => setShowYogaSheet(true)}
-        onMasaClick={() => {}}
+        onMasaClick={() => navigation.navigate("masa_info")}
         onNakshatraClick={() => navigation.navigate("nakshatra_info")}
         selectedDay={selection.date}
       />

@@ -26,7 +26,7 @@ export const enum MasaIndex {
   Phalguna = 11,
 }
 
-const MASA_NAMES = [
+export const MASA_NAMES = [
   "Chaitra",
   "Vaisakha",
   "Jyeshtha",

@@ -45,8 +45,8 @@ const moonSliderStyles = StyleSheet.create({
   },
   sliderHandle: {
     backgroundColor: useGetColor(AppColor.tint),
-    width: 10,
-    height: 10,
+    width: 15,
+    height: 15,
     borderRadius: 10,
     position: "absolute",
     left: 0,
@@ -65,7 +65,7 @@ export const MoonSlider = ({ onProgressChange }: MoonSliderProps) => {
 
   const offset = useSharedValue(0);
   const [trackWidth, setTrackWidth] = useState(100);
-  const handleSize = 10;
+  const handleSize = 15;
 
   const progress = useDerivedValue(() => {
     return offset.value / (trackWidth - handleSize);

@@ -42,8 +42,11 @@ export function NakshatraInfoPage() {
         </InfoParagraph>
         <InfoParagraph>
           Nakshatras play a key role in the Hindu Calendar, rituals, and
-          astrology. A person's Janma Nakshatra (birth Nakshatra) is determined
-          by the Moon's position at birth, influencing rituals like naming,
+          astrology.
+        </InfoParagraph>
+        <InfoParagraph>
+          A person's Janma Nakshatra (birth Nakshatra) is determined by the
+          Moon's position at birth, influencing rituals like naming,
           personality traits, and compatibility.
         </InfoParagraph>
         <InfoParagraph>

@@ -38,9 +38,7 @@ type PachangaProps = {
   onTithiClick?: () => void;
   onNakshatraClick?: () => void;
   onVaaraClick?: () => void;
-  onYogaClick?: () => void;
   onMasaClick?: () => void;
-  onKaranaClick?: () => void;
   selectedDay: number;
 };
 
@@ -49,31 +47,19 @@ export function Pachanga({
   onTithiClick,
   onNakshatraClick,
   onVaaraClick,
-  onYogaClick,
   onMasaClick,
-  onKaranaClick,
   selectedDay,
 }: PachangaProps) {
   const { location } = useLocation();
 
-  const {
-    tithi,
-    nakshatra,
-    yoga,
-    vaara,
-    masa,
-    sunrise,
-    sunset,
-    moonrise,
-    moonset,
-  } = computePanchanga(truncateToDay(selectedDay), location!);
+  const { tithi, nakshatra, vaara, masa, sunrise, sunset, moonrise, moonset } =
+    computePanchanga(truncateToDay(selectedDay), location!);
 
   return (
     <View style={panchangaStyles.container}>
       <Card
         title="VAARA—DAY OF THE WEEK"
         mainText={vaara.name}
-        showExplainCaption
         onClick={onVaaraClick}
       >
         <View style={panchangaStyles.rowContainer}>
@@ -130,32 +116,31 @@ export function Pachanga({
         mainText={tithi[0].name}
         caption={`until ${getHumanReadableDate(tithi[0].endDate)}`}
         onClick={onTithiClick}
-        showExplainCaption
       />
       <Card
         title="NAKSHATRA-CONSTELLATION"
         mainText={nakshatra[0].name}
         caption={`until ${getHumanReadableDate(nakshatra[0].endDate)}`}
         onClick={onNakshatraClick}
-        showExplainCaption
       />
-      <Card
-        title="YOGA-LUNISOLAR ALIGNMENT"
-        mainText={yoga[0].name}
-        caption={`until ${getHumanReadableDate(yoga[0].endDate)}`}
-        onClick={onYogaClick}
-        showExplainCaption
-      />
-      <Card title="MASA—LUNAR MONTH" onClick={onMasaClick} showExplainCaption>
-        <View>
-          <Text semibold larger>
-            Purnimanta — {masa.purnimanta.name}
-          </Text>
-        </View>
-        <View>
-          <Text semibold larger>
-            Amanta — {masa.amanta.name}
-          </Text>
+      <Card title="MASA—LUNAR MONTH" onClick={onMasaClick}>
+        <View style={panchangaStyles.rowContainer}>
+          <View>
+            <Text semibold tint>
+              Amanta
+            </Text>
+            <Text semibold larger>
+              {masa.amanta.name}
+            </Text>
+          </View>
+          <View>
+            <Text semibold tint>
+              Purnimanta
+            </Text>
+            <Text semibold larger>
+              {masa.purnimanta.name}
+            </Text>
+          </View>
         </View>
       </Card>
     </View>

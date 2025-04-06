@@ -96,11 +96,6 @@ export function NakshatraOrbit() {
     () => centerY + Math.sin(moonAngleRad.value) * moonOrbitRadius
   );
 
-  const referenceAngle = 0; // Fixed at 0 degrees
-  const moonSunAngleDegrees = useDerivedValue(() => {
-    return (moonAngleDeg.value - referenceAngle + 360) % 360;
-  });
-
   // Set up animated props
   const moonProps = useAnimatedProps(() => ({
     cx: moonX.value,
@@ -262,7 +257,7 @@ export function NakshatraOrbit() {
                 `;
               })(),
             }))}
-            fill={tintColor}
+            fill="#8A2BE2"
             opacity={0.3}
             stroke={tintColor}
             strokeWidth="1"

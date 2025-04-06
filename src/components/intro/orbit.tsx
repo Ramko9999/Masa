@@ -115,11 +115,11 @@ function Orbits({ isHeliocentric, size }: OrbitsProps) {
 
     // Moon position in geocentric model (orbits around center)
     const geoMoonX = useDerivedValue(
-        () => centerX + Math.cos(moonAngleRad.value) * (size * 0.2)
+        () => centerX + Math.cos(moonAngleRad.value) * (size * 0.4)
     );
 
     const geoMoonY = useDerivedValue(
-        () => centerY + Math.sin(moonAngleRad.value) * (size * 0.2)
+        () => centerY + Math.sin(moonAngleRad.value) * (size * 0.4)
     );
 
     // Interpolate between the two positions
@@ -158,7 +158,6 @@ function Orbits({ isHeliocentric, size }: OrbitsProps) {
     // Orbit opacity animations
     const heliocentricOrbitOpacity = useSharedValue(1); // Start with heliocentric
     const geocentricSunOrbitOpacity = useSharedValue(0);
-    const geocentricMoonOrbitOpacity = useSharedValue(0);
 
     // Animated props for orbit lines
     const heliocentricOrbitProps = useAnimatedProps(() => ({
@@ -167,10 +166,6 @@ function Orbits({ isHeliocentric, size }: OrbitsProps) {
 
     const geocentricSunOrbitProps = useAnimatedProps(() => ({
         opacity: geocentricSunOrbitOpacity.value,
-    }));
-
-    const geocentricMoonOrbitProps = useAnimatedProps(() => ({
-        opacity: geocentricMoonOrbitOpacity.value,
     }));
 
     // Continuous orbital animation
@@ -209,20 +204,12 @@ function Orbits({ isHeliocentric, size }: OrbitsProps) {
                 duration: transitionDuration,
                 easing: Easing.inOut(Easing.cubic),
             });
-            geocentricMoonOrbitOpacity.value = withTiming(1, {
-                duration: transitionDuration,
-                easing: Easing.inOut(Easing.cubic),
-            });
         } else {
             heliocentricOrbitOpacity.value = withTiming(1, {
                 duration: transitionDuration,
                 easing: Easing.inOut(Easing.cubic),
             });
             geocentricSunOrbitOpacity.value = withTiming(0, {
-                duration: transitionDuration,
-                easing: Easing.inOut(Easing.cubic),
-            });
-            geocentricMoonOrbitOpacity.value = withTiming(0, {
                 duration: transitionDuration,
                 easing: Easing.inOut(Easing.cubic),
             });
@@ -258,17 +245,6 @@ function Orbits({ isHeliocentric, size }: OrbitsProps) {
                         animatedProps={geocentricSunOrbitProps}
                     />
 
-                    <AnimatedCircle
-                        cx={centerX}
-                        cy={centerY}
-                        r={size * 0.2}
-                        stroke={tintColor}
-                        strokeWidth="1"
-                        strokeDasharray="5,5"
-                        fill="transparent"
-                        animatedProps={geocentricMoonOrbitProps}
-                    />
-
                     {/* Animated celestial bodies */}
                     <AnimatedCircle animatedProps={sunProps} r={15} fill="orange" />
                     <AnimatedCircle
@@ -302,17 +278,17 @@ const introOrbitsDiagramStyles = StyleSheet.create({
     },
     tabsContainer: {
         position: 'absolute',
-        top: 0,
+        top: -10,
         right: 0,
         ...StyleUtils.flexRow(),
-        backgroundColor: useGetColor(AppColor.background),
+        backgroundColor: useGetColor(AppColor.primary),
         borderWidth: 2,
-        height: 40,
     },
     tab: {
-        flex: 1,
-        paddingHorizontal: "4%",
+        paddingHorizontal: 12,
+        paddingVertical: 8,
         ...StyleUtils.flexRowCenterAll(),
+        backgroundColor: useGetColor(AppColor.background),
         borderColor: useGetColor(AppColor.primary),
     },
     tabActive: {
@@ -338,7 +314,7 @@ export function IntroOrbitsDiagram({ size: providedSize }: IntroOrbitsDiagramPro
                     isHeliocentric={isHeliocentric}
                     size={size}
                 />
-                <View style={[introOrbitsDiagramStyles.tabsContainer, { width: size * 0.5 }]}>
+                <View style={introOrbitsDiagramStyles.tabsContainer}>
                     <TouchableOpacity
                         style={[
                             introOrbitsDiagramStyles.tab,
