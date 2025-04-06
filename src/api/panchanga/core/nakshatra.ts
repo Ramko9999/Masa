@@ -140,7 +140,7 @@ export function compute(day: number, sunrise: number): NakshatraInterval[] {
 
   const nakshatras: NakshatraInterval[] = [currentNakshatra];
 
-  while (currentNakshatra.endDate < nextDay) {
+  while (currentNakshatra.endDate < nextDay || nakshatras.filter(({ endDate }) => endDate >= sunrise).length < 2) {
     currentNakshatra = getNakshatraInterval(
       currentNakshatra.endDate,
       (currentNakshatra.index + 1) % 27

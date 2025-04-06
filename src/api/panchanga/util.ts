@@ -40,7 +40,7 @@ export function getSunrise(
 export function getSunset(
   day: number,
   { latitude, longitude }: Location
-): number | null {
+): number {
   const observer = new Astronomy.Observer(latitude, longitude, 0);
   const search = Astronomy.SearchRiseSet(
     Astronomy.Body.Sun,
@@ -51,10 +51,32 @@ export function getSunset(
   );
 
   if (!search) {
-    return null;
+    throw new Error("Unexpected: failed to find sunset");
   }
 
   return search.date.valueOf();
+}
+
+export function getSunLongitudeMoment(
+  niryanaLongitude: number,
+  anchorDay: number,
+  limit: number
+) {
+  const longitude =
+    niryanaLongitude + toDegrees(approximateAyanamsa(anchorDay));
+  const moment = Astronomy.SearchSunLongitude(
+    longitude,
+    new Date(anchorDay),
+    limit
+  );
+  if (!moment) {
+    throw new Error(
+      `Could not find sun longitude ${longitude} on ${new Date(
+        anchorDay
+      )}. This is unexpected.`
+    );
+  }
+  return moment.date.valueOf();
 }
 
 export function getMoonrise(
@@ -182,12 +204,23 @@ export function getFullMoonOccurrence(
   return fullMoonTime.date.valueOf();
 }
 
-export function getMoonPhaseOccurence(anchorDay: number, phaseInArcSeconds: number){
+export function getMoonPhaseOccurence(
+  anchorDay: number,
+  phaseInArcSeconds: number
+) {
   const phaseDegrees = toDegrees(phaseInArcSeconds);
-  const moonPhase = Astronomy.SearchMoonPhase(phaseDegrees, new Date(anchorDay), MOON_SEARCH_DAYS);
+  const moonPhase = Astronomy.SearchMoonPhase(
+    phaseDegrees,
+    new Date(anchorDay),
+    MOON_SEARCH_DAYS
+  );
 
-  if(!moonPhase){
-    throw new Error(`Could not find moon phase ${phaseDegrees} on ${new Date(anchorDay)}. This is unexpected.`);
+  if (!moonPhase) {
+    throw new Error(
+      `Could not find moon phase ${phaseDegrees} on ${new Date(
+        anchorDay
+      )}. This is unexpected.`
+    );
   }
 
   return moonPhase.date.valueOf();

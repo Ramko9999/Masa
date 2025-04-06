@@ -65,23 +65,26 @@ export function getHumanReadableDate(timestamp: number) {
 
   let date;
   if (today === truncatedTime) {
-    date = "Today";
+    return time;
   } else if (today === removeDays(truncatedTime, 1)) {
-    date = "Tommorrow";
+    return `Tomorrow ${time}`;
   } else {
     date = new Date(truncatedTime).toLocaleDateString("default", {
       month: "long",
       day: "numeric",
     });
+    return `${date}, ${time}`;
   }
-
-  return `${date} ${time}`;
 }
 
 export function getHumanReadableDateWithWeekday(timestamp: number) {
   const date = new Date(timestamp);
-  const weekday = date.toLocaleDateString("en-US", { weekday: "long" }).toUpperCase();
-  const month = date.toLocaleDateString("en-US", { month: "short" }).toUpperCase();
+  const weekday = date
+    .toLocaleDateString("en-US", { weekday: "long" })
+    .toUpperCase();
+  const month = date
+    .toLocaleDateString("en-US", { month: "short" })
+    .toUpperCase();
   const day = date.getDate();
   return `${weekday} — ${month} ${day}`;
 }

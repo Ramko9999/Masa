@@ -208,7 +208,10 @@ export function compute(day: number, sunrise: number): TithiInterval[] {
 
   const tithis: TithiInterval[] = [currentTithi];
 
-  while (currentTithi.endDate < nextDay) {
+  while (
+    currentTithi.endDate < nextDay ||
+    tithis.filter(({ endDate }) => endDate >= sunrise).length < 2
+  ) {
     currentTithi = getTithiInterval(
       currentTithi.endDate,
       (currentTithi.index + 1) % 30
@@ -219,7 +222,10 @@ export function compute(day: number, sunrise: number): TithiInterval[] {
   return tithis.filter(({ endDate }) => endDate >= sunrise);
 }
 
-function getTithiInterval(startDate: number, tithiIndex: number): TithiInterval {
+function getTithiInterval(
+  startDate: number,
+  tithiIndex: number
+): TithiInterval {
   const endDate = getTithiEnd(tithiIndex, startDate);
   return {
     startDate,

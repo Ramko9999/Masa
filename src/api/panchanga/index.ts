@@ -54,5 +54,5 @@ export function computePanchanga(day: number, location: Location): Panchanga {
 }
 
 export function getUpcomingFestivals(anchorDay: number, location: Location) {
-  return Festival.getLunarFestivals(anchorDay, location);
+  return Festival.getUpcomingFestivals(anchorDay, location);
 }

@@ -9,12 +9,12 @@ import {
   getPurnimantaMasaCalendarForYear,
 } from "@/api/panchanga/core/masa";
 import { Location } from "@/api/location";
-import { getDatesBetween } from "@/util/date";
-import { getSunrise } from "../util";
+import { addDays, getDatesBetween, truncateToDay } from "@/util/date";
+import { getSunLongitudeMoment, getSunrise, getSunset } from "../util";
 
 enum RuleType {
   Lunar = "lunar",
-  Solar = "solar",
+  Dynamic = "dynamic",
 }
 
 type LunarRule = {
@@ -23,11 +23,9 @@ type LunarRule = {
   masaIndex: MasaIndex;
 };
 
-type SolarRule = {
-  type: RuleType.Solar;
-  month: number;
-  day: number;
-  masaIndex: MasaIndex;
+type DynamicRule = {
+  type: RuleType.Dynamic;
+  evaluate: (year: number, location: Location) => number;
 };
 
 type FestivalRule = {
@@ -36,7 +34,7 @@ type FestivalRule = {
   description: string;
   celebration: string;
   image: string;
-  rule: LunarRule | SolarRule;
+  rule: LunarRule | DynamicRule;
 };
 
 export enum FestivalName {
@@ -76,7 +74,35 @@ export enum FestivalName {
   ChhathPuja = "Chhath Puja",
 }
 
+function getMakarSankrantiDate(year: number, location: Location) {
+  const sankranti = getSunLongitudeMoment(
+    270,
+    new Date(year, 0, 0).valueOf(),
+    90
+  );
+
+  const dayOfSankranti = truncateToDay(sankranti);
+  const sunset = getSunset(dayOfSankranti, location);
+  if (sunset > sankranti) {
+    return dayOfSankranti;
+  }
+  return addDays(dayOfSankranti, 1);
+}
+
 const FESTIVAL_RULES: FestivalRule[] = [
+  {
+    name: FestivalName.MakarSankranti,
+    caption: "Embracing the Sun's New Journey",
+    description:
+      "This festival marks the sun's transition into Capricorn, symbolizing longer days and the harvest season, a day to seek blessings for abundance and prosperity.",
+    celebration:
+      "Taking holy baths, flying kites, eating sesame and jaggery sweets, and performing charity.",
+    image: "makar-sankranti.png",
+    rule: {
+      type: RuleType.Dynamic,
+      evaluate: getMakarSankrantiDate,
+    },
+  },
   {
     name: FestivalName.VasantPanchami,
     caption: "A Celebration of Knowledge and Wisdom",
@@ -407,7 +433,7 @@ export type Festival = Omit<FestivalRule, "rule"> & {
 
 function isFestival(
   date: Date,
-  rule: LunarRule | SolarRule,
+  rule: LunarRule,
   tithi: TithiInterval[],
   masa: Masa,
   sunrise: number
@@ -420,14 +446,6 @@ function isFestival(
           t.startDate <= sunrise &&
           t.endDate >= sunrise
       ) && masa.purnimanta.index === rule.masaIndex
-    );
-  } else if (rule.type === RuleType.Solar) {
-    const month = date.getMonth();
-    const day = date.getDate();
-    return (
-      rule.day === day &&
-      rule.month === month &&
-      rule.masaIndex === masa.purnimanta.index
     );
   }
 
@@ -444,7 +462,10 @@ export function compute(
   const festivals: Festival[] = [];
 
   for (const festival of FESTIVAL_RULES) {
-    if (isFestival(date, festival.rule, tithi, masa, sunrise)) {
+    if (
+      festival.rule.type === RuleType.Lunar &&
+      isFestival(date, festival.rule, tithi, masa, sunrise)
+    ) {
       const { rule, ...festivalWithoutRule } = festival;
       festivals.push({ ...festivalWithoutRule, date: day });
     }
@@ -453,9 +474,7 @@ export function compute(
   return festivals;
 }
 
-// todo: add makar sankranti
-export function getLunarFestivals(anchorDay: number, location: Location) {
-  const start = Date.now();
+function getLunarFestivals(anchorDay: number, location: Location) {
   const year = new Date(anchorDay).getFullYear();
   const purnimantaMasaCalendar = getPurnimantaMasaCalendarForYear(
     year,
@@ -486,9 +505,28 @@ export function getLunarFestivals(anchorDay: number, location: Location) {
       return festivals;
     });
   });
-
-  console.log(
-    `[UPCOMING FESTIVALS] Time taken: ${(Date.now() - start) / 1000}s`
-  );
   return lunarFestivals;
+}
+
+function getDynamicFestivals(anchorDay: number, location: Location) {
+  const year = new Date(anchorDay).getFullYear();
+  const festivals: Festival[] = [];
+
+  for (const festival of FESTIVAL_RULES) {
+    if (festival.rule.type === RuleType.Dynamic) {
+      const dynamicRule = festival.rule as DynamicRule;
+      const date = dynamicRule.evaluate(year, location);
+      festivals.push({ ...festival, date });
+    }
+  }
+
+  return festivals;
+}
+
+export function getUpcomingFestivals(anchorDay: number, location: Location) {
+  const lunarFestivals = getLunarFestivals(anchorDay, location);
+  const dynamicFestivals = getDynamicFestivals(anchorDay, location);
+  return [...lunarFestivals, ...dynamicFestivals].sort(
+    (a, b) => a.date - b.date
+  );
 }

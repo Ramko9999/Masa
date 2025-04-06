@@ -14,6 +14,8 @@ import {
   MoonsetIcon,
 } from "@/theme/icon";
 import { useLocation } from "@/context/location";
+import { TithiInterval } from "@/api/panchanga/core/tithi";
+import { NakshatraInterval } from "@/api/panchanga/core/nakshatra";
 
 const panchangaStyles = StyleSheet.create({
   container: {
@@ -41,6 +43,29 @@ type PachangaProps = {
   onMasaClick?: () => void;
   selectedDay: number;
 };
+
+function getIntervalDescription(
+  intervals: TithiInterval[] | NakshatraInterval[]
+) {
+  return intervals
+    .map((interval, index) => {
+      // Check if there's a next interval to refer to
+      const hasNextInterval = index < intervals.length - 1;
+      const nextIntervalName = hasNextInterval
+        ? intervals[index + 1].name
+        : null;
+
+      if (hasNextInterval) {
+        return `changes to ${nextIntervalName} at ${getHumanReadableDate(
+          interval.endDate
+        )}`;
+      } else {
+        return "";
+      }
+    })
+    .filter((value) => value.trim().length > 0)
+    .join("\n");
+}
 
 // todo: verify moon rise and set times
 export function Pachanga({
@@ -114,13 +139,13 @@ export function Pachanga({
       <Card
         title="TITHI—LUNAR DAY"
         mainText={tithi[0].name}
-        caption={`until ${getHumanReadableDate(tithi[0].endDate)}`}
+        caption={getIntervalDescription(tithi)}
         onClick={onTithiClick}
       />
       <Card
         title="NAKSHATRA-CONSTELLATION"
         mainText={nakshatra[0].name}
-        caption={`until ${getHumanReadableDate(nakshatra[0].endDate)}`}
+        caption={getIntervalDescription(nakshatra)}
         onClick={onNakshatraClick}
       />
       <Card title="MASA—LUNAR MONTH" onClick={onMasaClick}>
