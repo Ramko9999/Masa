@@ -56,7 +56,9 @@ export enum FestivalName {
   AkshayaTritiya = "Akshaya Tritiya",
 
   // Summer Festivals
+  VatSavitri = "Vat Savitri",
   GuruPurnima = "Guru Purnima",
+  RathYatra = "Rath Yatra",
   NagaPanchamiShukla = "Naga Panchami (Shukla)",
   NagaPanchamiKrishna = "Naga Panchami (Krishna)",
   RakshaBandhan = "Raksha Bandhan",
@@ -64,11 +66,14 @@ export enum FestivalName {
   GaneshChaturthi = "Ganesh Chaturthi",
 
   // Autumn Festivals
-  NavaratriStart = "Navaratri Start",
+  Navaratri = "Navaratri",
   DurgaPuja = "Durga Puja",
   Dussehra = "Dussehra",
+  KojagaraPuja = "Kojagara Puja",
   KarvaChauth = "Karva Chauth",
+  GovardhanaPuja = "Govardhana Puja",
   Diwali = "Diwali",
+  ChhathPuja = "Chhath Puja",
 }
 
 const FESTIVAL_RULES: FestivalRule[] = [
@@ -171,6 +176,34 @@ const FESTIVAL_RULES: FestivalRule[] = [
     },
   },
   {
+    name: FestivalName.VatSavitri,
+    caption: "A Devotion of Wifely Duty",
+    description:
+      "Observed by married women for the longevity and well-being of their husbands, commemorating the devotion of Savitri who rescued her husband Satyavan from Yama, the god of death.",
+    celebration:
+      "Fasting for 24 hours, tying sacred threads around banyan (vat) trees, performing rituals while circling the tree, and offering prayers for husband's health and long life.",
+    image: "vat-savitri.png",
+    rule: {
+      type: RuleType.Lunar,
+      tithiIndex: TithiIndex.Amavasya,
+      masaIndex: MasaIndex.Jyeshtha,
+    },
+  },
+  {
+    name: FestivalName.RathYatra,
+    caption: "The Chariot Festival of Lord Jagannath",
+    description:
+      "Celebrates the annual journey of Lord Jagannath, Lord Balabhadra, and Goddess Subhadra from their temple to Gundicha Temple, symbolizing Krishna's return to Vrindavan.",
+    celebration:
+      "Pulling elaborately decorated chariots through the streets, singing devotional songs, offering prayers, and participating in the grand procession.",
+    image: "rath-yatra.png",
+    rule: {
+      type: RuleType.Lunar,
+      tithiIndex: TithiIndex.ShuklaDwitiya,
+      masaIndex: MasaIndex.Ashadha,
+    },
+  },
+  {
     name: FestivalName.GuruPurnima,
     caption: "Honoring the Spiritual Teacher",
     description:
@@ -255,6 +288,20 @@ const FESTIVAL_RULES: FestivalRule[] = [
     },
   },
   {
+    name: FestivalName.Navaratri,
+    caption: "Nine Nights of Divine Feminine",
+    description:
+      "A nine-night celebration honoring the divine feminine energy (Shakti) in her various forms of Durga, Lakshmi, and Saraswati, representing the triumph of good over evil.",
+    celebration:
+      "Setting up golu (display of dolls), performing special pujas, fasting, dancing garba and dandiya raas, and worshipping young girls as embodiments of the goddess.",
+    image: "navaratri.png",
+    rule: {
+      type: RuleType.Lunar,
+      tithiIndex: TithiIndex.ShuklaPratipada,
+      masaIndex: MasaIndex.Ashwin,
+    },
+  },
+  {
     name: FestivalName.DurgaPuja,
     caption: "Honoring the Warrior Goddess",
     description:
@@ -283,6 +330,20 @@ const FESTIVAL_RULES: FestivalRule[] = [
     },
   },
   {
+    name: FestivalName.KojagaraPuja,
+    caption: "The Festival of Goddess Lakshmi",
+    description:
+      "Also known as Sharad Purnima or Kojagiri Purnima, it celebrates Goddess Lakshmi, believed to roam the earth on this night asking 'Ko Jagarti?' (Who is awake?), blessing those awake with prosperity.",
+    celebration:
+      "Staying awake all night, preparing rice kheer to offer under moonlight, decorating homes with lights, and performing special pujas to Goddess Lakshmi.",
+    image: "kojagara-puja.png",
+    rule: {
+      type: RuleType.Lunar,
+      tithiIndex: TithiIndex.Purnima,
+      masaIndex: MasaIndex.Ashwin,
+    },
+  },
+  {
     name: FestivalName.KarvaChauth,
     caption: "A Vow of Love and Devotion",
     description:
@@ -297,6 +358,20 @@ const FESTIVAL_RULES: FestivalRule[] = [
     },
   },
   {
+    name: FestivalName.GovardhanaPuja,
+    caption: "Honoring the Sacred Mountain",
+    description:
+      "Celebrates Lord Krishna's lifting of Govardhana Hill to protect villagers from Indra's wrath, symbolizing the importance of environmental protection and the triumph of devotion over pride.",
+    celebration:
+      "Creating miniature Govardhana hills from cow dung, offering Annakut (mountain of food) to Lord Krishna, performing circumambulation of the hill or its representation, and feeding cows.",
+    image: "govardhana-puja.png",
+    rule: {
+      type: RuleType.Lunar,
+      tithiIndex: TithiIndex.ShuklaPratipada,
+      masaIndex: MasaIndex.Kartika,
+    },
+  },
+  {
     name: FestivalName.Diwali,
     caption: "The Festival of Lights and Joy",
     description:
@@ -307,6 +382,20 @@ const FESTIVAL_RULES: FestivalRule[] = [
     rule: {
       type: RuleType.Lunar,
       tithiIndex: TithiIndex.Amavasya,
+      masaIndex: MasaIndex.Kartika,
+    },
+  },
+  {
+    name: FestivalName.ChhathPuja,
+    caption: "A Celebration of the Sun God",
+    description:
+      "A four-day festival dedicated to Surya (the Sun God) and Chhathi Maiya (Goddess Shashti), seeking blessings for prosperity, well-being, and longevity of family members.",
+    celebration:
+      "Devotees observe rigorous fasting, offer prayers at riverbanks or water bodies during sunset and sunrise, and prepare special prasad like thekua and kheer.",
+    image: "chhath-puja.png",
+    rule: {
+      type: RuleType.Lunar,
+      tithiIndex: TithiIndex.ShuklaShashti,
       masaIndex: MasaIndex.Kartika,
     },
   },
