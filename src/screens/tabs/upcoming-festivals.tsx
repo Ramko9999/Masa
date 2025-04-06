@@ -55,10 +55,10 @@ function FestivalItem({ festival, onPress }: FestivalItemProps) {
             { borderBottomColor: useGetColor(AppColor.border) },
           ]}
         >
-          <Text medium>{getHumanReadableDateWithWeekday(festival.date)}</Text>
+          <Text neutral tint semibold>{getHumanReadableDateWithWeekday(festival.date)}</Text>
         </View>
         <View style={upcomingFestivalsStyles.festivalContent}>
-          <Text semibold>{festival.name}</Text>
+          <Text neutral bold>{festival.name}</Text>
         </View>
       </View>
     </Pressable>
