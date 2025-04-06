@@ -78,6 +78,14 @@ export function getHumanReadableDate(timestamp: number) {
   return `${date} ${time}`;
 }
 
+export function getHumanReadableDateWithWeekday(timestamp: number) {
+  const date = new Date(timestamp);
+  const weekday = date.toLocaleDateString("en-US", { weekday: "long" }).toUpperCase();
+  const month = date.toLocaleDateString("en-US", { month: "short" }).toUpperCase();
+  const day = date.getDate();
+  return `${weekday} — ${month} ${day}`;
+}
+
 export function getHumanReadableTime(timestamp: number | null) {
   if (timestamp === null) {
     return "N/A";
