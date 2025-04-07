@@ -31,16 +31,15 @@ type DynamicRule = {
 type FestivalRule = {
   name: FestivalName;
   alias?: string[];
+  deities?: string[];
   caption: string;
   description: string;
   celebration: string;
-  image: string;
   rule: LunarRule | DynamicRule;
 };
 
 export enum FestivalName {
   // Pongal/Sankranti Festivals
-  Bhogi = "Bhogi",
   MakarSankranti = "Makar Sankranti",
 
   // Spring Festivals
@@ -58,8 +57,7 @@ export enum FestivalName {
   VatSavitri = "Vat Savitri",
   GuruPurnima = "Guru Purnima",
   RathYatra = "Rath Yatra",
-  NagaPanchamiShukla = "Naga Panchami (Shukla)",
-  NagaPanchamiKrishna = "Naga Panchami (Krishna)",
+  NagaPanchami = "Naga Panchami",
   RakshaBandhan = "Raksha Bandhan",
   KrishnaJanmashtami = "Krishna Janmashtami",
   GaneshChaturthi = "Ganesh Chaturthi",
@@ -94,12 +92,13 @@ const FESTIVAL_RULES: FestivalRule[] = [
   {
     name: FestivalName.MakarSankranti,
     alias: ["Pongal"],
-    caption: "Embracing the Sun's New Journey",
+    deities: ["Surya"],
+    caption:
+      "A sacred turning point honoring Surya and the light that guides new beginnings",
     description:
-      "Makar Sankranti is a festival dedicated to Lord Surya, the Sun God. Signifying the end of winter and the onset of longer, warmer days. It is usually celebrated annually on January 14th (or January 15th in leap years), this day is considered highly auspicious for new beginnings and spiritual practices.",
+      "Makar Sankranti signifies the end of winter and the onset of longer, warmer days. It is usually occurs on January 14th (or January 15th in leap years). It is a highly auspicious day for new beginnings and spiritual practices.",
     celebration:
-      "Makar Sankranti is celebrated in different ways across India. Many people wake up early to take a holy dip in rivers, which is believed to cleanse the soul. Prayers are offered to the Sun, thanking it for its light and energy. Families prepare sweets made from sesame seeds and jaggery, which are shared with loved ones to promote harmony and warmth. In places like Gujarat, people fly colorful kites to celebrate the arrival of brighter days. In some regions, people also gather around bonfires, sing songs, and enjoy time together in the spirit of the season.",
-    image: "makar-sankranti.png",
+      "People wake up early to take dips in rivers to cleanse their souls. Prayers are offered to the Sun, thanking it for its light and energy. Families prepare sesame seed and jaggery sweets to share with loved ones to promote harmony and warmth. People fly colorful kites, gather around bonfires, and enjoy company to celebrate the arrival of brighter days.",
     rule: {
       type: RuleType.Dynamic,
       evaluate: getMakarSankrantiDate,
@@ -107,12 +106,14 @@ const FESTIVAL_RULES: FestivalRule[] = [
   },
   {
     name: FestivalName.VasantPanchami,
-    caption: "A Celebration of Knowledge and Wisdom",
+    alias: ["Saraswati Jayanti"],
+    deities: ["Saraswati"],
+    caption:
+      "Honor Goddess Saraswati, embracing wisdom and new educational endeavors",
     description:
-      "Honors goddess Saraswati, embodying knowledge and wisdom, a day to seek blessings for intellectual growth and start new educational endeavors.",
+      "Vasant Panchami is dedicated to Goddess Saraswati, the Hindu deity of knowledge, music, arts, wisdom, and learning. It is believed to be her birth anniversary.",
     celebration:
-      "Worshipping Saraswati, offering prayers and flowers, wearing yellow attire, and participating in cultural events promoting learning and arts.",
-    image: "vasant-panchami.png",
+      "People perform Saraswati Puja at homes, schools, and colleges, wearing white and yellow attire and offering mustard and marigold flowers to Goddess Saraswati. Parents initiate their young children into learning. Flying kites is a popular activity during this day as well.",
     rule: {
       type: RuleType.Lunar,
       tithiIndex: TithiIndex.ShuklaPanchami,
@@ -121,12 +122,12 @@ const FESTIVAL_RULES: FestivalRule[] = [
   },
   {
     name: FestivalName.MahaShivaratri,
+    deities: ["Shiva", "Parvati"],
     caption: "A Night of Spiritual Awakening",
     description:
-      "Honors Lord Shiva, a night of fasting and staying awake for spiritual practices, seeking his blessings for enlightenment.",
+      "Maha Shivaratri celebrates the divine marriage of Lord Shiva and Goddess Parvati. It is believed that Lord Shiva's cosmic dance, or Tandava, took place on this day, representing creation, preservation, and destruction in the universe.",
     celebration:
-      "Fasting, performing special pujas, reciting mantras, and holding all-night vigils in temples or at home.",
-    image: "maha-shivaratri.png",
+      "Devotees fast, meditate, and offer prayers throughout the night, focusing on the worship of Lord Shiva, especially the Shiva Lingam. Mantras and rituals like Abhishekam (bathing the Shiva Lingam with water, milk and honey) are performed for spiritual growth and purification.",
     rule: {
       type: RuleType.Lunar,
       tithiIndex: TithiIndex.KrishnaChaturdashi,
@@ -135,12 +136,12 @@ const FESTIVAL_RULES: FestivalRule[] = [
   },
   {
     name: FestivalName.Holi,
+    deities: ["Vishnu"],
     caption: "A Celebration of Colors and Love",
     description:
-      "Celebrates the love between Lord Krishna and Radha, and the victory of good over evil, a time for colors, music, dance, and community joy.",
+      'Holi is a joyous and vibrant Hindu festival that celebrates the victory of good over evil. It originates from the legend of Prahlada, a devotee of Lord Vishnu, who was saved from the fire while the demoness Holika was burned. This symbolizes the triumph of devotion and righteousness. Holi also welcomes the arrival of spring and is known as the "Festival of Colors."',
     celebration:
-      "Playing with colors, throwing water balloons, eating special foods like gujiya, and joining cultural events and processions.",
-    image: "holi.png",
+      "Celebrations begin with Holika Dahan, a sacred bonfire on the night before Holi that symbolizes the burning of negativity. The next day is marked by joyous gatherings where people apply colored powders with water, dance, and celebrate with music and sweets, spreading unity and love.",
     rule: {
       type: RuleType.Lunar,
       tithiIndex: TithiIndex.Purnima,
@@ -150,11 +151,11 @@ const FESTIVAL_RULES: FestivalRule[] = [
   {
     name: FestivalName.Ugadi,
     caption: "Welcoming the New Year",
+    alias: ["Gudi Padwa"],
     description:
-      "Marks the Hindu New Year, a time for new beginnings and auspicious activities, celebrating the start of the Chaitra month.",
+      "Ugadi marks the beginning of the New Year, celebrated on the first day of Chaitra masa. The term 'Ugadi' signifies the beginning of a new age, symbolizing renewal and the ushering in of prosperity and hope.",
     celebration:
-      "Raising a gudi (flag), performing special pujas, preparing traditional foods like pachadi, and participating in cultural events.",
-    image: "ugadi.png",
+      "The day begins with a ritual oil bath, followed by prayers and temple visits. Homes are cleaned and adorned with fresh mango leaves and vibrant rangoli designs. Families hoist flags in their home and prepare and share 'Ugadi Pachadi,' a special dish combining six distinct flavors—sweet, sour, salty, bitter, astringent, and spicy—representing the varied experiences of life in the coming year.",
     rule: {
       type: RuleType.Lunar,
       tithiIndex: TithiIndex.ShuklaPratipada,
@@ -163,12 +164,12 @@ const FESTIVAL_RULES: FestivalRule[] = [
   },
   {
     name: FestivalName.RamaNavami,
+    deities: ["Rama"],
     caption: "Celebrating the Birth of Lord Rama",
     description:
-      "Celebrates Lord Rama's birth, the seventh avatar of Vishnu, a day to seek blessings for righteousness and reflect on his teachings.",
+      "Rama Navami is the birth anniversary of Lord Rama. Lord Rama, the seventh incarnation of Lord Vishnu, is revered for his virtues and righteousness. The festival commemorates his birth in Ayodhya to King Dasharatha and Queen Kausalya",
     celebration:
-      "Fasting, performing special pujas, reading the Ramayana, and joining cultural events and processions.",
-    image: "rama-navami.png",
+      "Devotees observe a day-long fast, engage in prayers, and recite verses from the Ramayana. In many regions, the day includes processions and the ceremonial marriage of Lord Rama and Goddess Sita. Temples are decorated, and special rituals are performed to honor Lord Rama and Goddess Sita.",
     rule: {
       type: RuleType.Lunar,
       tithiIndex: TithiIndex.ShuklaNavami,
@@ -177,12 +178,12 @@ const FESTIVAL_RULES: FestivalRule[] = [
   },
   {
     name: FestivalName.HanumanJayanti,
+    deities: ["Hanuman"],
     caption: "Honoring the Mighty Devotee",
     description:
-      "Celebrates Lord Hanuman's birth, known for strength and loyalty, a day to seek his blessings for protection and success.",
+      "Hanuman Jayanti commemorates the birth of Lord Hanuman, the devoted disciple of Lord Rama, symbolizing unwavering devotion, strength, and selfless service",
     celebration:
-      "Fasting, performing special pujas, reading the Hanuman Chalisa, and participating in cultural events and processions.",
-    image: "hanuman-jayanti.png",
+      "Devotees observe the day with day-long fasts, recitations of the Hanuman Chalisa, and readings from the Ramayana. Visiting Hanuman temples, offering sindoor (vermilion), and participating in spiritual discourses are common practices.",
     rule: {
       type: RuleType.Lunar,
       tithiIndex: TithiIndex.Purnima,
@@ -191,12 +192,12 @@ const FESTIVAL_RULES: FestivalRule[] = [
   },
   {
     name: FestivalName.AkshayaTritiya,
+    deities: ["Vishnu", "Lakshmi"],
     caption: "A Day of Abundance and New Beginnings",
     description:
-      "Marks a highly auspicious day for starting new ventures, considered ideal for investments and seeking prosperity blessings.",
+      'The word Akshaya means "that which never diminishes," symbolizing eternal prosperity, virtue, and success. It is believed that this day marks the beginning of the Treta Yuga, the second of the four Yugas in Hindu cosmology. The day is celebrated for its spiritual potency, as any good deeds performed are believed to yield unending and timeless merit.',
     celebration:
-      "Purchasing gold or valuables, performing special pujas, and joining cultural events and fairs.",
-    image: "akshaya-tritiya.png",
+      "Akshaya Tritiya is observed with devotion by worshipping Lord Vishnu, seeking blessings for unending prosperity and spiritual growth. Acts of charity—such as donating food, clothing, and essentials—are encouraged, believed to bring lasting merit. Many begin new ventures, spiritual practices, or investments on this day, as it is considered highly auspicious. It is also a sacred day for marriages, with the belief that unions solemnized on Akshaya Tritiya are blessed with harmony, abundance, and enduring fortune",
     rule: {
       type: RuleType.Lunar,
       tithiIndex: TithiIndex.ShuklaTritiya,
@@ -205,12 +206,12 @@ const FESTIVAL_RULES: FestivalRule[] = [
   },
   {
     name: FestivalName.VatSavitri,
-    caption: "A Devotion of Wifely Duty",
+    caption:
+      "A celebration of unwavering marital devotion and the triumph of love over death",
     description:
-      "Observed by married women for the longevity and well-being of their husbands, commemorating the devotion of Savitri who rescued her husband Satyavan from Yama, the god of death.",
+      "Observed by married women for the longevity and well-being of their husbands, commemorating the devotion of Savitri who rescued her husband Satyavan from Yama, the god of death. The festival signifies the deep love, devotion, and strength within the marital bond.",
     celebration:
-      "Fasting for 24 hours, tying sacred threads around banyan (vat) trees, performing rituals while circling the tree, and offering prayers for husband's health and long life.",
-    image: "vat-savitri.png",
+      "Married women often observe a fast. They gather near a Banyan tree which is considered sacred and symbolic of long life and stability. They offer prayers, tie threads around the tree, and walk around it as a symbol of their devotion and prayers for their husbands' health and longevity. Some women also listen to or narrate the story of Savitri and Satyavan.",
     rule: {
       type: RuleType.Lunar,
       tithiIndex: TithiIndex.Amavasya,
@@ -219,12 +220,12 @@ const FESTIVAL_RULES: FestivalRule[] = [
   },
   {
     name: FestivalName.RathYatra,
+    deities: ["Krishna"],
     caption: "The Chariot Festival of Lord Jagannath",
     description:
-      "Celebrates the annual journey of Lord Jagannath, Lord Balabhadra, and Goddess Subhadra from their temple to Gundicha Temple, symbolizing Krishna's return to Vrindavan.",
+      "Celebrates the annual journey of Lord Jagannath (Krishna), Lord Balabhadra, and Goddess Subhadra from their temple to Gundicha Temple, symbolizing Krishna's return to Vrindavan.",
     celebration:
       "Pulling elaborately decorated chariots through the streets, singing devotional songs, offering prayers, and participating in the grand procession.",
-    image: "rath-yatra.png",
     rule: {
       type: RuleType.Lunar,
       tithiIndex: TithiIndex.ShuklaDwitiya,
@@ -235,10 +236,9 @@ const FESTIVAL_RULES: FestivalRule[] = [
     name: FestivalName.GuruPurnima,
     caption: "Honoring the Spiritual Teacher",
     description:
-      "Honors the Guru, guiding disciples towards enlightenment, a day to express gratitude and seek blessings for spiritual growth.",
+      "Honors the Guru, who guides disciples in their spiritual journey. It is a day to express gratitude and seek blessings for spiritual growth.",
     celebration:
-      "Performing special pujas for the Guru, offering gifts and sweets, and participating in cultural events and discussions.",
-    image: "guru-purnima.png",
+      "Perform special pujas for the Guru, offering gifts and sweets. Reflect on the teachings of your Guru and seek their blessings for future spiritual growth, and connect with fellow disciples.",
     rule: {
       type: RuleType.Lunar,
       tithiIndex: TithiIndex.Purnima,
@@ -246,13 +246,12 @@ const FESTIVAL_RULES: FestivalRule[] = [
     },
   },
   {
-    name: FestivalName.NagaPanchamiShukla,
-    caption: "Seeking Blessings from Serpent Deities",
+    name: FestivalName.NagaPanchami,
+    caption: "Seek Blessings from Serpent Deities",
     description:
       "Honors snake gods for protection and prosperity, a day to offer prayers and rituals to ward off evil and ensure well-being.",
     celebration:
-      "Fasting, performing special pujas, offering milk to snake idols, and joining cultural events and processions.",
-    image: "naga-panchami.png",
+      "People observe Naga Panchami by fasting and performing special pujas and offering milk to snake idols to ward off evil and ensure well-being.",
     rule: {
       type: RuleType.Lunar,
       tithiIndex: TithiIndex.ShuklaPanchami,
@@ -260,27 +259,13 @@ const FESTIVAL_RULES: FestivalRule[] = [
     },
   },
   {
-    name: FestivalName.NagaPanchamiKrishna,
-    caption: "Seeking Blessings from Serpent Deities",
-    description:
-      "Honors snake gods for protection and prosperity, a day to offer prayers and rituals to ward off evil and ensure well-being.",
-    celebration:
-      "Fasting, performing special pujas, offering milk to snake idols, and joining cultural events and processions.",
-    image: "naga-panchami.png",
-    rule: {
-      type: RuleType.Lunar,
-      tithiIndex: TithiIndex.KrishnaPanchami,
-      masaIndex: MasaIndex.Shravana,
-    },
-  },
-  {
     name: FestivalName.RakshaBandhan,
+    alias: ["Rakhi"],
     caption: "A Bond of Love and Protection",
     description:
-      "Sisters tie a rakhi on brothers' wrists, symbolizing love and prayers for well-being, with brothers promising protection in return.",
+      "Raksha Bandhan celebrates the loving bond between brothers and sisters. Its origin stems from when the Goddess Indrani tied a sacred thread to Indra that ultimately led to his victory over the asuras. In modern time, it is celebrated between brothers and sisters.",
     celebration:
-      "Sisters tie rakhis, brothers give gifts, families celebrate with feasts, and join cultural activities.",
-    image: "raksha-bandhan.png",
+      "Sisters often prepare a puja plate with a Rakhi, tilak, and sweets. The celebration involves the sister tying the Rakhi on her brother's wrist after applying a tilak and offering prayers. She may perform an aarti. Siblings exchange sweets, and brothers often give gifts to their sisters. It's a time for families to gather and celebrate their loving bond.",
     rule: {
       type: RuleType.Lunar,
       tithiIndex: TithiIndex.Purnima,
@@ -289,12 +274,12 @@ const FESTIVAL_RULES: FestivalRule[] = [
   },
   {
     name: FestivalName.KrishnaJanmashtami,
+    deities: ["Krishna"],
     caption: "Celebrating the Birth of Lord Krishna",
     description:
       "Celebrates Lord Krishna's birth, known for divine playfulness and teachings, a day to seek blessings for love, wisdom, and protection.",
     celebration:
-      "Fasting until midnight, performing special pujas, joining cultural events like Rasa Leela, and enjoying festive foods.",
-    image: "krishna-janmashtami.png",
+      "It is celebrated by fasting until midnight, performing special pujas, and enjoying festive foods. Some regions participate in Dahi Handi which is a game where a pot filled with curd is suspended from the ceiling and players must form pyramids with their bodies to reach and break it.",
     rule: {
       type: RuleType.Lunar,
       tithiIndex: TithiIndex.KrishnaAshtami,
@@ -303,12 +288,13 @@ const FESTIVAL_RULES: FestivalRule[] = [
   },
   {
     name: FestivalName.GaneshChaturthi,
+    deities: ["Ganesha"],
+    alias: ["Vinayaka Chaturthi"],
     caption: "Welcoming Lord Ganesha",
     description:
-      "Honors Lord Ganesha, the remover of obstacles, a time to seek blessings for success and prosperity in all endeavors.",
+      "Ganesh Chaturthi is a joyous festival dedicated to Lord Ganesha, the remover of obstacles and the god of wisdom and prosperity. It celebrates his birth and his presence as a bringer of good fortune.",
     celebration:
-      "Installing Ganesha idols, performing special pujas, offering modaks, and joining cultural events and processions.",
-    image: "ganesh-chaturthi.png",
+      "Celebrations involve installing beautifully crafted idols of Lord Ganesha in homes and public spaces. Devotees offer prayers, flowers, sweets (especially modaks), and perform aartis. There are days of vibrant festivities with cultural programs, music, and dance. It is important to avoid looking at the moon during this day as it can lead to bad luck. Several days after, the Ganesha idols are ceremonially dissolved in water bodies.",
     rule: {
       type: RuleType.Lunar,
       tithiIndex: TithiIndex.ShuklaChaturthi,
@@ -317,12 +303,12 @@ const FESTIVAL_RULES: FestivalRule[] = [
   },
   {
     name: FestivalName.Navaratri,
+    deities: ["Durga", "Lakshmi", "Saraswati"],
     caption: "Nine Nights of Divine Feminine",
     description:
       "A nine-night celebration honoring the divine feminine energy (Shakti) in her various forms of Durga, Lakshmi, and Saraswati, representing the triumph of good over evil.",
     celebration:
       "Setting up golu (display of dolls), performing special pujas, fasting, dancing garba and dandiya raas, and worshipping young girls as embodiments of the goddess.",
-    image: "navaratri.png",
     rule: {
       type: RuleType.Lunar,
       tithiIndex: TithiIndex.ShuklaPratipada,
@@ -336,7 +322,6 @@ const FESTIVAL_RULES: FestivalRule[] = [
       "Specifically honors Durga's victory over Mahishasura, a time to seek her blessings for strength and protection, especially in eastern India.",
     celebration:
       "Installing Durga idols, performing elaborate pujas, joining cultural events and processions, and enjoying festive foods.",
-    image: "durga-puja.png",
     rule: {
       type: RuleType.Lunar,
       tithiIndex: TithiIndex.ShuklaShashti,
@@ -350,7 +335,6 @@ const FESTIVAL_RULES: FestivalRule[] = [
       "Marks Lord Rama's victory over Ravana, symbolizing good over evil, a day to celebrate righteousness through cultural festivities.",
     celebration:
       "Burning Ravana effigies, performing Ramlila, offering special pujas, and exchanging gifts and sweets.",
-    image: "dussehra.png",
     rule: {
       type: RuleType.Lunar,
       tithiIndex: TithiIndex.ShuklaDashami,
@@ -364,7 +348,6 @@ const FESTIVAL_RULES: FestivalRule[] = [
       "Also known as Sharad Purnima or Kojagiri Purnima, it celebrates Goddess Lakshmi, believed to roam the earth on this night asking 'Ko Jagarti?' (Who is awake?), blessing those awake with prosperity.",
     celebration:
       "Staying awake all night, preparing rice kheer to offer under moonlight, decorating homes with lights, and performing special pujas to Goddess Lakshmi.",
-    image: "kojagara-puja.png",
     rule: {
       type: RuleType.Lunar,
       tithiIndex: TithiIndex.Purnima,
@@ -378,7 +361,6 @@ const FESTIVAL_RULES: FestivalRule[] = [
       "Married women fast from sunrise to moonrise for husbands' well-being, expressing love and commitment through traditional rituals.",
     celebration:
       "Dressing traditionally, observing a strict fast, performing pujas, and breaking the fast by viewing the moon through a sieve.",
-    image: "karva-chauth.png",
     rule: {
       type: RuleType.Lunar,
       tithiIndex: TithiIndex.KrishnaChaturthi,
@@ -392,7 +374,6 @@ const FESTIVAL_RULES: FestivalRule[] = [
       "Celebrates Lord Krishna's lifting of Govardhana Hill to protect villagers from Indra's wrath, symbolizing the importance of environmental protection and the triumph of devotion over pride.",
     celebration:
       "Creating miniature Govardhana hills from cow dung, offering Annakut (mountain of food) to Lord Krishna, performing circumambulation of the hill or its representation, and feeding cows.",
-    image: "govardhana-puja.png",
     rule: {
       type: RuleType.Lunar,
       tithiIndex: TithiIndex.ShuklaPratipada,
@@ -401,12 +382,12 @@ const FESTIVAL_RULES: FestivalRule[] = [
   },
   {
     name: FestivalName.Diwali,
+    deities: ["Rama", "Krishna", "Lakshmi"],
     caption: "The Festival of Lights and Joy",
     description:
-      "Celebrates light over darkness and good over evil, a time for lighting lamps, exchanging gifts, and enjoying festive meals with family.",
+      "Diwali, also known as Deepavali or the Festival of Lights, is a significant Hindu festival symbolizing the victory of light over darkness, knowledge over ignorance, and good over evil. It commemorates the return of Lord Rama to Ayodhya after defeating Ravana, and the victory of Lord Krishna over the demon Narakasura.",
     celebration:
-      "Lighting diyas and candles, decorating with rangoli, performing Lakshmi pujas, exchanging gifts and sweets, and bursting fireworks.",
-    image: "diwali.png",
+      "Diwali celebrations involve lighting oil lamps (diyas) to illuminate homes and streets, symbolizing the removal of darkness. Families perform Lakshmi Puja to invite prosperity and well-being. The festival is also marked by cleaning and decorating homes, exchanging gifts and sweets, and enjoying festive meals with loved ones.",
     rule: {
       type: RuleType.Lunar,
       tithiIndex: TithiIndex.Amavasya,
@@ -420,7 +401,6 @@ const FESTIVAL_RULES: FestivalRule[] = [
       "A four-day festival dedicated to Surya (the Sun God) and Chhathi Maiya (Goddess Shashti), seeking blessings for prosperity, well-being, and longevity of family members.",
     celebration:
       "Devotees observe rigorous fasting, offer prayers at riverbanks or water bodies during sunset and sunrise, and prepare special prasad like thekua and kheer.",
-    image: "chhath-puja.png",
     rule: {
       type: RuleType.Lunar,
       tithiIndex: TithiIndex.ShuklaShashti,

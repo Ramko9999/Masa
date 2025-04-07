@@ -13,26 +13,33 @@ import { RootStackParamList } from "@/layout/types";
 import { StackScreenProps } from "@react-navigation/stack";
 import { StyleSheet } from "react-native";
 import { SystemBars } from "react-native-edge-to-edge";
+import { FestivalName } from "@/api/panchanga/core/festival";
 
-// Import the same festival images from upcoming.tsx
-const festivalImages: Record<string, any> = {
-  "makar-sankranti.png": require("../../assets/festivals/makar-sankranti.png"),
-  "vasant-panchami.png": require("../../assets/festivals/vasant-panchami.png"),
-  "maha-shivaratri.png": require("../../assets/festivals/maha-shivaratri.png"),
-  "holi.png": require("../../assets/festivals/holi.png"),
-  "ugadi.png": require("../../assets/festivals/ugadi.png"),
-  "rama-navami.png": require("../../assets/festivals/rama-navami.png"),
-  "hanuman-jayanti.png": require("../../assets/festivals/hanuman-jayanti.png"),
-  "akshaya-tritiya.png": require("../../assets/festivals/akshaya-tritiya.png"),
-  "guru-purnima.png": require("../../assets/festivals/guru-purnima.png"),
-  "naga-panchami.png": require("../../assets/festivals/naga-panchami.png"),
-  "raksha-bandhan.png": require("../../assets/festivals/raksha-bandhan.png"),
-  "krishna-janmashtami.png": require("../../assets/festivals/krishna-janmashtami.png"),
-  "ganesh-chaturthi.png": require("../../assets/festivals/ganesh-chaturthi.png"),
-  "durga-puja.png": require("../../assets/festivals/durga-puja.png"),
-  "dussehra.png": require("../../assets/festivals/dussehra.png"),
-  "karva-chauth.png": require("../../assets/festivals/karva-chauth.png"),
-  "diwali.png": require("../../assets/festivals/diwali.png"),
+// Direct mapping from FestivalName to image require statements
+const FESTIVAL_IMAGES: Record<FestivalName, any> = {
+  [FestivalName.MakarSankranti]: require("../../assets/festivals/v1_makar-sankranti.png"),
+  [FestivalName.VasantPanchami]: require("../../assets/festivals/v1_vasant_panchami.webp"),
+  [FestivalName.MahaShivaratri]: require("../../assets/festivals/maha-shivaratri.webp"),
+  [FestivalName.Holi]: require("../../assets/festivals/holi.png"),
+  [FestivalName.Ugadi]: require("../../assets/festivals/ugadi.webp"),
+  [FestivalName.RamaNavami]: require("../../assets/festivals/rama-navami.webp"),
+  [FestivalName.HanumanJayanti]: require("../../assets/festivals/hanuman-jayanti.png"),
+  [FestivalName.AkshayaTritiya]: require("../../assets/festivals/akshaya-tritya.webp"),
+  [FestivalName.VatSavitri]: require("../../assets/festivals/vat-savitri.png"),
+  [FestivalName.GuruPurnima]: require("../../assets/festivals/guru-purnima.png"),
+  [FestivalName.RathYatra]: require("../../assets/festivals/rath-yatra.webp"),
+  [FestivalName.NagaPanchami]: require("../../assets/festivals/nag-panchami.webp"),
+  [FestivalName.RakshaBandhan]: require("../../assets/festivals/raksha-bandhan.webp"),
+  [FestivalName.KrishnaJanmashtami]: require("../../assets/festivals/krishna-janmashtami.webp"),
+  [FestivalName.GaneshChaturthi]: require("../../assets/festivals/ganesha-chaturthi.webp"),
+  [FestivalName.Navaratri]: require("../../assets/festivals/akshaya-tritiya.png"),
+  [FestivalName.DurgaPuja]: require("../../assets/festivals/durga-puja.png"),
+  [FestivalName.Dussehra]: require("../../assets/festivals/dussehra.webp"),
+  [FestivalName.KojagaraPuja]: require("../../assets/festivals/akshaya-tritiya.png"),
+  [FestivalName.KarvaChauth]: require("../../assets/festivals/karva-chauth.png"),
+  [FestivalName.GovardhanaPuja]: require("../../assets/festivals/akshaya-tritiya.png"),
+  [FestivalName.Diwali]: require("../../assets/festivals/diwali.png"),
+  [FestivalName.ChhathPuja]: require("../../assets/festivals/akshaya-tritiya.png"),
 };
 
 const festivalDetailsStyles = StyleSheet.create({
@@ -42,11 +49,14 @@ const festivalDetailsStyles = StyleSheet.create({
   },
   back: {
     position: "absolute",
-    zIndex: 10
-  }
+    zIndex: 10,
+  },
 });
 
-type FestivalDetailsProps = StackScreenProps<RootStackParamList, "festival_details">
+type FestivalDetailsProps = StackScreenProps<
+  RootStackParamList,
+  "festival_details"
+>;
 
 export function FestivalDetails({ navigation, route }: FestivalDetailsProps) {
   const { festival } = route.params;
@@ -57,17 +67,18 @@ export function FestivalDetails({ navigation, route }: FestivalDetailsProps) {
 
   // todo: only add the scroll view to the text and not the image
   return (
-    <View
-      style={festivalDetailsStyles.container}
-    >
+    <View style={festivalDetailsStyles.container}>
       <SystemBars style="light" />
 
       {/* Back button overlay - fixed position */}
       <View
-        style={[festivalDetailsStyles.back, {
-          top: insets.top + spacing,
-          left: spacing * 3,
-        }]}
+        style={[
+          festivalDetailsStyles.back,
+          {
+            top: insets.top + spacing,
+            left: spacing * 3,
+          },
+        ]}
       >
         <Pressable
           onPress={navigation.goBack}
@@ -92,16 +103,20 @@ export function FestivalDetails({ navigation, route }: FestivalDetailsProps) {
             height: imageHeight,
             resizeMode: "cover",
           }}
-          source={festivalImages[festival.image]}
+          source={FESTIVAL_IMAGES[festival.name as FestivalName]}
         />
         <View style={{ padding: spacing * 3 }}>
           <View>
-            <Text bold larger>{festival.name}</Text>
+            <Text bold larger>
+              {festival.name}
+            </Text>
             <Text
               style={{
                 marginBottom: spacing,
               }}
-              bold tint sneutral
+              bold
+              tint
+              sneutral
             >
               {new Date(festival.date).toLocaleDateString("en-US", {
                 weekday: "long",
@@ -113,13 +128,9 @@ export function FestivalDetails({ navigation, route }: FestivalDetailsProps) {
           </View>
           <View style={{ gap: spacing }}>
             <Text medium>About this festival</Text>
-            <Text small>
-              {festival.description}
-            </Text>
+            <Text small>{festival.description}</Text>
             <Text medium>How to celebrate?</Text>
-            <Text small>
-              {festival.celebration}
-            </Text>
+            <Text small>{festival.celebration}</Text>
           </View>
         </View>
       </ScrollView>
