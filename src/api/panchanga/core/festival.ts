@@ -407,9 +407,11 @@ const FESTIVAL_RULES: FestivalRule[] = [
 export type Festival = Omit<FestivalRule, "rule"> & {
   date: number;
   rule: {
-    type: RuleType;
-    tithiIndex?: TithiIndex;
-    masaIndex?: MasaIndex;
+    type: RuleType.Lunar;
+    tithiIndex: TithiIndex;
+    masaIndex: MasaIndex;
+  } | {
+    type: RuleType.Dynamic;
   };
 };
 

@@ -6,11 +6,9 @@
     "start": "expo start",
     "web": "expo start --web",
     "android": "expo run:android",
-    "ios": "expo run:ios",
-    "build-widget": "npx expo prebuild --template node_modules/@bacons/apple-targets/prebuild-blank.tgz --clean"
+    "ios": "expo run:ios"
   },
   "dependencies": {
-    "@bacons/apple-targets": "^0.2.1",
     "@expo/metro-runtime": "~4.0.0",
     "@react-native-async-storage/async-storage": "1.23.1",
     "@react-navigation/bottom-tabs": "^7.2.1",
