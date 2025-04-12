@@ -404,8 +404,13 @@ const FESTIVAL_RULES: FestivalRule[] = [
   },
 ];
 
-export type Festival = FestivalRule & {
+export type Festival = Omit<FestivalRule, "rule"> & {
   date: number;
+  rule: {
+    type: RuleType;
+    tithiIndex?: TithiIndex;
+    masaIndex?: MasaIndex;
+  };
 };
 
 function getLunarFestivals(anchorDay: number, location: Location) {
@@ -450,7 +455,13 @@ function getDynamicFestivals(anchorDay: number, location: Location) {
     if (festival.rule.type === RuleType.Dynamic) {
       const dynamicRule = festival.rule as DynamicRule;
       const date = dynamicRule.evaluate(year, location);
-      festivals.push({ ...festival, date });
+      const { rule, ...rest } = festival;
+      const { evaluate, ...ruleWithoutEvaluate } = rule;
+      festivals.push({
+        ...rest,
+        date,
+        rule: ruleWithoutEvaluate,
+      });
     }
   }
 
