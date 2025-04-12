@@ -29,36 +29,34 @@ export async function requestNotificationsPermissions() {
 }
 
 export async function scheduleFestivalNotifications(location: Location) {
-  const festivals = getUpcomingFestivals(truncateToDay(Date.now()), location);
+  try {
+    const festivals = getUpcomingFestivals(truncateToDay(Date.now()), location);
 
-  // Cancel all existing notifications first
-  await Notifications.cancelAllScheduledNotificationsAsync();
+    await Notifications.cancelAllScheduledNotificationsAsync();
 
-  for (const [index, festival] of festivals.entries()) {
-    const notificationDate = new Date(festival.date);
+    for (const festival of festivals) {
+      const notificationDate = new Date(festival.date);
 
-    const notification = await Notifications.scheduleNotificationAsync({
-      content: {
-        title: festival.name,
-        body: festival.caption,
-        data: {
-          festivalName: festival.name,
-          festivalId: `festival-${index}`,
+      if (notificationDate < new Date()) {
+        continue;
+      }
+
+      const notification = await Notifications.scheduleNotificationAsync({
+        content: {
+          title: festival.name,
+          body: festival.caption,
+          data: { festivalName: festival.name },
+          sound: true,
         },
-        sound: true,
-      },
-      trigger: {
-        type: SchedulableTriggerInputTypes.DATE,
-        date: notificationDate,
-      },
-      identifier: `festival-notification-${index}`,
-    });
-
-    console.log(
-      `Scheduled notification for ${
-        festival.name
-      } at ${notificationDate.toLocaleString()}:`,
-      notification
-    );
+        trigger: {
+          type: SchedulableTriggerInputTypes.DATE,
+          date: notificationDate,
+        },
+      });
+      console.log("Scheduled notification:", notification);
+    }
+  } catch (error) {
+    console.error("Error scheduling festival notifications:", error);
+    throw error;
   }
 }
