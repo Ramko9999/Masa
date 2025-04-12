@@ -4,7 +4,6 @@ import * as SplashScreen from "expo-splash-screen";
 import * as React from "react";
 import { Layout } from "@/layout";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { setupNotificationListeners } from "@/util/notifications";
 import { LocationProvider } from "@/context/location";
 import { CalendarProvider } from "@/components/calendar";
 import { SafeAreaProvider } from "react-native-safe-area-context";
@@ -21,14 +20,6 @@ const preloadAssets = async () => {
 SplashScreen.preventAutoHideAsync();
 
 export function App() {
-  React.useEffect(() => {
-    const subscriptions = setupNotificationListeners();
-    return () => {
-      subscriptions.foregroundSubscription.remove();
-      subscriptions.responseSubscription.remove();
-    };
-  }, []);
-
   const [assetsLoaded, setAssetsLoaded] = React.useState(false);
 
   // Load assets

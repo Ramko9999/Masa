@@ -9,6 +9,7 @@ export type TabParamList = {
 export type RootStackParamList = {
     splash: undefined;
     location_permission: undefined;
+    notification_permission: undefined;
     tabs: NavigatorScreenParams<TabParamList>;
     festival_details: { festival: Festival };
     intro: undefined;

@@ -5,6 +5,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Splash } from "@/screens/splash";
 import { RootStackParamList, TabParamList } from "./types";
 import { LocationPermission } from "@/screens/location-permission";
+import { NotificationPermission } from "@/screens/notification-permission";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { UpcomingFestivals } from "@/screens/tabs/upcoming-festivals";
 import { FestivalDetails } from "@/screens/festival-details";
@@ -59,6 +60,7 @@ export function Layout() {
         <Stack.Screen name="tabs" component={Tabs} />
         <Stack.Screen name="festival_details" component={FestivalDetails} />
         <Stack.Screen name="location_permission" component={LocationPermission} />
+        <Stack.Screen name="notification_permission" component={NotificationPermission} />
         <Stack.Screen name="intro" component={Intro} />
         <Stack.Screen
           name="tithi_info"

@@ -14,6 +14,7 @@
         "com.apple.security.application-groups": "group.com.anonymous.masa"
       },
       "infoPlist": {
+        "NSLocationUsageDescription": "We need your location to calculate the correct calendar elements and festival timings for your region.",
         "NSLocationAlwaysAndWhenInUseUsageDescription": "We need your location to calculate the correct calendar elements and festival timings for your region."
       },
       "bundleIdentifier": "com.anonymous.masa",
