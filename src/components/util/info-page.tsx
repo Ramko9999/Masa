@@ -16,52 +16,56 @@ const infoPageStyles = StyleSheet.create({
     ...StyleUtils.flexColumn(),
     flex: 1,
   },
+  scrollViewContent: {
+    paddingBottom: "35%",
+  },
   scrollView: {
     paddingHorizontal: "3%",
   },
   headerContainer: {
-    marginBottom: 20,
+    marginBottom: "5%",
     marginTop: "4%",
   },
-  sectionTitle: {
-    marginBottom: 16,
-  },
   paragraph: {
-    marginBottom: 12,
+    marginBottom: "3%",
     lineHeight: 22,
   },
   footer: {
-    height: 30,
+    height: "8%",
+  },
+  sectionTitle: {
+    marginBottom: "3%",
   },
   section: {
     ...StyleUtils.flexColumn(),
-    marginBottom: 32,
+    marginBottom: "4%",
   },
   spacer: {
-    height: 16,
+    height: "4%",
   },
   label: {
-    marginBottom: 4,
+    marginBottom: "1%",
   },
   visual: {
-    marginBottom: 32,
+    marginBottom: "8%",
   },
   noteContainer: {
     alignItems: "center",
   },
-  listItem: {
-    marginBottom: 4,
-    lineHeight: 22,
-  }
 });
 
-export function InfoPage({ title, children, showBackButton = true }: InfoPageProps) {
+export function InfoPage({
+  title,
+  children,
+  showBackButton = true,
+}: InfoPageProps) {
   const insets = useSafeAreaInsets();
 
   return (
     <View style={[infoPageStyles.container, { paddingTop: insets.top }]}>
       <ScrollView
         showsVerticalScrollIndicator={false}
+        contentContainerStyle={infoPageStyles.scrollViewContent}
         style={infoPageStyles.scrollView}
       >
         {showBackButton && <InfoHeader />}
@@ -77,31 +81,61 @@ export function InfoPage({ title, children, showBackButton = true }: InfoPagePro
   );
 }
 
-export function InfoSection({ children, style }: { children: ReactNode, style?: any }) {
+export function InfoSection({
+  children,
+  style,
+}: {
+  children: ReactNode;
+  style?: any;
+}) {
   return <View style={[infoPageStyles.section, style]}>{children}</View>;
 }
 
-export function InfoVisual({ children, style }: { children: ReactNode, style?: any }) {
+export function InfoVisual({
+  children,
+  style,
+}: {
+  children: ReactNode;
+  style?: any;
+}) {
   return <View style={[infoPageStyles.visual, style]}>{children}</View>;
 }
 
-export function InfoParagraph({ children, style }: { children: ReactNode, style?: any }) {
+export function InfoParagraph({
+  children,
+  style,
+}: {
+  children: ReactNode;
+  style?: any;
+}) {
   return <Text style={[infoPageStyles.paragraph, style]}>{children}</Text>;
 }
 
-export function InfoListItem({ children, style }: { children: ReactNode, style?: any }) {
-  return <Text style={[infoPageStyles.listItem, style]}>{children}</Text>;
-}
-
-export function InfoSectionTitle({ children, style }: { children: ReactNode, style?: any }) {
-  return <Text large semibold style={[infoPageStyles.sectionTitle, style]}>{children}</Text>;
+export function InfoSectionTitle({
+  children,
+  style,
+}: {
+  children: ReactNode;
+  style?: any;
+}) {
+  return (
+    <Text large semibold style={[infoPageStyles.sectionTitle, style]}>
+      {children}
+    </Text>
+  );
 }
 
 export function InfoSpacer() {
   return <View style={infoPageStyles.spacer} />;
 }
 
-export function InfoNote({ children, style }: { children: ReactNode, style?: any }) {
+export function InfoNote({
+  children,
+  style,
+}: {
+  children: ReactNode;
+  style?: any;
+}) {
   return (
     <View style={infoPageStyles.noteContainer}>
       <Text tiny tint style={[{ fontStyle: "italic" }, style]}>
@@ -111,6 +145,16 @@ export function InfoNote({ children, style }: { children: ReactNode, style?: any
   );
 }
 
-export function InfoLabel({ children, style }: { children: ReactNode, style?: any }) {
-  return <Text medium style={[infoPageStyles.label, style]}>{children}</Text>;
-} 
+export function InfoLabel({
+  children,
+  style,
+}: {
+  children: ReactNode;
+  style?: any;
+}) {
+  return (
+    <Text medium style={[infoPageStyles.label, style]}>
+      {children}
+    </Text>
+  );
+}

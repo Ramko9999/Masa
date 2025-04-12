@@ -1,7 +1,6 @@
 import { WeekCalendar } from "@/components/calendar/week";
 import React, { useState } from "react";
 import { Pachanga } from "@/components/panchanga";
-import { YogaInfoSheet } from "@/components/sheets";
 import { useCalendar } from "@/components/calendar/context";
 import { CompositeScreenProps } from "@react-navigation/native";
 import { TabParamList } from "@/layout/types";

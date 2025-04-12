@@ -4,43 +4,38 @@ import { View, Text } from "@/theme/index";
 import { AppColor, useGetColor } from "@/theme/color";
 import { StyleUtils } from "@/theme/style-utils";
 
+const floatingButtonStyles = StyleSheet.create({
+    container: {
+        ...StyleUtils.flexRowCenterAll(5),
+        position: "absolute",
+        bottom: "5%",
+        right: "5%",
+        backgroundColor: useGetColor(AppColor.primary),
+        paddingHorizontal: "4%",
+        paddingVertical: "2%",
+        borderRadius: "2%",
+    },
+    text: {
+        color: useGetColor(AppColor.background),
+        fontSize: 16,
+        fontWeight: "600",
+    },
+});
+
 type FloatingButtonProps = {
-  currentRoute: string;
-  onClick: (route: string) => void;
+    currentRoute: string;
+    onClick: (route: string) => void;
 };
 
 export function FloatingButton({ currentRoute, onClick }: FloatingButtonProps) {
-  return (
-    <View style={styles.wrapper}>
-      <View style={styles.container}>
+    return (
         <TouchableOpacity
-          onPress={() => {
-            currentRoute === "upcoming-festivals" ? onClick("home") : onClick("upcoming-festivals");
-          }}
+            style={floatingButtonStyles.container}
+            onPress={() => onClick(currentRoute)}
         >
-          <Text semibold background>
-            {currentRoute === "upcoming-festivals" ? "Home" : "Upcoming Festivals"}
-          </Text>
+            <Text style={floatingButtonStyles.text}>
+                {currentRoute === "home" ? "Settings" : "Home"}
+            </Text>
         </TouchableOpacity>
-      </View>
-    </View>
-  );
+    );
 }
-
-const styles = StyleSheet.create({
-  wrapper: {
-    position: "absolute",
-    bottom: 20,
-    left: 0,
-    right: 0,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  container: {
-    ...StyleUtils.flexRow(8),
-    paddingVertical: 8,
-    paddingHorizontal: 12,
-    borderRadius: 4,
-    backgroundColor: useGetColor(AppColor.primary),
-  },
-});

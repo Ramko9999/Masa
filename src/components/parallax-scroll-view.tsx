@@ -8,6 +8,7 @@ import Animated, {
 } from "react-native-reanimated";
 import { View } from "@/theme";
 import { AppColor, useGetColor } from "@/theme/color";
+import { StyleUtils } from "@/theme/style-utils";
 
 const SCREEN_HEIGHT = Dimensions.get("window").height;
 const HEADER_HEIGHT = SCREEN_HEIGHT * 0.6;
@@ -18,6 +19,7 @@ const parallaxScrollViewStyles = StyleSheet.create({
   },
   scrollContent: {
     flexGrow: 1,
+    paddingBottom: "35%",
   },
   header: {
     height: HEADER_HEIGHT,
@@ -25,8 +27,10 @@ const parallaxScrollViewStyles = StyleSheet.create({
     backgroundColor: useGetColor(AppColor.background),
   },
   content: {
+    paddingTop: "5%",
     paddingHorizontal: "3%",
     backgroundColor: useGetColor(AppColor.background),
+    ...StyleUtils.flexColumn(20),
   },
 });
 

@@ -12,16 +12,12 @@ import { ChevronLeft } from "lucide-react-native";
 import { RootStackParamList } from "@/layout/types";
 import { StackScreenProps } from "@react-navigation/stack";
 import { FestivalName, RuleType } from "@/api/panchanga/core/festival";
-import {
-  InfoParagraph,
-  InfoSection,
-  InfoSectionTitle,
-  InfoSpacer,
-} from "@/components/util/info-page";
 import { ParallaxScrollView } from "@/components/parallax-scroll-view";
 import { FESTIVAL_IMAGES } from "@/components/festival-images";
 import { TITHI_NAMES } from "@/api/panchanga/core/tithi";
 import { MASA_NAMES } from "@/api/panchanga/core/masa";
+import Markdown from "react-native-markdown-display";
+import { StyleUtils } from "@/theme/style-utils";
 
 const festivalDetailsStyles = StyleSheet.create({
   container: {
@@ -32,7 +28,7 @@ const festivalDetailsStyles = StyleSheet.create({
     position: "absolute",
     zIndex: 10,
     backgroundColor: "rgba(0, 0, 0, 0.5)",
-    borderRadius: 24,
+    borderRadius: "50%",
     padding: "3%",
     aspectRatio: 1,
   },
@@ -42,7 +38,7 @@ const festivalDetailsStyles = StyleSheet.create({
     resizeMode: "cover",
   },
   festivalInfo: {
-    flexDirection: "column",
+    ...StyleUtils.flexColumn(10),
   },
   metaInfo: {
     flexDirection: "row",
@@ -54,6 +50,15 @@ type FestivalDetailsProps = StackScreenProps<
   RootStackParamList,
   "festival_details"
 >;
+
+function formatCelebrationText(text: string): string {
+  return text
+    .split(".")
+    .map((sentence) => sentence.trim())
+    .filter((sentence) => sentence.length > 0)
+    .map((sentence) => `${sentence}.`)
+    .join("\n\n");
+}
 
 export function FestivalDetails({ navigation, route }: FestivalDetailsProps) {
   const { festival } = route.params;
@@ -89,9 +94,7 @@ export function FestivalDetails({ navigation, route }: FestivalDetailsProps) {
           />
         }
       >
-        <InfoSpacer />
-        <InfoSpacer />
-        <InfoSection>
+        <View>
           <View style={festivalDetailsStyles.festivalInfo}>
             <View>
               <Text huge bold>
@@ -103,7 +106,6 @@ export function FestivalDetails({ navigation, route }: FestivalDetailsProps) {
             </View>
             {festival.rule.type == RuleType.Lunar && (
               <>
-                <InfoSpacer />
                 <View style={festivalDetailsStyles.metaInfo}>
                   <View>
                     <Text semibold tint>
@@ -121,16 +123,19 @@ export function FestivalDetails({ navigation, route }: FestivalDetailsProps) {
               </>
             )}
           </View>
-        </InfoSection>
-        <InfoSection>
-          <InfoSectionTitle>About this festival</InfoSectionTitle>
-          <InfoParagraph>{festival.description}</InfoParagraph>
-        </InfoSection>
-
-        <InfoSection>
-          <InfoSectionTitle>How to celebrate?</InfoSectionTitle>
-          <InfoParagraph>{festival.celebration}</InfoParagraph>
-        </InfoSection>
+        </View>
+        <View>
+          <Text large semibold>
+            About this festival
+          </Text>
+          <Markdown>{festival.description}</Markdown>
+        </View>
+        <View>
+          <Text large semibold>
+            How to celebrate?
+          </Text>
+          <Markdown>{formatCelebrationText(festival.celebration)}</Markdown>
+        </View>
       </ParallaxScrollView>
     </View>
   );
