@@ -1,5 +1,5 @@
-import { Location } from "@/api/panchanga/location";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Location } from "@/api/location";
 
 const STORAGE_KEY = "location";
 

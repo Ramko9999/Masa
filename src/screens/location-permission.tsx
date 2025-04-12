@@ -18,7 +18,7 @@ import { RootStackParamList } from "@/layout/types";
 import { LocationApi } from "@/api/location";
 import { useState } from "react";
 
-const LOCATION_TITLE = "One last thing";
+const LOCATION_TITLE = "Location permission";
 const LOCATION_SUBTEXT =
   "We need your location to calculate the correct calendar elements and festival timings for your region.";
 
