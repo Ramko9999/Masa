@@ -186,31 +186,29 @@ export function Pachanga({
           </View>
         </View>
       </Card>
-      {festivals.length && (
+      {festivals.length !== 0 && (
         <Card title="FESTIVALS">
-          <View style={{ flexDirection: "column", gap: 15 }}>
-            {festivals.map((festival, index) => (
-              <Pressable
-                key={`${festival.name}-${index}`}
-                onPress={() =>
-                  /* @ts-ignore */
-                  navigation.navigate("festival_details", { festival })
-                }
-              >
-                <View style={panchangaStyles.festivalContainer}>
-                  <View style={{ flexDirection: "column", gap: 4 }}>
-                    <Text bold larger>
-                      {festival.name}
-                    </Text>
-                    <View>
-                      <Text>{festival.caption}</Text>
-                    </View>
+          {festivals.map((festival, index) => (
+            <Pressable
+              key={`${festival.name}-${index}`}
+              onPress={() =>
+                /* @ts-ignore */
+                navigation.navigate("festival_details", { festival })
+              }
+            >
+              <View style={panchangaStyles.festivalContainer}>
+                <View style={{ flexDirection: "column", gap: 4 }}>
+                  <Text bold larger>
+                    {festival.name}
+                  </Text>
+                  <View>
+                    <Text>{festival.caption}</Text>
                   </View>
-                  <ChevronRight size={24} color={useGetColor(AppColor.tint)} />
                 </View>
-              </Pressable>
-            ))}
-          </View>
+                <ChevronRight size={24} color={useGetColor(AppColor.tint)} />
+              </View>
+            </Pressable>
+          ))}
         </Card>
       )}
     </View>

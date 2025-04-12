@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, TouchableOpacity } from "react-native";
+import { Pressable, StyleSheet } from "react-native";
 import { View, Text } from "@/theme";
 import { AppColor, useGetColor } from "@/theme/color";
 import { StyleUtils } from "@/theme/style-utils";
@@ -38,7 +38,7 @@ export function Card({
   children,
 }: CardProps) {
   return (
-    <TouchableOpacity onPress={onClick} disabled={!onClick}>
+    <Pressable onPress={onClick} disabled={!onClick}>
       <View style={styles.cardContainer}>
         <View style={styles.titleContainer}>
           <Text bold tint sneutral>
@@ -55,6 +55,6 @@ export function Card({
         {caption && <Text sneutral>{caption}</Text>}
         {children}
       </View>
-    </TouchableOpacity>
+    </Pressable>
   );
 }
