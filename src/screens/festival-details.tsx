@@ -1,55 +1,52 @@
 import React from "react";
 import {
-  ScrollView,
   useWindowDimensions,
   Image,
   Pressable,
+  StyleSheet,
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { View, Text } from "@/theme";
 import { AppColor, useGetColor } from "@/theme/color";
-import { Ionicons } from "@expo/vector-icons";
+import { ChevronLeft } from "lucide-react-native";
 import { RootStackParamList } from "@/layout/types";
 import { StackScreenProps } from "@react-navigation/stack";
-import { StyleSheet } from "react-native";
-import { SystemBars } from "react-native-edge-to-edge";
-import { FestivalName } from "@/api/panchanga/core/festival";
-
-// Direct mapping from FestivalName to image require statements
-const FESTIVAL_IMAGES: Record<FestivalName, any> = {
-  [FestivalName.MakarSankranti]: require("../../assets/festivals/v1_makar-sankranti.png"),
-  [FestivalName.VasantPanchami]: require("../../assets/festivals/v1_vasant_panchami.webp"),
-  [FestivalName.MahaShivaratri]: require("../../assets/festivals/maha-shivaratri.webp"),
-  [FestivalName.Holi]: require("../../assets/festivals/holi.png"),
-  [FestivalName.Ugadi]: require("../../assets/festivals/ugadi.webp"),
-  [FestivalName.RamaNavami]: require("../../assets/festivals/rama-navami.webp"),
-  [FestivalName.HanumanJayanti]: require("../../assets/festivals/hanuman-jayanti.png"),
-  [FestivalName.AkshayaTritiya]: require("../../assets/festivals/akshaya-tritya.webp"),
-  [FestivalName.VatSavitri]: require("../../assets/festivals/vat-savitri.png"),
-  [FestivalName.GuruPurnima]: require("../../assets/festivals/guru-purnima.png"),
-  [FestivalName.RathYatra]: require("../../assets/festivals/rath-yatra.webp"),
-  [FestivalName.NagaPanchami]: require("../../assets/festivals/nag-panchami.webp"),
-  [FestivalName.RakshaBandhan]: require("../../assets/festivals/raksha-bandhan.webp"),
-  [FestivalName.KrishnaJanmashtami]: require("../../assets/festivals/krishna-janmashtami.webp"),
-  [FestivalName.GaneshChaturthi]: require("../../assets/festivals/ganesha-chaturthi.webp"),
-  [FestivalName.Navaratri]: require("../../assets/festivals/akshaya-tritiya.png"),
-  [FestivalName.DurgaPuja]: require("../../assets/festivals/durga-puja.png"),
-  [FestivalName.Dussehra]: require("../../assets/festivals/dussehra.webp"),
-  [FestivalName.KojagaraPuja]: require("../../assets/festivals/akshaya-tritiya.png"),
-  [FestivalName.KarvaChauth]: require("../../assets/festivals/karva-chauth.png"),
-  [FestivalName.GovardhanaPuja]: require("../../assets/festivals/akshaya-tritiya.png"),
-  [FestivalName.Diwali]: require("../../assets/festivals/diwali.png"),
-  [FestivalName.ChhathPuja]: require("../../assets/festivals/akshaya-tritiya.png"),
-};
+import { FestivalName, RuleType } from "@/api/panchanga/core/festival";
+import {
+  InfoParagraph,
+  InfoSection,
+  InfoSectionTitle,
+  InfoSpacer,
+} from "@/components/util/info-page";
+import { ParallaxScrollView } from "@/components/parallax-scroll-view";
+import { FESTIVAL_IMAGES } from "@/components/festival-images";
+import { TITHI_NAMES } from "@/api/panchanga/core/tithi";
+import { MASA_NAMES } from "@/api/panchanga/core/masa";
 
 const festivalDetailsStyles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: useGetColor(AppColor.background),
   },
-  back: {
+  backButton: {
     position: "absolute",
     zIndex: 10,
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    borderRadius: 24,
+    padding: "3%",
+    aspectRatio: 1,
+  },
+  headerImage: {
+    width: "100%",
+    height: "100%",
+    resizeMode: "cover",
+  },
+  festivalInfo: {
+    flexDirection: "column",
+  },
+  metaInfo: {
+    flexDirection: "row",
+    gap: "7%",
   },
 });
 
@@ -61,79 +58,80 @@ type FestivalDetailsProps = StackScreenProps<
 export function FestivalDetails({ navigation, route }: FestivalDetailsProps) {
   const { festival } = route.params;
   const insets = useSafeAreaInsets();
-  const { width, height } = useWindowDimensions();
-  const spacing = width * 0.02;
-  const imageHeight = height * 0.6;
+  const { width } = useWindowDimensions();
+  const spacing = width * 0.03;
 
-  // todo: only add the scroll view to the text and not the image
+  const formattedDate = new Date(festival.date).toLocaleDateString("en-US", {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+
   return (
     <View style={festivalDetailsStyles.container}>
-      <SystemBars style="light" />
-
-      {/* Back button overlay - fixed position */}
       <View
         style={[
-          festivalDetailsStyles.back,
-          {
-            top: insets.top + spacing,
-            left: spacing * 3,
-          },
+          festivalDetailsStyles.backButton,
+          { top: insets.top + spacing, left: spacing },
         ]}
       >
-        <Pressable
-          onPress={navigation.goBack}
-          style={{
-            backgroundColor: "rgba(0, 0, 0, 0.5)",
-            borderRadius: 20,
-            padding: spacing,
-          }}
-        >
-          <Ionicons name="arrow-back" size={24} color="white" />
+        <Pressable onPress={navigation.goBack}>
+          <ChevronLeft size={24} color="white" strokeWidth={3} />
         </Pressable>
       </View>
 
-      <ScrollView
-        contentContainerStyle={{
-          paddingBottom: insets.bottom + spacing * 3,
-        }}
+      <ParallaxScrollView
+        headerImage={
+          <Image
+            style={festivalDetailsStyles.headerImage}
+            source={FESTIVAL_IMAGES[festival.name as FestivalName]}
+          />
+        }
       >
-        <Image
-          style={{
-            width: "100%",
-            height: imageHeight,
-            resizeMode: "cover",
-          }}
-          source={FESTIVAL_IMAGES[festival.name as FestivalName]}
-        />
-        <View style={{ padding: spacing * 3 }}>
-          <View>
-            <Text bold larger>
-              {festival.name}
-            </Text>
-            <Text
-              style={{
-                marginBottom: spacing,
-              }}
-              bold
-              tint
-              sneutral
-            >
-              {new Date(festival.date).toLocaleDateString("en-US", {
-                weekday: "long",
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-              })}
-            </Text>
+        <InfoSpacer />
+        <InfoSpacer />
+        <InfoSection>
+          <View style={festivalDetailsStyles.festivalInfo}>
+            <View>
+              <Text huge bold>
+                {festival.name}
+              </Text>
+              <Text bold tint neutral>
+                {formattedDate}
+              </Text>
+            </View>
+            {festival.rule.type == RuleType.Lunar && (
+              <>
+                <InfoSpacer />
+                <View style={festivalDetailsStyles.metaInfo}>
+                  <View>
+                    <Text semibold tint>
+                      Tithi
+                    </Text>
+                    <Text>{TITHI_NAMES[festival.rule.tithiIndex]}</Text>
+                  </View>
+                  <View>
+                    <Text semibold tint>
+                      Purnimanta Masa
+                    </Text>
+                    <Text>{MASA_NAMES[festival.rule.masaIndex]}</Text>
+                  </View>
+                </View>
+              </>
+            )}
           </View>
-          <View style={{ gap: spacing }}>
-            <Text medium>About this festival</Text>
-            <Text small>{festival.description}</Text>
-            <Text medium>How to celebrate?</Text>
-            <Text small>{festival.celebration}</Text>
-          </View>
-        </View>
-      </ScrollView>
+        </InfoSection>
+        <InfoSection>
+          <InfoSectionTitle>About this festival</InfoSectionTitle>
+          <InfoParagraph>{festival.description}</InfoParagraph>
+        </InfoSection>
+
+        <InfoSection>
+          <InfoSectionTitle>How to celebrate?</InfoSectionTitle>
+          <InfoParagraph>{festival.celebration}</InfoParagraph>
+        </InfoSection>
+      </ParallaxScrollView>
     </View>
   );
 }

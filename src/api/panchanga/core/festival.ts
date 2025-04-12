@@ -1,10 +1,5 @@
+import { TithiIndex, searchForTithi } from "@/api/panchanga/core/tithi";
 import {
-  TithiInterval,
-  TithiIndex,
-  searchForTithi,
-} from "@/api/panchanga/core/tithi";
-import {
-  Masa,
   MasaIndex,
   getPurnimantaMasaCalendarForYear,
 } from "@/api/panchanga/core/masa";
@@ -12,7 +7,7 @@ import { Location } from "@/api/location";
 import { addDays, getDatesBetween, truncateToDay } from "@/util/date";
 import { getSunLongitudeMoment, getSunrise, getSunset } from "../util";
 
-enum RuleType {
+export enum RuleType {
   Lunar = "lunar",
   Dynamic = "dynamic",
 }
@@ -409,7 +404,7 @@ const FESTIVAL_RULES: FestivalRule[] = [
   },
 ];
 
-export type Festival = Omit<FestivalRule, "rule"> & {
+export type Festival = FestivalRule & {
   date: number;
 };
 
