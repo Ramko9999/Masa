@@ -72,7 +72,7 @@ export function IntroHinduCalendarSlide({ onNext }: IntroSlideProps) {
                 style={introSlideStyles.actionButtonContainer}
             >
                 <TouchableOpacity onPress={onNext} style={introSlideStyles.actionButton}>
-                    <Text style={introSlideStyles.actionText}>Tell me more</Text>
+                    <Text large semibold background>Tell me more</Text>
                 </TouchableOpacity>
             </DelayedFadeIn>
         </View>

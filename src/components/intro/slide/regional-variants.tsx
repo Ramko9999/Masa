@@ -72,7 +72,7 @@ export function IntroRegionalVariantsSlide({ onNext }: IntroSlideProps) {
                 style={introSlideStyles.actionButtonContainer}
             >
                 <TouchableOpacity onPress={onNext} style={introSlideStyles.actionButton}>
-                    <Text style={introSlideStyles.actionText}>Sounds good!</Text>
+                    <Text large semibold background>Sounds good!</Text>
                 </TouchableOpacity>
             </DelayedFadeIn>
         </View>

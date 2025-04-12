@@ -44,10 +44,6 @@ const notificationPermissionStyles = StyleSheet.create({
     paddingVertical: "4%",
     borderRadius: 12,
   },
-  actionText: {
-    color: useGetColor(AppColor.background),
-    textAlign: "center",
-  },
 });
 
 type NotificationPermissionProps = StackScreenProps<
@@ -110,7 +106,7 @@ export function NotificationPermission({
                 width={20}
                 height={20}
               />
-              <Text large semibold style={notificationPermissionStyles.actionText}>
+              <Text large semibold background>
                 Enable Festival Reminders
               </Text>
             </View>

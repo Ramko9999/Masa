@@ -60,7 +60,7 @@ export function IntroGeocentricSlide({ onNext }: IntroSlideProps) {
                 style={introSlideStyles.actionButtonContainer}
             >
                 <TouchableOpacity onPress={onNext} style={introSlideStyles.actionButton}>
-                    <Text style={introSlideStyles.actionText}>Understood</Text>
+                    <Text large semibold background>Understood</Text>
                 </TouchableOpacity>
             </DelayedFadeIn>
         </View>

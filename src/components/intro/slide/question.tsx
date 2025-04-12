@@ -51,7 +51,7 @@ export function IntroQuestionSlide({ onNext }: IntroSlideProps) {
                 style={introSlideStyles.actionButtonContainer}
             >
                 <TouchableOpacity onPress={onNext} style={introSlideStyles.actionButton}>
-                    <Text style={introSlideStyles.actionText}>I wondered that too...</Text>
+                    <Text large semibold background>I wondered that too...</Text>
                 </TouchableOpacity>
             </DelayedFadeIn>
         </View>
