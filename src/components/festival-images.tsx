@@ -20,7 +20,7 @@ export const FESTIVAL_IMAGES: Record<FestivalName, any> = {
   [FestivalName.Navaratri]: require("../../assets/festivals/akshaya-tritiya.png"),
   [FestivalName.DurgaPuja]: require("../../assets/festivals/durga-puja.png"),
   [FestivalName.Dussehra]: require("../../assets/festivals/dussehra.webp"),
-  [FestivalName.KojagaraPuja]: require("../../assets/festivals/akshaya-tritiya.png"),
+  [FestivalName.KojagaraPuja]: require("../../assets/festivals/kojagara-puja.webp"),
   [FestivalName.KarvaChauth]: require("../../assets/festivals/karva-chauth.png"),
   [FestivalName.GovardhanaPuja]: require("../../assets/festivals/akshaya-tritiya.png"),
   [FestivalName.Diwali]: require("../../assets/festivals/diwali.png"),
