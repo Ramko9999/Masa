@@ -19,6 +19,8 @@ import { MASA_NAMES } from "@/api/panchanga/core/masa";
 import Markdown from "react-native-markdown-display";
 import { StyleUtils } from "@/theme/style-utils";
 
+
+
 const festivalDetailsStyles = StyleSheet.create({
   container: {
     flex: 1,
