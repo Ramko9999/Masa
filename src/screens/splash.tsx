@@ -2,7 +2,7 @@ import * as Notifications from "expo-notifications";
 import { AppColor } from "@/theme/color";
 import { useGetColor } from "@/theme/color";
 import { View } from "../theme";
-import { StyleSheet } from "react-native";
+import { Platform, StyleSheet } from "react-native";
 import { SplashLogo } from "@/theme/icon";
 import { useEffect, useState } from "react";
 import { StackScreenProps } from "@react-navigation/stack";
@@ -43,9 +43,11 @@ export function Splash({ navigation }: SplashProps) {
     if (shouldAnimateLogo) {
       if (hasSeenOnboarding) {
         if (hasLocationPermission) {
-          const { status: notificationStatus } =
-            await Notifications.getPermissionsAsync();
-          if (notificationStatus === "undetermined") {
+          const notificationSettings = await Notifications.getPermissionsAsync();
+          if (
+            notificationSettings.status === "undetermined" &&
+            Platform.OS === "ios"
+          ) {
             navigation.replace("notification_permission");
           } else {
             navigation.replace("tabs", { screen: "home" });

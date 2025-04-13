@@ -3,6 +3,7 @@ import * as Notifications from "expo-notifications";
 import { SchedulableTriggerInputTypes } from "expo-notifications";
 import { truncateToDay } from "@/util/date";
 import { Location } from "@/api/location";
+import { Platform } from "react-native";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -29,34 +30,37 @@ async function getNotificationPermissionStatus() {
 }
 
 async function scheduleFestivalNotifications(location: Location) {
-  try {
-    const festivals = getFestivals(truncateToDay(Date.now()), location);
+  const festivals = getFestivals(truncateToDay(Date.now()), location);
 
-    await Notifications.cancelAllScheduledNotificationsAsync();
+  const { status } = await Notifications.getPermissionsAsync();
 
-    for (const festival of festivals) {
-      const notificationDate = new Date(festival.date);
+  if (status !== "granted" && Platform.OS === "ios") {
+    return;
+  }
 
-      if (notificationDate < new Date()) {
-        continue;
-      }
+  await Notifications.cancelAllScheduledNotificationsAsync();
 
-      await Notifications.scheduleNotificationAsync({
-        content: {
-          title: festival.name,
-          body: festival.caption,
-          data: { festivalName: festival.name },
-          sound: true,
-        },
-        trigger: {
-          type: SchedulableTriggerInputTypes.DATE,
-          date: notificationDate,
-        },
-      });
+  for (const festival of festivals) {
+    const notificationDate = new Date(festival.date);
+
+    if (notificationDate < new Date()) {
+      continue;
     }
-  } catch (error) {
-    console.error("Error scheduling festival notifications:", error);
-    throw error;
+
+    const notification = await Notifications.scheduleNotificationAsync({
+      content: {
+        title: festival.name,
+        body: festival.caption,
+        data: { festivalName: festival.name },
+        sound: true,
+      },
+      trigger: {
+        type: SchedulableTriggerInputTypes.DATE,
+        date: notificationDate,
+      },
+    });
+
+    console.log("notification scheduled", notification);
   }
 }
 

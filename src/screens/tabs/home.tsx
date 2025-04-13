@@ -1,5 +1,5 @@
 import { WeekCalendar } from "@/components/calendar/week";
-import React from "react";
+import React, { useEffect } from "react";
 import { Pachanga } from "@/components/panchanga";
 import { useCalendar } from "@/components/calendar/context";
 import { CompositeScreenProps } from "@react-navigation/native";
@@ -10,6 +10,8 @@ import { StackScreenProps } from "@react-navigation/stack";
 import { ScrollView, StyleSheet } from "react-native";
 import { View } from "@/theme";
 import { AppColor, useGetColor } from "@/theme/color";
+import { NotificationApi } from "@/api/notification";
+import { useLocation } from "@/context/location";
 
 type HomeProps = CompositeScreenProps<
   BottomTabScreenProps<TabParamList, "home">,
@@ -25,6 +27,11 @@ const homeStyles = StyleSheet.create({
 
 export function Home({ navigation }: HomeProps) {
   const { selection } = useCalendar();
+  const { location } = useLocation();
+
+  useEffect(() => {
+    NotificationApi.scheduleFestivalNotifications(location!);
+  }, []);
 
   return (
     <View style={homeStyles.container}>

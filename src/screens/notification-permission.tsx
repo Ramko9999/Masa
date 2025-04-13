@@ -56,24 +56,12 @@ export function NotificationPermission({
   const [isLoading, setIsLoading] = useState(false);
   const insets = useSafeAreaInsets();
   const { height } = useWindowDimensions();
-  const { location } = useLocation();
 
   const handleNotificationPermission = async () => {
     setIsLoading(true);
-    try {
-      const hasPermission =
-        await NotificationApi.getNotificationPermissionStatus();
-      if (hasPermission && location) {
-        await NotificationApi.scheduleFestivalNotifications(location);
-      }
-      navigation.replace("tabs", { screen: "home" });
-    } catch (error) {
-      // Log error but continue to home screen
-      console.error("Error handling notification permission:", error);
-      navigation.replace("tabs", { screen: "home" });
-    } finally {
-      setIsLoading(false);
-    }
+    await NotificationApi.getNotificationPermissionStatus();
+    setIsLoading(false);
+    navigation.replace("tabs", { screen: "home" });
   };
 
   return (

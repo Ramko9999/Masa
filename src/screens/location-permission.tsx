@@ -9,6 +9,7 @@ import {
   Linking,
   ActivityIndicator,
   useWindowDimensions,
+  Platform,
 } from "react-native";
 import { AppColor, useGetColor } from "@/theme/color";
 import { StyleUtils } from "@/theme/style-utils";
@@ -18,6 +19,7 @@ import { StackScreenProps } from "@react-navigation/stack";
 import { RootStackParamList } from "@/layout/types";
 import { LocationApi } from "@/api/location";
 import { useState } from "react";
+import { NotificationApi } from "@/api/notification";
 
 const LOCATION_TITLE = "Location Permission";
 const LOCATION_SUBTEXT =
@@ -81,9 +83,11 @@ export function LocationPermission({ navigation }: LocationPermissionProps) {
     if (permission.granted) {
       const location = await LocationApi.readDeviceLocation();
       setLocation(location);
-      const { status: notificationStatus } =
-        await Notifications.getPermissionsAsync();
-      if (notificationStatus === "undetermined") {
+      const notificationSettings = await Notifications.getPermissionsAsync();
+      if (
+        notificationSettings.status === "undetermined" &&
+        Platform.OS === "ios"
+      ) {
         navigation.replace("notification_permission");
       } else {
         navigation.replace("tabs", { screen: "home" });

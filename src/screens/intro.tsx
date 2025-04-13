@@ -6,6 +6,7 @@ import {
   StyleSheet,
   useWindowDimensions,
   TouchableOpacity,
+  Platform,
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { AppColor, useGetColor } from "@/theme/color";
@@ -124,9 +125,11 @@ export function Intro({ navigation }: IntroProps) {
     if (locationPermissionStatus.status === "granted") {
       const location = await LocationApi.readDeviceLocation();
       setLocation(location);
-      const { status: notificationStatus } =
-        await Notifications.getPermissionsAsync();
-      if (notificationStatus === "undetermined") {
+      const notificationSettings = await Notifications.getPermissionsAsync();
+      if (
+        notificationSettings.status === "undetermined" &&
+        Platform.OS === "ios"
+      ) {
         navigation.replace("notification_permission");
       } else {
         navigation.replace("tabs", { screen: "home" });
