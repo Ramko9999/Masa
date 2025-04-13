@@ -10,25 +10,12 @@ import {
 import { StyleSheet } from "react-native";
 import { Text, View } from "@/theme";
 import { AppColor, useGetColor } from "@/theme/color";
-import { StyleUtils } from "@/theme/style-utils";
 import { MasaOrbit } from "@/components/masa/orbit";
+import { MASA_NAMES } from "@/api/panchanga/core/masa";
+
+const masaData = MASA_NAMES.map((name, index) => `${index + 1}. ${name}`);
 
 export function MasaInfoPage() {
-  const masaData = [
-    "1. Chaitra",
-    "2. Vaisakha",
-    "3. Jyeshtha",
-    "4. Ashadha",
-    "5. Shravana",
-    "6. Bhadrapada",
-    "7. Ashwin",
-    "8. Kartika",
-    "9. Margashirsha",
-    "10. Pausha",
-    "11. Magha",
-    "12. Phalguna",
-  ];
-
   const tableStyles = StyleSheet.create({
     container: {
       marginTop: 16,
@@ -80,9 +67,7 @@ export function MasaInfoPage() {
       </InfoSection>
 
       <InfoSection>
-        <InfoNote>
-          Look at how the Masa changes
-        </InfoNote>
+        <InfoNote>Look at how the Masa changes</InfoNote>
         <InfoVisual>
           <MasaOrbit />
         </InfoVisual>

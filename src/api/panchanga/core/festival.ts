@@ -294,7 +294,7 @@ const FESTIVAL_RULES: FestivalRule[] = [
     rule: {
       type: RuleType.Lunar,
       tithiIndex: TithiIndex.ShuklaNavami,
-      masaIndex: MasaIndex.Ashwin,
+      masaIndex: MasaIndex.Ashwina,
     },
   },
   {
@@ -308,7 +308,7 @@ const FESTIVAL_RULES: FestivalRule[] = [
     rule: {
       type: RuleType.Lunar,
       tithiIndex: TithiIndex.ShuklaDashami,
-      masaIndex: MasaIndex.Ashwin,
+      masaIndex: MasaIndex.Ashwina,
     },
   },
   {
@@ -321,7 +321,7 @@ const FESTIVAL_RULES: FestivalRule[] = [
     rule: {
       type: RuleType.Lunar,
       tithiIndex: TithiIndex.ShuklaChaturdashi,
-      masaIndex: MasaIndex.Ashwin,
+      masaIndex: MasaIndex.Ashwina,
     },
   },
   {
