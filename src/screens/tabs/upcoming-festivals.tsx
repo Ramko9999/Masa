@@ -17,6 +17,7 @@ const upcomingFestivalsStyles = StyleSheet.create({
   container: {
     ...StyleUtils.flexColumn(),
     paddingHorizontal: "3%",
+    backgroundColor: useGetColor(AppColor.background),
     gap: 20,
   },
   festivalsList: {

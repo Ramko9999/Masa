@@ -9,7 +9,6 @@ import Animated, {
   useSharedValue,
   useAnimatedStyle,
   runOnJS,
-  withTiming,
   useDerivedValue,
   useAnimatedReaction,
 } from "react-native-reanimated";
@@ -123,8 +122,8 @@ export const MoonSlider = ({ onProgressChange }: MoonSliderProps) => {
         </GestureDetector>
       </View>
       <Text tint tiny style={{ fontStyle: "italic" }}>
-          Use the slider to explore Tithis
-        </Text>
+        Use the slider to explore Tithis
+      </Text>
     </View>
   );
 };

@@ -1,5 +1,5 @@
 import { WeekCalendar } from "@/components/calendar/week";
-import React, { useState } from "react";
+import React from "react";
 import { Pachanga } from "@/components/panchanga";
 import { useCalendar } from "@/components/calendar/context";
 import { CompositeScreenProps } from "@react-navigation/native";
@@ -7,18 +7,27 @@ import { TabParamList } from "@/layout/types";
 import { RootStackParamList } from "@/layout/types";
 import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
 import { StackScreenProps } from "@react-navigation/stack";
-import { ScrollView } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
+import { View } from "@/theme";
+import { AppColor, useGetColor } from "@/theme/color";
 
 type HomeProps = CompositeScreenProps<
   BottomTabScreenProps<TabParamList, "home">,
   StackScreenProps<RootStackParamList>
 >;
 
+const homeStyles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: useGetColor(AppColor.background),
+  },
+});
+
 export function Home({ navigation }: HomeProps) {
   const { selection } = useCalendar();
 
   return (
-    <>
+    <View style={homeStyles.container}>
       <WeekCalendar />
       <ScrollView>
         <Pachanga
@@ -29,6 +38,6 @@ export function Home({ navigation }: HomeProps) {
           selectedDay={selection.date}
         />
       </ScrollView>
-    </>
+    </View>
   );
 }
