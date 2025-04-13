@@ -1,13 +1,13 @@
 import { AnimatedSentence } from "@/components/util/animated-sentence";
 import { introSlideStyles, IntroSlideProps, WORD_DURATION, STAGGER, DELAY_PADDING } from "../common";
-import { View, Text } from "@/theme";
+import { View, Text, getFontSize } from "@/theme";
 import { TouchableOpacity } from "react-native";
 import { DelayedFadeIn } from "@/components/util/delayed-fade-in";
 import { useState } from "react";
 
 const REGIONAL_VARIANTS_TITLE = "Calendar with Regional Differences";
-const REGIONAL_VARIANTS_FIRST_POINT = "Festival dates can vary based on region as different regions follow slightly different systems";
-const REGIONAL_VARIANTS_SECOND_POINT = "Local customs can also influence festival timings";
+const REGIONAL_VARIANTS_FIRST_POINT = "Festival dates can vary based on region as different regions follow slightly different systems.";
+const REGIONAL_VARIANTS_SECOND_POINT = "Local customs can also influence festival timings.";
 const REGIONAL_VARIANTS_THIRD_POINT = "If you see something wrong or don't feel represented, please let us know!";
 
 export function IntroRegionalVariantsSlide({ onNext }: IntroSlideProps) {
@@ -38,7 +38,7 @@ export function IntroRegionalVariantsSlide({ onNext }: IntroSlideProps) {
                 content={REGIONAL_VARIANTS_FIRST_POINT}
                 wordDuration={WORD_DURATION}
                 stagger={STAGGER}
-                textStyle={[introSlideStyles.subtext, { fontSize: 22 }]}
+                textStyle={[introSlideStyles.subtext, { fontSize: getFontSize({ big: true }) }]}
                 initialDelay={DELAY_PADDING}
                 forceFinishAnimation={skipAnimationIndex >= 1}
                 startAnimation={currentAnimationIndex === 1}
@@ -48,7 +48,7 @@ export function IntroRegionalVariantsSlide({ onNext }: IntroSlideProps) {
                 content={REGIONAL_VARIANTS_SECOND_POINT}
                 wordDuration={WORD_DURATION}
                 stagger={STAGGER}
-                textStyle={[introSlideStyles.subtext, { fontSize: 22 }]}
+                textStyle={[introSlideStyles.subtext, { fontSize: getFontSize({big: true}) }]}
                 initialDelay={DELAY_PADDING}
                 forceFinishAnimation={skipAnimationIndex >= 2}
                 startAnimation={currentAnimationIndex === 2}
@@ -58,7 +58,7 @@ export function IntroRegionalVariantsSlide({ onNext }: IntroSlideProps) {
                 content={REGIONAL_VARIANTS_THIRD_POINT}
                 wordDuration={WORD_DURATION}
                 stagger={STAGGER}
-                textStyle={[introSlideStyles.subtext, { fontSize: 22 }]}
+                textStyle={[introSlideStyles.subtext, { fontSize: getFontSize({big: true}) }]}
                 initialDelay={DELAY_PADDING}
                 forceFinishAnimation={skipAnimationIndex >= 3}
                 startAnimation={currentAnimationIndex === 3}

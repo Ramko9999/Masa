@@ -2,25 +2,22 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { View, Text } from "@/theme";
 import {
   StyleSheet,
-  Pressable,
   ActivityIndicator,
   useWindowDimensions,
+  TouchableOpacity,
 } from "react-native";
 import { AppColor, useGetColor } from "@/theme/color";
 import { StyleUtils } from "@/theme/style-utils";
 import { Bell } from "lucide-react-native";
 import { StackScreenProps } from "@react-navigation/stack";
 import { RootStackParamList } from "@/layout/types";
-import {
-  requestNotificationsPermissions,
-  scheduleFestivalNotifications,
-} from "@/util/notifications";
+import { NotificationApi } from "@/api/notification";
 import { useState } from "react";
 import { useLocation } from "@/context/location";
 
 const NOTIFICATION_TITLE = "Festival Reminders";
 const NOTIFICATION_SUBTEXT =
-  "Would you like to receive reminders for upcoming festivals? We'll send you a notification on the day of each festival.";
+  "We'll send you a notification on the day of each festival.";
 
 const notificationPermissionStyles = StyleSheet.create({
   container: {
@@ -40,9 +37,11 @@ const notificationPermissionStyles = StyleSheet.create({
   },
   actionButton: {
     backgroundColor: useGetColor(AppColor.primary),
-    paddingHorizontal: "8%",
+    paddingHorizontal: "4%",
     paddingVertical: "4%",
     borderRadius: 12,
+    ...StyleUtils.flexRow(5),
+    alignItems: "center",
   },
 });
 
@@ -62,9 +61,10 @@ export function NotificationPermission({
   const handleNotificationPermission = async () => {
     setIsLoading(true);
     try {
-      const hasPermission = await requestNotificationsPermissions();
+      const hasPermission =
+        await NotificationApi.getNotificationPermissionStatus();
       if (hasPermission && location) {
-        await scheduleFestivalNotifications(location);
+        await NotificationApi.scheduleFestivalNotifications(location);
       }
       navigation.replace("tabs", { screen: "home" });
     } catch (error) {
@@ -92,25 +92,20 @@ export function NotificationPermission({
         </Text>
 
         <View style={notificationPermissionStyles.actionButtonContainer}>
-          <Pressable
-            style={({ pressed }) => [
-              notificationPermissionStyles.actionButton,
-              { opacity: pressed ? 0.7 : 1 },
-            ]}
+          <TouchableOpacity
+            style={notificationPermissionStyles.actionButton}
             onPress={handleNotificationPermission}
           >
-            <View style={StyleUtils.flexRow(8)}>
-              <Bell
-                stroke={useGetColor(AppColor.background)}
-                fill={useGetColor(AppColor.background)}
-                width={20}
-                height={20}
-              />
-              <Text large semibold background>
-                Enable Festival Reminders
-              </Text>
-            </View>
-          </Pressable>
+            <Bell
+              stroke={useGetColor(AppColor.background)}
+              fill={useGetColor(AppColor.background)}
+              width={20}
+              height={20}
+            />
+            <Text large semibold background>
+              Enable Festival Reminders
+            </Text>
+          </TouchableOpacity>
           {isLoading && (
             <ActivityIndicator
               size="large"

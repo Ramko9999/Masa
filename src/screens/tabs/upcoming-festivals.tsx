@@ -1,7 +1,7 @@
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { View, Text } from "@/theme";
 import { Festival } from "@/api/panchanga/core/festival";
-import { StyleSheet, ScrollView, Pressable } from "react-native";
+import { StyleSheet, ScrollView, TouchableOpacity } from "react-native";
 import { StyleUtils } from "@/theme/style-utils";
 import { getUpcomingFestivals } from "@/api/panchanga";
 import { getHumanReadableDateWithWeekday, truncateToDay } from "@/util/date";
@@ -44,28 +44,26 @@ type FestivalItemProps = {
 
 function FestivalItem({ festival, onPress }: FestivalItemProps) {
   return (
-    <Pressable
-      onPress={() => onPress(festival)}
-      style={({ pressed }) => [{ opacity: pressed ? 0.7 : 1 }]}
-    >
-      <View>
-        <View
-          style={[
-            upcomingFestivalsStyles.festivalHeader,
-            { borderBottomColor: useGetColor(AppColor.border) },
-          ]}
-        >
-          <Text neutral tint semibold>
-            {getHumanReadableDateWithWeekday(festival.date)}
-          </Text>
-        </View>
-        <View style={upcomingFestivalsStyles.festivalContent}>
-          <Text large semibold>
-            {festival.name}
-          </Text>
-        </View>
+    <View>
+      <View
+        style={[
+          upcomingFestivalsStyles.festivalHeader,
+          { borderBottomColor: useGetColor(AppColor.border) },
+        ]}
+      >
+        <Text neutral tint semibold>
+          {getHumanReadableDateWithWeekday(festival.date)}
+        </Text>
       </View>
-    </Pressable>
+      <TouchableOpacity
+        onPress={() => onPress(festival)}
+        style={upcomingFestivalsStyles.festivalContent}
+      >
+        <Text large semibold>
+          {festival.name}
+        </Text>
+      </TouchableOpacity>
+    </View>
   );
 }
 

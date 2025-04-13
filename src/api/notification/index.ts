@@ -12,7 +12,7 @@ Notifications.setNotificationHandler({
   }),
 });
 
-export async function requestNotificationsPermissions() {
+async function getNotificationPermissionStatus() {
   const { status: existingStatus } = await Notifications.getPermissionsAsync();
   let finalStatus = existingStatus;
 
@@ -28,7 +28,7 @@ export async function requestNotificationsPermissions() {
   return true;
 }
 
-export async function scheduleFestivalNotifications(location: Location) {
+async function scheduleFestivalNotifications(location: Location) {
   try {
     const festivals = getUpcomingFestivals(truncateToDay(Date.now()), location);
 
@@ -41,7 +41,7 @@ export async function scheduleFestivalNotifications(location: Location) {
         continue;
       }
 
-      const notification = await Notifications.scheduleNotificationAsync({
+      await Notifications.scheduleNotificationAsync({
         content: {
           title: festival.name,
           body: festival.caption,
@@ -53,10 +53,14 @@ export async function scheduleFestivalNotifications(location: Location) {
           date: notificationDate,
         },
       });
-      console.log("Scheduled notification:", notification);
     }
   } catch (error) {
     console.error("Error scheduling festival notifications:", error);
     throw error;
   }
 }
+
+export const NotificationApi = {
+  getNotificationPermissionStatus,
+  scheduleFestivalNotifications,
+};

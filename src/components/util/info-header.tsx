@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import { StyleUtils } from "@/theme/style-utils";
-import { StyleSheet, Pressable } from "react-native";
+import { StyleSheet, TouchableOpacity } from "react-native";
 import { View, Text } from "@/theme";
 import { AppColor, useGetColor } from "@/theme/color";
 import { ChevronLeft } from "lucide-react-native";
@@ -28,7 +28,7 @@ export function InfoHeader() {
 
   return (
     <View style={infoHeaderStyles.container}>
-      <Pressable
+      <TouchableOpacity
         style={infoHeaderStyles.backButton}
         onPress={() => navigation.goBack()}
       >
@@ -39,7 +39,7 @@ export function InfoHeader() {
         <Text neutral style={infoHeaderStyles.backText}>
           Back
         </Text>
-      </Pressable>
+      </TouchableOpacity>
     </View>
   );
 }

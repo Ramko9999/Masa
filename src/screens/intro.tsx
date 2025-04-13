@@ -1,7 +1,7 @@
 import { StackScreenProps } from "@react-navigation/stack";
 import { RootStackParamList } from "@/layout/types";
 import { View, Text } from "@/theme";
-import { StyleSheet, Pressable, useWindowDimensions } from "react-native";
+import { StyleSheet, useWindowDimensions, TouchableOpacity } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { AppColor, useGetColor } from "@/theme/color";
 import { StyleUtils } from "@/theme/style-utils";
@@ -44,11 +44,11 @@ function IntroHeader({ onSkip, currentIndex, totalSlides }: IntroHeaderProps) {
       ]}
     >
       <IntroPagination length={totalSlides} currentIndex={currentIndex} />
-      <Pressable onPress={onSkip}>
+      <TouchableOpacity onPress={onSkip}>
         <Text neutral style={introHeaderStyles.skipButton}>
           Skip
         </Text>
-      </Pressable>
+      </TouchableOpacity>
     </View>
   );
 }

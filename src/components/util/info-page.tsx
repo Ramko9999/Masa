@@ -108,7 +108,7 @@ export function InfoParagraph({
   children: ReactNode;
   style?: any;
 }) {
-  return <Text style={[infoPageStyles.paragraph, style]}>{children}</Text>;
+  return <Text neutral style={[infoPageStyles.paragraph, style]}>{children}</Text>;
 }
 
 export function InfoSectionTitle({

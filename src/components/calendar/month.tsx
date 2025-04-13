@@ -1,7 +1,7 @@
 import { View, Text } from "@/theme";
 import {
-  Pressable,
   StyleSheet,
+  TouchableOpacity,
   useWindowDimensions,
 } from "react-native";
 import { AppColor, useGetColor } from "@/theme/color";
@@ -33,10 +33,10 @@ const dayStyles = StyleSheet.create({
   text: {
     fontWeight: "normal",
   },
-  selectedPressable: {
+  selected: {
     backgroundColor: useGetColor(AppColor.primary),
   },
-  todayPressable: {
+  today: {
     backgroundColor: useGetColor(AppColor.tint),
   },
   selectedText: {
@@ -62,7 +62,7 @@ function Day({ day, isSelected, onPress }: DayProps) {
   const isToday = day === truncateToDay(Date.now());
   const { height } = useWindowDimensions();
   return (
-    <Pressable
+    <TouchableOpacity
       style={[dayStyles.container, { height: height * DAY_HEIGHT_MULTIPLER }]}
       onPress={day !== null ? onPress : undefined}
       disabled={day === null}
@@ -76,8 +76,8 @@ function Day({ day, isSelected, onPress }: DayProps) {
               width: height * OVERLAY_HEIGHT_MULTIPLIER,
               borderRadius: (height * OVERLAY_HEIGHT_MULTIPLIER) / 2,
             },
-            isToday && dayStyles.todayPressable,
-            isSelected && dayStyles.selectedPressable,
+            isToday && dayStyles.today,
+            isSelected && dayStyles.selected,
           ]}
         >
           <Text
@@ -92,7 +92,7 @@ function Day({ day, isSelected, onPress }: DayProps) {
           </Text>
         </View>
       )}
-    </Pressable>
+    </TouchableOpacity>
   );
 }
 
@@ -231,7 +231,7 @@ function MonthCalendarHeader({
         {formatMonthYear(new Date(monthDatum.year, monthDatum.month))}
       </Text>
       <View style={monthCalendarHeaderStyles.actions}>
-        <Pressable onPress={onGoBack} disabled={!canGoBack}>
+        <TouchableOpacity onPress={onGoBack} disabled={!canGoBack}>
           <ChevronLeft
             size={28}
             color={
@@ -240,8 +240,8 @@ function MonthCalendarHeader({
                 : useGetColor(AppColor.tint)
             }
           />
-        </Pressable>
-        <Pressable onPress={onGoForward} disabled={!canGoForward}>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={onGoForward} disabled={!canGoForward}>
           <ChevronRight
             size={28}
             color={
@@ -250,7 +250,7 @@ function MonthCalendarHeader({
                 : useGetColor(AppColor.tint)
             }
           />
-        </Pressable>
+        </TouchableOpacity>
       </View>
     </View>
   );
