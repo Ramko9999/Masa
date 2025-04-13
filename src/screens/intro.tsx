@@ -1,7 +1,12 @@
+import * as Notifications from "expo-notifications";
 import { StackScreenProps } from "@react-navigation/stack";
 import { RootStackParamList } from "@/layout/types";
 import { View, Text } from "@/theme";
-import { StyleSheet, useWindowDimensions, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  useWindowDimensions,
+  TouchableOpacity,
+} from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { AppColor, useGetColor } from "@/theme/color";
 import { StyleUtils } from "@/theme/style-utils";
@@ -119,9 +124,15 @@ export function Intro({ navigation }: IntroProps) {
     if (locationPermissionStatus.status === "granted") {
       const location = await LocationApi.readDeviceLocation();
       setLocation(location);
-      navigation.navigate("notification_permission");
+      const { status: notificationStatus } =
+        await Notifications.getPermissionsAsync();
+      if (notificationStatus === "undetermined") {
+        navigation.replace("notification_permission");
+      } else {
+        navigation.replace("tabs", { screen: "home" });
+      }
     } else {
-      navigation.navigate("location_permission");
+      navigation.replace("location_permission");
     }
   };
 

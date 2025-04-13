@@ -1,6 +1,7 @@
+import * as Notifications from "expo-notifications";
 import { useLocation } from "@/context/location";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { View, Text, getFontSize } from "@/theme";
+import { View, Text } from "@/theme";
 import {
   StyleSheet,
   TouchableOpacity,
@@ -80,7 +81,13 @@ export function LocationPermission({ navigation }: LocationPermissionProps) {
     if (permission.granted) {
       const location = await LocationApi.readDeviceLocation();
       setLocation(location);
-      navigation.replace("notification_permission");
+      const { status: notificationStatus } =
+        await Notifications.getPermissionsAsync();
+      if (notificationStatus === "undetermined") {
+        navigation.replace("notification_permission");
+      } else {
+        navigation.replace("tabs", { screen: "home" });
+      }
     } else {
       showLocationPermissionDisabledAlert();
     }

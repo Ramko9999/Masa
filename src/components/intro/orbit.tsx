@@ -26,7 +26,8 @@ const orbitsStyles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
     paddingHorizontal: "4%",
-    paddingVertical: "4%",
+    paddingTop: "2%",
+    paddingBottom: "5%",
   },
   svgContainer: {
     width: "100%",
@@ -89,7 +90,7 @@ function Orbits({ isHeliocentric, size }: OrbitsProps) {
   // In heliocentric (0): earth orbits sun
   // In geocentric (1): earth is at center
   const earthOrbitRadius = useDerivedValue(
-    () => size * 0.3 * (1 - transitionProgress.value) // 0.3*size when heliocentric, 0 when geocentric
+    () => size * 0.35 * (1 - transitionProgress.value) // 0.3*size when heliocentric, 0 when geocentric
   );
 
   const earthX = useDerivedValue(
@@ -221,7 +222,7 @@ function Orbits({ isHeliocentric, size }: OrbitsProps) {
           <AnimatedCircle
             cx={centerX}
             cy={centerY}
-            r={size * 0.3}
+            r={size * 0.35}
             stroke={tintColor}
             strokeWidth="1"
             strokeDasharray="5,5"
@@ -242,13 +243,13 @@ function Orbits({ isHeliocentric, size }: OrbitsProps) {
           />
 
           {/* Animated celestial bodies */}
+          <AnimatedCircle animatedProps={moonProps} r={5} fill="#999" />
           <AnimatedCircle animatedProps={sunProps} r={15} fill="orange" />
           <AnimatedCircle
             animatedProps={earthProps}
             r={10}
             fill="deepskyblue"
           />
-          <AnimatedCircle animatedProps={moonProps} r={5} fill="#999" />
         </Svg>
       </View>
     </View>
@@ -272,7 +273,7 @@ const introOrbitsDiagramStyles = StyleSheet.create({
     ...StyleUtils.flexRow(),
     backgroundColor: useGetColor(AppColor.primary),
     borderWidth: 2,
-    alignSelf: "flex-end",
+    alignSelf: "center",
   },
   tab: {
     paddingHorizontal: 12,

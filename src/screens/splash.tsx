@@ -1,3 +1,4 @@
+import * as Notifications from "expo-notifications";
 import { AppColor } from "@/theme/color";
 import { useGetColor } from "@/theme/color";
 import { View } from "../theme";
@@ -29,18 +30,26 @@ type SplashState = {
 
 export function Splash({ navigation }: SplashProps) {
   const { setLocation } = useLocation();
-  const [{ hasLocationPermission, shouldAnimateLogo, hasSeenOnboarding }, setState] =
-    useState<SplashState>({
-      hasLocationPermission: false,
-      shouldAnimateLogo: false,
-      hasSeenOnboarding: false,
-    });
+  const [
+    { hasLocationPermission, shouldAnimateLogo, hasSeenOnboarding },
+    setState,
+  ] = useState<SplashState>({
+    hasLocationPermission: false,
+    shouldAnimateLogo: false,
+    hasSeenOnboarding: false,
+  });
 
-  const onAnimationComplete = () => {
+  const onAnimationComplete = async () => {
     if (shouldAnimateLogo) {
       if (hasSeenOnboarding) {
         if (hasLocationPermission) {
-          navigation.replace("tabs", { screen: "home" });
+          const { status: notificationStatus } =
+            await Notifications.getPermissionsAsync();
+          if (notificationStatus === "undetermined") {
+            navigation.replace("notification_permission");
+          } else {
+            navigation.replace("tabs", { screen: "home" });
+          }
         } else {
           navigation.replace("location_permission");
         }
@@ -50,16 +59,26 @@ export function Splash({ navigation }: SplashProps) {
     }
   };
 
-
   useEffect(() => {
-    Promise.all([LocationApi.getLocationPermissionStatus(), UserApi.hasSeenOnboarding()]).then(([permission, hasSeenOnboarding]) => {
+    Promise.all([
+      LocationApi.getLocationPermissionStatus(),
+      UserApi.hasSeenOnboarding(),
+    ]).then(([permission, hasSeenOnboarding]) => {
       if (permission.status === "granted") {
         LocationApi.readDeviceLocation().then((location) => {
           setLocation(location);
-          setState({ hasLocationPermission: true, shouldAnimateLogo: true, hasSeenOnboarding });
+          setState({
+            hasLocationPermission: true,
+            shouldAnimateLogo: true,
+            hasSeenOnboarding,
+          });
         });
       } else {
-        setState({ hasLocationPermission: false, shouldAnimateLogo: true, hasSeenOnboarding });
+        setState({
+          hasLocationPermission: false,
+          shouldAnimateLogo: true,
+          hasSeenOnboarding,
+        });
       }
     });
   }, []);
