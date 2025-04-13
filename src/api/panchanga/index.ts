@@ -36,7 +36,7 @@ export function computePanchanga(day: number, location: Location): Panchanga {
   const yoga = Yoga.compute(day, sunrise);
   const vaara = Vaara.compute(day);
   const masa = Masa.compute(sunrise);
-  const festivals = Festival.getUpcomingFestivals(day, location).filter(
+  const festivals = Festival.getFestivals(day, location).filter(
     (festival) => festival.date === day
   );
 
@@ -55,6 +55,6 @@ export function computePanchanga(day: number, location: Location): Panchanga {
   };
 }
 
-export function getUpcomingFestivals(anchorDay: number, location: Location) {
-  return Festival.getUpcomingFestivals(anchorDay, location);
+export function getFestivals(anchorDay: number, location: Location) {
+  return Festival.getFestivals(anchorDay, location);
 }

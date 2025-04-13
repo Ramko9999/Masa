@@ -431,7 +431,7 @@ export function MasaOrbit() {
           />
           <TextInput
             style={styles.masaLabelText}
-            value="Amanta"
+            value="Amanta Masa"
             editable={false}
           />
         </View>
@@ -443,7 +443,7 @@ export function MasaOrbit() {
           />
           <TextInput
             style={styles.masaLabelText}
-            value="Purnimanta"
+            value="Purnimanta Masa"
             editable={false}
           />
         </View>

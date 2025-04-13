@@ -1,4 +1,4 @@
-import { getUpcomingFestivals } from "@/api/panchanga";
+import { getFestivals } from "@/api/panchanga";
 import * as Notifications from "expo-notifications";
 import { SchedulableTriggerInputTypes } from "expo-notifications";
 import { truncateToDay } from "@/util/date";
@@ -30,7 +30,7 @@ async function getNotificationPermissionStatus() {
 
 async function scheduleFestivalNotifications(location: Location) {
   try {
-    const festivals = getUpcomingFestivals(truncateToDay(Date.now()), location);
+    const festivals = getFestivals(truncateToDay(Date.now()), location);
 
     await Notifications.cancelAllScheduledNotificationsAsync();
 

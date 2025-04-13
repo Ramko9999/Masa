@@ -5,6 +5,7 @@ import {
   InfoParagraph,
   InfoSectionTitle,
   InfoVisual,
+  InfoNote,
 } from "@/components/util/info-page";
 import { StyleSheet } from "react-native";
 import { Text, View } from "@/theme";
@@ -53,15 +54,11 @@ export function MasaInfoPage() {
     <InfoPage title="Masa">
       <InfoSection>
         <InfoParagraph>
-          A Masa is a lunar month, consisting of ~29.5 days and 30 Tithis.
+          A Masa is a lunar month, which consists of 30 tithis, ~29.5 days.
         </InfoParagraph>
         <InfoParagraph>
-          Masa is a key unit of time in the Hindu calendar and plays a central
-          role in determining festival dates.
-        </InfoParagraph>
-        <InfoParagraph>
-          Each Masa is named after the Nakshatra (lunar constellation) closest
-          to the Full Moon (Purnima) during that month.
+          Masa, along with Tithi, play a central role in determinining festival
+          dates.
         </InfoParagraph>
       </InfoSection>
 
@@ -83,6 +80,9 @@ export function MasaInfoPage() {
       </InfoSection>
 
       <InfoSection>
+        <InfoNote>
+          Look at how the Masa changes
+        </InfoNote>
         <InfoVisual>
           <MasaOrbit />
         </InfoVisual>
@@ -91,7 +91,7 @@ export function MasaInfoPage() {
       <InfoSection>
         <InfoSectionTitle>Lunar vs Solar Year</InfoSectionTitle>
         <InfoParagraph>
-          A lunar year of 12 Masas adds up to ~354 days—about 11 days shorter
+          A lunar year of 12 Masas adds up to ~354 days, about 11 days shorter
           than the solar year.
         </InfoParagraph>
         <InfoParagraph>

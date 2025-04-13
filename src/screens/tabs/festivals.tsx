@@ -3,7 +3,7 @@ import { View, Text } from "@/theme";
 import { Festival } from "@/api/panchanga/core/festival";
 import { StyleSheet, ScrollView, TouchableOpacity } from "react-native";
 import { StyleUtils } from "@/theme/style-utils";
-import { getUpcomingFestivals } from "@/api/panchanga";
+import { getFestivals } from "@/api/panchanga";
 import { getHumanReadableDateWithWeekday, truncateToDay } from "@/util/date";
 import { RootStackParamList, TabParamList } from "@/layout/types";
 import { StackScreenProps } from "@react-navigation/stack";
@@ -13,7 +13,7 @@ import { useLocation } from "@/context/location";
 import { useGetColor } from "@/theme/color";
 import { AppColor } from "@/theme/color";
 
-const upcomingFestivalsStyles = StyleSheet.create({
+const FestivalsStyles = StyleSheet.create({
   container: {
     ...StyleUtils.flexColumn(),
     paddingHorizontal: "3%",
@@ -33,8 +33,8 @@ const upcomingFestivalsStyles = StyleSheet.create({
   },
 });
 
-type UpcomingFestivalsProps = CompositeScreenProps<
-  BottomTabScreenProps<TabParamList, "upcoming_festivals">,
+type FestivalsProps = CompositeScreenProps<
+  BottomTabScreenProps<TabParamList, "festivals">,
   StackScreenProps<RootStackParamList>
 >;
 
@@ -48,7 +48,7 @@ function FestivalItem({ festival, onPress }: FestivalItemProps) {
     <View>
       <View
         style={[
-          upcomingFestivalsStyles.festivalHeader,
+          FestivalsStyles.festivalHeader,
           { borderBottomColor: useGetColor(AppColor.border) },
         ]}
       >
@@ -58,7 +58,7 @@ function FestivalItem({ festival, onPress }: FestivalItemProps) {
       </View>
       <TouchableOpacity
         onPress={() => onPress(festival)}
-        style={upcomingFestivalsStyles.festivalContent}
+        style={FestivalsStyles.festivalContent}
       >
         <Text large semibold>
           {festival.name}
@@ -68,10 +68,10 @@ function FestivalItem({ festival, onPress }: FestivalItemProps) {
   );
 }
 
-export function UpcomingFestivals({ navigation }: UpcomingFestivalsProps) {
+export function Festivals({ navigation }: FestivalsProps) {
   const { location } = useLocation();
   const insets = useSafeAreaInsets();
-  const festivals = getUpcomingFestivals(truncateToDay(Date.now()), location!);
+  const festivals = getFestivals(truncateToDay(Date.now()), location!);
 
   const onFestivalPress = (festival: Festival) => {
     navigation.navigate("festival_details", { festival });
@@ -80,15 +80,15 @@ export function UpcomingFestivals({ navigation }: UpcomingFestivalsProps) {
   return (
     <View
       style={[
-        upcomingFestivalsStyles.container,
+        FestivalsStyles.container,
         { paddingTop: insets.top + 20, paddingBottom: insets.bottom + 20 },
       ]}
     >
       <Text huge bold>
-        Upcoming Festivals
+        Festivals
       </Text>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={upcomingFestivalsStyles.festivalsList}>
+        <View style={FestivalsStyles.festivalsList}>
           {festivals.map((festival, index) => (
             <FestivalItem
               key={`${festival.name}-${index}`}

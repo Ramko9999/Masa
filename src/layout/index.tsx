@@ -7,7 +7,7 @@ import { RootStackParamList, TabParamList } from "./types";
 import { LocationPermission } from "@/screens/location-permission";
 import { NotificationPermission } from "@/screens/notification-permission";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { UpcomingFestivals } from "@/screens/tabs/upcoming-festivals";
+import { Festivals } from "@/screens/tabs/festivals";
 import { FestivalDetails } from "@/screens/festival-details";
 import { TithiInfoPage } from "@/screens/tithi-info";
 import { VaaraInfoPage } from "@/screens/vaara-info";
@@ -39,10 +39,10 @@ function Tabs() {
         }}
       />
       <Tab.Screen
-        name="upcoming_festivals"
-        component={UpcomingFestivals}
+        name="festivals"
+        component={Festivals}
         options={{
-          title: "Upcoming Festivals",
+          title: "Festivals",
         }}
       />
     </Tab.Navigator>

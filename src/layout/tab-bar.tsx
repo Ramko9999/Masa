@@ -28,7 +28,7 @@ export const CustomTabBar = ({ state, navigation }: BottomTabBarProps) => {
                 small
                 style={[styles.tabText, isFocused && styles.activeTabText]}
               >
-                {route.name === "home" ? "Home" : "Upcoming Festivals"}
+                {route.name === "home" ? "Home" : "Festivals"}
               </Text>
             </Pressable>
           );

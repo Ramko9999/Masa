@@ -90,7 +90,7 @@ const FESTIVAL_RULES: FestivalRule[] = [
     description:
       "Makar Sankranti signifies the end of winter and the onset of longer, warmer days. It is an auspicious day to start new endeavors.",
     celebration:
-      "Bathe in holy rivers or water-bodies. Worship Surya, the sun god. Make Pongal and sesame seed and jaggery sweets. Fly kites and enjoy the company of friends and family. Perform acts of charity.",
+      "Bathe in holy rivers or water-bodies. Worship Surya, the sun god. Make Pongal and Sesame seed and Jaggery sweets. Fly kites and enjoy the company of friends and family. Perform acts of charity.",
     rule: {
       type: RuleType.Dynamic,
       evaluate: getMakarSankrantiDate,
@@ -117,7 +117,7 @@ const FESTIVAL_RULES: FestivalRule[] = [
     description:
       "Maha Shivaratri celebrates the divine marriage of Lord Shiva and Goddess Parvati and marks the day when Lord Shiva destroys creation performing his divine dance, <i>Tandava</i>. Take advantage of this most auspicious day.",
     celebration:
-      "Observe a fast for the day and night. Perform <i>Abhishekam</i> for the Shiva lingam by bathing it in water, milk, curd, ghee, honey and fruits. Stay alert the entire night.",
+      "Observe a fast for the day and night. Perform <i>Abhishekam</i> for the Shiva <i>Lingam</i> by bathing it in water, milk, curd, ghee, honey and fruits. Stay alert the entire night.",
     rule: {
       type: RuleType.Lunar,
       tithiIndex: TithiIndex.KrishnaChaturdashi,
@@ -128,13 +128,13 @@ const FESTIVAL_RULES: FestivalRule[] = [
     name: FestivalName.Holi,
     caption: "A Celebration of Colors and Love",
     description:
-      "Holi links to the legend of Prahlada, a devotee of Lord Vishnu who was saved from the fire while the demoness Holika was burned. Holi celebrates the love between Lord Krishna and Radha as it is said that Krishna and Radha partook in applying colors to each other.",
+      "Holi links to the legend of Prahlada, a devotee of Lord Vishnu who was saved from the fire while the demoness Holika was burned. Holi also celebrates the love between Lord Krishna and Radha as it is said that Krishna and Radha partook in applying colors to each other.",
     celebration:
       "Light or attend a bonfire and burn Holika effigies the night before. Gather with friends and apply colored powders with water to each other.",
     rule: {
       type: RuleType.Lunar,
-      tithiIndex: TithiIndex.Purnima,
-      masaIndex: MasaIndex.Phalguna,
+      tithiIndex: TithiIndex.KrishnaPratipada,
+      masaIndex: MasaIndex.Chaitra,
     },
   },
   {
@@ -142,9 +142,9 @@ const FESTIVAL_RULES: FestivalRule[] = [
     caption: "Welcoming the New Year",
     subtitle: "Also known as Gudi Padwa",
     description:
-      "Ugadi marks the beginning of the New Year. <i>Ugadi</i> signifies the beginning of a new age, symbolizing renewal and the ushering in of prosperity and hope.",
+      "Ugadi marks the beginning of the New Year. <i>Ugadi</i> means the \"beginning of a new age\", symbolizing renewal and the ushering in of prosperity and hope.",
     celebration:
-      "Listen to the calendar forecast for the year, <i>Panchanga Sravanam</i>. Perform <i>Abhyang Snan</i> by massaging your body oil before taking a warm bath. Prepare <i>Ugadi Pachadi</i>, a dish combining Neem flowers, Jaggery, Tamarind, Salt and raw Mango.",
+      "Listen to the calendar forecast for the year, <i>Panchanga Sravanam</i>. Perform <i>Abhyang Snan</i> by massaging your body with oil before taking a warm bath. Prepare <i>Ugadi Pachadi</i>, a dish combining Neem flowers, Jaggery, Tamarind, Salt and raw Mango.",
     rule: {
       type: RuleType.Lunar,
       tithiIndex: TithiIndex.ShuklaPratipada,
@@ -155,7 +155,7 @@ const FESTIVAL_RULES: FestivalRule[] = [
     name: FestivalName.RamaNavami,
     caption: "Celebrating the Birth of Lord Rama",
     description:
-      "Rama Navami is the birth anniversary of Lord Rama, the seventh incarnation of Lord Vishnu, who is revered for his righteousness.",
+      "Rama Navami is the birth anniversary of Lord Rama, the seventh incarnation of Lord Vishnu who is revered for his righteousness.",
     celebration:
       "Observe a day long fast. Read or listen to the Ramayana. Worship Lord Rama and Devi Sita.",
     rule: {
@@ -168,7 +168,7 @@ const FESTIVAL_RULES: FestivalRule[] = [
     name: FestivalName.HanumanJayanti,
     caption: "Honoring the Mighty Devotee",
     description:
-      "Hanuman Jayanti commemorates the birth of Lord Hanuman, the devoted disciple of Lord Rama, who symbolizes unwavering devotion, selfless service and strength.",
+      "Hanuman Jayanti commemorates the birth of Lord Hanuman, the devoted disciple of Lord Rama who symbolizes unwavering devotion, selfless service and strength.",
     celebration:
       "Observe a day long fast. Recite the <i>Hanuman Chalisa</i>. Read or listen to the Ramayana. Offer prayers and Vermillion to Lord Hanuman.",
     rule: {
@@ -181,7 +181,7 @@ const FESTIVAL_RULES: FestivalRule[] = [
     name: FestivalName.AkshayaTritiya,
     caption: "A Day of Abundance and New Beginnings",
     description:
-      "<i>Akshaya</i> means 'that which never diminishes'. On this day, Lord Krishna blessed his friend Sudama with wealth for his unconditional friendship. The Pandavas also recieved the <i>Akshaya Patra</i>, a vessel which yields unlimited food, on this day. Take advantage of this spiritually potent day as any righteous and spiritual deeds performed on this day yield timeless merit.",
+      "<i>Akshaya</i> means \"that which never diminishes\". On this day, Lord Krishna blessed his friend Sudama with wealth for his unconditional friendship. The Pandavas also recieved the <i>Akshaya Patra</i>, a vessel which yields unlimited food, on this day. Take advantage of this spiritually potent day as any righteous and spiritual deeds performed yield timeless merit.",
     celebration:
       "Perform acts of charity such as donating food, clothing or money or even volunteering. Worship your <i>Istha Devata</i>, your chosen deity. Perform any other spiritual practices as their effects multiply on this day.",
     rule: {
@@ -293,12 +293,13 @@ const FESTIVAL_RULES: FestivalRule[] = [
       "Observe a day long fast. Perform <i>Ayudha Puja</i>, the worship of machinery, instruments, equipment and auto-mobiles. Read or listen to the story of Durga and Mahishasura. Worship Goddess Durga.",
     rule: {
       type: RuleType.Lunar,
-      tithiIndex: TithiIndex.ShuklaShashti,
+      tithiIndex: TithiIndex.ShuklaNavami,
       masaIndex: MasaIndex.Ashwin,
     },
   },
   {
     name: FestivalName.Dussehra,
+    subtitle: "Also known as Vijayadashami",
     caption: "Triumph of Good Over Evil",
     description:
       "Dussehra marks Lord Rama's victory over Ravana, and celebrates the triumph of good over evil.",
@@ -319,7 +320,7 @@ const FESTIVAL_RULES: FestivalRule[] = [
       "Stay awake the entire night. Observe a day and night fast. Light oil lamps and candles in your home. Offer prayers and sweets to Goddess Lakshmi.",
     rule: {
       type: RuleType.Lunar,
-      tithiIndex: TithiIndex.Purnima,
+      tithiIndex: TithiIndex.ShuklaChaturdashi,
       masaIndex: MasaIndex.Ashwin,
     },
   },
@@ -332,7 +333,7 @@ const FESTIVAL_RULES: FestivalRule[] = [
       "Married women observe a fast from sunrise to moonrise and conclude it by looking at the moon through a transparent cloth or sieve. <i>Arghya</i>, ceremonial water, is offered to the moon and then their husband offers them water, breaking the fast.",
     rule: {
       type: RuleType.Lunar,
-      tithiIndex: TithiIndex.KrishnaChaturthi,
+      tithiIndex: TithiIndex.KrishnaTritiya,
       masaIndex: MasaIndex.Kartika,
     },
   },
@@ -385,7 +386,7 @@ const FESTIVAL_RULES: FestivalRule[] = [
     description:
       "Lakshmi Puja is the 3rd day of Diwali and is considered to be the main Diwali festival. It is dedicated to Goddess Lakshmi.",
     celebration:
-      "Observe a day long fast. Clean and decorate homes and offices with Marigold, Mango and Banana leaves. Place both sides of a broken, unpeeled Coconut in front of your home. Light oil lamps and place them throughout the home. Worship Goddess Lakshmi Puja.",
+      "Observe a day long fast. Clean and decorate homes and offices with Marigold, Mango and Banana leaves. Place both sides of a broken, unpeeled Coconut in front of your home. Light oil lamps and place them throughout the home. Worship Goddess Lakshmi.",
     rule: {
       type: RuleType.Lunar,
       tithiIndex: TithiIndex.Amavasya,
@@ -495,7 +496,7 @@ function generateCacheKey(anchorDay: number, location: Location): CacheKey {
   )}`;
 }
 
-export function getUpcomingFestivals(anchorDay: number, location: Location) {
+export function getFestivals(anchorDay: number, location: Location) {
   // Generate cache key
   const cacheKey = generateCacheKey(anchorDay, location);
 
