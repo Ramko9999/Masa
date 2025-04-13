@@ -90,7 +90,7 @@ const FESTIVAL_RULES: FestivalRule[] = [
     description:
       "Makar Sankranti occurs when the Sun moves through the Capricorn Zodiac, signifying the end of winter and the onset of longer, warmer days. It is usually occurs on January 14th (or January 15th in leap years). It is a highly auspicious day for new beginnings and spiritual practices.",
     celebration:
-      "Though there exist regional variations, common celebrations include: Bathing in holy rivers. Worshipping Surya, the sun god. Making Pongal and sesame seed and jaggery sweets. Flying kites. Performing acts of charity.",
+      "Bathe in holy rivers or water-bodies. Worship Surya, the sun god. Make Pongal and sesame seed and jaggery sweets. Fly kites. Perform acts of charity.",
     rule: {
       type: RuleType.Dynamic,
       evaluate: getMakarSankrantiDate,

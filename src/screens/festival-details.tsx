@@ -77,16 +77,15 @@ export function FestivalDetails({ navigation, route }: FestivalDetailsProps) {
 
   return (
     <View style={festivalDetailsStyles.container}>
-      <View
+      <Pressable
+        onPress={navigation.goBack}
         style={[
           festivalDetailsStyles.backButton,
           { top: insets.top + spacing, left: spacing },
         ]}
       >
-        <Pressable onPress={navigation.goBack}>
           <ChevronLeft size={24} color="white" strokeWidth={3} />
-        </Pressable>
-      </View>
+      </Pressable>
 
       <ParallaxScrollView
         headerImage={
