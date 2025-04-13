@@ -58,97 +58,59 @@ const styles = StyleSheet.create({
   },
 });
 
-export function NakshatraOrbit() {
-  const { width } = Dimensions.get("window");
-  const size = width * 0.9;
-  const centerX = size / 2;
-  const centerY = size / 2;
-
-  // Get the tint color from the theme
-  const tintColor = useGetColor(AppColor.tint);
-
-  // Orbital motion
-  const time = useSharedValue(0);
-
-  // Motion constants
-  const orbitalSpeed = 0.4; // degrees per animation frame (increased for slightly faster movement)
-
-  // Calculate angles
-  const moonAngleDeg = useDerivedValue(() => (time.value * orbitalSpeed) % 360);
-  const moonAngleRad = useDerivedValue(
-    () => moonAngleDeg.value * (Math.PI / 180)
-  );
-
-  // Number of segments in the wheel (Nakshatras)
-  const numSegments = 27;
-  const segmentAngle = 360 / numSegments;
-
-  // EARTH POSITION - in geocentric model, earth is at center
-  const earthX = centerX;
-  const earthY = centerY;
-
-  // MOON POSITION - in geocentric model, moon orbits earth
-  const moonOrbitRadius = size * 0.3; // Adjusted back to original value
-  const moonX = useDerivedValue(
-    () => centerX + Math.cos(moonAngleRad.value) * moonOrbitRadius
-  );
-  const moonY = useDerivedValue(
-    () => centerY + Math.sin(moonAngleRad.value) * moonOrbitRadius
-  );
-
-  // Set up animated props
-  const moonProps = useAnimatedProps(() => ({
-    cx: moonX.value,
-    cy: moonY.value,
-  }));
-
-  const moonAngleTextProps = useAnimatedProps(() => {
-    return {
-      text: `Moon: ${Math.round(moonAngleDeg.value)}°`,
-      defaultValue: "Moon: 0°",
-    };
-  });
-
-  // Updated nakshatra index calculation to use segmentAngle instead of dividing by 27
-  const nakshatraIndex = useDerivedValue(() => {
-    // Simply use moonAngleDeg directly with segmentAngle since we don't care about reference angle
-    return (Math.floor(moonAngleDeg.value / segmentAngle) %
-      numSegments) as NakshatraIndex;
-  });
-
-  // We don't need a separate currentSegmentIndex since it's the same calculation
-  // Use nakshatraIndex for both the name and highlighting the segment
-
-  const nakshatraNameTextProps = useAnimatedProps(() => {
-    return {
-      text: NAKSHATRA_NAMES[nakshatraIndex.value],
-      defaultValue: NAKSHATRA_NAMES[NakshatraIndex.Ashwini],
-    };
-  });
-
-  // Continuous orbital animation
-  useEffect(() => {
-    time.value = withRepeat(
-      withTiming(time.value + 3600, {
-        duration: 90000, // 90 seconds (1.5 minutes) for one cycle
-        easing: Easing.linear,
-      }),
-      -1,
-      false
+// Memoized static orbit elements
+const StaticOrbitElements = React.memo(
+  ({
+    centerX,
+    centerY,
+    size,
+    tintColor,
+  }: {
+    centerX: number;
+    centerY: number;
+    size: number;
+    tintColor: string;
+  }) => {
+    return (
+      <>
+        {/* Moon orbit - dashed circle */}
+        <Circle
+          cx={centerX}
+          cy={centerY}
+          r={size * 0.3}
+          stroke={tintColor}
+          strokeWidth="0.8"
+          strokeDasharray="3,3"
+          fill="transparent"
+        />
+        {/* Earth at center */}
+        <Circle cx={centerX} cy={centerY} r={10} fill="deepskyblue" />
+      </>
     );
+  }
+);
 
-    return () => {
-      cancelAnimation(time);
-    };
-  }, []);
-
-  // Create the wheel segments
-  const createWheelSegments = () => {
+// Memoized wheel segments component
+const WheelSegments = React.memo(
+  ({
+    centerX,
+    centerY,
+    size,
+    tintColor,
+    numSegments,
+    segmentAngle,
+  }: {
+    centerX: number;
+    centerY: number;
+    size: number;
+    tintColor: string;
+    numSegments: number;
+    segmentAngle: number;
+  }) => {
     const segments = [];
     const outerRadius = size * 0.42;
     const innerRadius = size * 0.39;
-    // Place text outside the outer radius
-    const textRadius = size * 0.45; // Increased to be outside the segments
+    const textRadius = size * 0.45;
 
     for (let i = 0; i < numSegments; i++) {
       const startAngle = i * segmentAngle * (Math.PI / 180);
@@ -165,7 +127,7 @@ export function NakshatraOrbit() {
       const endInnerX = centerX + Math.cos(startAngle) * innerRadius;
       const endInnerY = centerY + Math.sin(startAngle) * innerRadius;
 
-      // Text position - moved outside the wheel
+      // Text position
       const textX = centerX + Math.cos(midAngle) * textRadius;
       const textY = centerY + Math.sin(midAngle) * textRadius;
 
@@ -201,26 +163,107 @@ export function NakshatraOrbit() {
       );
     }
 
-    return segments;
-  };
+    return <>{segments}</>;
+  }
+);
+
+export function NakshatraOrbit() {
+  const { width } = Dimensions.get("window");
+  const size = width * 0.9;
+  const centerX = size / 2;
+  const centerY = size / 2;
+
+  // Get the tint color from the theme
+  const tintColor = useGetColor(AppColor.tint);
+
+  // Orbital motion
+  const time = useSharedValue(0);
+
+  // Motion constants
+  const orbitalSpeed = 0.4; // degrees per animation frame (increased for slightly faster movement)
+
+  // Calculate angles
+  const moonAngleDeg = useDerivedValue(() => (time.value * orbitalSpeed) % 360);
+  const moonAngleRad = useDerivedValue(
+    () => moonAngleDeg.value * (Math.PI / 180)
+  );
+
+  // Number of segments in the wheel (Nakshatras)
+  const numSegments = 27;
+  const segmentAngle = 360 / numSegments;
+
+  // MOON POSITION - in geocentric model, moon orbits earth
+  const moonOrbitRadius = size * 0.3;
+  const moonX = useDerivedValue(
+    () => centerX + Math.cos(moonAngleRad.value) * moonOrbitRadius
+  );
+  const moonY = useDerivedValue(
+    () => centerY + Math.sin(moonAngleRad.value) * moonOrbitRadius
+  );
+
+  // Set up animated props
+  const moonProps = useAnimatedProps(() => ({
+    cx: moonX.value,
+    cy: moonY.value,
+  }));
+
+  const moonAngleTextProps = useAnimatedProps(() => {
+    return {
+      text: `Moon: ${Math.round(moonAngleDeg.value)}°`,
+      defaultValue: "Moon: 0°",
+    };
+  });
+
+  // Updated nakshatra index calculation to use segmentAngle instead of dividing by 27
+  const nakshatraIndex = useDerivedValue(() => {
+    return (Math.floor(moonAngleDeg.value / segmentAngle) %
+      numSegments) as NakshatraIndex;
+  });
+
+  const nakshatraNameTextProps = useAnimatedProps(() => {
+    return {
+      text: NAKSHATRA_NAMES[nakshatraIndex.value],
+      defaultValue: NAKSHATRA_NAMES[NakshatraIndex.Ashwini],
+    };
+  });
+
+  // Continuous orbital animation
+  useEffect(() => {
+    time.value = withRepeat(
+      withTiming(time.value + 3600, {
+        duration: 90000, // 90 seconds (1.5 minutes) for one cycle
+        easing: Easing.linear,
+      }),
+      -1,
+      false
+    );
+
+    return () => {
+      cancelAnimation(time);
+    };
+  }, []);
 
   return (
     <View style={styles.container}>
       <View style={styles.svgContainer}>
         <Svg height={size} width={size}>
-          {/* Moon orbit - dashed circle */}
-          <Circle
-            cx={centerX}
-            cy={centerY}
-            r={moonOrbitRadius}
-            stroke={tintColor}
-            strokeWidth="0.8"
-            strokeDasharray="3,3"
-            fill="transparent"
+          {/* Static elements */}
+          <StaticOrbitElements
+            centerX={centerX}
+            centerY={centerY}
+            size={size}
+            tintColor={tintColor}
           />
 
-          {/* Wheel with segments */}
-          {createWheelSegments()}
+          {/* Wheel segments */}
+          <WheelSegments
+            centerX={centerX}
+            centerY={centerY}
+            size={size}
+            tintColor={tintColor}
+            numSegments={numSegments}
+            segmentAngle={segmentAngle}
+          />
 
           {/* Highlight current segment */}
           <AnimatedPath
@@ -263,9 +306,8 @@ export function NakshatraOrbit() {
             strokeWidth="1"
           />
 
-          {/* Celestial bodies */}
+          {/* Moon */}
           <AnimatedCircle animatedProps={moonProps} r={5} fill="#999" />
-          <Circle cx={earthX} cy={earthY} r={10} fill="deepskyblue" />
         </Svg>
       </View>
       <View style={styles.anglesContainer}>
