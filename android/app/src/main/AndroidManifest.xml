@@ -28,7 +28,6 @@
         <category android:name="android.intent.category.BROWSABLE"/>
         <data android:scheme="masa"/>
         <data android:scheme="com.anonymous.masa"/>
-        <data android:scheme="exp+masa"/>
       </intent-filter>
     </activity>
   </application>
