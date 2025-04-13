@@ -4,6 +4,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Text, View } from "@/theme";
 import { InfoHeader } from "./info-header";
 import { StyleUtils } from "@/theme/style-utils";
+import { useGetColor, AppColor } from "@/theme/color";
 
 export interface InfoPageProps {
   title: string;
@@ -14,6 +15,7 @@ export interface InfoPageProps {
 const infoPageStyles = StyleSheet.create({
   container: {
     ...StyleUtils.flexColumn(),
+    backgroundColor: useGetColor(AppColor.background),
     flex: 1,
   },
   scrollViewContent: {
