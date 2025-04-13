@@ -1,5 +1,10 @@
 import React from "react";
-import { Text as DefaultText, View as DefaultView } from "react-native";
+import {
+  Text as DefaultText,
+  View as DefaultView,
+  Dimensions,
+  PixelRatio,
+} from "react-native";
 import { AppColor, useGetColor } from "@/theme/color";
 
 type TextSizeProps = {
@@ -41,6 +46,13 @@ type TextProps = DefaultText["props"] &
   TextColorProps &
   TextWeightProps;
 
+function scaleFontSize(size: number) {
+  const { width: SCREEN_WIDTH } = Dimensions.get("window");
+  const scale = SCREEN_WIDTH / 375;
+  const newSize = size * scale * PixelRatio.getFontScale();
+  return Math.round(PixelRatio.roundToNearestPixel(newSize));
+}
+
 export function getFontSize({
   micro,
   xtiny,
@@ -55,20 +67,20 @@ export function getFontSize({
   bigger,
   huge,
 }: TextSizeProps) {
-  if (micro) return 8;
-  if (xtiny) return 9.5;
-  if (tiny) return 11;
-  if (smaller) return 12;
-  if (small) return 13;
-  if (sneutral) return 14;
-  if (neutral) return 16;
-  if (large) return 18;
-  if (larger) return 20;
-  if (big) return 23;
-  if (bigger) return 26;
-  if (huge) return 32;
+  if (micro) return scaleFontSize(8);
+  if (xtiny) return scaleFontSize(9.5);
+  if (tiny) return scaleFontSize(11);
+  if (smaller) return scaleFontSize(12);
+  if (small) return scaleFontSize(13);
+  if (sneutral) return scaleFontSize(14);
+  if (neutral) return scaleFontSize(16);
+  if (large) return scaleFontSize(18);
+  if (larger) return scaleFontSize(20);
+  if (big) return scaleFontSize(23);
+  if (bigger) return scaleFontSize(26);
+  if (huge) return scaleFontSize(30);
 
-  return 14;
+  return scaleFontSize(14);
 }
 
 function getFontColor({ background, primary, accent, tint }: TextColorProps) {
@@ -137,4 +149,3 @@ export const View = React.forwardRef(
     return <DefaultView ref={ref} {...props} />;
   }
 );
-

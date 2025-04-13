@@ -18,7 +18,7 @@ import { RootStackParamList } from "@/layout/types";
 import { LocationApi } from "@/api/location";
 import { useState } from "react";
 
-const LOCATION_TITLE = "Location permission";
+const LOCATION_TITLE = "Location Permission";
 const LOCATION_SUBTEXT =
   "We need your location to calculate the correct calendar elements and festival timings for your region.";
 
@@ -40,10 +40,12 @@ const newLocationPermissionStyles = StyleSheet.create({
   },
   actionButton: {
     backgroundColor: useGetColor(AppColor.primary),
-    paddingHorizontal: "8%",
+    paddingHorizontal: "4%",
     paddingVertical: "4%",
     borderRadius: 12,
-  }
+    ...StyleUtils.flexRow(10),
+    alignItems: "center",
+  },
 });
 
 type LocationPermissionProps = StackScreenProps<
@@ -105,17 +107,15 @@ export function LocationPermission({ navigation }: LocationPermissionProps) {
             style={newLocationPermissionStyles.actionButton}
             onPress={handleLocationPermission}
           >
-            <View style={StyleUtils.flexRow(8)}>
-              <Navigation
-                stroke={useGetColor(AppColor.background)}
-                fill={useGetColor(AppColor.background)}
-                width={20}
-                height={20}
-              />
-              <Text large semibold background>
-                Use Current Location
-              </Text>
-            </View>
+            <Navigation
+              stroke={useGetColor(AppColor.background)}
+              fill={useGetColor(AppColor.background)}
+              width={20}
+              height={20}
+            />
+            <Text large semibold background>
+              Use Current Location
+            </Text>
           </TouchableOpacity>
           {isLoading && (
             <ActivityIndicator

@@ -18,7 +18,7 @@ export const introSlideStyles = StyleSheet.create({
   },
   actionButton: {
     backgroundColor: useGetColor(AppColor.primary),
-    paddingHorizontal: "8%",
+    paddingHorizontal: "4%",
     paddingVertical: "4%",
     borderRadius: 12,
   },

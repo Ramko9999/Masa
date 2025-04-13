@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet } from "react-native";
+import { TouchableOpacity, StyleSheet } from "react-native";
 import { computePanchanga } from "@/api/panchanga";
 import {
   getHumanReadableDate,
@@ -189,7 +189,7 @@ export function Pachanga({
       {festivals.length !== 0 && (
         <Card title="FESTIVALS">
           {festivals.map((festival, index) => (
-            <Pressable
+            <TouchableOpacity
               key={`${festival.name}-${index}`}
               onPress={() =>
                 /* @ts-ignore */
@@ -207,7 +207,7 @@ export function Pachanga({
                 </View>
                 <ChevronRight size={24} color={useGetColor(AppColor.tint)} />
               </View>
-            </Pressable>
+            </TouchableOpacity>
           ))}
         </Card>
       )}
