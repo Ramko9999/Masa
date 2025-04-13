@@ -70,6 +70,7 @@ export function ParallaxScrollView({
         ref={scrollRef}
         scrollEventThrottle={16}
         contentContainerStyle={parallaxScrollViewStyles.scrollContent}
+        showsVerticalScrollIndicator={false}
       >
         <Animated.View
           style={[parallaxScrollViewStyles.header, headerAnimatedStyle]}
