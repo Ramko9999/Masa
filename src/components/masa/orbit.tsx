@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { View, StyleSheet, Dimensions, TextInput } from "react-native";
 import Svg, { Circle, Text as SvgText } from "react-native-svg";
 import { AppColor, useGetColor } from "@/theme/color";
@@ -97,6 +97,77 @@ const styles = StyleSheet.create({
   },
 });
 
+// Memoized static orbit elements
+const StaticOrbitElements = React.memo(
+  ({
+    centerX,
+    centerY,
+    size,
+    tintColor,
+  }: {
+    centerX: number;
+    centerY: number;
+    size: number;
+    tintColor: string;
+  }) => {
+    return (
+      <>
+        {/* Geocentric orbits (Sun and Moon around Earth) */}
+        <Circle
+          cx={centerX}
+          cy={centerY}
+          r={size * 0.4}
+          stroke={tintColor}
+          strokeWidth="1"
+          strokeDasharray="5,5"
+          fill="transparent"
+        />
+        {/* Earth at center */}
+        <Circle cx={centerX} cy={centerY} r={10} fill="deepskyblue" />
+      </>
+    );
+  }
+);
+
+// Memoized degree markings component
+const DegreeMarkings = React.memo(
+  ({
+    centerX,
+    centerY,
+    size,
+    tintColor,
+  }: {
+    centerX: number;
+    centerY: number;
+    size: number;
+    tintColor: string;
+  }) => {
+    return (
+      <>
+        {[...Array(12)].map((_, i) => {
+          const markerAngle = i * 30 * (Math.PI / 180);
+          const markerX = centerX + Math.cos(markerAngle) * (size * 0.47);
+          const markerY = centerY + Math.sin(markerAngle) * (size * 0.47);
+          return (
+            <SvgText
+              key={i}
+              x={markerX}
+              y={markerY}
+              fontSize="10"
+              fill={tintColor}
+              textAnchor="middle"
+              fontFamily="monospace"
+              pointerEvents="none"
+            >
+              {`${i * 30}°`}
+            </SvgText>
+          );
+        })}
+      </>
+    );
+  }
+);
+
 export function MasaOrbit() {
   const { width } = Dimensions.get("window");
   const size = width * 0.9;
@@ -107,18 +178,6 @@ export function MasaOrbit() {
   const [currentTithiIndex, setCurrentTithiIndex] = useState<TithiIndex>(
     TithiIndex.Amavasya
   );
-
-  // Add state for masaIndex
-  const [currentMasaIndex, setCurrentMasaIndex] = useState<MasaIndex>(
-    MasaIndex.Chaitra
-  );
-
-  // Add state for both masa types
-  const [currentAmantaMasaIndex, setCurrentAmantaMasaIndex] =
-    useState<MasaIndex>(MasaIndex.Chaitra);
-
-  const [currentPurnimantaMasaIndex, setCurrentPurnimantaMasaIndex] =
-    useState<MasaIndex>(MasaIndex.Chaitra);
 
   // Get the tint color from the theme
   const tintColor = useGetColor(AppColor.tint);
@@ -208,11 +267,6 @@ export function MasaOrbit() {
     () => centerY + Math.sin(moonAngleRad.value) * moonOrbitRadius
   );
 
-  // Calculate the instantaneous angle between sun and moon (0-360)
-  const moonSunAngleDegrees = useDerivedValue(() => {
-    return (moonAngleDeg.value - sunAngleDeg.value + 360) % 360;
-  });
-
   // Calculate the total relative angle traveled by moon compared to sun
   const totalRelativeAngle = useDerivedValue(() => {
     return totalMoonAngle.value - totalSunAngle.value;
@@ -280,22 +334,6 @@ export function MasaOrbit() {
     }
   );
 
-  // Update useAnimatedReaction for Amanta masa
-  useAnimatedReaction(
-    () => amantaMasaIndex.value,
-    (result) => {
-      runOnJS(setCurrentAmantaMasaIndex)(result);
-    }
-  );
-
-  // Add reaction for Purnimanta masa
-  useAnimatedReaction(
-    () => purnimantaMasaIndex.value,
-    (result) => {
-      runOnJS(setCurrentPurnimantaMasaIndex)(result);
-    }
-  );
-
   const tithiNameTextProps = useAnimatedProps(() => {
     return {
       text: `${TITHI_NAMES[tithiIndex.value]}`,
@@ -326,7 +364,10 @@ export function MasaOrbit() {
     let angleDiff = (moonAngleDeg.value - sunAngleDeg.value + 360) % 360;
 
     // Calculate the arc length based on the angle difference
-    const arcLength = Math.max(0, (angleDiff / 360) * circumference - SUN_RADIUS);
+    const arcLength = Math.max(
+      0,
+      (angleDiff / 360) * circumference - SUN_RADIUS
+    );
 
     // Calculate the dash offset based on sun position
     const dashOffset =
@@ -342,7 +383,7 @@ export function MasaOrbit() {
   useEffect(() => {
     time.value = withRepeat(
       withTiming(time.value + 3600, {
-        duration: 120000, // 120 seconds (2 minutes) for one cycle (decreased from 300000)
+        duration: 180000, // 3 minutes for one cycle
         easing: Easing.linear,
       }),
       -1,
@@ -358,15 +399,12 @@ export function MasaOrbit() {
     <View style={styles.container}>
       <View style={styles.svgContainer}>
         <Svg height={size} width={size}>
-          {/* Geocentric orbits (Sun and Moon around Earth) */}
-          <Circle
-            cx={centerX}
-            cy={centerY}
-            r={size * 0.4}
-            stroke={tintColor}
-            strokeWidth="1"
-            strokeDasharray="5,5"
-            fill="transparent"
+          {/* Static elements */}
+          <StaticOrbitElements
+            centerX={centerX}
+            centerY={centerY}
+            size={size}
+            tintColor={tintColor}
           />
 
           {/* Arc between Sun and Moon */}
@@ -389,25 +427,14 @@ export function MasaOrbit() {
             fill="orange"
           />
           <Circle cx={earthX} cy={earthY} r={10} fill="deepskyblue" />
-          {/* Degree markings */}
-          {[...Array(12)].map((_, i) => {
-            const markerAngle = i * 30 * (Math.PI / 180);
-            const markerX = centerX + Math.cos(markerAngle) * (size * 0.47);
-            const markerY = centerY + Math.sin(markerAngle) * (size * 0.47);
-            return (
-              <SvgText
-                key={i}
-                x={markerX}
-                y={markerY}
-                fontSize="10"
-                fill={useGetColor(AppColor.tint)}
-                textAnchor="middle"
-                fontFamily="monospace"
-              >
-                {`${i * 30}°`}
-              </SvgText>
-            );
-          })}
+          
+          {/* Static degree markings layer */}
+          <DegreeMarkings
+            centerX={centerX}
+            centerY={centerY}
+            size={size}
+            tintColor={tintColor}
+          />
         </Svg>
       </View>
       <View style={styles.anglesContainer}>

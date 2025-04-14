@@ -58,6 +58,77 @@ const styles = StyleSheet.create({
   },
 });
 
+// Memoized static orbit elements
+const StaticOrbitElements = React.memo(
+  ({
+    centerX,
+    centerY,
+    size,
+    tintColor,
+  }: {
+    centerX: number;
+    centerY: number;
+    size: number;
+    tintColor: string;
+  }) => {
+    return (
+      <>
+        {/* Geocentric orbits (Sun and Moon around Earth) */}
+        <Circle
+          cx={centerX}
+          cy={centerY}
+          r={size * 0.4}
+          stroke={tintColor}
+          strokeWidth="1"
+          strokeDasharray="5,5"
+          fill="transparent"
+        />
+        {/* Earth at center */}
+        <Circle cx={centerX} cy={centerY} r={10} fill="deepskyblue" />
+      </>
+    );
+  }
+);
+
+// Memoized degree markings component
+const DegreeMarkings = React.memo(
+  ({
+    centerX,
+    centerY,
+    size,
+    tintColor,
+  }: {
+    centerX: number;
+    centerY: number;
+    size: number;
+    tintColor: string;
+  }) => {
+    return (
+      <>
+        {[...Array(12)].map((_, i) => {
+          const markerAngle = i * 30 * (Math.PI / 180);
+          const markerX = centerX + Math.cos(markerAngle) * (size * 0.47);
+          const markerY = centerY + Math.sin(markerAngle) * (size * 0.47);
+          return (
+            <SvgText
+              key={i}
+              x={markerX}
+              y={markerY}
+              fontSize="10"
+              fill={tintColor}
+              textAnchor="middle"
+              fontFamily="monospace"
+              pointerEvents="none"
+            >
+              {`${i * 30}°`}
+            </SvgText>
+          );
+        })}
+      </>
+    );
+  }
+);
+
 export function TithiOrbit() {
   const { width } = Dimensions.get("window");
   const size = width * 0.9;
@@ -203,15 +274,12 @@ export function TithiOrbit() {
     <View style={styles.container}>
       <View style={styles.svgContainer}>
         <Svg height={size} width={size}>
-          {/* Geocentric orbits (Sun and Moon around Earth) */}
-          <Circle
-            cx={centerX}
-            cy={centerY}
-            r={size * 0.4}
-            stroke={tintColor}
-            strokeWidth="1"
-            strokeDasharray="5,5"
-            fill="transparent"
+          {/* Static elements */}
+          <StaticOrbitElements
+            centerX={centerX}
+            centerY={centerY}
+            size={size}
+            tintColor={tintColor}
           />
 
           {/* Arc between Sun and Moon */}
@@ -233,26 +301,14 @@ export function TithiOrbit() {
             r={SUN_RADIUS}
             fill="orange"
           />
-          <Circle cx={earthX} cy={earthY} r={10} fill="deepskyblue" />
-          {/* Degree markings */}
-          {[...Array(12)].map((_, i) => {
-            const markerAngle = i * 30 * (Math.PI / 180);
-            const markerX = centerX + Math.cos(markerAngle) * (size * 0.47);
-            const markerY = centerY + Math.sin(markerAngle) * (size * 0.47);
-            return (
-              <SvgText
-                key={i}
-                x={markerX}
-                y={markerY}
-                fontSize="10"
-                fill={useGetColor(AppColor.tint)}
-                textAnchor="middle"
-                fontFamily="monospace"
-              >
-                {`${i * 30}°`}
-              </SvgText>
-            );
-          })}
+
+          {/* Static degree markings layer */}
+          <DegreeMarkings
+            centerX={centerX}
+            centerY={centerY}
+            size={size}
+            tintColor={tintColor}
+          />
         </Svg>
       </View>
       <View style={styles.anglesContainer}>
