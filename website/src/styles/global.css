@@ -1,0 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap');
+
+@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@theme {
+    --font-serif: 'Instrument Serif', serif;
+}
+
+body {
+  font-family: var(--font-sans);
+  height: 100vh;
+  overflow: scroll
+}
