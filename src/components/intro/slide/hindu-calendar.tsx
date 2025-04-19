@@ -1,6 +1,6 @@
 import { AnimatedSentence } from "@/components/util/animated-sentence";
 import {
-  introSlideStyles,
+  introSlideStylesFactory,
   IntroSlideProps,
   WORD_DURATION,
   STAGGER,
@@ -10,7 +10,7 @@ import { View, Text, getFontSize } from "@/theme";
 import { TouchableOpacity } from "react-native";
 import { DelayedFadeIn } from "@/components/util/delayed-fade-in";
 import { useState } from "react";
-
+import { useThemedStyles } from "@/theme/color";
 const HINDU_CALENDAR_TITLE = "Two Calendars, Two Systems";
 const HINDU_CALENDAR_FIRST_POINT =
   "It's not actually changing! Diwali and other festivals are based off the Hindu calendar which has a different astronomical basis than the Gregorian calendar.";
@@ -22,6 +22,7 @@ const HINDU_CALENDAR_THIRD_POINT =
 export function IntroHinduCalendarSlide({ onNext }: IntroSlideProps) {
   const [skipAnimationIndex, setSkipAnimationIndex] = useState(-1);
   const [currentAnimationIndex, setCurrentAnimationIndex] = useState(0);
+  const introSlideStyles = useThemedStyles(introSlideStylesFactory);
 
   const handleTap = () => {
     setSkipAnimationIndex((prev) => Math.max(prev + 1, currentAnimationIndex));
