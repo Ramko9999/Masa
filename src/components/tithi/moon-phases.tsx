@@ -1,9 +1,15 @@
 import React, { forwardRef, useState } from "react";
 import Svg, { Circle, Path } from "react-native-svg";
-import { StyleProp, View, ViewStyle, StyleSheet } from "react-native";
+import {
+  StyleProp,
+  View,
+  ViewStyle,
+  StyleSheet,
+  ColorSchemeName,
+  useColorScheme,
+} from "react-native";
 import { TithiIndex, TITHI_NAMES } from "@/api/panchanga/core/tithi";
-import { AppColor } from "@/theme/color";
-import { useGetColor } from "@/theme/color";
+import { AppColor, useGetColor, useThemedStyles } from "@/theme/color";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import Animated, {
   useSharedValue,
@@ -26,7 +32,9 @@ interface MoonSliderProps {
   onProgressChange?: (progress: number) => void;
 }
 
-const moonSliderStyles = StyleSheet.create({
+const moonSliderStylesFactory = (
+  theme: ColorSchemeName
+): StyleSheet.NamedStyles<any> => ({
   container: {
     flexDirection: "column",
     width: "100%",
@@ -38,12 +46,12 @@ const moonSliderStyles = StyleSheet.create({
   sliderTrack: {
     width: "100%",
     height: 5,
-    backgroundColor: useGetColor(AppColor.border),
+    backgroundColor: useGetColor(AppColor.border, theme),
     borderRadius: 5,
     justifyContent: "center",
   },
   sliderHandle: {
-    backgroundColor: useGetColor(AppColor.tint),
+    backgroundColor: useGetColor(AppColor.tint, theme),
     width: 15,
     height: 15,
     borderRadius: 10,
@@ -61,6 +69,9 @@ export const MoonSlider = ({ onProgressChange }: MoonSliderProps) => {
   const [currentTithiIndex, setCurrentTithiIndex] = useState<TithiIndex>(
     TithiIndex.ShuklaPratipada
   );
+
+  const theme = useColorScheme();
+  const moonSliderStyles = useThemedStyles(moonSliderStylesFactory);
 
   const offset = useSharedValue(0);
   const [trackWidth, setTrackWidth] = useState(100);
@@ -134,13 +145,15 @@ export const Moon = forwardRef<
 >(({ width = 96, height = 96, style, tithiIndex, ...props }, ref) => {
   const TithiComponent = TITHI_MAP[tithiIndex];
 
+  const theme = useColorScheme();
+
   return (
     <Svg
       ref={ref}
       width={width}
       height={height}
       viewBox="0 0 200 200"
-      fill={useGetColor(AppColor.tint)}
+      fill={useGetColor(AppColor.tint, theme)}
       style={style}
       {...props}
     >
@@ -149,233 +162,320 @@ export const Moon = forwardRef<
   );
 });
 
-export const ShuklaPratipada = () => (
-  <Path
-    d="M100,20 a80,80 0 0,1 0,160 a79.56,80 0 0,0 0,-160"
-    fill={useGetColor(AppColor.tint)}
-    strokeLinecap="round"
-  />
-);
+export const ShuklaPratipada = () => {
+  const theme = useColorScheme();
+  return (
+    <Path
+      d="M100,20 a80,80 0 0,1 0,160 a79.56,80 0 0,0 0,-160"
+      fill={useGetColor(AppColor.tint, theme)}
+      strokeLinecap="round"
+    />
+  );
+};
 
-export const ShuklaDwitiya = () => (
-  <Path
-    d="M100,20 a80,80 0 0,1 0,160 a76.08,80 0 0,0 0,-160"
-    fill={useGetColor(AppColor.tint)}
-    strokeLinecap="round"
-  />
-);
+export const ShuklaDwitiya = () => {
+  const theme = useColorScheme();
+  return (
+    <Path
+      d="M100,20 a80,80 0 0,1 0,160 a76.08,80 0 0,0 0,-160"
+      fill={useGetColor(AppColor.tint, theme)}
+      strokeLinecap="round"
+    />
+  );
+};
 
-export const ShuklaTritiya = () => (
-  <Path
-    d="M100,20 a80,80 0 0,1 0,160 a73.08,80 0 0,0 0,-160"
-    fill={useGetColor(AppColor.tint)}
-    strokeLinecap="round"
-  />
-);
+export const ShuklaTritiya = () => {
+  const theme = useColorScheme();
+  return (
+    <Path
+      d="M100,20 a80,80 0 0,1 0,160 a73.08,80 0 0,0 0,-160"
+      fill={useGetColor(AppColor.tint, theme)}
+      strokeLinecap="round"
+    />
+  );
+};
 
-export const ShuklaChaturthi = () => (
-  <Path
-    d="M100,20 a80,80 0 0,1 0,160 a69.28,80 0 0,0 0,-160"
-    fill={useGetColor(AppColor.tint)}
-    strokeLinecap="round"
-  />
-);
+export const ShuklaChaturthi = () => {
+  const theme = useColorScheme();
+  return (
+    <Path
+      d="M100,20 a80,80 0 0,1 0,160 a69.28,80 0 0,0 0,-160"
+      fill={useGetColor(AppColor.tint, theme)}
+      strokeLinecap="round"
+    />
+  );
+};
 
-export const ShuklaPanchami = () => (
-  <Path
-    d="M100,20 a80,80 0 0,1 0,160 a59.45,80 0 0,0 0,-160"
-    fill={useGetColor(AppColor.tint)}
-    strokeLinecap="round"
-  />
-);
+export const ShuklaPanchami = () => {
+  const theme = useColorScheme();
+  return (
+    <Path
+      d="M100,20 a80,80 0 0,1 0,160 a59.45,80 0 0,0 0,-160"
+      fill={useGetColor(AppColor.tint, theme)}
+      strokeLinecap="round"
+    />
+  );
+};
 
-export const ShuklaShashti = () => (
-  <Path
-    d="M100,20 a80,80 0 0,1 0,160 a47.02,80 0 0,0 0,-160"
-    fill={useGetColor(AppColor.tint)}
-    strokeLinecap="round"
-  />
-);
+export const ShuklaShashti = () => {
+  const theme = useColorScheme();
+  return (
+    <Path
+      d="M100,20 a80,80 0 0,1 0,160 a47.02,80 0 0,0 0,-160"
+      fill={useGetColor(AppColor.tint, theme)}
+      strokeLinecap="round"
+    />
+  );
+};
 
-export const ShuklaSaptami = () => (
-  <Path
-    d="M100,20 a80,80 0 0,1 0,160 a32.54,80 0 0,0 0,-160"
-    fill={useGetColor(AppColor.tint)}
-    strokeLinecap="round"
-  />
-);
+export const ShuklaSaptami = () => {
+  const theme = useColorScheme();
+  return (
+    <Path
+      d="M100,20 a80,80 0 0,1 0,160 a32.54,80 0 0,0 0,-160"
+      fill={useGetColor(AppColor.tint, theme)}
+      strokeLinecap="round"
+    />
+  );
+};
 
-export const ShuklaAshtami = () => (
-  <Path
-    d="M100,20 a80,80 0 0,1 0,160 a16.63,80 0 0,0 0,-160"
-    fill={useGetColor(AppColor.tint)}
-    strokeLinecap="round"
-  />
-);
+export const ShuklaAshtami = () => {
+  const theme = useColorScheme();
+  return (
+    <Path
+      d="M100,20 a80,80 0 0,1 0,160 a16.63,80 0 0,0 0,-160"
+      fill={useGetColor(AppColor.tint, theme)}
+      strokeLinecap="round"
+    />
+  );
+};
 
-export const ShuklaNavami = () => (
-  <Path
-    d="M100,20 a80,80 0 0,1 0,160 a0,80 0 0,1 0,-160"
-    fill={useGetColor(AppColor.tint)}
-    strokeLinecap="round"
-  />
-);
+export const ShuklaNavami = () => {
+  const theme = useColorScheme();
+  return (
+    <Path
+      d="M100,20 a80,80 0 0,1 0,160 a0,80 0 0,1 0,-160"
+      fill={useGetColor(AppColor.tint, theme)}
+      strokeLinecap="round"
+    />
+  );
+};
 
-export const ShuklaDashami = () => (
-  <Path
-    d="M100,20 a80,80 0 0,1 0,160 a16.63,80 0 0,1 0,-160"
-    fill={useGetColor(AppColor.tint)}
-    strokeLinecap="round"
-  />
-);
+export const ShuklaDashami = () => {
+  const theme = useColorScheme();
+  return (
+    <Path
+      d="M100,20 a80,80 0 0,1 0,160 a16.63,80 0 0,1 0,-160"
+      fill={useGetColor(AppColor.tint, theme)}
+      strokeLinecap="round"
+    />
+  );
+};
 
-export const ShuklaEkadashi = () => (
-  <Path
-    d="M100,20 a80,80 0 0,1 0,160 a32.54,80 0 0,1 0,-160"
-    fill={useGetColor(AppColor.tint)}
-    strokeLinecap="round"
-  />
-);
+export const ShuklaEkadashi = () => {
+  const theme = useColorScheme();
+  return (
+    <Path
+      d="M100,20 a80,80 0 0,1 0,160 a32.54,80 0 0,1 0,-160"
+      fill={useGetColor(AppColor.tint, theme)}
+      strokeLinecap="round"
+    />
+  );
+};
 
-export const ShuklaDwadashi = () => (
-  <Path
-    d="M100,20 a80,80 0 0,1 0,160 a47.02,80 0 0,1 0,-160"
-    fill={useGetColor(AppColor.tint)}
-    strokeLinecap="round"
-  />
-);
+export const ShuklaDwadashi = () => {
+  const theme = useColorScheme();
+  return (
+    <Path
+      d="M100,20 a80,80 0 0,1 0,160 a47.02,80 0 0,1 0,-160"
+      fill={useGetColor(AppColor.tint, theme)}
+      strokeLinecap="round"
+    />
+  );
+};
 
-export const ShuklaTrayodashi = () => (
-  <Path
-    d="M100,20 a80,80 0 0,1 0,160 a59.45,80 0 0,1 0,-160"
-    fill={useGetColor(AppColor.tint)}
-    strokeLinecap="round"
-  />
-);
+export const ShuklaTrayodashi = () => {
+  const theme = useColorScheme();
+  return (
+    <Path
+      d="M100,20 a80,80 0 0,1 0,160 a59.45,80 0 0,1 0,-160"
+      fill={useGetColor(AppColor.tint, theme)}
+      strokeLinecap="round"
+    />
+  );
+};
 
-export const ShuklaChaturdashi = () => (
-  <Path
-    d="M100,20 a80,80 0 0,1 0,160 a69.28,80 0 0,1 0,-160"
-    fill={useGetColor(AppColor.tint)}
-    strokeLinecap="round"
-  />
-);
+export const ShuklaChaturdashi = () => {
+  const theme = useColorScheme();
+  return (
+    <Path
+      d="M100,20 a80,80 0 0,1 0,160 a69.28,80 0 0,1 0,-160"
+      fill={useGetColor(AppColor.tint, theme)}
+      strokeLinecap="round"
+    />
+  );
+};
 
-export const Purnima = () => (
-  <Circle cx="100" cy="100" r="80" fill={useGetColor(AppColor.tint)} />
-);
+export const Purnima = () => {
+  const theme = useColorScheme();
+  return (
+    <Circle cx="100" cy="100" r="80" fill={useGetColor(AppColor.tint, theme)} />
+  );
+};
 
-export const KrishnaPratipada = () => (
-  <Path
-    d="M100,20 a80,80 0 1,0 0,160 a76.08,80 0 0,0 0,-160"
-    fill={useGetColor(AppColor.tint)}
-    strokeLinecap="round"
-  />
-);
+export const KrishnaPratipada = () => {
+  const theme = useColorScheme();
+  return (
+    <Path
+      d="M100,20 a80,80 0 1,0 0,160 a76.08,80 0 0,0 0,-160"
+      fill={useGetColor(AppColor.tint, theme)}
+      strokeLinecap="round"
+    />
+  );
+};
 
-export const KrishnaDwitiya = () => (
-  <Path
-    d="M100,20 a80,80 0 1,0 0,160 a69.28,80 0 0,0 0,-160"
-    fill={useGetColor(AppColor.tint)}
-    strokeLinecap="round"
-  />
-);
+export const KrishnaDwitiya = () => {
+  const theme = useColorScheme();
+  return (
+    <Path
+      d="M100,20 a80,80 0 1,0 0,160 a69.28,80 0 0,0 0,-160"
+      fill={useGetColor(AppColor.tint, theme)}
+      strokeLinecap="round"
+    />
+  );
+};
 
-export const KrishnaTritiya = () => (
-  <Path
-    d="M100,20 a80,80 0 1,0 0,160 a59.45,80 0 0,0 0,-160"
-    fill={useGetColor(AppColor.tint)}
-    strokeLinecap="round"
-  />
-);
+export const KrishnaTritiya = () => {
+  const theme = useColorScheme();
+  return (
+    <Path
+      d="M100,20 a80,80 0 1,0 0,160 a59.45,80 0 0,0 0,-160"
+      fill={useGetColor(AppColor.tint, theme)}
+      strokeLinecap="round"
+    />
+  );
+};
 
-export const KrishnaChaturthi = () => (
-  <Path
-    d="M100,20 a80,80 0 1,0 0,160 a47.02,80 0 0,0 0,-160"
-    fill={useGetColor(AppColor.tint)}
-    strokeLinecap="round"
-  />
-);
+export const KrishnaChaturthi = () => {
+  const theme = useColorScheme();
+  return (
+    <Path
+      d="M100,20 a80,80 0 1,0 0,160 a47.02,80 0 0,0 0,-160"
+      fill={useGetColor(AppColor.tint, theme)}
+      strokeLinecap="round"
+    />
+  );
+};
 
-export const KrishnaPanchami = () => (
-  <Path
-    d="M100,20 a80,80 0 1,0 0,160 a32.54,80 0 0,0 0,-160"
-    fill={useGetColor(AppColor.tint)}
-    strokeLinecap="round"
-  />
-);
+export const KrishnaPanchami = () => {
+  const theme = useColorScheme();
+  return (
+    <Path
+      d="M100,20 a80,80 0 1,0 0,160 a32.54,80 0 0,0 0,-160"
+      fill={useGetColor(AppColor.tint, theme)}
+      strokeLinecap="round"
+    />
+  );
+};
 
-export const KrishnaShashti = () => (
-  <Path
-    d="M100,20 a80,80 0 1,0 0,160 a16.63,80 0 0,0 0,-160"
-    fill={useGetColor(AppColor.tint)}
-    strokeLinecap="round"
-  />
-);
+export const KrishnaShashti = () => {
+  const theme = useColorScheme();
+  return (
+    <Path
+      d="M100,20 a80,80 0 1,0 0,160 a16.63,80 0 0,0 0,-160"
+      fill={useGetColor(AppColor.tint, theme)}
+      strokeLinecap="round"
+    />
+  );
+};
 
-export const KrishnaSaptami = () => (
-  <Path
-    d="M100,20 a80,80 0 0,0 0,160 a0,80 0 0,1 0,-160"
-    fill={useGetColor(AppColor.tint)}
-    strokeLinecap="round"
-  />
-);
+export const KrishnaSaptami = () => {
+  const theme = useColorScheme();
+  return (
+    <Path
+      d="M100,20 a80,80 0 0,0 0,160 a0,80 0 0,1 0,-160"
+      fill={useGetColor(AppColor.tint, theme)}
+      strokeLinecap="round"
+    />
+  );
+};
 
-export const KrishnaAshtami = () => (
-  <Path
-    d="M100,20 a80,80 0 0,0 0,160 a16.63,80 0 0,1 0,-160"
-    fill={useGetColor(AppColor.tint)}
-    strokeLinecap="round"
-  />
-);
+export const KrishnaAshtami = () => {
+  const theme = useColorScheme();
+  return (
+    <Path
+      d="M100,20 a80,80 0 0,0 0,160 a16.63,80 0 0,1 0,-160"
+      fill={useGetColor(AppColor.tint, theme)}
+      strokeLinecap="round"
+    />
+  );
+};
 
-export const KrishnaNavami = () => (
-  <Path
-    d="M100,20 a80,80 0 0,0 0,160 a32.54,80 0 0,1 0,-160"
-    fill={useGetColor(AppColor.tint)}
-    strokeLinecap="round"
-  />
-);
+export const KrishnaNavami = () => {
+  const theme = useColorScheme();
+  return (
+    <Path
+      d="M100,20 a80,80 0 0,0 0,160 a32.54,80 0 0,1 0,-160"
+      fill={useGetColor(AppColor.tint, theme)}
+      strokeLinecap="round"
+    />
+  );
+};
 
-export const KrishnaDashami = () => (
-  <Path
-    d="M100,20 a80,80 0 0,0 0,160 a47.02,80 0 0,1 0,-160"
-    fill={useGetColor(AppColor.tint)}
-    strokeLinecap="round"
-  />
-);
+export const KrishnaDashami = () => {
+  const theme = useColorScheme();
+  return (
+    <Path
+      d="M100,20 a80,80 0 0,0 0,160 a47.02,80 0 0,1 0,-160"
+      fill={useGetColor(AppColor.tint, theme)}
+      strokeLinecap="round"
+    />
+  );
+};
 
-export const KrishnaEkadashi = () => (
-  <Path
-    d="M100,20 a80,80 0 0,0 0,160 a59.45,80 0 0,1 0,-160"
-    fill={useGetColor(AppColor.tint)}
-    strokeLinecap="round"
-  />
-);
+export const KrishnaEkadashi = () => {
+  const theme = useColorScheme();
+  return (
+    <Path
+      d="M100,20 a80,80 0 0,0 0,160 a59.45,80 0 0,1 0,-160"
+      fill={useGetColor(AppColor.tint, theme)}
+      strokeLinecap="round"
+    />
+  );
+};
 
-export const KrishnaDwadashi = () => (
-  <Path
-    d="M100,20 a80,80 0 0,0 0,160 a69.28,80 0 0,1 0,-160"
-    fill={useGetColor(AppColor.tint)}
-    strokeLinecap="round"
-  />
-);
+export const KrishnaDwadashi = () => {
+  const theme = useColorScheme();
+  return (
+    <Path
+      d="M100,20 a80,80 0 0,0 0,160 a69.28,80 0 0,1 0,-160"
+      fill={useGetColor(AppColor.tint, theme)}
+      strokeLinecap="round"
+    />
+  );
+};
 
-export const KrishnaTrayodashi = () => (
-  <Path
-    d="M100,20 a80,80 0 0,0 0,160 a76.08,80 0 0,1 0,-160"
-    fill={useGetColor(AppColor.tint)}
-    strokeLinecap="round"
-  />
-);
+export const KrishnaTrayodashi = () => {
+  const theme = useColorScheme();
+  return (
+    <Path
+      d="M100,20 a80,80 0 0,0 0,160 a76.08,80 0 0,1 0,-160"
+      fill={useGetColor(AppColor.tint, theme)}
+      strokeLinecap="round"
+    />
+  );
+};
 
-export const KrishnaChaturdashi = () => (
-  <Path
-    d="M100,20 a80,80 0 0,0 0,160 a79.56,80 0 0,1 0,-160"
-    fill={useGetColor(AppColor.tint)}
-    strokeLinecap="round"
-  />
-);
+export const KrishnaChaturdashi = () => {
+  const theme = useColorScheme();
+  return (
+    <Path
+      d="M100,20 a80,80 0 0,0 0,160 a79.56,80 0 0,1 0,-160"
+      fill={useGetColor(AppColor.tint, theme)}
+      strokeLinecap="round"
+    />
+  );
+};
 
 export const Amavasya = () => (
   <Circle cx="100" cy="100" r="80" fill="transparent" />

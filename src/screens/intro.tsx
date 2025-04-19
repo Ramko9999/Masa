@@ -7,9 +7,10 @@ import {
   useWindowDimensions,
   TouchableOpacity,
   Platform,
+  ColorSchemeName,
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { AppColor, useGetColor } from "@/theme/color";
+import { AppColor, useGetColor, useThemedStyles } from "@/theme/color";
 import { StyleUtils } from "@/theme/style-utils";
 import Animated, { LinearTransition } from "react-native-reanimated";
 import { useState } from "react";
@@ -21,7 +22,9 @@ import { IntroRegionalVariantsSlide } from "@/components/intro/slide/regional-va
 import { LocationApi } from "@/api/location";
 import { useLocation } from "@/context/location";
 
-const introHeaderStyles = StyleSheet.create({
+const introHeaderStylesFactory = (
+  theme: ColorSchemeName
+): StyleSheet.NamedStyles<any> => ({
   container: {
     paddingHorizontal: "5%",
     ...StyleUtils.flexRow(),
@@ -42,6 +45,7 @@ type IntroHeaderProps = {
 function IntroHeader({ onSkip, currentIndex, totalSlides }: IntroHeaderProps) {
   const insets = useSafeAreaInsets();
   const { height } = useWindowDimensions();
+  const introHeaderStyles = useThemedStyles(introHeaderStylesFactory);
   return (
     <View
       style={[
@@ -59,7 +63,9 @@ function IntroHeader({ onSkip, currentIndex, totalSlides }: IntroHeaderProps) {
   );
 }
 
-const introPaginationStyles = StyleSheet.create({
+const introPaginationStylesFactory = (
+  theme: ColorSchemeName
+): StyleSheet.NamedStyles<any> => ({
   container: {
     ...StyleUtils.flexRow(8),
     justifyContent: "center",
@@ -70,14 +76,14 @@ const introPaginationStyles = StyleSheet.create({
     width: 8,
     height: 4,
     borderRadius: 2,
-    backgroundColor: useGetColor(AppColor.primary),
+    backgroundColor: useGetColor(AppColor.primary, theme),
     opacity: 0.3,
   },
   activeDot: {
     width: 24,
     height: 4,
     borderRadius: 2,
-    backgroundColor: useGetColor(AppColor.primary),
+    backgroundColor: useGetColor(AppColor.primary, theme),
     opacity: 1,
   },
 });
@@ -88,6 +94,7 @@ type IntroPaginationProps = {
 };
 
 function IntroPagination({ length, currentIndex }: IntroPaginationProps) {
+  const introPaginationStyles = useThemedStyles(introPaginationStylesFactory);
   return (
     <View style={introPaginationStyles.container}>
       {Array.from({ length }, (_, index) => (
@@ -105,10 +112,12 @@ function IntroPagination({ length, currentIndex }: IntroPaginationProps) {
   );
 }
 
-const introStyles = StyleSheet.create({
+const introStylesFactory = (
+  theme: ColorSchemeName
+): StyleSheet.NamedStyles<any> => ({
   container: {
     height: "100%",
-    backgroundColor: useGetColor(AppColor.background),
+    backgroundColor: useGetColor(AppColor.background, theme),
   },
 });
 
@@ -117,6 +126,7 @@ type IntroProps = StackScreenProps<RootStackParamList, "intro">;
 export function Intro({ navigation }: IntroProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const { setLocation } = useLocation();
+  const introStyles = useThemedStyles(introStylesFactory);
 
   const handleOnboardingComplete = async () => {
     await UserApi.markOnboardingComplete();

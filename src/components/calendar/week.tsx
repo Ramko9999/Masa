@@ -1,9 +1,10 @@
-import { useGetColor } from "@/theme/color";
+import { useGetColor, useThemedStyles } from "@/theme/color";
 import { StyleUtils } from "@/theme/style-utils";
 import {
   useWindowDimensions,
   StyleSheet,
   TouchableOpacity,
+  ColorSchemeName,
 } from "react-native";
 import { AppColor } from "@/theme/color";
 import { View, Text } from "@/theme";
@@ -21,7 +22,9 @@ import PagerView from "react-native-pager-view";
 const WEEK_WIDTH = 0.94;
 const DAY_HEIGHT = 0.07;
 
-const dayStyles = StyleSheet.create({
+const dayStylesFactory = (
+  theme: ColorSchemeName
+): StyleSheet.NamedStyles<any> => ({
   container: {
     ...StyleUtils.flexColumn(),
     alignItems: "center",
@@ -37,20 +40,20 @@ const dayStyles = StyleSheet.create({
     padding: 8,
   },
   selectedOverlay: {
-    backgroundColor: useGetColor(AppColor.primary),
+    backgroundColor: useGetColor(AppColor.primary, theme),
   },
   todayOverlay: {
-    backgroundColor: useGetColor(AppColor.tint),
+    backgroundColor: useGetColor(AppColor.tint, theme),
   },
   text: {
-    color: useGetColor(AppColor.tint),
+    color: useGetColor(AppColor.tint, theme),
   },
   selectedText: {
-    color: useGetColor(AppColor.background),
+    color: useGetColor(AppColor.background, theme),
     fontWeight: "bold",
   },
   todayText: {
-    color: useGetColor(AppColor.background),
+    color: useGetColor(AppColor.background, theme),
     fontWeight: "bold",
   },
 });
@@ -63,6 +66,7 @@ type DayProps = {
 };
 
 function Day({ day, isSelected, isToday, onClick }: DayProps) {
+  const dayStyles = useThemedStyles(dayStylesFactory);
   const { height } = useWindowDimensions();
   return (
     <TouchableOpacity
@@ -104,7 +108,9 @@ function Day({ day, isSelected, isToday, onClick }: DayProps) {
   );
 }
 
-const weekStyles = StyleSheet.create({
+const weekStylesFactory = (
+  theme: ColorSchemeName
+): StyleSheet.NamedStyles<any> => ({
   container: {
     ...StyleUtils.flexRow(),
   },
@@ -119,6 +125,7 @@ interface WeekProps {
 const Week = memo(
   function Week({ week, selectedDate, onClick }: WeekProps) {
     const { width } = useWindowDimensions();
+    const weekStyles = useThemedStyles(weekStylesFactory);
     return (
       <View style={[weekStyles.container, { width: width * WEEK_WIDTH }]}>
         {week.map((dayDate, index) => (
@@ -144,7 +151,9 @@ const Week = memo(
   }
 );
 
-const calendarTitleStyles = StyleSheet.create({
+const calendarTitleStylesFactory = (
+  theme: ColorSchemeName
+): StyleSheet.NamedStyles<any> => ({
   container: {
     ...StyleUtils.flexRow(),
     justifyContent: "space-between",
@@ -163,6 +172,7 @@ type CalendarTitleProps = {
 
 function CalendarTitle({ day }: CalendarTitleProps) {
   const { openMonthCalendar } = useCalendar();
+  const calendarTitleStyles = useThemedStyles(calendarTitleStylesFactory);
   return (
     <View style={calendarTitleStyles.container}>
       <Text huge bold>
@@ -202,7 +212,9 @@ function findIndexThatContainsDate(data: number[][], date: number) {
   return data.findIndex((week) => week.includes(date));
 }
 
-const weekCalendarStyles = StyleSheet.create({
+const weekCalendarStylesFactory = (
+  theme: ColorSchemeName
+): StyleSheet.NamedStyles<any> => ({
   container: {
     ...StyleUtils.flexColumn(5),
     paddingHorizontal: "3%",
@@ -250,7 +262,7 @@ export function WeekCalendar() {
     },
     [data, selection.date, setSelection]
   );
-
+  const weekCalendarStyles = useThemedStyles(weekCalendarStylesFactory);
   return (
     <View
       style={[weekCalendarStyles.container, { paddingTop: insets.top + 20 }]}

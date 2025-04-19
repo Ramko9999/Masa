@@ -1,4 +1,9 @@
-import { TouchableOpacity, StyleSheet } from "react-native";
+import {
+  TouchableOpacity,
+  StyleSheet,
+  ColorSchemeName,
+  useColorScheme,
+} from "react-native";
 import { computePanchanga } from "@/api/panchanga";
 import {
   getHumanReadableDate,
@@ -18,9 +23,11 @@ import { TithiInterval } from "@/api/panchanga/core/tithi";
 import { NakshatraInterval } from "@/api/panchanga/core/nakshatra";
 import { useNavigation } from "@react-navigation/native";
 import { ChevronRight } from "lucide-react-native";
-import { AppColor, useGetColor } from "@/theme/color";
+import { AppColor, useGetColor, useThemedStyles } from "@/theme/color";
 
-const panchangaStyles = StyleSheet.create({
+const panchangaStylesFactory = (
+  theme: ColorSchemeName
+): StyleSheet.NamedStyles<any> => ({
   container: {
     paddingHorizontal: "3%",
     paddingBottom: "35%",
@@ -85,6 +92,9 @@ export function Pachanga({
 }: PachangaProps) {
   const { location } = useLocation();
   const navigation = useNavigation();
+
+  const panchangaStyles = useThemedStyles(panchangaStylesFactory);
+  const theme = useColorScheme();
 
   const {
     tithi,
@@ -205,7 +215,10 @@ export function Pachanga({
                     <Text>{festival.caption}</Text>
                   </View>
                 </View>
-                <ChevronRight size={24} color={useGetColor(AppColor.tint)} />
+                <ChevronRight
+                  size={24}
+                  color={useGetColor(AppColor.tint, theme)}
+                />
               </View>
             </TouchableOpacity>
           ))}

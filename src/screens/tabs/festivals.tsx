@@ -1,7 +1,12 @@
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { View, Text } from "@/theme";
 import { Festival } from "@/api/panchanga/core/festival";
-import { StyleSheet, ScrollView, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+  ColorSchemeName,
+} from "react-native";
 import { StyleUtils } from "@/theme/style-utils";
 import { getFestivals } from "@/api/panchanga";
 import { getHumanReadableDateWithWeekday, truncateToDay } from "@/util/date";
@@ -10,14 +15,16 @@ import { StackScreenProps } from "@react-navigation/stack";
 import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
 import { CompositeScreenProps } from "@react-navigation/native";
 import { useLocation } from "@/context/location";
-import { useGetColor } from "@/theme/color";
+import { useGetColor, useThemedStyles } from "@/theme/color";
 import { AppColor } from "@/theme/color";
 
-const FestivalsStyles = StyleSheet.create({
+const festivalsStylesFactory = (
+  theme: ColorSchemeName
+): StyleSheet.NamedStyles<any> => ({
   container: {
     ...StyleUtils.flexColumn(),
     paddingHorizontal: "3%",
-    backgroundColor: useGetColor(AppColor.background),
+    backgroundColor: useGetColor(AppColor.background, theme),
     gap: 20,
   },
   festivalsList: {
@@ -27,6 +34,7 @@ const FestivalsStyles = StyleSheet.create({
   festivalHeader: {
     paddingBottom: "2%",
     borderBottomWidth: 1,
+    borderBottomColor: useGetColor(AppColor.border, theme),
   },
   festivalContent: {
     paddingTop: "2%",
@@ -44,21 +52,17 @@ type FestivalItemProps = {
 };
 
 function FestivalItem({ festival, onPress }: FestivalItemProps) {
+  const festivalsStyles = useThemedStyles(festivalsStylesFactory);
   return (
     <View>
-      <View
-        style={[
-          FestivalsStyles.festivalHeader,
-          { borderBottomColor: useGetColor(AppColor.border) },
-        ]}
-      >
+      <View style={festivalsStyles.festivalHeader}>
         <Text neutral tint semibold>
           {getHumanReadableDateWithWeekday(festival.date)}
         </Text>
       </View>
       <TouchableOpacity
         onPress={() => onPress(festival)}
-        style={FestivalsStyles.festivalContent}
+        style={festivalsStyles.festivalContent}
       >
         <Text large semibold>
           {festival.name}
@@ -72,7 +76,7 @@ export function Festivals({ navigation }: FestivalsProps) {
   const { location } = useLocation();
   const insets = useSafeAreaInsets();
   const festivals = getFestivals(truncateToDay(Date.now()), location!);
-
+  const festivalsStyles = useThemedStyles(festivalsStylesFactory);
   const onFestivalPress = (festival: Festival) => {
     navigation.navigate("festival_details", { festival });
   };
@@ -80,7 +84,7 @@ export function Festivals({ navigation }: FestivalsProps) {
   return (
     <View
       style={[
-        FestivalsStyles.container,
+        festivalsStyles.container,
         { paddingTop: insets.top + 20, paddingBottom: insets.bottom + 20 },
       ]}
     >
@@ -88,7 +92,7 @@ export function Festivals({ navigation }: FestivalsProps) {
         Festivals
       </Text>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={FestivalsStyles.festivalsList}>
+        <View style={festivalsStyles.festivalsList}>
           {festivals.map((festival, index) => (
             <FestivalItem
               key={`${festival.name}-${index}`}
