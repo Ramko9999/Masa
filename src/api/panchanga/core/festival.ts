@@ -142,7 +142,7 @@ const FESTIVAL_RULES: FestivalRule[] = [
     caption: "Welcoming the New Year",
     subtitle: "Also known as Gudi Padwa",
     description:
-      "Ugadi marks the beginning of the New Year. <i>Ugadi</i> means the \"beginning of a new age\", symbolizing renewal and the ushering in of prosperity and hope.",
+      'Ugadi marks the beginning of the New Year. <i>Ugadi</i> means the "beginning of a new age", symbolizing renewal and the ushering in of prosperity and hope.',
     celebration:
       "Listen to the calendar forecast for the year, <i>Panchanga Sravanam</i>. Perform <i>Abhyang Snan</i> by massaging your body with oil before taking a warm bath. Prepare <i>Ugadi Pachadi</i>, a dish combining Neem flowers, Jaggery, Tamarind, Salt and raw Mango.",
     rule: {
@@ -181,7 +181,7 @@ const FESTIVAL_RULES: FestivalRule[] = [
     name: FestivalName.AkshayaTritiya,
     caption: "A Day of Abundance and New Beginnings",
     description:
-      "<i>Akshaya</i> means \"that which never diminishes\". On this day, Lord Krishna blessed his friend Sudama with wealth for his unconditional friendship. The Pandavas also recieved the <i>Akshaya Patra</i>, a vessel which yields unlimited food, on this day. Take advantage of this spiritually potent day as any righteous and spiritual deeds performed yield timeless merit.",
+      '<i>Akshaya</i> means "that which never diminishes". On this day, Lord Krishna blessed his friend Sudama with wealth for his unconditional friendship. The Pandavas also recieved the <i>Akshaya Patra</i>, a vessel which yields unlimited food, on this day. Take advantage of this spiritually potent day as any righteous and spiritual deeds performed yield timeless merit.',
     celebration:
       "Perform acts of charity such as donating food, clothing or money or even volunteering. Worship your <i>Istha Devata</i>, your chosen deity. Perform any other spiritual practices as their effects multiply on this day.",
     rule: {

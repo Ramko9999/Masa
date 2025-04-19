@@ -41,3 +41,5 @@ app-example
 panchanga_daily/
 
 festival.md
+credentials.json
+*.keystore
