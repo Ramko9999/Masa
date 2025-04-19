@@ -1,9 +1,10 @@
 import { AnimatedSentence } from "@/components/util/animated-sentence";
-import { introSlideStyles, IntroSlideProps, WORD_DURATION, STAGGER, DELAY_PADDING } from "../common";
+import { introSlideStylesFactory, IntroSlideProps, WORD_DURATION, STAGGER, DELAY_PADDING } from "../common";
 import { View, Text, getFontSize } from "@/theme";
 import { TouchableOpacity } from "react-native";
 import { DelayedFadeIn } from "@/components/util/delayed-fade-in";
 import { useState } from "react";
+import { useThemedStyles } from "@/theme/color";
 
 const REGIONAL_VARIANTS_TITLE = "Calendar with Regional Differences";
 const REGIONAL_VARIANTS_FIRST_POINT = "Festival dates can vary based on region as different regions follow slightly different systems.";
@@ -13,7 +14,7 @@ const REGIONAL_VARIANTS_THIRD_POINT = "If you see something wrong or don't feel 
 export function IntroRegionalVariantsSlide({ onNext }: IntroSlideProps) {
     const [skipAnimationIndex, setSkipAnimationIndex] = useState(-1);
     const [currentAnimationIndex, setCurrentAnimationIndex] = useState(0);
-
+    const introSlideStyles = useThemedStyles(introSlideStylesFactory);
     const handleTap = () => {
         setSkipAnimationIndex(prev => Math.max(prev + 1, currentAnimationIndex));
     };

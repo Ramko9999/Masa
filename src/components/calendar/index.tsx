@@ -1,11 +1,13 @@
-import { StyleSheet, useWindowDimensions } from "react-native";
+import { ColorSchemeName, StyleSheet, useWindowDimensions } from "react-native";
 import React, { useState, useRef } from "react";
 import { truncateToDay } from "@/util/date";
 import { MonthCalendar } from "./month";
 import { CalendarContext, Selection } from "./context";
 import { BottomSheet, BottomSheetRef } from "../util/sheet";
-
-const calendarProviderStyles = StyleSheet.create({
+import { useThemedStyles } from "@/theme/color";
+const calendarProviderStylesFactory = (
+  theme: ColorSchemeName
+): StyleSheet.NamedStyles<any> => ({
   monthCalendarSheet: {
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
@@ -16,6 +18,7 @@ const calendarProviderStyles = StyleSheet.create({
 });
 
 export function CalendarProvider({ children }: { children: React.ReactNode }) {
+  const calendarProviderStyles = useThemedStyles(calendarProviderStylesFactory);
   const [selection, setSelection] = useState<Selection>({
     date: truncateToDay(Date.now()),
     lastEditedBy: "week",

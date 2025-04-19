@@ -1,7 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { View, StyleSheet, Dimensions, TextInput } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Dimensions,
+  TextInput,
+  ColorSchemeName,
+  useColorScheme,
+} from "react-native";
 import Svg, { Circle, Text as SvgText } from "react-native-svg";
-import { AppColor, useGetColor } from "@/theme/color";
+import { AppColor, useGetColor, useThemedStyles } from "@/theme/color";
 import Animated, {
   useSharedValue,
   useAnimatedProps,
@@ -23,7 +30,9 @@ const AnimatedTextInput = Animated.createAnimatedComponent(TextInput);
 
 const SUN_RADIUS = 15;
 
-const styles = StyleSheet.create({
+const stylesFactory = (
+  theme: ColorSchemeName
+): StyleSheet.NamedStyles<any> => ({
   container: {
     width: "100%",
     alignItems: "center",
@@ -46,11 +55,11 @@ const styles = StyleSheet.create({
   },
   angleText: {
     width: "50%",
-    color: useGetColor(AppColor.tint),
+    color: useGetColor(AppColor.tint, theme),
     fontSize: getFontSize({ small: true }),
   },
   tithiText: {
-    color: useGetColor(AppColor.tint),
+    color: useGetColor(AppColor.tint, theme),
     fontWeight: "bold",
     fontSize: getFontSize({ neutral: true }),
     textAlign: "center",
@@ -69,8 +78,11 @@ export function TithiOrbit() {
     TithiIndex.Amavasya
   );
 
+  const theme = useColorScheme();
+  const styles = useThemedStyles(stylesFactory);
+
   // Get the tint color from the theme
-  const tintColor = useGetColor(AppColor.tint);
+  const tintColor = useGetColor(AppColor.tint, theme);
 
   // Orbital motion
   const time = useSharedValue(0);
@@ -245,7 +257,7 @@ export function TithiOrbit() {
                 x={markerX}
                 y={markerY}
                 fontSize="10"
-                fill={useGetColor(AppColor.tint)}
+                fill={useGetColor(AppColor.tint, theme)}
                 textAnchor="middle"
                 fontFamily="monospace"
               >

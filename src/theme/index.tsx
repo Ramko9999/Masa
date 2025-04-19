@@ -4,6 +4,7 @@ import {
   View as DefaultView,
   Dimensions,
   PixelRatio,
+  useColorScheme,
 } from "react-native";
 import { AppColor, useGetColor } from "@/theme/color";
 
@@ -128,7 +129,8 @@ function getFontWeight({
 
 export function Text(props: TextProps) {
   const { style, ...otherProps } = props;
-  const color = useGetColor(getFontColor(props));
+  const theme = useColorScheme();
+  const color = useGetColor(getFontColor(props), theme);
   return (
     <DefaultText
       style={[

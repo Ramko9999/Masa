@@ -4,10 +4,11 @@ import {
   Image,
   StyleSheet,
   TouchableOpacity,
+  ColorSchemeName,
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { View, Text } from "@/theme";
-import { AppColor, useGetColor } from "@/theme/color";
+import { AppColor, useGetColor, useThemedStyles } from "@/theme/color";
 import { ChevronLeft } from "lucide-react-native";
 import { RootStackParamList } from "@/layout/types";
 import { StackScreenProps } from "@react-navigation/stack";
@@ -19,13 +20,15 @@ import { MASA_NAMES } from "@/api/panchanga/core/masa";
 import { StyleUtils } from "@/theme/style-utils";
 import { SystemBars } from "react-native-edge-to-edge";
 
-const festivalDetailsStyles = StyleSheet.create({
+const festivalDetailsStylesFactory = (
+  theme: ColorSchemeName
+): StyleSheet.NamedStyles<any> => ({
   festivalTitle: {
     ...StyleUtils.flexColumn(),
   },
   container: {
     flex: 1,
-    backgroundColor: useGetColor(AppColor.background),
+    backgroundColor: useGetColor(AppColor.background, theme),
   },
   backButton: {
     position: "absolute",
@@ -34,11 +37,6 @@ const festivalDetailsStyles = StyleSheet.create({
     borderRadius: "50%",
     padding: "3%",
     aspectRatio: 1,
-  },
-  headerImage: {
-    width: "100%",
-    height: "100%",
-    resizeMode: "cover",
   },
   festivalInfo: {
     ...StyleUtils.flexColumn(10),
@@ -85,7 +83,7 @@ function parseLine(content: string, key: number | string): React.ReactNode {
         if (part.startsWith("<i>") && part.endsWith("</i>")) {
           const italicText = part.slice(3, -4);
           return (
-            <Text key={index} neutral style={{ fontStyle: "italic"}}>
+            <Text key={index} neutral style={{ fontStyle: "italic" }}>
               {italicText}
             </Text>
           );
@@ -101,6 +99,7 @@ export function FestivalDetails({ navigation, route }: FestivalDetailsProps) {
   const insets = useSafeAreaInsets();
   const { width } = useWindowDimensions();
   const spacing = width * 0.03;
+  const festivalDetailsStyles = useThemedStyles(festivalDetailsStylesFactory);
 
   const formattedDate = new Date(festival.date).toLocaleDateString("en-US", {
     weekday: "long",
@@ -125,7 +124,11 @@ export function FestivalDetails({ navigation, route }: FestivalDetailsProps) {
         <ParallaxScrollView
           headerImage={
             <Image
-              style={festivalDetailsStyles.headerImage}
+              style={{
+                width: "100%",
+                height: "100%",
+                resizeMode: "cover",
+              }}
               source={FESTIVAL_IMAGES[festival.name as FestivalName]}
             />
           }
@@ -154,7 +157,9 @@ export function FestivalDetails({ navigation, route }: FestivalDetailsProps) {
                       <Text semibold neutral tint>
                         Tithi
                       </Text>
-                      <Text neutral>{TITHI_NAMES[festival.rule.tithiIndex]}</Text>
+                      <Text neutral>
+                        {TITHI_NAMES[festival.rule.tithiIndex]}
+                      </Text>
                     </View>
                     <View>
                       <Text semibold neutral tint>

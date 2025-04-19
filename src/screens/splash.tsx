@@ -1,8 +1,7 @@
 import * as Notifications from "expo-notifications";
-import { AppColor } from "@/theme/color";
-import { useGetColor } from "@/theme/color";
+import { AppColor, useThemedStyles, useGetColor } from "@/theme/color";
 import { View } from "../theme";
-import { Platform, StyleSheet } from "react-native";
+import { ColorSchemeName, Platform, StyleSheet } from "react-native";
 import { SplashLogo } from "@/theme/icon";
 import { useEffect, useState } from "react";
 import { StackScreenProps } from "@react-navigation/stack";
@@ -12,11 +11,13 @@ import { StyleUtils } from "@/theme/style-utils";
 import { useLocation } from "@/context/location";
 import { UserApi } from "@/api/user";
 
-const splashStyles = StyleSheet.create({
+const splashStylesFactory = (
+  theme: ColorSchemeName
+): StyleSheet.NamedStyles<any> => ({
   container: {
     flex: 1,
     ...StyleUtils.flexRowCenterAll(),
-    backgroundColor: useGetColor(AppColor.background),
+    backgroundColor: useGetColor(AppColor.background, theme),
   },
 });
 
@@ -29,6 +30,7 @@ type SplashState = {
 };
 
 export function Splash({ navigation }: SplashProps) {
+  const splashStyles = useThemedStyles(splashStylesFactory);
   const { setLocation } = useLocation();
   const [
     { hasLocationPermission, shouldAnimateLogo, hasSeenOnboarding },
@@ -43,7 +45,8 @@ export function Splash({ navigation }: SplashProps) {
     if (shouldAnimateLogo) {
       if (hasSeenOnboarding) {
         if (hasLocationPermission) {
-          const notificationSettings = await Notifications.getPermissionsAsync();
+          const notificationSettings =
+            await Notifications.getPermissionsAsync();
           if (
             notificationSettings.status === "undetermined" &&
             Platform.OS === "ios"

@@ -1,17 +1,18 @@
 import { AnimatedSentence } from "@/components/util/animated-sentence";
-import { introSlideStyles, IntroSlideProps, WORD_DURATION, STAGGER, DELAY_PADDING } from "../common";
+import { introSlideStylesFactory, IntroSlideProps, WORD_DURATION, STAGGER, DELAY_PADDING } from "../common";
 import { View, Text, getFontSize } from "@/theme";
 import { TouchableOpacity } from "react-native";
 import { DelayedFadeIn } from "@/components/util/delayed-fade-in";
 import { IntroOrbitsDiagram } from "@/components/intro/orbit";
 import { useState } from "react";
-
+import { useThemedStyles } from "@/theme/color";
 const GEOCENTRIC_TITLE = "The Hindu Calendar is Geocentric";
 const GEOCENTRIC_FIRST_POINT = "The Hindu calendar's elements are based off the positions of the celestial bodies from the perspective of Earth.";
 
 export function IntroGeocentricSlide({ onNext }: IntroSlideProps) {
     const [skipAnimationIndex, setSkipAnimationIndex] = useState(-1);
     const [currentAnimationIndex, setCurrentAnimationIndex] = useState(0);
+    const introSlideStyles = useThemedStyles(introSlideStylesFactory);
 
     const handleTap = () => {
         setSkipAnimationIndex(prev => Math.max(prev + 1, currentAnimationIndex));

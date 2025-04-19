@@ -1,7 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { View, StyleSheet, Dimensions, TextInput } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Dimensions,
+  TextInput,
+  ColorSchemeName,
+  useColorScheme,
+} from "react-native";
 import Svg, { Circle, Text as SvgText } from "react-native-svg";
-import { AppColor, useGetColor } from "@/theme/color";
+import { AppColor, useGetColor, useThemedStyles } from "@/theme/color";
 import Animated, {
   useSharedValue,
   useAnimatedProps,
@@ -24,7 +31,9 @@ const AnimatedTextInput = Animated.createAnimatedComponent(TextInput);
 
 const SUN_RADIUS = 15;
 
-const styles = StyleSheet.create({
+const stylesFactory = (
+  theme: ColorSchemeName
+): StyleSheet.NamedStyles<any> => ({
   container: {
     width: "100%",
     alignItems: "center",
@@ -47,18 +56,18 @@ const styles = StyleSheet.create({
   },
   angleText: {
     width: "50%",
-    color: useGetColor(AppColor.tint),
+    color: useGetColor(AppColor.tint, theme),
     fontSize: getFontSize({ small: true }),
   },
   tithiText: {
-    color: useGetColor(AppColor.tint),
+    color: useGetColor(AppColor.tint, theme),
     fontWeight: "bold",
     fontSize: getFontSize({ neutral: true }),
     textAlign: "center",
     width: "50%",
   },
   masaText: {
-    color: useGetColor(AppColor.tint),
+    color: useGetColor(AppColor.tint, theme),
     fontWeight: "bold",
     fontSize: getFontSize({ neutral: true }),
     textAlign: "center",
@@ -77,19 +86,19 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   masaValueText: {
-    color: useGetColor(AppColor.tint),
+    color: useGetColor(AppColor.tint, theme),
     fontWeight: "bold",
     fontSize: getFontSize({ neutral: true }),
     textAlign: "center",
   },
   masaLabelText: {
-    color: useGetColor(AppColor.tint),
+    color: useGetColor(AppColor.tint, theme),
     fontSize: getFontSize({ smaller: true }),
     textAlign: "center",
     marginTop: 2,
   },
   masaTypeText: {
-    color: useGetColor(AppColor.tint),
+    color: useGetColor(AppColor.tint, theme),
     fontWeight: "bold",
     fontSize: getFontSize({ small: true }),
     textAlign: "center",
@@ -98,6 +107,8 @@ const styles = StyleSheet.create({
 });
 
 export function MasaOrbit() {
+  const theme = useColorScheme();
+  const styles = useThemedStyles(stylesFactory);
   const { width } = Dimensions.get("window");
   const size = width * 0.9;
   const centerX = size / 2;
@@ -121,7 +132,7 @@ export function MasaOrbit() {
     useState<MasaIndex>(MasaIndex.Chaitra);
 
   // Get the tint color from the theme
-  const tintColor = useGetColor(AppColor.tint);
+  const tintColor = useGetColor(AppColor.tint, theme);
 
   // Orbital motion
   const time = useSharedValue(0);
@@ -326,7 +337,10 @@ export function MasaOrbit() {
     let angleDiff = (moonAngleDeg.value - sunAngleDeg.value + 360) % 360;
 
     // Calculate the arc length based on the angle difference
-    const arcLength = Math.max(0, (angleDiff / 360) * circumference - SUN_RADIUS);
+    const arcLength = Math.max(
+      0,
+      (angleDiff / 360) * circumference - SUN_RADIUS
+    );
 
     // Calculate the dash offset based on sun position
     const dashOffset =
@@ -400,7 +414,7 @@ export function MasaOrbit() {
                 x={markerX}
                 y={markerY}
                 fontSize="10"
-                fill={useGetColor(AppColor.tint)}
+                fill={useGetColor(AppColor.tint, theme)}
                 textAnchor="middle"
                 fontFamily="monospace"
               >

@@ -1,12 +1,19 @@
 import { useNavigation } from "@react-navigation/native";
 import { StyleUtils } from "@/theme/style-utils";
-import { StyleSheet, TouchableOpacity } from "react-native";
+import {
+  ColorSchemeName,
+  StyleSheet,
+  TouchableOpacity,
+  useColorScheme,
+} from "react-native";
 import { View, Text } from "@/theme";
-import { AppColor, useGetColor } from "@/theme/color";
+import { AppColor, useGetColor, useThemedStyles } from "@/theme/color";
 import { ChevronLeft } from "lucide-react-native";
 import { getFontSize } from "@/theme";
 
-const infoHeaderStyles = StyleSheet.create({
+const infoHeaderStylesFactory = (
+  theme: ColorSchemeName
+): StyleSheet.NamedStyles<any> => ({
   container: {
     paddingHorizontal: "1%",
     marginTop: "2%",
@@ -25,7 +32,8 @@ const infoHeaderStyles = StyleSheet.create({
 
 export function InfoHeader() {
   const navigation = useNavigation();
-
+  const infoHeaderStyles = useThemedStyles(infoHeaderStylesFactory);
+  const theme = useColorScheme();
   return (
     <View style={infoHeaderStyles.container}>
       <TouchableOpacity
@@ -34,7 +42,7 @@ export function InfoHeader() {
       >
         <ChevronLeft
           size={getFontSize({ neutral: true })}
-          color={useGetColor(AppColor.primary)}
+          color={useGetColor(AppColor.primary, theme)}
         />
         <Text neutral style={infoHeaderStyles.backText}>
           Back
