@@ -24,7 +24,7 @@ export type Vaara = {
 };
 
 export function compute(day: number): Vaara {
-  const dayIndex = (new Date(day).getDay() + 1) % 7;
+  const dayIndex = (new Date(day).getDay()) % 7;
   return {
     index: dayIndex,
     name: VAARA_NAMES[dayIndex],
