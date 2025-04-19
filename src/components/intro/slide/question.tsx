@@ -1,10 +1,10 @@
 import { AnimatedSentence } from "@/components/util/animated-sentence";
-import { introSlideStyles, IntroSlideProps, WORD_DURATION, STAGGER, DELAY_PADDING } from "../common";
+import { introSlideStylesFactory, IntroSlideProps, WORD_DURATION, STAGGER, DELAY_PADDING } from "../common";
 import { View, Text } from "@/theme";
 import { TouchableOpacity } from "react-native";
 import { DelayedFadeIn } from "@/components/util/delayed-fade-in";
 import { useState } from "react";
-
+import { useThemedStyles } from "@/theme/color";
 const INTRO_QUESTION_TITLE = "Have you ever wondered";
 const INTRO_QUESTION = "Why does Diwali start on a different day every year?";
 
@@ -12,6 +12,7 @@ const INTRO_QUESTION = "Why does Diwali start on a different day every year?";
 export function IntroQuestionSlide({ onNext }: IntroSlideProps) {
     const [skipAnimationIndex, setSkipAnimationIndex] = useState(-1);
     const [currentAnimationIndex, setCurrentAnimationIndex] = useState(0);
+    const introSlideStyles = useThemedStyles(introSlideStylesFactory);
 
     const handleTap = () => {
         setSkipAnimationIndex(prev => Math.max(prev + 1, currentAnimationIndex));
