@@ -10,8 +10,10 @@ import {
   ActivityIndicator,
   useWindowDimensions,
   Platform,
+  ColorSchemeName,
+  useColorScheme,
 } from "react-native";
-import { AppColor, useGetColor } from "@/theme/color";
+import { AppColor, useGetColor, useThemedStyles } from "@/theme/color";
 import { StyleUtils } from "@/theme/style-utils";
 import { Navigation } from "lucide-react-native";
 import * as ExpoLocation from "expo-location";
@@ -25,10 +27,12 @@ const LOCATION_TITLE = "Location Permission";
 const LOCATION_SUBTEXT =
   "We need your location to calculate the correct calendar elements and festival timings for your region.";
 
-const newLocationPermissionStyles = StyleSheet.create({
+const newLocationPermissionStylesFactory = (
+  theme: ColorSchemeName
+): StyleSheet.NamedStyles<any> => ({
   container: {
     height: "100%",
-    backgroundColor: useGetColor(AppColor.background),
+    backgroundColor: useGetColor(AppColor.background, theme),
   },
   content: {
     ...StyleUtils.flexColumn(30),
@@ -41,7 +45,7 @@ const newLocationPermissionStyles = StyleSheet.create({
     alignSelf: "center",
   },
   actionButton: {
-    backgroundColor: useGetColor(AppColor.primary),
+    backgroundColor: useGetColor(AppColor.primary, theme),
     paddingHorizontal: "4%",
     paddingVertical: "4%",
     borderRadius: 12,
@@ -60,6 +64,10 @@ export function LocationPermission({ navigation }: LocationPermissionProps) {
   const { setLocation } = useLocation();
   const insets = useSafeAreaInsets();
   const { height } = useWindowDimensions();
+  const newLocationPermissionStyles = useThemedStyles(
+    newLocationPermissionStylesFactory
+  );
+  const theme = useColorScheme();
 
   const openSettings = () => {
     Linking.openSettings();
@@ -123,8 +131,8 @@ export function LocationPermission({ navigation }: LocationPermissionProps) {
             onPress={handleLocationPermission}
           >
             <Navigation
-              stroke={useGetColor(AppColor.background)}
-              fill={useGetColor(AppColor.background)}
+              stroke={useGetColor(AppColor.background, theme)}
+              fill={useGetColor(AppColor.background, theme)}
               width={20}
               height={20}
             />
@@ -135,7 +143,7 @@ export function LocationPermission({ navigation }: LocationPermissionProps) {
           {isLoading && (
             <ActivityIndicator
               size="large"
-              color={useGetColor(AppColor.primary)}
+              color={useGetColor(AppColor.primary, theme)}
               style={{ marginTop: 16 }}
             />
           )}

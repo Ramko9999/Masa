@@ -1,14 +1,17 @@
 import React from "react";
-import { TouchableOpacity, StyleSheet } from "react-native";
+import { TouchableOpacity, StyleSheet, ColorSchemeName } from "react-native";
 import { View, Text } from "@/theme";
-import { AppColor, useGetColor } from "@/theme/color";
+import { AppColor, useGetColor, useThemedStyles } from "@/theme/color";
 import { StyleUtils } from "@/theme/style-utils";
-const styles = StyleSheet.create({
+
+const stylesFactory = (
+  theme: ColorSchemeName
+): StyleSheet.NamedStyles<any> => ({
   cardContainer: {
     ...StyleUtils.flexColumn(4),
     width: "100%",
     paddingVertical: "2%",
-    borderColor: useGetColor(AppColor.border),
+    borderColor: useGetColor(AppColor.border, theme),
     borderTopWidth: 1,
   },
   mainContainer: {
@@ -18,7 +21,7 @@ const styles = StyleSheet.create({
   titleContainer: {
     ...StyleUtils.flexRow(),
     justifyContent: "space-between",
-    alignItems: "center"
+    alignItems: "center",
   },
 });
 
@@ -37,6 +40,7 @@ export function Card({
   onClick,
   children,
 }: CardProps) {
+  const styles = useThemedStyles(stylesFactory);
   return (
     <TouchableOpacity onPress={onClick} disabled={!onClick}>
       <View style={styles.cardContainer}>

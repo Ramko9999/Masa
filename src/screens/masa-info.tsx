@@ -7,35 +7,39 @@ import {
   InfoVisual,
   InfoNote,
 } from "@/components/util/info-page";
-import { StyleSheet } from "react-native";
+import { ColorSchemeName, StyleSheet } from "react-native";
 import { Text, View } from "@/theme";
-import { AppColor, useGetColor } from "@/theme/color";
+import { AppColor, useGetColor, useThemedStyles } from "@/theme/color";
 import { MasaOrbit } from "@/components/masa/orbit";
 import { MASA_NAMES } from "@/api/panchanga/core/masa";
 
 const masaData = MASA_NAMES.map((name, index) => `${index + 1}. ${name}`);
 
+const tableStylesFactory = (
+  theme: ColorSchemeName
+): StyleSheet.NamedStyles<any> => ({
+  container: {
+    marginTop: 16,
+    marginBottom: 16,
+    borderWidth: 1,
+    borderColor: useGetColor(AppColor.border, theme),
+    borderRadius: 6,
+    overflow: "hidden",
+  },
+  row: {
+    paddingVertical: 10,
+    paddingHorizontal: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: useGetColor(AppColor.border, theme),
+  },
+  lastRow: {
+    paddingVertical: 10,
+    paddingHorizontal: 12,
+  },
+});
+
 export function MasaInfoPage() {
-  const tableStyles = StyleSheet.create({
-    container: {
-      marginTop: 16,
-      marginBottom: 16,
-      borderWidth: 1,
-      borderColor: useGetColor(AppColor.border),
-      borderRadius: 6,
-      overflow: "hidden",
-    },
-    row: {
-      paddingVertical: 10,
-      paddingHorizontal: 12,
-      borderBottomWidth: 1,
-      borderBottomColor: useGetColor(AppColor.border),
-    },
-    lastRow: {
-      paddingVertical: 10,
-      paddingHorizontal: 12,
-    },
-  });
+  const tableStyles = useThemedStyles(tableStylesFactory);
 
   return (
     <InfoPage title="Masa">

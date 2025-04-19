@@ -1,10 +1,6 @@
-import { useGetColor } from "@/theme/color";
+import { useGetColor, useThemedStyles } from "@/theme/color";
 import { StyleUtils } from "@/theme/style-utils";
-import {
-  useWindowDimensions,
-  StyleSheet,
-  TouchableOpacity,
-} from "react-native";
+import { ColorSchemeName, StyleSheet, TouchableOpacity } from "react-native";
 import { AppColor } from "@/theme/color";
 import { View, Text } from "@/theme";
 import { useCallback, useEffect, useState, memo, useRef } from "react";
@@ -18,7 +14,9 @@ import { useCalendar } from "@/components/calendar/context";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import PagerView from "react-native-pager-view";
 
-const dayStyles = StyleSheet.create({
+const dayStylesFactory = (
+  theme: ColorSchemeName
+): StyleSheet.NamedStyles<any> => ({
   container: {
     ...StyleUtils.flexColumn(),
     alignItems: "center",
@@ -34,20 +32,20 @@ const dayStyles = StyleSheet.create({
     padding: 8,
   },
   selectedOverlay: {
-    backgroundColor: useGetColor(AppColor.primary),
+    backgroundColor: useGetColor(AppColor.primary, theme),
   },
   todayOverlay: {
-    backgroundColor: useGetColor(AppColor.tint),
+    backgroundColor: useGetColor(AppColor.tint, theme),
   },
   text: {
-    color: useGetColor(AppColor.tint),
+    color: useGetColor(AppColor.tint, theme),
   },
   selectedText: {
-    color: useGetColor(AppColor.background),
+    color: useGetColor(AppColor.background, theme),
     fontWeight: "bold",
   },
   todayText: {
-    color: useGetColor(AppColor.background),
+    color: useGetColor(AppColor.background, theme),
     fontWeight: "bold",
   },
 });
@@ -60,6 +58,8 @@ type DayProps = {
 };
 
 function Day({ day, isSelected, isToday, onClick }: DayProps) {
+  const dayStyles = useThemedStyles(dayStylesFactory);
+
   return (
     <TouchableOpacity
       style={{ flex: 1 }}

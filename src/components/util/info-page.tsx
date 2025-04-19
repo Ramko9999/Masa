@@ -1,10 +1,10 @@
 import React, { ReactNode } from "react";
-import { StyleSheet, ScrollView } from "react-native";
+import { StyleSheet, ScrollView, ColorSchemeName } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Text, View } from "@/theme";
 import { InfoHeader } from "./info-header";
 import { StyleUtils } from "@/theme/style-utils";
-import { useGetColor, AppColor } from "@/theme/color";
+import { useGetColor, AppColor, useThemedStyles } from "@/theme/color";
 
 export interface InfoPageProps {
   title: string;
@@ -12,10 +12,12 @@ export interface InfoPageProps {
   showBackButton?: boolean;
 }
 
-const infoPageStyles = StyleSheet.create({
+const infoPageStylesFactory = (
+  theme: ColorSchemeName
+): StyleSheet.NamedStyles<any> => ({
   container: {
     ...StyleUtils.flexColumn(),
-    backgroundColor: useGetColor(AppColor.background),
+    backgroundColor: useGetColor(AppColor.background, theme),
     flex: 1,
   },
   scrollViewContent: {
@@ -63,6 +65,8 @@ export function InfoPage({
 }: InfoPageProps) {
   const insets = useSafeAreaInsets();
 
+  const infoPageStyles = useThemedStyles(infoPageStylesFactory);
+
   return (
     <View style={[infoPageStyles.container, { paddingTop: insets.top }]}>
       <ScrollView
@@ -90,6 +94,7 @@ export function InfoSection({
   children: ReactNode;
   style?: any;
 }) {
+  const infoPageStyles = useThemedStyles(infoPageStylesFactory);
   return <View style={[infoPageStyles.section, style]}>{children}</View>;
 }
 
@@ -100,6 +105,7 @@ export function InfoVisual({
   children: ReactNode;
   style?: any;
 }) {
+  const infoPageStyles = useThemedStyles(infoPageStylesFactory);
   return <View style={[infoPageStyles.visual, style]}>{children}</View>;
 }
 
@@ -110,7 +116,12 @@ export function InfoParagraph({
   children: ReactNode;
   style?: any;
 }) {
-  return <Text neutral style={[infoPageStyles.paragraph, style]}>{children}</Text>;
+  const infoPageStyles = useThemedStyles(infoPageStylesFactory);
+  return (
+    <Text neutral style={[infoPageStyles.paragraph, style]}>
+      {children}
+    </Text>
+  );
 }
 
 export function InfoSectionTitle({
@@ -120,6 +131,7 @@ export function InfoSectionTitle({
   children: ReactNode;
   style?: any;
 }) {
+  const infoPageStyles = useThemedStyles(infoPageStylesFactory);
   return (
     <Text large semibold style={[infoPageStyles.sectionTitle, style]}>
       {children}
@@ -128,6 +140,7 @@ export function InfoSectionTitle({
 }
 
 export function InfoSpacer() {
+  const infoPageStyles = useThemedStyles(infoPageStylesFactory);
   return <View style={infoPageStyles.spacer} />;
 }
 
@@ -138,6 +151,7 @@ export function InfoNote({
   children: ReactNode;
   style?: any;
 }) {
+  const infoPageStyles = useThemedStyles(infoPageStylesFactory);
   return (
     <View style={infoPageStyles.noteContainer}>
       <Text tiny tint style={[{ fontStyle: "italic" }, style]}>
@@ -154,6 +168,7 @@ export function InfoLabel({
   children: ReactNode;
   style?: any;
 }) {
+  const infoPageStyles = useThemedStyles(infoPageStylesFactory);
   return (
     <Text medium style={[infoPageStyles.label, style]}>
       {children}

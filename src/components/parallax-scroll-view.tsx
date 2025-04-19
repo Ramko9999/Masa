@@ -1,5 +1,5 @@
 import type { PropsWithChildren, ReactElement } from "react";
-import { StyleSheet, Dimensions } from "react-native";
+import { StyleSheet, Dimensions, ColorSchemeName } from "react-native";
 import Animated, {
   interpolate,
   useAnimatedRef,
@@ -7,13 +7,15 @@ import Animated, {
   useScrollViewOffset,
 } from "react-native-reanimated";
 import { View } from "@/theme";
-import { AppColor, useGetColor } from "@/theme/color";
+import { AppColor, useGetColor, useThemedStyles } from "@/theme/color";
 import { StyleUtils } from "@/theme/style-utils";
 
 const SCREEN_HEIGHT = Dimensions.get("window").height;
 const HEADER_HEIGHT = SCREEN_HEIGHT * 0.6;
 
-const parallaxScrollViewStyles = StyleSheet.create({
+const parallaxScrollViewStylesFactory = (
+  theme: ColorSchemeName
+): StyleSheet.NamedStyles<any> => ({
   container: {
     flex: 1,
   },
@@ -24,12 +26,12 @@ const parallaxScrollViewStyles = StyleSheet.create({
   header: {
     height: HEADER_HEIGHT,
     overflow: "hidden",
-    backgroundColor: useGetColor(AppColor.background),
+    backgroundColor: useGetColor(AppColor.background, theme),
   },
   content: {
     paddingTop: "5%",
     paddingHorizontal: "3%",
-    backgroundColor: useGetColor(AppColor.background),
+    backgroundColor: useGetColor(AppColor.background, theme),
     ...StyleUtils.flexColumn(20),
   },
 });
@@ -42,6 +44,10 @@ export function ParallaxScrollView({
   children,
   headerImage,
 }: ParallaxScrollViewProps) {
+  const parallaxScrollViewStyles = useThemedStyles(
+    parallaxScrollViewStylesFactory
+  );
+
   const scrollRef = useAnimatedRef<Animated.ScrollView>();
   const scrollOffset = useScrollViewOffset(scrollRef);
 
