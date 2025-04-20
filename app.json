@@ -25,6 +25,7 @@
       }
     },
     "android": {
+      "versionCode": 2,
       "adaptiveIcon": {
         "foregroundImage": "./assets/logo/android/adaptive.png",
         "monochromeImage": "./assets/logo/android/adaptive.png",
