@@ -7,12 +7,11 @@ import { TabParamList } from "@/layout/types";
 import { RootStackParamList } from "@/layout/types";
 import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
 import { StackScreenProps } from "@react-navigation/stack";
-import { Dimensions, ScrollView, StyleSheet } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 import { View } from "@/theme";
 import { AppColor, useGetColor } from "@/theme/color";
 import { NotificationApi } from "@/api/notification";
 import { useLocation } from "@/context/location";
-import { MonthCalendar } from "@/components/calendar/month";
 
 type HomeProps = CompositeScreenProps<
   BottomTabScreenProps<TabParamList, "home">,
@@ -29,8 +28,6 @@ const homeStyles = StyleSheet.create({
 export function Home({ navigation }: HomeProps) {
   const { selection } = useCalendar();
   const { location } = useLocation();
-
-  console.log(Dimensions.get("window"));
 
   useEffect(() => {
     NotificationApi.scheduleFestivalNotifications(location!);
