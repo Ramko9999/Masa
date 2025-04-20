@@ -1,4 +1,4 @@
-import { View, Text } from "@/theme";
+import { View, Text, scaleFontSize } from "@/theme";
 import {
   StyleSheet,
   TouchableOpacity,
@@ -19,9 +19,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react-native";
 import PagerView from "react-native-pager-view";
 
 const MONTH_CALENDAR_WIDTH = 0.96;
-const DAY_HEIGHT_MULTIPLER = 0.05;
 const OVERLAY_HEIGHT_MULTIPLIER = 0.04;
-const WEEKDAY_HEIGHT_MULTIPLIER = 0.02;
 
 const dayStyles = StyleSheet.create({
   container: {
@@ -49,6 +47,9 @@ const dayStyles = StyleSheet.create({
   },
   overlay: {
     ...StyleUtils.flexRowCenterAll(),
+    height: "60%",
+    aspectRatio: 1,
+    borderRadius: "50%",
   },
 });
 
@@ -63,7 +64,7 @@ function Day({ day, isSelected, onPress }: DayProps) {
   const { height } = useWindowDimensions();
   return (
     <TouchableOpacity
-      style={[dayStyles.container, { height: height * DAY_HEIGHT_MULTIPLER }]}
+      style={[dayStyles.container, { aspectRatio: 1 }]}
       onPress={day !== null ? onPress : undefined}
       disabled={day === null}
     >
@@ -72,8 +73,6 @@ function Day({ day, isSelected, onPress }: DayProps) {
           style={[
             dayStyles.overlay,
             {
-              height: height * OVERLAY_HEIGHT_MULTIPLIER,
-              width: height * OVERLAY_HEIGHT_MULTIPLIER,
               borderRadius: (height * OVERLAY_HEIGHT_MULTIPLIER) / 2,
             },
             isToday && dayStyles.today,
@@ -99,6 +98,7 @@ function Day({ day, isSelected, onPress }: DayProps) {
 const weekStyles = StyleSheet.create({
   container: {
     ...StyleUtils.flexRow(),
+    aspectRatio: 9.5,
   },
 });
 
@@ -131,6 +131,8 @@ const monthStyles = StyleSheet.create({
   },
   weekdayRow: {
     flexDirection: "row",
+    alignItems: "center",
+    aspectRatio: 14,
   },
   weekdayCell: {
     flex: 1,
@@ -156,12 +158,7 @@ const Month = memo(
       <View
         style={[monthStyles.container, { width: width * MONTH_CALENDAR_WIDTH }]}
       >
-        <View
-          style={[
-            monthStyles.weekdayRow,
-            { height: height * WEEKDAY_HEIGHT_MULTIPLIER },
-          ]}
-        >
+        <View style={monthStyles.weekdayRow}>
           {DAYS_OF_WEEK_ABBR.map((day, index) => (
             <View key={index} style={monthStyles.weekdayCell}>
               <Text semibold tint>
@@ -233,7 +230,7 @@ function MonthCalendarHeader({
       <View style={monthCalendarHeaderStyles.actions}>
         <TouchableOpacity onPress={onGoBack} disabled={!canGoBack}>
           <ChevronLeft
-            size={28}
+            size={scaleFontSize(28)}
             color={
               canGoBack
                 ? useGetColor(AppColor.primary)
@@ -243,7 +240,7 @@ function MonthCalendarHeader({
         </TouchableOpacity>
         <TouchableOpacity onPress={onGoForward} disabled={!canGoForward}>
           <ChevronRight
-            size={28}
+            size={scaleFontSize(28)}
             color={
               canGoForward
                 ? useGetColor(AppColor.primary)
@@ -342,7 +339,7 @@ export function MonthCalendar({ onFinishDayClick }: MonthCalendarProps) {
       </View>
       <PagerView
         ref={pagerRef}
-        style={{ height: height * 0.325 }}
+        style={{ height: "100%", width: "100%" }}
         initialPage={currentPage}
         onPageSelected={onPageSelected}
       >
