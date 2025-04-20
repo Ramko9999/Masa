@@ -46,10 +46,10 @@ type TextProps = DefaultText["props"] &
   TextColorProps &
   TextWeightProps;
 
-function scaleFontSize(size: number) {
-  const { width: SCREEN_WIDTH } = Dimensions.get("window");
-  const scale = SCREEN_WIDTH / 375;
-  const newSize = size * scale * PixelRatio.getFontScale();
+export function scaleFontSize(size: number) {
+  const { width, height } = Dimensions.get("window");
+  const scale = Math.min(width / 375, height / 810);
+  const newSize = size * scale;
   return Math.round(PixelRatio.roundToNearestPixel(newSize));
 }
 

@@ -32,7 +32,6 @@ const notificationPermissionStyles = StyleSheet.create({
   },
   actionButtonContainer: {
     marginTop: "auto",
-    marginBottom: "10%",
     alignSelf: "center",
   },
   actionButton: {
@@ -79,7 +78,12 @@ export function NotificationPermission({
           {NOTIFICATION_SUBTEXT}
         </Text>
 
-        <View style={notificationPermissionStyles.actionButtonContainer}>
+        <View
+          style={[
+            notificationPermissionStyles.actionButtonContainer,
+            { marginBottom: insets.bottom },
+          ]}
+        >
           <TouchableOpacity
             style={notificationPermissionStyles.actionButton}
             onPress={handleNotificationPermission}

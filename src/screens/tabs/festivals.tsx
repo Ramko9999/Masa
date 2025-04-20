@@ -25,7 +25,7 @@ const FestivalsStyles = StyleSheet.create({
     paddingBottom: "35%",
   },
   festivalHeader: {
-    paddingBottom: "2%",
+    paddingBottom: "1%",
     borderBottomWidth: 1,
   },
   festivalContent: {

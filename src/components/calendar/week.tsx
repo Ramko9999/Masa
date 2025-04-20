@@ -18,9 +18,6 @@ import { useCalendar } from "@/components/calendar/context";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import PagerView from "react-native-pager-view";
 
-const WEEK_WIDTH = 0.94;
-const DAY_HEIGHT = 0.07;
-
 const dayStyles = StyleSheet.create({
   container: {
     ...StyleUtils.flexColumn(),
@@ -63,10 +60,9 @@ type DayProps = {
 };
 
 function Day({ day, isSelected, isToday, onClick }: DayProps) {
-  const { height } = useWindowDimensions();
   return (
     <TouchableOpacity
-      style={{ flex: 1, height: height * DAY_HEIGHT }}
+      style={{ flex: 1 }}
       onPress={() => {
         onClick(day);
       }}
@@ -118,9 +114,8 @@ interface WeekProps {
 
 const Week = memo(
   function Week({ week, selectedDate, onClick }: WeekProps) {
-    const { width } = useWindowDimensions();
     return (
-      <View style={[weekStyles.container, { width: width * WEEK_WIDTH }]}>
+      <View style={[weekStyles.container]}>
         {week.map((dayDate, index) => (
           <Day
             key={index}
@@ -217,7 +212,6 @@ const OFFSCREEN_PAGES = 6;
 
 export function WeekCalendar() {
   const insets = useSafeAreaInsets();
-  const { height } = useWindowDimensions();
   const { selection, setSelection } = useCalendar();
   const pagerRef = useRef<PagerView>(null);
   const [data] = useState<number[][]>(generateWeeksData(selection.date));
@@ -259,7 +253,7 @@ export function WeekCalendar() {
       <CalendarTitle day={selection.date} />
       <PagerView
         ref={pagerRef}
-        style={{ height: height * DAY_HEIGHT }}
+        style={{ aspectRatio: 6 }}
         initialPage={currentPage}
         onPageSelected={onPageSelected}
       >

@@ -1,19 +1,18 @@
-import { getFontSize } from "@/theme";
+import { getFontSize, scaleFontSize } from "@/theme";
 import { useGetColor } from "@/theme/color";
 import { AppColor } from "@/theme/color";
-import { StyleUtils } from "@/theme/style-utils";
 import { StyleSheet } from "react-native";
 
 export const introSlideStyles = StyleSheet.create({
   container: {
-    ...StyleUtils.flexColumn(30),
+    flexDirection: "column",
+    gap: "3%",
     flex: 1,
     paddingHorizontal: "5%",
     paddingTop: "6%",
   },
   actionButtonContainer: {
     marginTop: "auto",
-    marginBottom: "10%",
     alignSelf: "center",
   },
   actionButton: {
@@ -26,13 +25,13 @@ export const introSlideStyles = StyleSheet.create({
     fontSize: getFontSize({ huge: true }),
     fontWeight: "bold",
     color: useGetColor(AppColor.primary),
-    lineHeight: 40,
+    lineHeight: scaleFontSize(40),
   },
   subtext: {
     fontSize: getFontSize({ bigger: true }),
     fontWeight: "400",
     color: useGetColor(AppColor.primary),
-    lineHeight: 36,
+    lineHeight: scaleFontSize(36),
     letterSpacing: 0.5,
   },
 });

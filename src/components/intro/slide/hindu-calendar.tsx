@@ -10,12 +10,12 @@ import { View, Text, getFontSize } from "@/theme";
 import { TouchableOpacity } from "react-native";
 import { DelayedFadeIn } from "@/components/util/delayed-fade-in";
 import { useState } from "react";
-
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 const HINDU_CALENDAR_TITLE = "Two Calendars, Two Systems";
 const HINDU_CALENDAR_FIRST_POINT =
-  "It's not actually changing! Diwali and other festivals are based off the Hindu calendar which has a different astronomical basis than the Gregorian calendar.";
+  "It's not changing! Diwali is based off the Hindu calendar which has a different astronomical basis than the Gregorian calendar.";
 const HINDU_CALENDAR_SECOND_POINT =
-  "The Gregorian calendar (solar) tracks Earth's journey around the Sun, while the Hindu calendar (lunisolar) also considers the Moon's phases and positions.";
+  "The Gregorian calendar tracks Earth's journey around the Sun, while the Hindu calendar also considers the Moon's phases and positions.";
 const HINDU_CALENDAR_THIRD_POINT =
   "Here are a couple other things to keep in mind:";
 
@@ -30,6 +30,8 @@ export function IntroHinduCalendarSlide({ onNext }: IntroSlideProps) {
   const triggerNextAnimation = (currentAnimation: number) => {
     setCurrentAnimationIndex((prev) => Math.max(prev, currentAnimation));
   };
+
+  const insets = useSafeAreaInsets();
 
   return (
     <View style={introSlideStyles.container} onTouchEnd={handleTap}>
@@ -87,7 +89,7 @@ export function IntroHinduCalendarSlide({ onNext }: IntroSlideProps) {
         delay={DELAY_PADDING}
         forceFinishAnimation={skipAnimationIndex >= 4}
         startAnimation={currentAnimationIndex === 4}
-        style={introSlideStyles.actionButtonContainer}
+        style={{...introSlideStyles.actionButtonContainer,  marginBottom: insets.bottom }}
       >
         <TouchableOpacity
           onPress={onNext}

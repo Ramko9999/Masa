@@ -5,13 +5,15 @@ import { TouchableOpacity } from "react-native";
 import { DelayedFadeIn } from "@/components/util/delayed-fade-in";
 import { IntroOrbitsDiagram } from "@/components/intro/orbit";
 import { useState } from "react";
-
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 const GEOCENTRIC_TITLE = "The Hindu Calendar is Geocentric";
 const GEOCENTRIC_FIRST_POINT = "The Hindu calendar's elements are based off the positions of the celestial bodies from the perspective of Earth.";
 
 export function IntroGeocentricSlide({ onNext }: IntroSlideProps) {
     const [skipAnimationIndex, setSkipAnimationIndex] = useState(-1);
     const [currentAnimationIndex, setCurrentAnimationIndex] = useState(0);
+
+    const insets = useSafeAreaInsets();
 
     const handleTap = () => {
         setSkipAnimationIndex(prev => Math.max(prev + 1, currentAnimationIndex));
@@ -57,7 +59,7 @@ export function IntroGeocentricSlide({ onNext }: IntroSlideProps) {
                 delay={DELAY_PADDING}
                 forceFinishAnimation={skipAnimationIndex >= 3}
                 startAnimation={currentAnimationIndex === 3}
-                style={introSlideStyles.actionButtonContainer}
+                style={{...introSlideStyles.actionButtonContainer,  marginBottom: insets.bottom }}
             >
                 <TouchableOpacity onPress={onNext} style={introSlideStyles.actionButton}>
                     <Text large semibold background>Understood</Text>
