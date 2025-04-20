@@ -26,12 +26,11 @@ const orbitsStyles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
     paddingHorizontal: "4%",
-    paddingTop: "2%",
     paddingBottom: "5%",
   },
   svgContainer: {
     width: "100%",
-    alignItems: "center",
+    alignItems: "center"
   },
 });
 
@@ -75,7 +74,7 @@ function Orbits({ isHeliocentric, size }: OrbitsProps) {
   // In heliocentric (0): sun is at center
   // In geocentric (1): sun orbits earth
   const sunOrbitRadius = useDerivedValue(
-    () => size * 0.4 * transitionProgress.value // 0 when heliocentric, 0.4*size when geocentric
+    () => size * 0.35 * transitionProgress.value // 0 when heliocentric, 0.35*size when geocentric
   );
 
   const sunX = useDerivedValue(
@@ -90,7 +89,7 @@ function Orbits({ isHeliocentric, size }: OrbitsProps) {
   // In heliocentric (0): earth orbits sun
   // In geocentric (1): earth is at center
   const earthOrbitRadius = useDerivedValue(
-    () => size * 0.35 * (1 - transitionProgress.value) // 0.3*size when heliocentric, 0 when geocentric
+    () => size * 0.30 * (1 - transitionProgress.value) // 0.3*size when heliocentric, 0 when geocentric
   );
 
   const earthX = useDerivedValue(
@@ -116,11 +115,11 @@ function Orbits({ isHeliocentric, size }: OrbitsProps) {
 
   // Moon position in geocentric model (orbits around center)
   const geoMoonX = useDerivedValue(
-    () => centerX + Math.cos(moonAngleRad.value) * (size * 0.4)
+    () => centerX + Math.cos(moonAngleRad.value) * (size * 0.35)
   );
 
   const geoMoonY = useDerivedValue(
-    () => centerY + Math.sin(moonAngleRad.value) * (size * 0.4)
+    () => centerY + Math.sin(moonAngleRad.value) * (size * 0.35)
   );
 
   // Interpolate between the two positions
@@ -222,7 +221,7 @@ function Orbits({ isHeliocentric, size }: OrbitsProps) {
           <AnimatedCircle
             cx={centerX}
             cy={centerY}
-            r={size * 0.35}
+            r={size * 0.30}
             stroke={tintColor}
             strokeWidth="1"
             strokeDasharray="5,5"
@@ -234,7 +233,7 @@ function Orbits({ isHeliocentric, size }: OrbitsProps) {
           <AnimatedCircle
             cx={centerX}
             cy={centerY}
-            r={size * 0.4}
+            r={size * 0.35}
             stroke={tintColor}
             strokeWidth="1"
             strokeDasharray="5,5"
@@ -261,8 +260,7 @@ const introOrbitsDiagramStyles = StyleSheet.create({
   container: {
     width: "100%",
     alignItems: "center",
-    paddingHorizontal: "4%",
-    paddingVertical: "4%",
+    paddingHorizontal: "4%"
   },
   orbitsContainer: {
     width: "100%",

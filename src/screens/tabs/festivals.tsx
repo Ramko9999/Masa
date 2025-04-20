@@ -13,7 +13,7 @@ import { useLocation } from "@/context/location";
 import { useGetColor } from "@/theme/color";
 import { AppColor } from "@/theme/color";
 
-const FestivalsStyles = StyleSheet.create({
+const festivalsStyles = StyleSheet.create({
   container: {
     ...StyleUtils.flexColumn(),
     paddingHorizontal: "3%",
@@ -21,14 +21,15 @@ const FestivalsStyles = StyleSheet.create({
     gap: 20,
   },
   festivalsList: {
-    ...StyleUtils.flexColumn(20),
+    ...StyleUtils.flexColumn(15),
     paddingBottom: "35%",
   },
   festivalHeader: {
-    paddingBottom: "2%",
+    paddingBottom: "1%",
     borderBottomWidth: 1,
   },
   festivalContent: {
+    ...StyleUtils.flexColumn(5),
     paddingTop: "2%",
   },
 });
@@ -46,20 +47,20 @@ type FestivalItemProps = {
 function FestivalItem({ festival, onPress }: FestivalItemProps) {
   return (
     <View>
-      <View
-        style={[
-          FestivalsStyles.festivalHeader,
-          { borderBottomColor: useGetColor(AppColor.border) },
-        ]}
-      >
-        <Text neutral tint semibold>
-          {getHumanReadableDateWithWeekday(festival.date)}
-        </Text>
-      </View>
       <TouchableOpacity
         onPress={() => onPress(festival)}
-        style={FestivalsStyles.festivalContent}
+        style={festivalsStyles.festivalContent}
       >
+        <View
+          style={[
+            festivalsStyles.festivalHeader,
+            { borderBottomColor: useGetColor(AppColor.border) },
+          ]}
+        >
+          <Text neutral tint semibold>
+            {getHumanReadableDateWithWeekday(festival.date)}
+          </Text>
+        </View>
         <Text large semibold>
           {festival.name}
         </Text>
@@ -80,7 +81,7 @@ export function Festivals({ navigation }: FestivalsProps) {
   return (
     <View
       style={[
-        FestivalsStyles.container,
+        festivalsStyles.container,
         { paddingTop: insets.top + 20, paddingBottom: insets.bottom + 20 },
       ]}
     >
@@ -88,7 +89,7 @@ export function Festivals({ navigation }: FestivalsProps) {
         Festivals
       </Text>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={FestivalsStyles.festivalsList}>
+        <View style={festivalsStyles.festivalsList}>
           {festivals.map((festival, index) => (
             <FestivalItem
               key={`${festival.name}-${index}`}
