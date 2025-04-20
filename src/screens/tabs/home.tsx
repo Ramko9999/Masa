@@ -7,7 +7,7 @@ import { TabParamList } from "@/layout/types";
 import { RootStackParamList } from "@/layout/types";
 import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
 import { StackScreenProps } from "@react-navigation/stack";
-import { ScrollView, StyleSheet } from "react-native";
+import { ScrollView, StyleSheet, useWindowDimensions } from "react-native";
 import { View } from "@/theme";
 import { AppColor, useGetColor } from "@/theme/color";
 import { NotificationApi } from "@/api/notification";

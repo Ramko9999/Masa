@@ -1,4 +1,4 @@
-import { StyleSheet, useWindowDimensions } from "react-native";
+import { Platform, StyleSheet, useWindowDimensions } from "react-native";
 import React, { useState, useRef } from "react";
 import { truncateToDay } from "@/util/date";
 import { MonthCalendar } from "./month";
@@ -40,7 +40,9 @@ export function CalendarProvider({ children }: { children: React.ReactNode }) {
           show={isMonthCalendarOpen}
           onHide={() => setIsMonthCalendarOpen(false)}
           contentStyle={calendarProviderStyles.monthCalendarSheet}
-          contentHeight={Math.max(height * 0.41, 350)}
+          contentHeight={
+            Platform.OS === "ios" ? height * 0.41 : Math.max(height * 0.41, 400)
+          }
           hitslopHeight={height * 0.075}
         >
           <MonthCalendar
