@@ -46,20 +46,20 @@ type FestivalItemProps = {
 function FestivalItem({ festival, onPress }: FestivalItemProps) {
   return (
     <View>
-      <View
-        style={[
-          FestivalsStyles.festivalHeader,
-          { borderBottomColor: useGetColor(AppColor.border) },
-        ]}
-      >
-        <Text neutral tint semibold>
-          {getHumanReadableDateWithWeekday(festival.date)}
-        </Text>
-      </View>
       <TouchableOpacity
         onPress={() => onPress(festival)}
         style={FestivalsStyles.festivalContent}
       >
+        <View
+          style={[
+            FestivalsStyles.festivalHeader,
+            { borderBottomColor: useGetColor(AppColor.border) },
+          ]}
+        >
+          <Text neutral tint semibold>
+            {getHumanReadableDateWithWeekday(festival.date)}
+          </Text>
+        </View>
         <Text large semibold>
           {festival.name}
         </Text>
