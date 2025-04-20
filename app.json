@@ -9,7 +9,7 @@
     "scheme": "masa",
     "ios": {
       "appleTeamId": "37U34B89DU",
-      "supportsTablet": true,
+      "supportsTablet": false,
       "entitlements": {
         "com.apple.security.application-groups": "group.com.anonymous.masa"
       },
