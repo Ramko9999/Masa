@@ -206,6 +206,7 @@ const weekCalendarStyles = StyleSheet.create({
   container: {
     ...StyleUtils.flexColumn(5),
     paddingHorizontal: "3%",
+    paddingVertical: "4%",
   },
   page: {
     ...StyleUtils.flexRowCenterAll(),
