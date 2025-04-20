@@ -47,7 +47,7 @@ const dayStyles = StyleSheet.create({
   },
   overlay: {
     ...StyleUtils.flexRowCenterAll(),
-    height: "60%",
+    height: "70%",
     aspectRatio: 1,
     borderRadius: "50%",
   },

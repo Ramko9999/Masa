@@ -13,7 +13,7 @@ import { useLocation } from "@/context/location";
 import { useGetColor } from "@/theme/color";
 import { AppColor } from "@/theme/color";
 
-const FestivalsStyles = StyleSheet.create({
+const festivalsStyles = StyleSheet.create({
   container: {
     ...StyleUtils.flexColumn(),
     paddingHorizontal: "3%",
@@ -21,7 +21,7 @@ const FestivalsStyles = StyleSheet.create({
     gap: 20,
   },
   festivalsList: {
-    ...StyleUtils.flexColumn(20),
+    ...StyleUtils.flexColumn(15),
     paddingBottom: "35%",
   },
   festivalHeader: {
@@ -29,6 +29,7 @@ const FestivalsStyles = StyleSheet.create({
     borderBottomWidth: 1,
   },
   festivalContent: {
+    ...StyleUtils.flexColumn(5),
     paddingTop: "2%",
   },
 });
@@ -48,11 +49,11 @@ function FestivalItem({ festival, onPress }: FestivalItemProps) {
     <View>
       <TouchableOpacity
         onPress={() => onPress(festival)}
-        style={FestivalsStyles.festivalContent}
+        style={festivalsStyles.festivalContent}
       >
         <View
           style={[
-            FestivalsStyles.festivalHeader,
+            festivalsStyles.festivalHeader,
             { borderBottomColor: useGetColor(AppColor.border) },
           ]}
         >
@@ -80,7 +81,7 @@ export function Festivals({ navigation }: FestivalsProps) {
   return (
     <View
       style={[
-        FestivalsStyles.container,
+        festivalsStyles.container,
         { paddingTop: insets.top + 20, paddingBottom: insets.bottom + 20 },
       ]}
     >
@@ -88,7 +89,7 @@ export function Festivals({ navigation }: FestivalsProps) {
         Festivals
       </Text>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={FestivalsStyles.festivalsList}>
+        <View style={festivalsStyles.festivalsList}>
           {festivals.map((festival, index) => (
             <FestivalItem
               key={`${festival.name}-${index}`}

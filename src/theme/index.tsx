@@ -49,7 +49,7 @@ type TextProps = DefaultText["props"] &
 export function scaleFontSize(size: number) {
   const { width, height } = Dimensions.get("window");
   const scale = Math.min(width / 375, height / 810);
-  const newSize = size * scale;
+  const newSize = size * scale * PixelRatio.getFontScale();
   return Math.round(PixelRatio.roundToNearestPixel(newSize));
 }
 
