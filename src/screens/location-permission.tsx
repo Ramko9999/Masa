@@ -38,7 +38,6 @@ const newLocationPermissionStyles = StyleSheet.create({
   },
   actionButtonContainer: {
     marginTop: "auto",
-    marginBottom: "10%",
     alignSelf: "center",
   },
   actionButton: {
@@ -113,7 +112,12 @@ export function LocationPermission({ navigation }: LocationPermissionProps) {
           {LOCATION_SUBTEXT}
         </Text>
 
-        <View style={newLocationPermissionStyles.actionButtonContainer}>
+        <View
+          style={[
+            newLocationPermissionStyles.actionButtonContainer,
+            { marginBottom: insets.bottom },
+          ]}
+        >
           <TouchableOpacity
             style={newLocationPermissionStyles.actionButton}
             onPress={handleLocationPermission}

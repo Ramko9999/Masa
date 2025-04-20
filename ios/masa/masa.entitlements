@@ -5,6 +5,8 @@
     <key>aps-environment</key>
     <string>development</string>
     <key>com.apple.security.application-groups</key>
-    <string>group.com.anonymous.masa</string>
+    <array>
+      <string>group.com.anonymous.masa</string>
+    </array>
   </dict>
 </plist>

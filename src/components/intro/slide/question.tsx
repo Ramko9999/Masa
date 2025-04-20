@@ -4,6 +4,7 @@ import { View, Text } from "@/theme";
 import { TouchableOpacity } from "react-native";
 import { DelayedFadeIn } from "@/components/util/delayed-fade-in";
 import { useState } from "react";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const INTRO_QUESTION_TITLE = "Have you ever wondered";
 const INTRO_QUESTION = "Why does Diwali start on a different day every year?";
@@ -20,6 +21,8 @@ export function IntroQuestionSlide({ onNext }: IntroSlideProps) {
     const triggerNextAnimation = (currentAnimation: number) => {
         setCurrentAnimationIndex(prev => Math.max(prev, currentAnimation));
     };
+
+    const insets = useSafeAreaInsets();
 
     return (
         <View style={introSlideStyles.container} onTouchEnd={handleTap}>
@@ -48,7 +51,7 @@ export function IntroQuestionSlide({ onNext }: IntroSlideProps) {
                 delay={DELAY_PADDING}
                 forceFinishAnimation={skipAnimationIndex >= 2}
                 startAnimation={currentAnimationIndex === 2}
-                style={introSlideStyles.actionButtonContainer}
+                style={{...introSlideStyles.actionButtonContainer,  marginBottom: insets.bottom }}
             >
                 <TouchableOpacity onPress={onNext} style={introSlideStyles.actionButton}>
                     <Text large semibold background>I wondered that too...</Text>
