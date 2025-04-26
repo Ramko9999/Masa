@@ -50,7 +50,7 @@ export function CalendarProvider({ children }: { children: React.ReactNode }) {
           enablePanDownToClose
           style={calendarProviderStyles.monthCalendarSheet}
           snapPoints={snapPoints}
-          index={0}
+          enableDynamicSizing={false}
         >
           <BottomSheetView
             style={[
