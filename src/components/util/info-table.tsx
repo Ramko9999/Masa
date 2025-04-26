@@ -1,7 +1,7 @@
 import React from "react";
-import { StyleSheet } from "react-native";
+import { ColorSchemeName, StyleSheet } from "react-native";
 import { Text, View } from "@/theme";
-import { AppColor, useGetColor } from "@/theme/color";
+import { AppColor, useGetColor, useThemedStyles } from "@/theme/color";
 import { StyleUtils } from "@/theme/style-utils";
 
 export interface Column {
@@ -16,19 +16,21 @@ export interface InfoTableProps {
   style?: any;
 }
 
-const infoTableStyles = StyleSheet.create({
+const infoTableStylesFactory = (
+  theme: ColorSchemeName
+): StyleSheet.NamedStyles<any> => ({
   container: {
     marginTop: 16,
     marginBottom: 16,
     borderWidth: 1,
-    borderColor: useGetColor(AppColor.border),
+    borderColor: useGetColor(AppColor.border, theme),
     borderRadius: 6,
     overflow: "hidden",
   },
   row: {
     ...StyleUtils.flexRow(),
     borderBottomWidth: 1,
-    borderBottomColor: useGetColor(AppColor.border),
+    borderBottomColor: useGetColor(AppColor.border, theme),
   },
   header: {
     paddingVertical: 10,
@@ -43,6 +45,8 @@ const infoTableStyles = StyleSheet.create({
 });
 
 export function InfoTable({ columns, data, style }: InfoTableProps) {
+  const infoTableStyles = useThemedStyles(infoTableStylesFactory);
+
   return (
     <View style={[infoTableStyles.container, style]}>
       <View style={infoTableStyles.row}>
@@ -70,4 +74,4 @@ export function InfoTable({ columns, data, style }: InfoTableProps) {
       ))}
     </View>
   );
-} 
+}

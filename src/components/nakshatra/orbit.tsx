@@ -1,7 +1,14 @@
 import React, { useEffect } from "react";
-import { View, StyleSheet, Dimensions, TextInput } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Dimensions,
+  TextInput,
+  ColorSchemeName,
+  useColorScheme,
+} from "react-native";
 import Svg, { Circle, Text as SvgText, Path, G } from "react-native-svg";
-import { AppColor, useGetColor } from "@/theme/color";
+import { AppColor, useGetColor, useThemedStyles } from "@/theme/color";
 import Animated, {
   useSharedValue,
   useAnimatedProps,
@@ -22,7 +29,9 @@ const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 const AnimatedTextInput = Animated.createAnimatedComponent(TextInput);
 const AnimatedPath = Animated.createAnimatedComponent(Path);
 
-const styles = StyleSheet.create({
+const stylesFactory = (
+  theme: ColorSchemeName
+): StyleSheet.NamedStyles<any> => ({
   container: {
     width: "100%",
     alignItems: "center",
@@ -45,12 +54,12 @@ const styles = StyleSheet.create({
   },
   angleText: {
     width: "100%",
-    color: useGetColor(AppColor.tint),
+    color: useGetColor(AppColor.tint, theme),
     fontSize: getFontSize({ small: true }),
     textAlign: "center",
   },
   nakshatraText: {
-    color: useGetColor(AppColor.tint),
+    color: useGetColor(AppColor.tint, theme),
     fontWeight: "bold",
     fontSize: getFontSize({ neutral: true }),
     textAlign: "center",
@@ -59,13 +68,16 @@ const styles = StyleSheet.create({
 });
 
 export function NakshatraOrbit() {
+  const theme = useColorScheme();
+  const styles = useThemedStyles(stylesFactory);
+
   const { width } = Dimensions.get("window");
   const size = width * 0.9;
   const centerX = size / 2;
   const centerY = size / 2;
 
   // Get the tint color from the theme
-  const tintColor = useGetColor(AppColor.tint);
+  const tintColor = useGetColor(AppColor.tint, theme);
 
   // Orbital motion
   const time = useSharedValue(0);

@@ -5,24 +5,27 @@ import {
   ActivityIndicator,
   useWindowDimensions,
   TouchableOpacity,
+  ColorSchemeName,
+  useColorScheme,
 } from "react-native";
-import { AppColor, useGetColor } from "@/theme/color";
+import { AppColor, useGetColor, useThemedStyles } from "@/theme/color";
 import { StyleUtils } from "@/theme/style-utils";
 import { Bell } from "lucide-react-native";
 import { StackScreenProps } from "@react-navigation/stack";
 import { RootStackParamList } from "@/layout/types";
 import { NotificationApi } from "@/api/notification";
 import { useState } from "react";
-import { useLocation } from "@/context/location";
 
 const NOTIFICATION_TITLE = "Festival Reminders";
 const NOTIFICATION_SUBTEXT =
   "We'll send you a notification on the day of each festival.";
 
-const notificationPermissionStyles = StyleSheet.create({
+const notificationPermissionStylesFactory = (
+  theme: ColorSchemeName
+): StyleSheet.NamedStyles<any> => ({
   container: {
     height: "100%",
-    backgroundColor: useGetColor(AppColor.background),
+    backgroundColor: useGetColor(AppColor.background, theme),
   },
   content: {
     ...StyleUtils.flexColumn(30),
@@ -35,7 +38,7 @@ const notificationPermissionStyles = StyleSheet.create({
     alignSelf: "center",
   },
   actionButton: {
-    backgroundColor: useGetColor(AppColor.primary),
+    backgroundColor: useGetColor(AppColor.primary, theme),
     paddingHorizontal: "4%",
     paddingVertical: "4%",
     borderRadius: 12,
@@ -55,7 +58,10 @@ export function NotificationPermission({
   const [isLoading, setIsLoading] = useState(false);
   const insets = useSafeAreaInsets();
   const { height } = useWindowDimensions();
-
+  const notificationPermissionStyles = useThemedStyles(
+    notificationPermissionStylesFactory
+  );
+  const theme = useColorScheme();
   const handleNotificationPermission = async () => {
     setIsLoading(true);
     await NotificationApi.getNotificationPermissionStatus();
@@ -89,8 +95,8 @@ export function NotificationPermission({
             onPress={handleNotificationPermission}
           >
             <Bell
-              stroke={useGetColor(AppColor.background)}
-              fill={useGetColor(AppColor.background)}
+              stroke={useGetColor(AppColor.background, theme)}
+              fill={useGetColor(AppColor.background, theme)}
               width={20}
               height={20}
             />
@@ -101,7 +107,7 @@ export function NotificationPermission({
           {isLoading && (
             <ActivityIndicator
               size="large"
-              color={useGetColor(AppColor.primary)}
+              color={useGetColor(AppColor.primary, theme)}
               style={{ marginTop: 16 }}
             />
           )}

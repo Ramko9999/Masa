@@ -3,9 +3,11 @@ import {
   TouchableOpacity,
   StyleSheet,
   useWindowDimensions,
+  ColorSchemeName,
+  useColorScheme,
 } from "react-native";
 import Svg, { Circle } from "react-native-svg";
-import { AppColor, useGetColor } from "@/theme/color";
+import { AppColor, useGetColor, useThemedStyles } from "@/theme/color";
 import { StyleUtils } from "@/theme/style-utils";
 import Animated, {
   useSharedValue,
@@ -21,7 +23,9 @@ import { View, Text } from "@/theme";
 
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 
-const orbitsStyles = StyleSheet.create({
+const orbitsStylesFactory = (
+  theme: ColorSchemeName
+): StyleSheet.NamedStyles<any> => ({
   container: {
     width: "100%",
     alignItems: "center",
@@ -40,9 +44,12 @@ type OrbitsProps = {
 };
 
 function Orbits({ isHeliocentric, size }: OrbitsProps) {
+  const theme = useColorScheme();
+  const orbitsStyles = useThemedStyles(orbitsStylesFactory);
+
   const centerX = size / 2;
   const centerY = size / 2;
-  const tintColor = useGetColor(AppColor.tint);
+  const tintColor = useGetColor(AppColor.tint, theme);
 
   // Animation timing config
   const transitionDuration = 1000; // 1 second for the transition
@@ -256,7 +263,9 @@ function Orbits({ isHeliocentric, size }: OrbitsProps) {
 }
 
 // Create a new container component
-const introOrbitsDiagramStyles = StyleSheet.create({
+const introOrbitsDiagramStylesFactory = (
+  theme: ColorSchemeName
+): StyleSheet.NamedStyles<any> => ({
   container: {
     width: "100%",
     alignItems: "center",
@@ -265,11 +274,11 @@ const introOrbitsDiagramStyles = StyleSheet.create({
   orbitsContainer: {
     width: "100%",
     aspectRatio: 1,
-    borderColor: useGetColor(AppColor.primary),
+    borderColor: useGetColor(AppColor.primary, theme),
   },
   tabsContainer: {
     ...StyleUtils.flexRow(),
-    backgroundColor: useGetColor(AppColor.primary),
+    backgroundColor: useGetColor(AppColor.primary, theme),
     borderWidth: 2,
     alignSelf: "center",
   },
@@ -277,11 +286,11 @@ const introOrbitsDiagramStyles = StyleSheet.create({
     paddingHorizontal: 12,
     paddingVertical: 8,
     ...StyleUtils.flexRowCenterAll(),
-    backgroundColor: useGetColor(AppColor.background),
-    borderColor: useGetColor(AppColor.primary),
+    backgroundColor: useGetColor(AppColor.background, theme),
+    borderColor: useGetColor(AppColor.primary, theme),
   },
   tabActive: {
-    backgroundColor: useGetColor(AppColor.primary),
+    backgroundColor: useGetColor(AppColor.primary, theme),
   },
 });
 
@@ -292,6 +301,10 @@ type IntroOrbitsDiagramProps = {
 export function IntroOrbitsDiagram({
   size: providedSize,
 }: IntroOrbitsDiagramProps) {
+  const introOrbitsDiagramStyles = useThemedStyles(
+    introOrbitsDiagramStylesFactory
+  );
+
   const [isHeliocentric, setIsHeliocentric] = useState(false);
   const { width } = useWindowDimensions();
 

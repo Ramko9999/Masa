@@ -1,16 +1,18 @@
 import React from "react";
-import { TouchableOpacity, StyleSheet } from "react-native";
+import { TouchableOpacity, StyleSheet, ColorSchemeName } from "react-native";
 import { Text } from "@/theme/index";
-import { AppColor, useGetColor } from "@/theme/color";
+import { AppColor, useGetColor, useThemedStyles } from "@/theme/color";
 import { StyleUtils } from "@/theme/style-utils";
 
-const floatingButtonStyles = StyleSheet.create({
+const floatingButtonStylesFactory = (
+  theme: ColorSchemeName
+): StyleSheet.NamedStyles<any> => ({
   container: {
     ...StyleUtils.flexRowCenterAll(5),
     position: "absolute",
     bottom: "5%",
     right: "5%",
-    backgroundColor: useGetColor(AppColor.primary),
+    backgroundColor: useGetColor(AppColor.primary, theme),
     paddingHorizontal: "4%",
     paddingVertical: "2%",
     borderRadius: "2%",
@@ -23,6 +25,7 @@ type FloatingButtonProps = {
 };
 
 export function FloatingButton({ currentRoute, onClick }: FloatingButtonProps) {
+  const floatingButtonStyles = useThemedStyles(floatingButtonStylesFactory);
   return (
     <TouchableOpacity
       style={floatingButtonStyles.container}

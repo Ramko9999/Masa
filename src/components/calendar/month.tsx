@@ -3,8 +3,10 @@ import {
   StyleSheet,
   TouchableOpacity,
   useWindowDimensions,
+  ColorSchemeName,
+  useColorScheme,
 } from "react-native";
-import { AppColor, useGetColor } from "@/theme/color";
+import { AppColor, useGetColor, useThemedStyles } from "@/theme/color";
 import { useState, useCallback, useRef, memo } from "react";
 import {
   formatMonthYear,
@@ -21,7 +23,9 @@ import PagerView from "react-native-pager-view";
 const MONTH_CALENDAR_WIDTH = 0.96;
 const OVERLAY_HEIGHT_MULTIPLIER = 0.04;
 
-const dayStyles = StyleSheet.create({
+const dayStylesFactory = (
+  theme: ColorSchemeName
+): StyleSheet.NamedStyles<any> => ({
   container: {
     flex: 1,
     alignItems: "center",
@@ -32,17 +36,17 @@ const dayStyles = StyleSheet.create({
     fontWeight: "normal",
   },
   selected: {
-    backgroundColor: useGetColor(AppColor.primary),
+    backgroundColor: useGetColor(AppColor.primary, theme),
   },
   today: {
-    backgroundColor: useGetColor(AppColor.tint),
+    backgroundColor: useGetColor(AppColor.tint, theme),
   },
   selectedText: {
-    color: useGetColor(AppColor.background),
+    color: useGetColor(AppColor.background, theme),
     fontWeight: "bold",
   },
   todayText: {
-    color: useGetColor(AppColor.background),
+    color: useGetColor(AppColor.background, theme),
     fontWeight: "bold",
   },
   overlay: {
@@ -60,6 +64,7 @@ interface DayProps {
 }
 
 function Day({ day, isSelected, onPress }: DayProps) {
+  const dayStyles = useThemedStyles(dayStylesFactory);
   const isToday = day === truncateToDay(Date.now());
   const { height } = useWindowDimensions();
   return (
@@ -95,7 +100,9 @@ function Day({ day, isSelected, onPress }: DayProps) {
   );
 }
 
-const weekStyles = StyleSheet.create({
+const weekStylesFactory = (
+  theme: ColorSchemeName
+): StyleSheet.NamedStyles<any> => ({
   container: {
     ...StyleUtils.flexRow(),
     aspectRatio: 9.5,
@@ -109,6 +116,7 @@ interface WeekProps {
 }
 
 function Week({ week, selectedDate, onDayClick }: WeekProps) {
+  const weekStyles = useThemedStyles(weekStylesFactory);
   return (
     <View style={weekStyles.container}>
       {week.map((day, index) => {
@@ -125,7 +133,9 @@ function Week({ week, selectedDate, onDayClick }: WeekProps) {
   );
 }
 
-const monthStyles = StyleSheet.create({
+const monthStylesFactory = (
+  theme: ColorSchemeName
+): StyleSheet.NamedStyles<any> => ({
   container: {
     flexDirection: "column",
   },
@@ -153,6 +163,7 @@ const Month = memo(
     const daysArray = generateCalendarDays(year, month);
     const weeks = groupIntoWeeks(daysArray);
     const { height } = useWindowDimensions();
+    const monthStyles = useThemedStyles(monthStylesFactory);
 
     return (
       <View
@@ -194,7 +205,9 @@ interface MonthData {
   month: number;
 }
 
-const monthCalendarHeaderStyles = StyleSheet.create({
+const monthCalendarHeaderStylesFactory = (
+  theme: ColorSchemeName
+): StyleSheet.NamedStyles<any> => ({
   container: {
     ...StyleUtils.flexRow(),
     justifyContent: "space-between",
@@ -222,6 +235,10 @@ function MonthCalendarHeader({
   canGoForward,
   onGoForward,
 }: MonthCalendarHeaderProps) {
+  const monthCalendarHeaderStyles = useThemedStyles(
+    monthCalendarHeaderStylesFactory
+  );
+  const theme = useColorScheme();
   return (
     <View style={monthCalendarHeaderStyles.container}>
       <Text semibold large>
@@ -233,8 +250,8 @@ function MonthCalendarHeader({
             size={scaleFontSize(28)}
             color={
               canGoBack
-                ? useGetColor(AppColor.primary)
-                : useGetColor(AppColor.tint)
+                ? useGetColor(AppColor.primary, theme)
+                : useGetColor(AppColor.tint, theme)
             }
           />
         </TouchableOpacity>
@@ -243,8 +260,8 @@ function MonthCalendarHeader({
             size={scaleFontSize(28)}
             color={
               canGoForward
-                ? useGetColor(AppColor.primary)
-                : useGetColor(AppColor.tint)
+                ? useGetColor(AppColor.primary, theme)
+                : useGetColor(AppColor.tint, theme)
             }
           />
         </TouchableOpacity>
@@ -276,10 +293,13 @@ function generateMonthsData(currentDate: number) {
   });
 }
 
-const pagerMonthCalendarStyles = StyleSheet.create({
+const pagerMonthCalendarStylesFactory = (
+  theme: ColorSchemeName
+): StyleSheet.NamedStyles<any> => ({
   container: {
     ...StyleUtils.flexColumn(),
     paddingHorizontal: "3%",
+    backgroundColor: useGetColor(AppColor.background, theme),
   },
   page: {
     ...StyleUtils.flexRow(),
@@ -326,6 +346,9 @@ export function MonthCalendar({ onFinishDayClick }: MonthCalendarProps) {
     }
   }, [currentPage, data.length]);
 
+  const pagerMonthCalendarStyles = useThemedStyles(
+    pagerMonthCalendarStylesFactory
+  );
   return (
     <View style={pagerMonthCalendarStyles.container}>
       <View style={{ height: height * 0.075 }}>
