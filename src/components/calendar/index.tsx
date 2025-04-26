@@ -1,9 +1,10 @@
-import { Platform, StyleSheet, useWindowDimensions } from "react-native";
-import React, { useState, useRef } from "react";
+import { StyleSheet } from "react-native";
+import React, { useState, useRef, useCallback, useMemo } from "react";
 import { truncateToDay } from "@/util/date";
-import { MonthCalendar } from "./month";
 import { CalendarContext, Selection } from "./context";
-import { BottomSheet, BottomSheetRef } from "../util/sheet";
+import { BottomSheetModal, BottomSheetView } from "@gorhom/bottom-sheet";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { MonthCalendar } from "./month";
 
 const calendarProviderStyles = StyleSheet.create({
   monthCalendarSheet: {
@@ -13,6 +14,10 @@ const calendarProviderStyles = StyleSheet.create({
     overflow: "hidden",
     backgroundColor: "white",
   },
+  contentContainer: {
+    flex: 1,
+    width: "100%",
+  },
 });
 
 export function CalendarProvider({ children }: { children: React.ReactNode }) {
@@ -20,14 +25,18 @@ export function CalendarProvider({ children }: { children: React.ReactNode }) {
     date: truncateToDay(Date.now()),
     lastEditedBy: "week",
   });
-  const { height } = useWindowDimensions();
-  const bottomSheetRef = useRef<BottomSheetRef>(null);
+  const bottomSheetRef = useRef<BottomSheetModal>(null);
+  const snapPoints = useMemo(() => ["50%"], []);
 
-  const [isMonthCalendarOpen, setIsMonthCalendarOpen] = useState(false);
+  const openMonthCalendar = useCallback(() => {
+    bottomSheetRef.current?.present();
+  }, []);
 
-  const openMonthCalendar = () => {
-    setIsMonthCalendarOpen(true);
-  };
+  const handleSheetChanges = useCallback((index: number) => {
+    console.log("handleSheetChanges", index);
+  }, []);
+
+  const insets = useSafeAreaInsets();
 
   return (
     <CalendarContext.Provider
@@ -35,20 +44,27 @@ export function CalendarProvider({ children }: { children: React.ReactNode }) {
     >
       <>
         {children}
-        <BottomSheet
+        <BottomSheetModal
           ref={bottomSheetRef}
-          show={isMonthCalendarOpen}
-          onHide={() => setIsMonthCalendarOpen(false)}
-          contentStyle={calendarProviderStyles.monthCalendarSheet}
-          contentHeight={
-            Platform.OS === "ios" ? height * 0.6 : Math.max(height * 0.6, 400)
-          }
-          hitslopHeight={height * 0.075}
+          onChange={handleSheetChanges}
+          enablePanDownToClose
+          style={calendarProviderStyles.monthCalendarSheet}
+          snapPoints={snapPoints}
+          index={0}
         >
-          <MonthCalendar
-            onFinishDayClick={() => bottomSheetRef.current?.hide()}
-          />
-        </BottomSheet>
+          <BottomSheetView
+            style={[
+              calendarProviderStyles.contentContainer,
+              { paddingBottom: insets.bottom },
+            ]}
+          >
+            <MonthCalendar
+              onFinishDayClick={() => {
+                bottomSheetRef.current?.dismiss();
+              }}
+            />
+          </BottomSheetView>
+        </BottomSheetModal>
       </>
     </CalendarContext.Provider>
   );
