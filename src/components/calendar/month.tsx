@@ -1,9 +1,5 @@
-import { View, Text, scaleFontSize } from "@/theme";
-import {
-  StyleSheet,
-  TouchableOpacity,
-  useWindowDimensions,
-} from "react-native";
+import { View, Text } from "@/theme";
+import { StyleSheet, TouchableOpacity } from "react-native";
 import { AppColor, useGetColor } from "@/theme/color";
 import { useState, useCallback, useRef, memo } from "react";
 import {
@@ -18,24 +14,57 @@ import { useCalendar } from "@/components/calendar/context";
 import { ChevronLeft, ChevronRight } from "lucide-react-native";
 import PagerView from "react-native-pager-view";
 
-const MONTH_CALENDAR_WIDTH = 0.96;
-const OVERLAY_HEIGHT_MULTIPLIER = 0.04;
+const monthCalendarHeaderStyles = StyleSheet.create({
+  container: {
+    ...StyleUtils.flexRow(),
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingHorizontal: "3%",
+    paddingVertical: "2%",
+  },
+  actions: {
+    ...StyleUtils.flexRow(2),
+  },
+});
+
+const calendarStyles = StyleSheet.create({
+  container: {
+    ...StyleUtils.flexColumn(),
+    flex: 1,
+  },
+  headerRow: {
+    ...StyleUtils.flexRow(),
+    width: "100%",
+  },
+  headerCell: {
+    flex: 1,
+    aspectRatio: 1.5,
+    ...StyleUtils.flexRowCenterAll(),
+  },
+  weeksContainer: {
+    flex: 1,
+    ...StyleUtils.flexColumn(),
+  },
+});
 
 const dayStyles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    borderRadius: 6,
+    aspectRatio: 1.5,
   },
-  text: {
-    fontWeight: "normal",
+  button: {
+    flex: 1,
+    ...StyleUtils.flexRowCenterAll(),
+    borderRadius: 10,
   },
   selected: {
     backgroundColor: useGetColor(AppColor.primary),
   },
   today: {
     backgroundColor: useGetColor(AppColor.tint),
+  },
+  text: {
+    fontWeight: "normal",
   },
   selectedText: {
     color: useGetColor(AppColor.background),
@@ -45,99 +74,73 @@ const dayStyles = StyleSheet.create({
     color: useGetColor(AppColor.background),
     fontWeight: "bold",
   },
-  overlay: {
-    ...StyleUtils.flexRowCenterAll(),
-    height: "70%",
-    aspectRatio: 1,
-    borderRadius: "50%",
-  },
 });
 
-interface DayProps {
+type DayProps = {
   day: number | null;
-  isSelected: boolean;
-  onPress: () => void;
-}
+  selectedDate: number;
+  onDayClick: (day: number) => void;
+};
 
-function Day({ day, isSelected, onPress }: DayProps) {
+const Day = memo(function Day({ day, selectedDate, onDayClick }: DayProps) {
+  if (!day) {
+    return <View style={dayStyles.container} />;
+  }
+
   const isToday = day === truncateToDay(Date.now());
-  const { height } = useWindowDimensions();
+  const isSelected = day === selectedDate;
+  console.log(day, selectedDate, isToday);
   return (
-    <TouchableOpacity
-      style={[dayStyles.container, { aspectRatio: 1 }]}
-      onPress={day !== null ? onPress : undefined}
-      disabled={day === null}
-    >
-      {day !== null && (
-        <View
+    <View style={dayStyles.container}>
+      <TouchableOpacity
+        onPress={() => onDayClick(day)}
+        style={[
+          dayStyles.button,
+          isToday && dayStyles.today,
+          isSelected && dayStyles.selected,
+        ]}
+      >
+        <Text
+          semibold
           style={[
-            dayStyles.overlay,
-            {
-              borderRadius: (height * OVERLAY_HEIGHT_MULTIPLIER) / 2,
-            },
-            isToday && dayStyles.today,
-            isSelected && dayStyles.selected,
+            dayStyles.text,
+            isSelected && dayStyles.selectedText,
+            isToday && dayStyles.todayText,
           ]}
         >
-          <Text
-            large
-            style={[
-              dayStyles.text,
-              isSelected && dayStyles.selectedText,
-              isToday && dayStyles.todayText,
-            ]}
-          >
-            {new Date(day).getDate()}
-          </Text>
-        </View>
-      )}
-    </TouchableOpacity>
+          {new Date(day).getDate()}
+        </Text>
+      </TouchableOpacity>
+    </View>
   );
-}
+});
 
 const weekStyles = StyleSheet.create({
   container: {
     ...StyleUtils.flexRow(),
-    aspectRatio: 9.5,
+    width: "100%",
   },
 });
 
-interface WeekProps {
+type WeekProps = {
   week: (number | null)[];
   selectedDate: number;
   onDayClick: (day: number) => void;
-}
+};
 
-function Week({ week, selectedDate, onDayClick }: WeekProps) {
+const Week = memo(function Week({ week, selectedDate, onDayClick }: WeekProps) {
   return (
     <View style={weekStyles.container}>
-      {week.map((day, index) => {
-        return (
-          <Day
-            key={index}
-            day={day}
-            isSelected={selectedDate === day}
-            onPress={() => day !== null && onDayClick(day)}
-          />
-        );
-      })}
+      {week.map((day, dayIndex) => (
+        <Day
+          key={dayIndex}
+          day={day}
+          selectedDate={selectedDate}
+          onDayClick={onDayClick}
+        />
+      ))}
     </View>
   );
-}
-
-const monthStyles = StyleSheet.create({
-  container: {
-    flexDirection: "column",
-  },
-  weekdayRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    aspectRatio: 14,
-  },
-  weekdayCell: {
-    flex: 1,
-    alignItems: "center",
-  },
 });
 
 interface MonthProps {
@@ -149,18 +152,14 @@ interface MonthProps {
 
 const Month = memo(
   function Month({ year, month, selectedDate, onDayClick }: MonthProps) {
-    const { width } = useWindowDimensions();
     const daysArray = generateCalendarDays(year, month);
     const weeks = groupIntoWeeks(daysArray);
-    const { height } = useWindowDimensions();
 
     return (
-      <View
-        style={[monthStyles.container, { width: width * MONTH_CALENDAR_WIDTH }]}
-      >
-        <View style={monthStyles.weekdayRow}>
+      <View style={calendarStyles.container}>
+        <View style={calendarStyles.headerRow}>
           {DAYS_OF_WEEK_ABBR.map((day, index) => (
-            <View key={index} style={monthStyles.weekdayCell}>
+            <View key={index} style={calendarStyles.headerCell}>
               <Text semibold tint>
                 {day}
               </Text>
@@ -168,14 +167,16 @@ const Month = memo(
           ))}
         </View>
 
-        {weeks.map((week, weekIndex) => (
-          <Week
-            key={weekIndex}
-            week={week}
-            selectedDate={selectedDate}
-            onDayClick={onDayClick}
-          />
-        ))}
+        <View style={calendarStyles.weeksContainer}>
+          {weeks.map((week, weekIndex) => (
+            <Week
+              key={weekIndex}
+              week={week}
+              selectedDate={selectedDate}
+              onDayClick={onDayClick}
+            />
+          ))}
+        </View>
       </View>
     );
   },
@@ -193,19 +194,6 @@ interface MonthData {
   year: number;
   month: number;
 }
-
-const monthCalendarHeaderStyles = StyleSheet.create({
-  container: {
-    ...StyleUtils.flexRow(),
-    justifyContent: "space-between",
-    alignItems: "center",
-    paddingHorizontal: "3%",
-    flex: 1,
-  },
-  actions: {
-    ...StyleUtils.flexRow(2),
-  },
-});
 
 type MonthCalendarHeaderProps = {
   monthDatum: MonthData;
@@ -230,7 +218,7 @@ function MonthCalendarHeader({
       <View style={monthCalendarHeaderStyles.actions}>
         <TouchableOpacity onPress={onGoBack} disabled={!canGoBack}>
           <ChevronLeft
-            size={scaleFontSize(28)}
+            size={28}
             color={
               canGoBack
                 ? useGetColor(AppColor.primary)
@@ -240,7 +228,7 @@ function MonthCalendarHeader({
         </TouchableOpacity>
         <TouchableOpacity onPress={onGoForward} disabled={!canGoForward}>
           <ChevronRight
-            size={scaleFontSize(28)}
+            size={28}
             color={
               canGoForward
                 ? useGetColor(AppColor.primary)
@@ -279,10 +267,13 @@ function generateMonthsData(currentDate: number) {
 const pagerMonthCalendarStyles = StyleSheet.create({
   container: {
     ...StyleUtils.flexColumn(),
+    paddingVertical: "2%",
     paddingHorizontal: "3%",
+    flex: 1,
   },
   page: {
     ...StyleUtils.flexRow(),
+    flex: 1,
   },
 });
 
@@ -293,7 +284,6 @@ type MonthCalendarProps = {
 const OFFSCREEN_PAGES = 1;
 
 export function MonthCalendar({ onFinishDayClick }: MonthCalendarProps) {
-  const { height } = useWindowDimensions();
   const { selection, setSelection } = useCalendar();
   const [data] = useState<MonthData[]>(generateMonthsData(Date.now()));
   const [currentPage, setCurrentPage] = useState(
@@ -328,18 +318,16 @@ export function MonthCalendar({ onFinishDayClick }: MonthCalendarProps) {
 
   return (
     <View style={pagerMonthCalendarStyles.container}>
-      <View style={{ height: height * 0.075 }}>
-        <MonthCalendarHeader
-          monthDatum={data[currentPage]}
-          canGoBack={currentPage > 0}
-          onGoBack={onGoBack}
-          canGoForward={currentPage < data.length - 1}
-          onGoForward={onGoForward}
-        />
-      </View>
+      <MonthCalendarHeader
+        monthDatum={data[currentPage]}
+        canGoBack={currentPage > 0}
+        onGoBack={onGoBack}
+        canGoForward={currentPage < data.length - 1}
+        onGoForward={onGoForward}
+      />
       <PagerView
         ref={pagerRef}
-        style={{ height: "100%", width: "100%" }}
+        style={{ flex: 1 }}
         initialPage={currentPage}
         onPageSelected={onPageSelected}
       >

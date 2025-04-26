@@ -7,6 +7,8 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { LocationProvider } from "@/context/location";
 import { CalendarProvider } from "@/components/calendar";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
+
 // Preload assets
 const preloadAssets = async () => {
   // Load image assets
@@ -48,11 +50,13 @@ export function App() {
   return (
     <SafeAreaProvider>
       <GestureHandlerRootView>
-        <LocationProvider>
-          <CalendarProvider>
-            <Layout />
-          </CalendarProvider>
-        </LocationProvider>
+        <BottomSheetModalProvider>
+          <LocationProvider>
+            <CalendarProvider>
+              <Layout />
+            </CalendarProvider>
+          </LocationProvider>
+        </BottomSheetModalProvider>
       </GestureHandlerRootView>
     </SafeAreaProvider>
   );
