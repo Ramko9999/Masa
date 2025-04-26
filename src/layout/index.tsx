@@ -1,4 +1,5 @@
 import {
+  DefaultTheme,
   NavigationContainer,
 } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -17,6 +18,9 @@ import { Home } from "@/screens/tabs/home";
 import { CustomTabBar } from "./tab-bar";
 import { SystemBars } from "react-native-edge-to-edge";
 import { Intro } from "@/screens/intro";
+import { useColorScheme } from "react-native";
+import { useGetColor } from "@/theme/color";
+import { AppColor } from "@/theme/color";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator<TabParamList>();
@@ -50,8 +54,19 @@ function Tabs() {
 }
 
 export function Layout() {
+
+  const colorScheme = useColorScheme();
+  const color = useGetColor(AppColor.background, colorScheme);
+  const theme = {
+    ...DefaultTheme,
+    colors: {
+      ...DefaultTheme.colors,
+      background: color,
+    },
+  };
+
   return (
-    <NavigationContainer>
+    <NavigationContainer theme={theme}>
       <Stack.Navigator
         initialRouteName="splash"
         screenOptions={{ headerShown: false }}

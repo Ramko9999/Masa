@@ -10,7 +10,7 @@ import Animated, {
 } from "react-native-reanimated";
 import { ColorSchemeName, StyleSheet, useColorScheme } from "react-native";
 import { View } from "@/theme";
-import { useThemedStyles } from "@/theme/color";
+import { AppColor, useGetColor, useThemedStyles } from "@/theme/color";
 
 const LOGO_SVG_XML = `
     <svg
@@ -79,6 +79,8 @@ export function SplashLogo({
 }: SplashLogoProps) {
   const strokeDashoffset = useSharedValue(100);
   const circleOpacity = useSharedValue(0);
+  const colorScheme = useColorScheme();
+  const logoColor = useGetColor(AppColor.primary, colorScheme);
 
   useEffect(() => {
     if (shouldAnimate) {
@@ -121,7 +123,7 @@ export function SplashLogo({
       height="200"
       viewBox="0 0 100 100"
       fill="none"
-      stroke="black"
+      stroke={logoColor}
       strokeWidth="5"
       strokeLinecap="round"
       strokeLinejoin="round"
@@ -221,7 +223,7 @@ export function SplashLogo({
         cy="38"
         r="2"
         strokeWidth="2"
-        fill="black"
+        fill={logoColor}
       />
       <AnimatedCircle
         animatedProps={animatedCircleProps}
@@ -229,7 +231,7 @@ export function SplashLogo({
         cy="62"
         r="2"
         strokeWidth="2"
-        fill="black"
+        fill={logoColor}
       />
       <AnimatedCircle
         animatedProps={animatedCircleProps}
@@ -237,7 +239,7 @@ export function SplashLogo({
         cy="50"
         r="2"
         strokeWidth="2"
-        fill="black"
+        fill={logoColor}
       />
       <AnimatedCircle
         animatedProps={animatedCircleProps}
@@ -245,7 +247,7 @@ export function SplashLogo({
         cy="50"
         r="2"
         strokeWidth="2"
-        fill="black"
+        fill={logoColor}
       />
     </Svg>
   );
@@ -257,7 +259,6 @@ const sheetDraggerStylesFactory = (
   container: {
     width: 90,
     height: 4,
-    backgroundColor: "white",
     borderRadius: 10,
     position: "absolute",
     top: 5,
