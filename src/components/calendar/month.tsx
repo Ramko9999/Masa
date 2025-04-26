@@ -21,7 +21,6 @@ import { ChevronLeft, ChevronRight } from "lucide-react-native";
 import PagerView from "react-native-pager-view";
 
 const MONTH_CALENDAR_WIDTH = 0.96;
-const OVERLAY_HEIGHT_MULTIPLIER = 0.04;
 
 const dayStylesFactory = (
   theme: ColorSchemeName
@@ -51,7 +50,7 @@ const dayStylesFactory = (
   },
   overlay: {
     ...StyleUtils.flexRowCenterAll(),
-    height: "70%",
+    height: "75%",
     aspectRatio: 1,
     borderRadius: "50%",
   },
@@ -69,7 +68,7 @@ function Day({ day, isSelected, onPress }: DayProps) {
   const { height } = useWindowDimensions();
   return (
     <TouchableOpacity
-      style={[dayStyles.container, { aspectRatio: 1 }]}
+      style={dayStyles.container}
       onPress={day !== null ? onPress : undefined}
       disabled={day === null}
     >
@@ -77,9 +76,6 @@ function Day({ day, isSelected, onPress }: DayProps) {
         <View
           style={[
             dayStyles.overlay,
-            {
-              borderRadius: (height * OVERLAY_HEIGHT_MULTIPLIER) / 2,
-            },
             isToday && dayStyles.today,
             isSelected && dayStyles.selected,
           ]}
@@ -105,7 +101,7 @@ const weekStylesFactory = (
 ): StyleSheet.NamedStyles<any> => ({
   container: {
     ...StyleUtils.flexRow(),
-    aspectRatio: 9.5,
+    flex: 1,
   },
 });
 
@@ -137,10 +133,11 @@ const monthStylesFactory = (
   theme: ColorSchemeName
 ): StyleSheet.NamedStyles<any> => ({
   container: {
-    flexDirection: "column",
+    ...StyleUtils.flexColumn(),
+    flex: 1
   },
   weekdayRow: {
-    flexDirection: "row",
+    ...StyleUtils.flexRow(),
     alignItems: "center",
     aspectRatio: 14,
   },
@@ -162,7 +159,6 @@ const Month = memo(
     const { width } = useWindowDimensions();
     const daysArray = generateCalendarDays(year, month);
     const weeks = groupIntoWeeks(daysArray);
-    const { height } = useWindowDimensions();
     const monthStyles = useThemedStyles(monthStylesFactory);
 
     return (
@@ -303,6 +299,7 @@ const pagerMonthCalendarStylesFactory = (
   },
   page: {
     ...StyleUtils.flexRow(),
+    flex: 1,
   },
 });
 
@@ -350,7 +347,7 @@ export function MonthCalendar({ onFinishDayClick }: MonthCalendarProps) {
     pagerMonthCalendarStylesFactory
   );
   return (
-    <View style={pagerMonthCalendarStyles.container}>
+    <View style={[pagerMonthCalendarStyles.container, {paddingBottom: height * 0.025}]}>
       <View style={{ height: height * 0.075 }}>
         <MonthCalendarHeader
           monthDatum={data[currentPage]}
@@ -362,7 +359,7 @@ export function MonthCalendar({ onFinishDayClick }: MonthCalendarProps) {
       </View>
       <PagerView
         ref={pagerRef}
-        style={{ height: "100%", width: "100%" }}
+        style={{ height: height * 0.35, width: "100%" }}
         initialPage={currentPage}
         onPageSelected={onPageSelected}
       >
@@ -373,7 +370,7 @@ export function MonthCalendar({ onFinishDayClick }: MonthCalendarProps) {
             collapsable={false}
           >
             {index >= currentPage - OFFSCREEN_PAGES &&
-            index <= currentPage + OFFSCREEN_PAGES ? (
+              index <= currentPage + OFFSCREEN_PAGES ? (
               <Month
                 {...monthData}
                 selectedDate={selection.date}

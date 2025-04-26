@@ -2,12 +2,13 @@ import {
   ColorSchemeName,
   Pressable,
   StyleSheet,
+  useColorScheme,
   ViewStyle,
 } from "react-native";
 import { forwardRef, useEffect, useImperativeHandle } from "react";
 import Animated, {
   Easing,
-  interpolateColor,
+  interpolate,
   runOnJS,
   useAnimatedStyle,
   useSharedValue,
@@ -16,16 +17,16 @@ import Animated, {
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import React from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { useThemedStyles } from "@/theme/color";
+import { AppColor, useGetColor, useThemedStyles } from "@/theme/color";
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
-const BACKDROP_VISIBLE_COLOR = "rgba(0, 0, 0, 0.5)";
 
 const backdropStylesFactory = (
   theme: ColorSchemeName
 ): StyleSheet.NamedStyles<any> => ({
   container: {
     ...StyleSheet.absoluteFillObject,
+    backgroundColor: useGetColor(AppColor.primary, theme),
     zIndex: 1,
   },
 });
@@ -96,6 +97,7 @@ export const BottomSheet = forwardRef<BottomSheetRef, BottomSheetProps>(
 
     const sheetStyles = useThemedStyles(sheetStylesFactory);
 
+
     useEffect(() => {
       if (show) {
         totalTranslation.value = withTiming(0, SNAP_OPEN_CONFIG);
@@ -140,11 +142,7 @@ export const BottomSheet = forwardRef<BottomSheetRef, BottomSheetProps>(
     useImperativeHandle(ref, () => ({ hide }));
 
     const backdropAnimatedStyle = useAnimatedStyle(() => ({
-      backgroundColor: interpolateColor(
-        totalTranslation.value,
-        [0, maxTranslation],
-        [BACKDROP_VISIBLE_COLOR, "rgba(0, 0, 0, 0)"]
-      ),
+      opacity: interpolate(totalTranslation.value, [0, maxTranslation], [0.5, 0])
     }));
 
     const contentAnimatedStyle = useAnimatedStyle(() => ({
