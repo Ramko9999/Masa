@@ -33,6 +33,10 @@ const dayStylesFactory = (
     borderRadius: 6,
     aspectRatio: 1,
   },
+  pressable: {
+    paddingHorizontal: "20%",
+    paddingVertical: "10%",
+  },
   text: {
     fontWeight: "normal",
   },
@@ -53,6 +57,9 @@ const dayStylesFactory = (
   overlay: {
     ...StyleUtils.flexRowCenterAll(),
     borderRadius: "50%",
+    width: "75%",
+    aspectRatio: 1,
+    position: "absolute",
   },
 });
 
@@ -67,36 +74,29 @@ function Day({ day, isSelected, onPress }: DayProps) {
   const isToday = day === truncateToDay(Date.now());
   const { height } = useWindowDimensions();
   return (
-    <View
-      style={[
-        dayStyles.container
-      ]}
-    >
+    <View style={[dayStyles.container]}>
+      <View
+        style={[
+          dayStyles.overlay,
+          isToday && dayStyles.today,
+          isSelected && dayStyles.selected,
+        ]}
+      />
       <TouchableOpacity
-        style={{ paddingHorizontal: "20%", paddingVertical: "10%" }}
+        style={dayStyles.pressable}
         onPress={day !== null ? onPress : undefined}
         disabled={day === null}
       >
-        {
-          <View
-            style={[
-              dayStyles.overlay,
-              isToday && dayStyles.today,
-              isSelected && dayStyles.selected,
-            ]}
-          >
-            <Text
-              large
-              style={[
-                dayStyles.text,
-                isSelected && dayStyles.selectedText,
-                isToday && dayStyles.todayText,
-              ]}
-            >
-              {day !== null ? new Date(day).getDate() : null}
-            </Text>
-          </View>
-        }
+        <Text
+          large
+          style={[
+            dayStyles.text,
+            isSelected && dayStyles.selectedText,
+            isToday && dayStyles.todayText,
+          ]}
+        >
+          {day !== null ? new Date(day).getDate() : null}
+        </Text>
       </TouchableOpacity>
     </View>
   );
@@ -143,7 +143,7 @@ const monthStylesFactory = (
     flex: 1,
   },
   weekdayRow: {
-    ...StyleUtils.flexRow()
+    ...StyleUtils.flexRow(),
   },
   weekdayCell: {
     flex: 1,
