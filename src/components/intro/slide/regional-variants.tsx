@@ -1,6 +1,6 @@
 import { AnimatedSentence } from "@/components/util/animated-sentence";
 import {
-  introSlideStyles,
+  introSlideStylesFactory,
   IntroSlideProps,
   WORD_DURATION,
   STAGGER,
@@ -11,6 +11,7 @@ import { TouchableOpacity } from "react-native";
 import { DelayedFadeIn } from "@/components/util/delayed-fade-in";
 import { useState } from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useThemedStyles } from "@/theme/color";
 const REGIONAL_VARIANTS_TITLE = "Calendar with Regional Differences";
 const REGIONAL_VARIANTS_FIRST_POINT =
   "Festival dates can vary based on region as different regions follow slightly different systems.";
@@ -32,6 +33,8 @@ export function IntroRegionalVariantsSlide({ onNext }: IntroSlideProps) {
   };
 
   const insets = useSafeAreaInsets();
+
+  const introSlideStyles = useThemedStyles(introSlideStylesFactory);
 
   return (
     <View style={introSlideStyles.container} onTouchEnd={handleTap}>

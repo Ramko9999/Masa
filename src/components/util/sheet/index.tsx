@@ -1,8 +1,14 @@
-import { Pressable, StyleSheet, ViewStyle } from "react-native";
+import {
+  ColorSchemeName,
+  Pressable,
+  StyleSheet,
+  useColorScheme,
+  ViewStyle,
+} from "react-native";
 import { forwardRef, useEffect, useImperativeHandle } from "react";
 import Animated, {
   Easing,
-  interpolateColor,
+  interpolate,
   runOnJS,
   useAnimatedStyle,
   useSharedValue,
@@ -11,13 +17,16 @@ import Animated, {
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import React from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { AppColor, useGetColor, useThemedStyles } from "@/theme/color";
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
-const BACKDROP_VISIBLE_COLOR = "rgba(0, 0, 0, 0.5)";
 
-const backdropStyles = StyleSheet.create({
+const backdropStylesFactory = (
+  theme: ColorSchemeName
+): StyleSheet.NamedStyles<any> => ({
   container: {
     ...StyleSheet.absoluteFillObject,
+    backgroundColor: useGetColor(AppColor.primary, theme),
     zIndex: 1,
   },
 });
@@ -28,6 +37,7 @@ type BackdropProps = {
 };
 
 function Backdrop({ animatedStyle, onClick }: BackdropProps) {
+  const backdropStyles = useThemedStyles(backdropStylesFactory);
   return (
     <AnimatedPressable
       style={[backdropStyles.container, animatedStyle]}
@@ -36,7 +46,9 @@ function Backdrop({ animatedStyle, onClick }: BackdropProps) {
   );
 }
 
-const sheetStyles = StyleSheet.create({
+const sheetStylesFactory = (
+  theme: ColorSchemeName
+): StyleSheet.NamedStyles<any> => ({
   content: {
     zIndex: 1,
     position: "absolute",
@@ -83,6 +95,9 @@ export const BottomSheet = forwardRef<BottomSheetRef, BottomSheetProps>(
     const lastTranslation = useSharedValue(0);
     const totalTranslation = useSharedValue(maxTranslation);
 
+    const sheetStyles = useThemedStyles(sheetStylesFactory);
+
+
     useEffect(() => {
       if (show) {
         totalTranslation.value = withTiming(0, SNAP_OPEN_CONFIG);
@@ -127,16 +142,18 @@ export const BottomSheet = forwardRef<BottomSheetRef, BottomSheetProps>(
     useImperativeHandle(ref, () => ({ hide }));
 
     const backdropAnimatedStyle = useAnimatedStyle(() => ({
-      backgroundColor: interpolateColor(
+      opacity: interpolate(
         totalTranslation.value,
         [0, maxTranslation],
-        [BACKDROP_VISIBLE_COLOR, "rgba(0, 0, 0, 0)"]
+        [0.5, 0]
       ),
     }));
 
     const contentAnimatedStyle = useAnimatedStyle(() => ({
       transform: [{ translateY: totalTranslation.value }],
     }));
+
+    const theme = useColorScheme();
 
     return (
       show && (
@@ -148,7 +165,11 @@ export const BottomSheet = forwardRef<BottomSheetRef, BottomSheetProps>(
                 sheetStyles.content,
                 contentStyle,
                 contentAnimatedStyle,
-                { height: contentHeight, paddingBottom: insets.bottom },
+                {
+                  height: contentHeight,
+                  paddingBottom: insets.bottom,
+                  backgroundColor: useGetColor(AppColor.background, theme),
+                },
               ]}
             >
               {children}

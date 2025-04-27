@@ -1,12 +1,50 @@
 import React from "react";
 import { View, Text } from "@/theme/index";
-import { Pressable, StyleSheet } from "react-native";
+import { ColorSchemeName, Pressable, StyleSheet } from "react-native";
 import { BottomTabBarProps } from "@react-navigation/bottom-tabs";
-import { AppColor, useGetColor } from "@/theme/color";
+import { AppColor, useGetColor, useThemedStyles } from "@/theme/color";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+
+const stylesFactory = (
+  theme: ColorSchemeName
+): StyleSheet.NamedStyles<any> => ({
+  wrapper: {
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    right: 0,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  container: {
+    flexDirection: "row",
+    borderRadius: 30,
+    alignItems: "center",
+    justifyContent: "space-between",
+    padding: 2,
+    backgroundColor: useGetColor(AppColor.tint, theme),
+  },
+  tab: {
+    borderRadius: 30,
+    alignItems: "center",
+    paddingVertical: 4,
+    paddingHorizontal: 12,
+  },
+  activeTab: {
+    backgroundColor: useGetColor(AppColor.primary, theme),
+  },
+  tabText: {
+    color: useGetColor(AppColor.background, theme),
+  },
+  activeTabText: {
+    color: useGetColor(AppColor.background, theme),
+  },
+});
 
 export const CustomTabBar = ({ state, navigation }: BottomTabBarProps) => {
   const insets = useSafeAreaInsets();
+  const styles = useThemedStyles(stylesFactory);
+
   return (
     <View style={[styles.wrapper, { paddingBottom: insets.bottom + 20 }]}>
       <View style={styles.container}>
@@ -37,37 +75,3 @@ export const CustomTabBar = ({ state, navigation }: BottomTabBarProps) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  wrapper: {
-    position: "absolute",
-    bottom: 0,
-    left: 0,
-    right: 0,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  container: {
-    flexDirection: "row",
-    borderRadius: 30,
-    alignItems: "center",
-    justifyContent: "space-between",
-    padding: 2,
-    backgroundColor: useGetColor(AppColor.tint),
-  },
-  tab: {
-    borderRadius: 30,
-    alignItems: "center",
-    paddingVertical: 4,
-    paddingHorizontal: 12,
-  },
-  activeTab: {
-    backgroundColor: useGetColor(AppColor.primary),
-  },
-  tabText: {
-    color: useGetColor(AppColor.background),
-  },
-  activeTabText: {
-    color: useGetColor(AppColor.background),
-  },
-});

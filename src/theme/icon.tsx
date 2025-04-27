@@ -1,15 +1,16 @@
 import { SvgXml, Svg, Use, Defs, G, Path, Circle } from "react-native-svg";
-import React, { useEffect } from 'react';
+import React, { useEffect } from "react";
 import Animated, {
-    useAnimatedProps,
-    useSharedValue,
-    withTiming,
-    withDelay,
-    Easing,
-    runOnJS,
-} from 'react-native-reanimated';
-import { StyleSheet } from "react-native";
+  useAnimatedProps,
+  useSharedValue,
+  withTiming,
+  withDelay,
+  Easing,
+  runOnJS,
+} from "react-native-reanimated";
+import { ColorSchemeName, StyleSheet, useColorScheme } from "react-native";
 import { View } from "@/theme";
+import { AppColor, useGetColor, useThemedStyles } from "@/theme/color";
 
 const LOGO_SVG_XML = `
     <svg
@@ -52,314 +53,347 @@ const LOGO_SVG_XML = `
 `;
 
 type LogoProps = {
-    width: number;
-    height: number;
-    color: string;
-}
+  width: number;
+  height: number;
+  color: string;
+};
 
 export function Logo({ width, height, color }: LogoProps) {
-    return <SvgXml xml={LOGO_SVG_XML} stroke={color} height={height} width={width} />
+  return (
+    <SvgXml xml={LOGO_SVG_XML} stroke={color} height={height} width={width} />
+  );
 }
-
 
 const AnimatedPath = Animated.createAnimatedComponent(Path);
 const AnimatedUse = Animated.createAnimatedComponent(Use);
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 
 type SplashLogoProps = {
-    shouldAnimate: boolean;
-    onAnimationComplete: () => void;
-}
+  shouldAnimate: boolean;
+  onAnimationComplete: () => void;
+};
 
-export function SplashLogo({ shouldAnimate, onAnimationComplete }: SplashLogoProps) {
+export function SplashLogo({
+  shouldAnimate,
+  onAnimationComplete,
+}: SplashLogoProps) {
+  const strokeDashoffset = useSharedValue(100);
+  const circleOpacity = useSharedValue(0);
+  const colorScheme = useColorScheme();
+  const logoColor = useGetColor(AppColor.primary, colorScheme);
 
-    const strokeDashoffset = useSharedValue(100);
-    const circleOpacity = useSharedValue(0);
-
-    useEffect(() => {
-        if (shouldAnimate) {
-            strokeDashoffset.value = withTiming(0, {
-                duration: 3000,
-                easing: Easing.bezier(0.25, 0.1, 0.25, 1),
-            }, (done) => {
-                if (done) {
-                    runOnJS(onAnimationComplete)()
-                }
-            });
-
-            circleOpacity.value = withDelay(1500, withTiming(1, {
-                duration: 500,
-                easing: Easing.bezier(0.25, 0.1, 0.25, 1),
-            }));
+  useEffect(() => {
+    if (shouldAnimate) {
+      strokeDashoffset.value = withTiming(
+        0,
+        {
+          duration: 3000,
+          easing: Easing.bezier(0.25, 0.1, 0.25, 1),
+        },
+        (done) => {
+          if (done) {
+            runOnJS(onAnimationComplete)();
+          }
         }
-    }, [shouldAnimate]);
+      );
 
-    const animatedCircleProps = useAnimatedProps(() => ({ opacity: circleOpacity.value }));
+      circleOpacity.value = withDelay(
+        1500,
+        withTiming(1, {
+          duration: 500,
+          easing: Easing.bezier(0.25, 0.1, 0.25, 1),
+        })
+      );
+    }
+  }, [shouldAnimate]);
 
-    const commonPathProps = { strokeDasharray: 100 };
+  const animatedCircleProps = useAnimatedProps(() => ({
+    opacity: circleOpacity.value,
+  }));
 
-    const animatedPathProps = useAnimatedProps(() => ({
-        strokeDashoffset: strokeDashoffset.value,
-    }));
+  const commonPathProps = { strokeDasharray: 100 };
 
+  const animatedPathProps = useAnimatedProps(() => ({
+    strokeDashoffset: strokeDashoffset.value,
+  }));
 
-    return (
-        <Svg width="200"
-            height="200"
-            viewBox="0 0 100 100"
-            fill="none"
-            stroke="black"
-            strokeWidth="5"
-            strokeLinecap="round"
-            strokeLinejoin="round">
+  return (
+    <Svg
+      width="200"
+      height="200"
+      viewBox="0 0 100 100"
+      fill="none"
+      stroke={logoColor}
+      strokeWidth="5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <Defs>
+        <G id="segment-h">
+          <AnimatedPath
+            animatedProps={animatedPathProps}
+            {...commonPathProps}
+            d="M0 0 q 40 15 80 0"
+          />
+        </G>
+        <G id="segment-v">
+          <AnimatedPath
+            animatedProps={animatedPathProps}
+            {...commonPathProps}
+            d="M0 0 q 15 40 0 80"
+          />
+        </G>
+        <G id="loop">
+          <AnimatedPath
+            animatedProps={animatedPathProps}
+            {...commonPathProps}
+            d="M 0 0 c -18 -7 3 -28 10 -10"
+          />
+        </G>
+      </Defs>
 
-            <Defs>
-                <G id="segment-h">
-                    <AnimatedPath
-                        animatedProps={animatedPathProps}
-                        {...commonPathProps}
-                        d="M0 0 q 40 15 80 0" />
-                </G>
-                <G id="segment-v">
-                    <AnimatedPath
-                        animatedProps={animatedPathProps}
-                        {...commonPathProps}
-                        d="M0 0 q 15 40 0 80" />
-                </G>
-                <G id="loop">
-                    <AnimatedPath
-                        animatedProps={animatedPathProps}
-                        {...commonPathProps}
-                        d="M 0 0 c -18 -7 3 -28 10 -10" />
-                </G>
-            </Defs>
+      <AnimatedUse
+        animatedProps={animatedPathProps}
+        href="#segment-h"
+        x="10"
+        y="20"
+      />
+      <AnimatedUse
+        animatedProps={animatedPathProps}
+        href="#segment-v"
+        x="20"
+        y="10"
+      />
+      <AnimatedUse
+        animatedProps={animatedPathProps}
+        href="#segment-h"
+        x="90"
+        y="80"
+        transform="rotate(180, 90, 80)"
+      />
+      <AnimatedUse
+        animatedProps={animatedPathProps}
+        href="#segment-v"
+        x="80"
+        y="90"
+        transform="rotate(180, 80, 90)"
+      />
+      <AnimatedUse
+        animatedProps={animatedPathProps}
+        href="#loop"
+        x="10"
+        y="20"
+      />
+      <AnimatedUse
+        animatedProps={animatedPathProps}
+        href="#loop"
+        x="80"
+        y="10"
+        transform="rotate(90, 80, 10)"
+      />
+      <AnimatedUse
+        animatedProps={animatedPathProps}
+        href="#loop"
+        x="20"
+        y="90"
+        transform="rotate(270, 20, 90)"
+      />
+      <AnimatedUse
+        animatedProps={animatedPathProps}
+        href="#loop"
+        x="90"
+        y="80"
+        transform="rotate(180, 90, 80)"
+      />
 
-            <AnimatedUse
-                animatedProps={animatedPathProps}
-                href="#segment-h"
-                x="10"
-                y="20" />
-            <AnimatedUse
-                animatedProps={animatedPathProps}
-                href="#segment-v"
-                x="20"
-                y="10" />
-            <AnimatedUse
-                animatedProps={animatedPathProps}
-                href="#segment-h"
-                x="90"
-                y="80"
-                transform="rotate(180, 90, 80)" />
-            <AnimatedUse
-                animatedProps={animatedPathProps}
-                href="#segment-v"
-                x="80"
-                y="90"
-                transform="rotate(180, 80, 90)" />
-            <AnimatedUse
-                animatedProps={animatedPathProps}
-                href="#loop"
-                x="10"
-                y="20" />
-            <AnimatedUse
-                animatedProps={animatedPathProps}
-                href="#loop"
-                x="80"
-                y="10"
-                transform="rotate(90, 80, 10)" />
-            <AnimatedUse
-                animatedProps={animatedPathProps}
-                href="#loop"
-                x="20"
-                y="90"
-                transform="rotate(270, 20, 90)" />
-            <AnimatedUse
-                animatedProps={animatedPathProps}
-                href="#loop"
-                x="90"
-                y="80"
-                transform="rotate(180, 90, 80)" />
+      <AnimatedPath
+        animatedProps={animatedPathProps}
+        {...commonPathProps}
+        d="M 35 35 l 30 30"
+      />
+      <AnimatedPath
+        animatedProps={animatedPathProps}
+        {...commonPathProps}
+        d="M 65 35 l -30 30"
+      />
 
-            <AnimatedPath
-                animatedProps={animatedPathProps}
-                {...commonPathProps}
-                d="M 35 35 l 30 30" />
-            <AnimatedPath
-                animatedProps={animatedPathProps}
-                {...commonPathProps}
-                d="M 65 35 l -30 30" />
-
-            <AnimatedCircle
-                animatedProps={animatedCircleProps}
-                cx="50"
-                cy="38"
-                r="2"
-                strokeWidth="2"
-                fill="black" />
-            <AnimatedCircle
-                animatedProps={animatedCircleProps}
-                cx="50"
-                cy="62"
-                r="2"
-                strokeWidth="2"
-                fill="black" />
-            <AnimatedCircle
-                animatedProps={animatedCircleProps}
-                cx="38"
-                cy="50"
-                r="2"
-                strokeWidth="2"
-                fill="black" />
-            <AnimatedCircle
-                animatedProps={animatedCircleProps}
-                cx="62"
-                cy="50"
-                r="2"
-                strokeWidth="2"
-                fill="black" />
-        </Svg>
-    );
+      <AnimatedCircle
+        animatedProps={animatedCircleProps}
+        cx="50"
+        cy="38"
+        r="2"
+        strokeWidth="2"
+        fill={logoColor}
+      />
+      <AnimatedCircle
+        animatedProps={animatedCircleProps}
+        cx="50"
+        cy="62"
+        r="2"
+        strokeWidth="2"
+        fill={logoColor}
+      />
+      <AnimatedCircle
+        animatedProps={animatedCircleProps}
+        cx="38"
+        cy="50"
+        r="2"
+        strokeWidth="2"
+        fill={logoColor}
+      />
+      <AnimatedCircle
+        animatedProps={animatedCircleProps}
+        cx="62"
+        cy="50"
+        r="2"
+        strokeWidth="2"
+        fill={logoColor}
+      />
+    </Svg>
+  );
 }
 
-const sheetDraggerStyles = StyleSheet.create({
-    container: {
-        width: 90,
-        height: 4,
-        backgroundColor: "white",
-        borderRadius: 10,
-        position: "absolute",
-        top: 5,
-        left: "50%",
-        transform: [{ translateX: -45 }],
-    },
+const sheetDraggerStylesFactory = (
+  theme: ColorSchemeName
+): StyleSheet.NamedStyles<any> => ({
+  container: {
+    width: 90,
+    height: 4,
+    borderRadius: 10,
+    position: "absolute",
+    top: 5,
+    left: "50%",
+    transform: [{ translateX: -45 }],
+  },
 });
 
 type SheetDraggerProps = {
-    color?: string;
-}
+  color?: string;
+};
 
 export function SheetDragger({ color }: SheetDraggerProps) {
-    return <View style={[sheetDraggerStyles.container, { backgroundColor: color }]} />;
+  const sheetDraggerStyles = useThemedStyles(sheetDraggerStylesFactory);
+  return (
+    <View style={[sheetDraggerStyles.container, { backgroundColor: color }]} />
+  );
 }
 
-
-type RiseSetIconProps = {   
-    width?: number;
-    height?: number;
-    fill?: string;
-}
+type RiseSetIconProps = {
+  width?: number;
+  height?: number;
+  fill?: string;
+};
 
 export const SunsetIcon: React.FC<RiseSetIconProps> = ({
-    width = 24,
-    height = 24,
-    fill = "#EE9321",
+  width = 24,
+  height = 24,
+  fill = "#EE9321",
 }) => {
-    return (
-      <Svg
-        width={width}
-        height={height}
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke={fill}
-        strokeWidth={2}
-        strokeLinecap="round"   
-        strokeLinejoin="round"
-      >
-        <Path d="M12 10V2" />
-        <Path d="m4.93 10.93 1.41 1.41" />
-        <Path d="M2 18h2" />
-        <Path d="M20 18h2" />
-        <Path d="m19.07 10.93-1.41 1.41" />
-        <Path d="M22 22H2" />
-        <Path d="m16 6-4 4-4-4" />
-        <Path d="M16 18a4 4 0 0 0-8 0" />
-      </Svg>
-    );
-  };
+  return (
+    <Svg
+      width={width}
+      height={height}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke={fill}
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <Path d="M12 10V2" />
+      <Path d="m4.93 10.93 1.41 1.41" />
+      <Path d="M2 18h2" />
+      <Path d="M20 18h2" />
+      <Path d="m19.07 10.93-1.41 1.41" />
+      <Path d="M22 22H2" />
+      <Path d="m16 6-4 4-4-4" />
+      <Path d="M16 18a4 4 0 0 0-8 0" />
+    </Svg>
+  );
+};
 
-  export const SunriseIcon: React.FC<RiseSetIconProps> = ({
-    width = 24,
-    height = 24,
-    fill = "#E9B824",
-  }) => {
-    return (
-      <Svg
-        width={width}
-        height={height}
-        viewBox="0 0 24 24"
-        fill="none"
+export const SunriseIcon: React.FC<RiseSetIconProps> = ({
+  width = 24,
+  height = 24,
+  fill = "#E9B824",
+}) => {
+  return (
+    <Svg
+      width={width}
+      height={height}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke={fill}
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <Path d="M12 2v8" />
+      <Path d="m4.93 10.93 1.41 1.41" />
+      <Path d="M2 18h2" />
+      <Path d="M20 18h2" />
+      <Path d="m19.07 10.93-1.41 1.41" />
+      <Path d="M22 22H2" />
+      <Path d="m8 6 4-4 4 4" />
+      <Path d="M16 18a4 4 0 0 0-8 0" />
+    </Svg>
+  );
+};
+
+export const MoonriseIcon: React.FC<RiseSetIconProps> = ({
+  width = 24,
+  height = 24,
+  fill = "#01A9FF",
+}) => {
+  return (
+    <Svg width={width} height={height} viewBox="0 0 24 24" fill={fill}>
+      <Path d="M9.36 3.293a1 1 0 0 1 .187 1.157A7.45 7.45 0 0 0 19.55 14.453a1 1 0 0 1 1.343 1.343 9.45 9.45 0 1 1-12.69-12.69 1 1 0 0 1 1.158.187zM6.823 6.67A7.45 7.45 0 0 0 17.33 17.179 9.45 9.45 0 0 1 6.821 6.67z" />
+
+      <Path
+        d="M17 2v8"
         stroke={fill}
         strokeWidth={2}
         strokeLinecap="round"
         strokeLinejoin="round"
-      >
-        <Path d="M12 2v8" />
-        <Path d="m4.93 10.93 1.41 1.41" />
-        <Path d="M2 18h2" />
-        <Path d="M20 18h2" />
-        <Path d="m19.07 10.93-1.41 1.41" />
-        <Path d="M22 22H2" />
-        <Path d="m8 6 4-4 4 4" />
-        <Path d="M16 18a4 4 0 0 0-8 0" />
-      </Svg>
-    );
-  };
-  
-  export const MoonriseIcon: React.FC<RiseSetIconProps> = ({
-    width = 24,
-    height = 24,
-    fill = "#01A9FF",
-  }) => {
-    return (
-      <Svg width={width} height={height} viewBox="0 0 24 24" fill={fill}>
-        <Path d="M9.36 3.293a1 1 0 0 1 .187 1.157A7.45 7.45 0 0 0 19.55 14.453a1 1 0 0 1 1.343 1.343 9.45 9.45 0 1 1-12.69-12.69 1 1 0 0 1 1.158.187zM6.823 6.67A7.45 7.45 0 0 0 17.33 17.179 9.45 9.45 0 0 1 6.821 6.67z" />
-  
-        <Path
-          d="M17 2v8"
-          stroke={fill}
-          strokeWidth={2}
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          fill="none"
-        />
-        <Path
-          d="m13 6 4-4 4 4"
-          stroke={fill}
-          strokeWidth={2}
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          fill="none"
-        />
-      </Svg>
-    );
-  };
-  
-  export const MoonsetIcon: React.FC<RiseSetIconProps> = ({
-    width = 24,
-    height = 24,
-    fill = "#6F60C0",
-  }) => {
-    return (
-      <Svg width={width} height={height} viewBox="0 0 24 24" fill={fill}>
-        <Path d="M9.36 3.293a1 1 0 0 1 .187 1.157A7.45 7.45 0 0 0 19.55 14.453a1 1 0 0 1 1.343 1.343 9.45 9.45 0 1 1-12.69-12.69 1 1 0 0 1 1.158.187zM6.823 6.67A7.45 7.45 0 0 0 17.33 17.179 9.45 9.45 0 0 1 6.821 6.67z" />
-  
-        <Path
-          d="M17 12v-8"
-          stroke={fill}
-          strokeWidth={2}
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          fill="none"
-        />
-        <Path
-          d="m13 8 4 4 4-4"
-          stroke={fill}
-          strokeWidth={2}
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          fill="none"
-        />
-      </Svg>
-    );
-  };
-  
+        fill="none"
+      />
+      <Path
+        d="m13 6 4-4 4 4"
+        stroke={fill}
+        strokeWidth={2}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        fill="none"
+      />
+    </Svg>
+  );
+};
+
+export const MoonsetIcon: React.FC<RiseSetIconProps> = ({
+  width = 24,
+  height = 24,
+  fill = "#6F60C0",
+}) => {
+  return (
+    <Svg width={width} height={height} viewBox="0 0 24 24" fill={fill}>
+      <Path d="M9.36 3.293a1 1 0 0 1 .187 1.157A7.45 7.45 0 0 0 19.55 14.453a1 1 0 0 1 1.343 1.343 9.45 9.45 0 1 1-12.69-12.69 1 1 0 0 1 1.158.187zM6.823 6.67A7.45 7.45 0 0 0 17.33 17.179 9.45 9.45 0 0 1 6.821 6.67z" />
+
+      <Path
+        d="M17 12v-8"
+        stroke={fill}
+        strokeWidth={2}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        fill="none"
+      />
+      <Path
+        d="m13 8 4 4 4-4"
+        stroke={fill}
+        strokeWidth={2}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        fill="none"
+      />
+    </Svg>
+  );
+};

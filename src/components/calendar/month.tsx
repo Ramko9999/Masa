@@ -3,8 +3,10 @@ import {
   StyleSheet,
   TouchableOpacity,
   useWindowDimensions,
+  ColorSchemeName,
+  useColorScheme,
 } from "react-native";
-import { AppColor, useGetColor } from "@/theme/color";
+import { AppColor, useGetColor, useThemedStyles } from "@/theme/color";
 import { useState, useCallback, useRef, memo } from "react";
 import {
   formatMonthYear,
@@ -19,9 +21,10 @@ import { ChevronLeft, ChevronRight } from "lucide-react-native";
 import PagerView from "react-native-pager-view";
 
 const MONTH_CALENDAR_WIDTH = 0.96;
-const OVERLAY_HEIGHT_MULTIPLIER = 0.04;
 
-const dayStyles = StyleSheet.create({
+const dayStylesFactory = (
+  theme: ColorSchemeName
+): StyleSheet.NamedStyles<any> => ({
   container: {
     flex: 1,
     alignItems: "center",
@@ -32,22 +35,22 @@ const dayStyles = StyleSheet.create({
     fontWeight: "normal",
   },
   selected: {
-    backgroundColor: useGetColor(AppColor.primary),
+    backgroundColor: useGetColor(AppColor.primary, theme),
   },
   today: {
-    backgroundColor: useGetColor(AppColor.tint),
+    backgroundColor: useGetColor(AppColor.tint, theme),
   },
   selectedText: {
-    color: useGetColor(AppColor.background),
+    color: useGetColor(AppColor.background, theme),
     fontWeight: "bold",
   },
   todayText: {
-    color: useGetColor(AppColor.background),
+    color: useGetColor(AppColor.background, theme),
     fontWeight: "bold",
   },
   overlay: {
     ...StyleUtils.flexRowCenterAll(),
-    height: "70%",
+    height: "75%",
     aspectRatio: 1,
     borderRadius: "50%",
   },
@@ -60,11 +63,12 @@ interface DayProps {
 }
 
 function Day({ day, isSelected, onPress }: DayProps) {
+  const dayStyles = useThemedStyles(dayStylesFactory);
   const isToday = day === truncateToDay(Date.now());
   const { height } = useWindowDimensions();
   return (
     <TouchableOpacity
-      style={[dayStyles.container, { aspectRatio: 1 }]}
+      style={dayStyles.container}
       onPress={day !== null ? onPress : undefined}
       disabled={day === null}
     >
@@ -72,9 +76,6 @@ function Day({ day, isSelected, onPress }: DayProps) {
         <View
           style={[
             dayStyles.overlay,
-            {
-              borderRadius: (height * OVERLAY_HEIGHT_MULTIPLIER) / 2,
-            },
             isToday && dayStyles.today,
             isSelected && dayStyles.selected,
           ]}
@@ -95,10 +96,12 @@ function Day({ day, isSelected, onPress }: DayProps) {
   );
 }
 
-const weekStyles = StyleSheet.create({
+const weekStylesFactory = (
+  theme: ColorSchemeName
+): StyleSheet.NamedStyles<any> => ({
   container: {
     ...StyleUtils.flexRow(),
-    aspectRatio: 9.5,
+    flex: 1,
   },
 });
 
@@ -109,6 +112,7 @@ interface WeekProps {
 }
 
 function Week({ week, selectedDate, onDayClick }: WeekProps) {
+  const weekStyles = useThemedStyles(weekStylesFactory);
   return (
     <View style={weekStyles.container}>
       {week.map((day, index) => {
@@ -125,12 +129,15 @@ function Week({ week, selectedDate, onDayClick }: WeekProps) {
   );
 }
 
-const monthStyles = StyleSheet.create({
+const monthStylesFactory = (
+  theme: ColorSchemeName
+): StyleSheet.NamedStyles<any> => ({
   container: {
-    flexDirection: "column",
+    ...StyleUtils.flexColumn(),
+    flex: 1
   },
   weekdayRow: {
-    flexDirection: "row",
+    ...StyleUtils.flexRow(),
     alignItems: "center",
     aspectRatio: 14,
   },
@@ -152,7 +159,7 @@ const Month = memo(
     const { width } = useWindowDimensions();
     const daysArray = generateCalendarDays(year, month);
     const weeks = groupIntoWeeks(daysArray);
-    const { height } = useWindowDimensions();
+    const monthStyles = useThemedStyles(monthStylesFactory);
 
     return (
       <View
@@ -194,7 +201,9 @@ interface MonthData {
   month: number;
 }
 
-const monthCalendarHeaderStyles = StyleSheet.create({
+const monthCalendarHeaderStylesFactory = (
+  theme: ColorSchemeName
+): StyleSheet.NamedStyles<any> => ({
   container: {
     ...StyleUtils.flexRow(),
     justifyContent: "space-between",
@@ -222,6 +231,10 @@ function MonthCalendarHeader({
   canGoForward,
   onGoForward,
 }: MonthCalendarHeaderProps) {
+  const monthCalendarHeaderStyles = useThemedStyles(
+    monthCalendarHeaderStylesFactory
+  );
+  const theme = useColorScheme();
   return (
     <View style={monthCalendarHeaderStyles.container}>
       <Text semibold large>
@@ -233,8 +246,8 @@ function MonthCalendarHeader({
             size={scaleFontSize(28)}
             color={
               canGoBack
-                ? useGetColor(AppColor.primary)
-                : useGetColor(AppColor.tint)
+                ? useGetColor(AppColor.primary, theme)
+                : useGetColor(AppColor.tint, theme)
             }
           />
         </TouchableOpacity>
@@ -243,8 +256,8 @@ function MonthCalendarHeader({
             size={scaleFontSize(28)}
             color={
               canGoForward
-                ? useGetColor(AppColor.primary)
-                : useGetColor(AppColor.tint)
+                ? useGetColor(AppColor.primary, theme)
+                : useGetColor(AppColor.tint, theme)
             }
           />
         </TouchableOpacity>
@@ -276,13 +289,17 @@ function generateMonthsData(currentDate: number) {
   });
 }
 
-const pagerMonthCalendarStyles = StyleSheet.create({
+const pagerMonthCalendarStylesFactory = (
+  theme: ColorSchemeName
+): StyleSheet.NamedStyles<any> => ({
   container: {
     ...StyleUtils.flexColumn(),
     paddingHorizontal: "3%",
+    backgroundColor: useGetColor(AppColor.background, theme),
   },
   page: {
     ...StyleUtils.flexRow(),
+    flex: 1,
   },
 });
 
@@ -326,8 +343,11 @@ export function MonthCalendar({ onFinishDayClick }: MonthCalendarProps) {
     }
   }, [currentPage, data.length]);
 
+  const pagerMonthCalendarStyles = useThemedStyles(
+    pagerMonthCalendarStylesFactory
+  );
   return (
-    <View style={pagerMonthCalendarStyles.container}>
+    <View style={[pagerMonthCalendarStyles.container, {paddingBottom: height * 0.025}]}>
       <View style={{ height: height * 0.075 }}>
         <MonthCalendarHeader
           monthDatum={data[currentPage]}
@@ -339,7 +359,7 @@ export function MonthCalendar({ onFinishDayClick }: MonthCalendarProps) {
       </View>
       <PagerView
         ref={pagerRef}
-        style={{ height: "100%", width: "100%" }}
+        style={{ height: height * 0.35, width: "100%" }}
         initialPage={currentPage}
         onPageSelected={onPageSelected}
       >
@@ -350,7 +370,7 @@ export function MonthCalendar({ onFinishDayClick }: MonthCalendarProps) {
             collapsable={false}
           >
             {index >= currentPage - OFFSCREEN_PAGES &&
-            index <= currentPage + OFFSCREEN_PAGES ? (
+              index <= currentPage + OFFSCREEN_PAGES ? (
               <Month
                 {...monthData}
                 selectedDate={selection.date}
