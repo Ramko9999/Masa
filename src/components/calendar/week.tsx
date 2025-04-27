@@ -112,6 +112,17 @@ interface WeekProps {
   onClick: (date: number) => void;
 }
 
+function shouldNotRenderWeek(prevProps: WeekProps, nextProps: WeekProps) {
+
+  const doesSelectedDateSelectionChangeMatter = (
+    prevProps.selectedDate === nextProps.selectedDate ||
+    (!prevProps.week.includes(prevProps.selectedDate) &&
+      !nextProps.week.includes(nextProps.selectedDate))
+  );
+
+  return JSON.stringify(prevProps.week) === JSON.stringify(nextProps.week) && prevProps.onClick === nextProps.onClick && doesSelectedDateSelectionChangeMatter;
+}
+
 const Week = memo(
   function Week({ week, selectedDate, onClick }: WeekProps) {
     return (
@@ -128,15 +139,7 @@ const Week = memo(
       </View>
     );
   },
-  (prevProps, nextProps) => {
-    return (
-      (prevProps.selectedDate === nextProps.selectedDate ||
-        (!prevProps.week.includes(prevProps.selectedDate) &&
-          !nextProps.week.includes(nextProps.selectedDate))) &&
-      JSON.stringify(prevProps.week) === JSON.stringify(nextProps.week) &&
-      prevProps.onClick === nextProps.onClick
-    );
-  }
+  shouldNotRenderWeek
 );
 
 const calendarTitleStyles = StyleSheet.create({
@@ -208,7 +211,7 @@ const weekCalendarStyles = StyleSheet.create({
   },
 });
 
-const OFFSCREEN_PAGES = 6;
+const OFFSCREEN_PAGES = 25;
 
 export function WeekCalendar() {
   const insets = useSafeAreaInsets();
@@ -264,7 +267,7 @@ export function WeekCalendar() {
             collapsable={false}
           >
             {index >= currentPage - OFFSCREEN_PAGES &&
-            index <= currentPage + OFFSCREEN_PAGES ? (
+              index <= currentPage + OFFSCREEN_PAGES ? (
               <Week
                 week={week}
                 selectedDate={selection.date}
