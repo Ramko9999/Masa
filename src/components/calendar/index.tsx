@@ -47,7 +47,7 @@ export function CalendarProvider({ children }: { children: React.ReactNode }) {
           show={isMonthCalendarOpen}
           onHide={() => setIsMonthCalendarOpen(false)}
           contentStyle={calendarProviderStyles.monthCalendarSheet}
-          contentHeight={height * 0.45}
+          contentHeight={height * 0.5}
           hitslopHeight={height * 0.075}
         >
           <MonthCalendar

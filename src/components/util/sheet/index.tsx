@@ -142,12 +142,18 @@ export const BottomSheet = forwardRef<BottomSheetRef, BottomSheetProps>(
     useImperativeHandle(ref, () => ({ hide }));
 
     const backdropAnimatedStyle = useAnimatedStyle(() => ({
-      opacity: interpolate(totalTranslation.value, [0, maxTranslation], [0.5, 0])
+      opacity: interpolate(
+        totalTranslation.value,
+        [0, maxTranslation],
+        [0.5, 0]
+      ),
     }));
 
     const contentAnimatedStyle = useAnimatedStyle(() => ({
       transform: [{ translateY: totalTranslation.value }],
     }));
+
+    const theme = useColorScheme();
 
     return (
       show && (
@@ -159,7 +165,11 @@ export const BottomSheet = forwardRef<BottomSheetRef, BottomSheetProps>(
                 sheetStyles.content,
                 contentStyle,
                 contentAnimatedStyle,
-                { height: contentHeight, paddingBottom: insets.bottom },
+                {
+                  height: contentHeight,
+                  paddingBottom: insets.bottom,
+                  backgroundColor: useGetColor(AppColor.background, theme),
+                },
               ]}
             >
               {children}
