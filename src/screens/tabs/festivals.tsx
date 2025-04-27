@@ -83,7 +83,7 @@ function FestivalItem({ festival, onPress }: FestivalItemProps) {
 export function Festivals({ navigation }: FestivalsProps) {
   const { location } = useLocation();
   const insets = useSafeAreaInsets();
-  const festivals = getFestivals(truncateToDay(Date.now()), location!);
+  const festivals = getFestivals(location!);
   const festivalsStyles = useThemedStyles(festivalsStylesFactory);
   const onFestivalPress = (festival: Festival) => {
     navigation.navigate("festival_details", { festival });

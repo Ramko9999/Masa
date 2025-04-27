@@ -483,37 +483,31 @@ type CacheEntry = {
   festivals: Festival[];
 };
 
-// In-memory cache
 const festivalsCache = new Map<CacheKey, CacheEntry>();
 
-// Generate a cache key from anchorDay and location
 function generateCacheKey(anchorDay: number, location: Location): CacheKey {
-  // Use day-level precision for the anchorDay (ignore time)
   const day = truncateToDay(anchorDay);
-  // Create a unique key based on day and location coordinates
   return `${day}:${location.latitude.toFixed(4)}:${location.longitude.toFixed(
     4
   )}`;
 }
 
-export function getFestivals(anchorDay: number, location: Location) {
-  // Generate cache key
+export function getFestivals(location: Location) {
+  const today = new Date();
+  const anchorDay = new Date(today.getFullYear(), 0, 1).valueOf();
   const cacheKey = generateCacheKey(anchorDay, location);
 
-  // Check if we have a cached result
   const cachedResult = festivalsCache.get(cacheKey);
   if (cachedResult) {
     return cachedResult.festivals;
   }
 
-  // If not cached, calculate festivals
   const lunarFestivals = getLunarFestivals(anchorDay, location);
   const dynamicFestivals = getDynamicFestivals(anchorDay, location);
   const festivals = [...lunarFestivals, ...dynamicFestivals].sort(
     (a, b) => a.date - b.date
   );
 
-  // Cache the result
   festivalsCache.set(cacheKey, {
     festivals,
   });

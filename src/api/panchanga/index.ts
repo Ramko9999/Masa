@@ -27,6 +27,8 @@ export type Panchanga = {
 };
 
 export function computePanchanga(day: number, location: Location): Panchanga {
+  const startTime = performance.now();
+  
   const sunrise = getSunrise(day, location);
   const sunset = getSunset(day, location);
   const moonrise = getMoonrise(day, location);
@@ -36,9 +38,12 @@ export function computePanchanga(day: number, location: Location): Panchanga {
   const yoga = Yoga.compute(day, sunrise);
   const vaara = Vaara.compute(day);
   const masa = Masa.compute(sunrise);
-  const festivals = Festival.getFestivals(day, location).filter(
+  const festivals = Festival.getFestivals(location).filter(
     (festival) => festival.date === day
   );
+
+  const endTime = performance.now();
+  console.log(`Total computePanchanga: ${endTime - startTime}ms`);
 
   return {
     tithi,
@@ -55,6 +60,6 @@ export function computePanchanga(day: number, location: Location): Panchanga {
   };
 }
 
-export function getFestivals(anchorDay: number, location: Location) {
-  return Festival.getFestivals(anchorDay, location);
+export function getFestivals(location: Location) {
+  return Festival.getFestivals(location);
 }

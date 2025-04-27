@@ -1,13 +1,14 @@
 import { View, Text, scaleFontSize } from "@/theme";
 import {
   StyleSheet,
-  TouchableOpacity,
   useWindowDimensions,
   ColorSchemeName,
   useColorScheme,
 } from "react-native";
 import { AppColor, useGetColor, useThemedStyles } from "@/theme/color";
 import { useState, useCallback, useRef, memo } from "react";
+import { TouchableOpacity } from "react-native-gesture-handler";
+
 import {
   formatMonthYear,
   generateCalendarDays,
@@ -30,6 +31,11 @@ const dayStylesFactory = (
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 6,
+    aspectRatio: 1,
+  },
+  pressable: {
+    paddingHorizontal: "20%",
+    paddingVertical: "10%",
   },
   text: {
     fontWeight: "normal",
@@ -50,9 +56,10 @@ const dayStylesFactory = (
   },
   overlay: {
     ...StyleUtils.flexRowCenterAll(),
-    height: "75%",
-    aspectRatio: 1,
     borderRadius: "50%",
+    width: "75%",
+    aspectRatio: 1,
+    position: "absolute",
   },
 });
 
@@ -65,34 +72,32 @@ interface DayProps {
 function Day({ day, isSelected, onPress }: DayProps) {
   const dayStyles = useThemedStyles(dayStylesFactory);
   const isToday = day === truncateToDay(Date.now());
-  const { height } = useWindowDimensions();
   return (
-    <TouchableOpacity
-      style={dayStyles.container}
-      onPress={day !== null ? onPress : undefined}
-      disabled={day === null}
-    >
-      {day !== null && (
-        <View
+    <View style={[dayStyles.container]}>
+      <View
+        style={[
+          dayStyles.overlay,
+          isToday && dayStyles.today,
+          isSelected && dayStyles.selected,
+        ]}
+      />
+      <TouchableOpacity
+        style={dayStyles.pressable}
+        onPress={day !== null ? onPress : undefined}
+        disabled={day === null}
+      >
+        <Text
+          large
           style={[
-            dayStyles.overlay,
-            isToday && dayStyles.today,
-            isSelected && dayStyles.selected,
+            dayStyles.text,
+            isSelected && dayStyles.selectedText,
+            isToday && dayStyles.todayText,
           ]}
         >
-          <Text
-            large
-            style={[
-              dayStyles.text,
-              isSelected && dayStyles.selectedText,
-              isToday && dayStyles.todayText,
-            ]}
-          >
-            {new Date(day).getDate()}
-          </Text>
-        </View>
-      )}
-    </TouchableOpacity>
+          {day !== null ? new Date(day).getDate() : null}
+        </Text>
+      </TouchableOpacity>
+    </View>
   );
 }
 
@@ -134,12 +139,10 @@ const monthStylesFactory = (
 ): StyleSheet.NamedStyles<any> => ({
   container: {
     ...StyleUtils.flexColumn(),
-    flex: 1
+    flex: 1,
   },
   weekdayRow: {
     ...StyleUtils.flexRow(),
-    alignItems: "center",
-    aspectRatio: 14,
   },
   weekdayCell: {
     flex: 1,
@@ -347,7 +350,12 @@ export function MonthCalendar({ onFinishDayClick }: MonthCalendarProps) {
     pagerMonthCalendarStylesFactory
   );
   return (
-    <View style={[pagerMonthCalendarStyles.container, {paddingBottom: height * 0.025}]}>
+    <View
+      style={[
+        pagerMonthCalendarStyles.container,
+        { paddingBottom: height * 0.025 },
+      ]}
+    >
       <View style={{ height: height * 0.075 }}>
         <MonthCalendarHeader
           monthDatum={data[currentPage]}

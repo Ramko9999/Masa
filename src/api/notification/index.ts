@@ -30,7 +30,7 @@ async function getNotificationPermissionStatus() {
 }
 
 async function scheduleFestivalNotifications(location: Location) {
-  const festivals = getFestivals(truncateToDay(Date.now()), location);
+  const festivals = getFestivals(location);
 
   const { status } = await Notifications.getPermissionsAsync();
 
@@ -59,8 +59,6 @@ async function scheduleFestivalNotifications(location: Location) {
         date: notificationDate,
       },
     });
-
-    console.log("notification scheduled", notification);
   }
 }
 
