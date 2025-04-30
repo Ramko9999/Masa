@@ -10,6 +10,7 @@ import { View, Text } from "@/theme";
 import { AppColor, useGetColor, useThemedStyles } from "@/theme/color";
 import { ChevronLeft } from "lucide-react-native";
 import { getFontSize } from "@/theme";
+import { useTranslation } from "react-i18next";
 
 const infoHeaderStylesFactory = (
   theme: ColorSchemeName
@@ -34,6 +35,8 @@ export function InfoHeader() {
   const navigation = useNavigation();
   const infoHeaderStyles = useThemedStyles(infoHeaderStylesFactory);
   const theme = useColorScheme();
+  const { t } = useTranslation();
+
   return (
     <View style={infoHeaderStyles.container}>
       <TouchableOpacity
@@ -45,7 +48,7 @@ export function InfoHeader() {
           color={useGetColor(AppColor.primary, theme)}
         />
         <Text neutral style={infoHeaderStyles.backText}>
-          Back
+          {t("info_page.back")}
         </Text>
       </TouchableOpacity>
     </View>

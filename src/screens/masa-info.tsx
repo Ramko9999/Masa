@@ -6,14 +6,15 @@ import {
   InfoSectionTitle,
   InfoVisual,
   InfoNote,
+  InfoPageSectionTranslation,
 } from "@/components/util/info-page";
 import { ColorSchemeName, StyleSheet } from "react-native";
 import { Text, View } from "@/theme";
 import { AppColor, useGetColor, useThemedStyles } from "@/theme/color";
 import { MasaOrbit } from "@/components/masa/orbit";
 import { MASA_NAMES } from "@/api/panchanga/core/masa";
+import { useTranslation } from "react-i18next";
 
-const masaData = MASA_NAMES.map((name, index) => `${index + 1}. ${name}`);
 
 const tableStylesFactory = (
   theme: ColorSchemeName
@@ -41,68 +42,58 @@ const tableStylesFactory = (
 export function MasaInfoPage() {
   const tableStyles = useThemedStyles(tableStylesFactory);
 
+  const { t } = useTranslation();
+
+  const intro = t("masa_info.intro", { returnObjects: true }) as string[];
+  const sections = t("masa_info.sections", {
+    returnObjects: true,
+  }) as InfoPageSectionTranslation[];
+
   return (
-    <InfoPage title="Masa">
+    <InfoPage title={t("masa_info.title")}>
       <InfoSection>
-        <InfoParagraph>
-          A Masa is a lunar month, which consists of 30 tithis, ~29.5 days.
-        </InfoParagraph>
-        <InfoParagraph>
-          Masa, along with Tithi, play a central role in determinining festival
-          dates.
-        </InfoParagraph>
+        {intro.map((p, i) => (
+          <InfoParagraph key={i}>{p}</InfoParagraph>
+        ))}
       </InfoSection>
 
       <InfoSection>
-        <InfoSectionTitle>Two Systems of Counting Masa</InfoSectionTitle>
-        <InfoParagraph>
-          There are two traditional ways of defining when a Masa begins and
-          ends:
-        </InfoParagraph>
-        <InfoParagraph>Amanta: New Moon (Amavasya) to New Moon</InfoParagraph>
-        <InfoParagraph>
-          Purnimanta: Full Moon (Purnima) to Full Moon
-        </InfoParagraph>
-        <InfoParagraph>
-          Different regions in India follow different systems. For example,
-          Amanta is common in South India, while Purnimanta is used in North
-          India.
-        </InfoParagraph>
+        <InfoSectionTitle>{sections[0].title}</InfoSectionTitle>
+        {sections[0].paragraphs.map((p, i) => (
+          <InfoParagraph key={i}>{p}</InfoParagraph>
+        ))}
       </InfoSection>
 
       <InfoSection>
-        <InfoNote>Look at how the Masa changes</InfoNote>
+        <InfoNote>{t("masa_info.masa_orbit.caption")}</InfoNote>
         <InfoVisual>
           <MasaOrbit />
         </InfoVisual>
       </InfoSection>
 
       <InfoSection>
-        <InfoSectionTitle>Lunar vs Solar Year</InfoSectionTitle>
-        <InfoParagraph>
-          A lunar year of 12 Masas adds up to ~354 days, about 11 days shorter
-          than the solar year.
-        </InfoParagraph>
-        <InfoParagraph>
-          To align the lunar calendar with the solar calendar, an extra month
-          called Adhika Masa (leap month) is added roughly every 2–3 years.
-        </InfoParagraph>
+        <InfoSectionTitle>{sections[1].title}</InfoSectionTitle>
+        {sections[1].paragraphs.map((p, i) => (
+          <InfoParagraph key={i}>{p}</InfoParagraph>
+        ))}
       </InfoSection>
 
       <InfoSection>
-        <InfoSectionTitle>Masa Names in Order</InfoSectionTitle>
+        <InfoSectionTitle>{t("masa_info.masa_names.title")}</InfoSectionTitle>
         <InfoVisual>
           <View style={tableStyles.container}>
-            {masaData.map((item, index) => (
+            {MASA_NAMES.map((item, index) => (
               <View
                 key={index}
                 style={
-                  index === masaData.length - 1
+                  index === MASA_NAMES.length - 1
                     ? tableStyles.lastRow
                     : tableStyles.row
                 }
               >
-                <Text>{item}</Text>
+                <Text>
+                  {index + 1}. {t(`masa.${item}`)}
+                </Text>
               </View>
             ))}
           </View>

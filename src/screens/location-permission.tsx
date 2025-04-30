@@ -19,9 +19,7 @@ import { RootStackParamList } from "@/layout/types";
 import { LocationApi, PrepopulatedLocation, PREPOPULATED_LOCATIONS } from "@/api/location";
 import { useEffect, useState } from "react";
 import { shadeColor, tintColor } from "@/util/color";
-
-const LOCATION_SUBTEXT =
-  "If you don't want to share your location, pick one of these cities to base your Hindu calendar on";
+import { useTranslation } from "react-i18next";
 
 const prepopulatedLocationSelectionStylesFactory = (
   theme: ColorSchemeName
@@ -71,6 +69,7 @@ export function PrepopulatedLocationSelection({
   isLoading = false 
 }: PrepopulatedLocationSelectionProps) {
   const prepopulatedLocationSelectionStyles = useThemedStyles(prepopulatedLocationSelectionStylesFactory);
+  const { t } = useTranslation();
 
   return (
     <View>
@@ -89,7 +88,7 @@ export function PrepopulatedLocationSelection({
             primary={!isSelected} 
             background={isSelected}
           >
-            {`${location.city}, ${location.country}`}
+            {`${t(`prepopulated_locations.${location.key}.city`)}, ${t(`prepopulated_locations.${location.key}.country`)}`}
           </Text>
         </View>
       </TouchableOpacity>
@@ -153,8 +152,8 @@ export function LocationPermission({ navigation }: LocationPermissionProps) {
   const onHandleNext = async () => {
     setIsLoading(true);
     if (prepopulatedLocation) {
-      await LocationApi.saveLocation({ ...prepopulatedLocation, place: prepopulatedLocation.city });
-      setLocation({ ...prepopulatedLocation, place: prepopulatedLocation.city });
+      await LocationApi.saveLocation({ ...prepopulatedLocation, place: t(`prepopulated_locations.${prepopulatedLocation.key}.city`) });
+      setLocation({ ...prepopulatedLocation, place: t(`prepopulated_locations.${prepopulatedLocation.key}.city`) });
       const notificationSettings = await Notifications.getPermissionsAsync();
       if (
         notificationSettings.status === "undetermined" &&
@@ -188,6 +187,8 @@ export function LocationPermission({ navigation }: LocationPermissionProps) {
     });
   }, []);
 
+  const { t } = useTranslation();
+
   return (
     <View style={newLocationPermissionStyles.container}>
       <View
@@ -197,14 +198,14 @@ export function LocationPermission({ navigation }: LocationPermissionProps) {
         ]}
       >
         <Text big primary>
-          {LOCATION_SUBTEXT}
+          {t("intro.location_permission.subtext")}
         </Text>
         <View>
           {PREPOPULATED_LOCATIONS.map((location) => (
-            <View key={location.city} style={{ marginBottom: "3%" }}>
+            <View key={location.key} style={{ marginBottom: "3%" }}>
               <PrepopulatedLocationSelection
                 location={location}
-                isSelected={prepopulatedLocation?.city === location.city}
+                isSelected={prepopulatedLocation?.key === location.key}
                 onSelect={() => setPrepopulatedLocation(location)}
               />
             </View>
@@ -220,7 +221,7 @@ export function LocationPermission({ navigation }: LocationPermissionProps) {
             disabled={prepopulatedLocation === null}
           >
             <Text large semibold background>
-              Next
+              {t("intro.location_permission.button")}
             </Text>
           </TouchableOpacity>
         </View>
@@ -233,5 +234,4 @@ export function LocationPermission({ navigation }: LocationPermissionProps) {
     </View>
   );
 }
-
 

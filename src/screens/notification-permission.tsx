@@ -15,10 +15,7 @@ import { StackScreenProps } from "@react-navigation/stack";
 import { RootStackParamList } from "@/layout/types";
 import { NotificationApi } from "@/api/notification";
 import { useState } from "react";
-
-const NOTIFICATION_TITLE = "Festival Reminders";
-const NOTIFICATION_SUBTEXT =
-  "We use notifications to remind you when a festival begins.";
+import { useTranslation } from "react-i18next";
 
 const notificationPermissionStylesFactory = (
   theme: ColorSchemeName
@@ -68,6 +65,7 @@ export function NotificationPermission({
     setIsLoading(false);
     navigation.replace("tabs", { screen: "home" });
   };
+  const { t } = useTranslation();
 
   return (
     <View style={notificationPermissionStyles.container}>
@@ -78,10 +76,10 @@ export function NotificationPermission({
         ]}
       >
         <Text huge bold primary>
-          {NOTIFICATION_TITLE}
+          {t("intro.notification_permission.title")}
         </Text>
         <Text big primary>
-          {NOTIFICATION_SUBTEXT}
+          {t("intro.notification_permission.subtext")}
         </Text>
 
         <View
@@ -101,7 +99,7 @@ export function NotificationPermission({
               height={20}
             />
             <Text large semibold background>
-              Enable Festival Reminders
+              {t("intro.notification_permission.button")}
             </Text>
           </TouchableOpacity>
           {isLoading && (

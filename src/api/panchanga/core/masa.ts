@@ -27,18 +27,18 @@ export const enum MasaIndex {
 }
 
 export const MASA_NAMES = [
-  "Chaitra",
-  "Vaisakha",
-  "Jyeshtha",
-  "Ashadha",
-  "Shravana",
-  "Bhadrapada",
-  "Ashwina",
-  "Kartika",
-  "Margashirsha",
-  "Pausha",
-  "Magha",
-  "Phalguna",
+  "chaitra",
+  "vaisakha",
+  "jyeshtha",
+  "ashadha",
+  "shravana",
+  "bhadrapada",
+  "ashwina",
+  "kartika",
+  "margashirsha",
+  "pausha",
+  "magha",
+  "phalguna",
 ];
 
 type CalendarUnawareMasa = {
@@ -63,7 +63,7 @@ function getLagnaIndex(day: number): number {
 
 function getMasaName(index: number, isLeap: boolean) {
   const name = MASA_NAMES[index];
-  return isLeap ? `Adhika ${name}` : name;
+  return isLeap ? `adhika_${name}` : name;
 }
 
 function computeAmantaMasa(sunrise: number): CalendarUnawareMasa {

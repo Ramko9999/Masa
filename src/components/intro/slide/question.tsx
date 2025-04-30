@@ -12,9 +12,7 @@ import { DelayedFadeIn } from "@/components/util/delayed-fade-in";
 import { useState } from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useThemedStyles } from "@/theme/color";
-
-const INTRO_QUESTION_TITLE = "Have you ever wondered";
-const INTRO_QUESTION = "Why does Diwali start on a different day every year?";
+import { useTranslation } from "react-i18next";
 
 export function IntroQuestionSlide({ onNext }: IntroSlideProps) {
   const [skipAnimationIndex, setSkipAnimationIndex] = useState(-1);
@@ -31,10 +29,12 @@ export function IntroQuestionSlide({ onNext }: IntroSlideProps) {
 
   const insets = useSafeAreaInsets();
 
+  const { t } = useTranslation();
+
   return (
     <View style={introSlideStyles.container} onTouchEnd={handleTap}>
       <AnimatedSentence
-        content={INTRO_QUESTION_TITLE}
+        content={t("intro.question.title")}
         wordDuration={WORD_DURATION}
         stagger={STAGGER}
         textStyle={introSlideStyles.title}
@@ -44,7 +44,7 @@ export function IntroQuestionSlide({ onNext }: IntroSlideProps) {
         initialDelay={DELAY_PADDING}
       />
       <AnimatedSentence
-        content={INTRO_QUESTION}
+        content={t("intro.question.question")}
         wordDuration={WORD_DURATION}
         stagger={STAGGER}
         textStyle={introSlideStyles.subtext}
@@ -68,7 +68,7 @@ export function IntroQuestionSlide({ onNext }: IntroSlideProps) {
           style={introSlideStyles.actionButton}
         >
           <Text large semibold background>
-            I wondered that too...
+            {t("intro.question.button")}
           </Text>
         </TouchableOpacity>
       </DelayedFadeIn>

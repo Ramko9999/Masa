@@ -1,0 +1,532 @@
+{
+    "intro": {
+        "skip": "Skip",
+        "question": {
+            "title": "Have you ever wondered",
+            "question": "Why does Diwali start on a different day every year?",
+            "button": "I wondered that too..."
+        },
+        "hindu_calendar": {
+            "title": "Two Calendars, Two Systems",
+            "first_point": "It's not changing! Diwali is based off the Hindu calendar which has a different astronomical basis than the Gregorian calendar.",
+            "second_point": "The Gregorian calendar tracks Earth's journey around the Sun, while the Hindu calendar also considers the Moon's phases and positions.",
+            "third_point": "Here are a couple other things to keep in mind:",
+            "button": "Tell me more"
+        },
+        "geocentric": {
+            "title": "The Hindu Calendar is Geocentric",
+            "first_point": "The Hindu calendar's elements are based off the positions of the celestial bodies from the perspective of Earth.",
+            "button": "Tell me more",
+            "heliocentric": "Heliocentric",
+            "geocentric": "Geocentric"
+        },
+        "regional_variants": {
+            "title": "Calendar with Regional Differences",
+            "first_point": "Festival dates can vary based on region as different regions follow slightly different systems.",
+            "second_point": "Local customs can also influence festival timings.",
+            "third_point": "If you see something wrong or don't feel represented, please let us know!",
+            "button": "Sounds good!"
+        },
+        "location_permission": {
+            "title": "Location Permission",
+            "subtext": "If you don't want to share your location, pick one of these cities to base your Hindu calendar on",
+            "button": "Next"
+        },
+        "notification_permission": {
+            "title": "Festival Reminders",
+            "subtext": "We use notifications to remind you when a festival begins.",
+            "button": "Enable Notifications"
+        }
+    },
+    "tabs": {
+        "home": "Home",
+        "festivals": "Festivals",
+        "settings": "Settings"
+    },
+    "prepopulated_locations": {
+        "san_francisco": {
+            "city": "San Francisco",
+            "country": "USA"
+        },
+        "chicago": {
+            "city": "Chicago",
+            "country": "USA"
+        },
+        "new_york": {
+            "city": "New York",
+            "country": "USA"
+        },
+        "delhi": {
+            "city": "Delhi",
+            "country": "India"
+        },
+        "mumbai": {
+            "city": "Mumbai",
+            "country": "India"
+        },
+        "bangalore": {
+            "city": "Bangalore",
+            "country": "India"
+        },
+        "hyderabad": {
+            "city": "Hyderabad",
+            "country": "India"
+        }
+    },
+    "home": {
+        "cards": {
+            "vaara": {
+                "title": "VAARA—DAY OF THE WEEK",
+                "sunrise": "Sunrise",
+                "moonrise": "Moonrise",
+                "sunset": "Sunset",
+                "moonset": "Moonset"
+            },
+            "tithi": {
+                "title": "TITHI—LUNAR DAY"
+            },
+            "nakshatra": {
+                "title": "NAKSHATRA-CONSTELLATION"
+            },
+            "masa": {
+                "title": "MASA—LUNAR MONTH",
+                "amanta": "Amanta",
+                "purnimanta": "Purnimanta"
+            },
+            "interval_change": "Changes to {{nextName}} at {{time}}",
+            "festivals": {
+                "title": "FESTIVALS"
+            }
+        }
+    },
+    "info_page": {
+        "back": "Back"
+    },
+    "festival_details": {
+        "about": "About this festival",
+        "how_to_celebrate": "How to celebrate?"
+    },
+    "vaara": {
+        "ravivaara": "Ravivaara",
+        "somavaara": "Somavaara",
+        "mangalavaara": "Mangalavaara",
+        "budhavaara": "Budhavaara",
+        "guruvaara": "Guruvaara",
+        "shukravaara": "Shukravaara",
+        "shanivaara": "Shanivaara"
+    },
+    "tithi": {
+        "shukla_pratipada": "Shukla Pratipada",
+        "shukla_dwitiya": "Shukla Dwitiya",
+        "shukla_tritiya": "Shukla Tritiya",
+        "shukla_chaturthi": "Shukla Chaturthi",
+        "shukla_panchami": "Shukla Panchami",
+        "shukla_shashti": "Shukla Shashti",
+        "shukla_saptami": "Shukla Saptami",
+        "shukla_ashtami": "Shukla Ashtami",
+        "shukla_navami": "Shukla Navami",
+        "shukla_dashami": "Shukla Dashami",
+        "shukla_ekadashi": "Shukla Ekadashi",
+        "shukla_dwadashi": "Shukla Dwadashi",
+        "shukla_trayodashi": "Shukla Trayodashi",
+        "shukla_chaturdashi": "Shukla Chaturdashi",
+        "purnima": "Purnima",
+        "krishna_pratipada": "Krishna Pratipada",
+        "krishna_dwitiya": "Krishna Dwitiya",
+        "krishna_tritiya": "Krishna Tritiya",
+        "krishna_chaturthi": "Krishna Chaturthi",
+        "krishna_panchami": "Krishna Panchami",
+        "krishna_shashti": "Krishna Shashti",
+        "krishna_saptami": "Krishna Saptami",
+        "krishna_ashtami": "Krishna Ashtami",
+        "krishna_navami": "Krishna Navami",
+        "krishna_dashami": "Krishna Dashami",
+        "krishna_ekadashi": "Krishna Ekadashi",
+        "krishna_dwadashi": "Krishna Dwadashi",
+        "krishna_trayodashi": "Krishna Trayodashi",
+        "krishna_chaturdashi": "Krishna Chaturdashi",
+        "amavasya": "Amavasya"
+    },
+    "nakshatra": {
+        "ashwini": "Ashwini",
+        "bharani": "Bharani",
+        "krittika": "Krittika",
+        "rohini": "Rohini",
+        "mrigashira": "Mrigashira",
+        "ardra": "Ardra",
+        "punarvasu": "Punarvasu",
+        "pushya": "Pushya",
+        "ashlesha": "Ashlesha",
+        "magha": "Magha",
+        "purva_phalguni": "Purva Phalguni",
+        "uttara_phalguni": "Uttara Phalguni",
+        "hasta": "Hasta",
+        "chitra": "Chitra",
+        "swati": "Swati",
+        "vishakha": "Vishakha",
+        "anuradha": "Anuradha",
+        "jyeshtha": "Jyeshtha",
+        "mula": "Mula",
+        "purva_ashadha": "Purva Ashadha",
+        "uttara_ashadha": "Uttara Ashadha",
+        "shravana": "Shravana",
+        "dhanishta": "Dhanishta",
+        "shatabhisha": "Shatabhisha",
+        "purva_bhadrapada": "Purva Bhadrapada",
+        "uttara_bhadrapada": "Uttara Bhadrapada",
+        "revati": "Revati"
+    },
+    "masa": {
+        "chaitra": "Chaitra",
+        "vaisakha": "Vaisakha",
+        "jyeshtha": "Jyeshtha",
+        "ashadha": "Ashadha",
+        "shravana": "Shravana",
+        "bhadrapada": "Bhadrapada",
+        "ashwina": "Ashwina",
+        "kartika": "Kartika",
+        "margashirsha": "Margashirsha",
+        "pausha": "Pausha",
+        "magha": "Magha",
+        "phalguna": "Phalguna",
+        "adhika_chaitra": "Adhika Chaitra",
+        "adhika_vaisakha": "Adhika Vaisakha",
+        "adhika_jyeshtha": "Adhika Jyeshtha",
+        "adhika_ashadha": "Adhika Ashadha",
+        "adhika_shravana": "Adhika Shravana",
+        "adhika_bhadrapada": "Adhika Bhadrapada",
+        "adhika_ashwina": "Adhika Ashwina",
+        "adhika_kartika": "Adhika Kartika",
+        "adhika_margashirsha": "Adhika Margashirsha",
+        "adhika_pausha": "Adhika Pausha",
+        "adhika_magha": "Adhika Magha",
+        "adhika_phalguna": "Adhika Phalguna"
+    },
+    "vaara_info": {
+        "title": "Vaara",
+        "intro": [
+            "Vaara means day of the week in the Hindu calendar.",
+            "Each day is linked to a graha (planet), and each graha has special qualities. These qualities influence our mood, energy, and activities for the day."
+        ],
+        "sections": [
+            {
+                "title": "How is Vaara decided?",
+                "paragraphs": [
+                    "Each day is linked to a graha (planet), and each graha has special qualities. These qualities influence our mood, energy, and activities for the day.",
+                    "Every Hora is linked to a planet, and the planet that is linked to the first Hora after sunrise decides the Vaara."
+                ]
+            }
+        ],
+        "table": {
+            "columns": {
+                "graha": "Graha",
+                "vaara": "Vaara",
+                "represents": "Represents"
+            },
+            "rows": [
+                {
+                    "graha": "Sun",
+                    "vaara": "Ravivaara (Sunday)",
+                    "represents": "Vitality, Authority, Energy"
+                },
+                {
+                    "graha": "Moon",
+                    "vaara": "Somavaara (Monday)",
+                    "represents": "Emotions, Calmness"
+                },
+                {
+                    "graha": "Mars",
+                    "vaara": "Mangalavaara (Tuesday)",
+                    "represents": "Courage, Strength"
+                },
+                {
+                    "graha": "Mercury",
+                    "vaara": "Budhavaara (Wednesday)",
+                    "represents": "Intellect, Communication, Learning"
+                },
+                {
+                    "graha": "Jupiter",
+                    "vaara": "Guruvaara (Thursday)",
+                    "represents": "Wisdom, Expansion, Luck"
+                },
+                {
+                    "graha": "Venus",
+                    "vaara": "Shukravaara (Friday)",
+                    "represents": "Love, Beauty"
+                },
+                {
+                    "graha": "Saturn",
+                    "vaara": "Shanivaara (Saturday)",
+                    "represents": "Discipline, Patience, Challenges"
+                }
+            ]
+        }
+    },
+    "orbits": {
+        "sun_angle": "Sun: {{angle}}°",
+        "moon_angle": "Moon: {{angle}}°"
+    },
+    "tithi_info": {
+        "title": "Tithi",
+        "intro": [
+            "A Tithi is the time the Moon takes to move 12 degrees relative to the Sun.",
+            "Each lunar month (Masa) has 30 Tithis.",
+            "Shukla Paksha (Waxing phase) refers to the period from New Moon to Full Moon (15 Tithis).",
+            "Krishna Paksha (Waning phase) refers to the period from Full Moon to New Moon (15 Tithis).",
+            "Tithi along with Masa are fundamental to determine festival dates."
+        ],
+        "tithi_orbit": {
+            "caption": "Look at how the Tithi changes based on the Sun-Moon angle"
+        },
+        "moon_phases": {
+            "title": "🌓 Moon Phases",
+            "caption": "Use the slider to explore Tithis"
+        },
+        "sections": [
+            {
+                "title": "Naming of Tithis",
+                "paragraphs": [
+                    "Amavasya is the moment of new moon.",
+                    "Purnima is the moment of full moon.",
+                    "All other Tithis are named using Sanskrit numbers: Pratipada (1st), Dwitiya (2nd), Tritiya (3rd), Chaturthi (4th), and so on."
+                ]
+            },
+            {
+                "title": "Tithi Nuances",
+                "paragraphs": [
+                    "Tithis can start and end at any time, lasting between 18 to 24 hours due to the elliptical nature of the moon's orbit.",
+                    "Tithis can be named using Sanskrit numbers: Pratipada (1st), Dwitiya (2nd), Tritiya (3rd), Chaturthi (4th), and so on."
+                ]
+            }
+        ]
+    },
+    "nakshatra_info": {
+        "title": "Nakshatra",
+        "intro": [
+            "Nakshatra can refer to both a single star and a group of stars (asterism).",
+            "In the Hindu Calendar, a Nakshatra is a segment of the Moon's ecliptic orbit.",
+            "The Moon takes about 27 days to complete its orbit, so there are 27 Nakshatras, with the Moon spending roughly one day in each."
+        ],
+        "sections": [
+            {
+                "title": "Naming & Relevance",
+                "paragraphs": [
+                    "Each Nakshatra is named after the prominent star that lies within its segment.",
+                    "A person's birth Nakshatra influences rituals like naming, personality traits, and compatibility with other people.",
+                    "Nakshatras also serve as a convenient coordinate system to locate the positions of planets in the sky."
+                ]
+            }
+        ]
+    },
+    "masa_info": {
+        "title": "Masa",
+        "intro": [
+            "A Masa is a lunar month, which consists of 30 tithis, ~29.5 days.",
+            "Masa, along with Tithi, play a central role in determinining festival dates."
+        ],
+        "sections": [
+            {
+                "title": "Two Systems of Counting Masa",
+                "paragraphs": [
+                    "There are two traditional ways of defining when a Masa begins and ends:",
+                    "Purnimanta: Full Moon (Purnima) to Full Moon",
+                    "Amanta: New Moon (Amavasya) to New Moon",
+                    "Different regions in India follow different systems. For example, Amanta is common in South India, while Purnimanta is used in North India."
+                ]
+            },
+            {
+                "title": "Lunar vs Solar Year",
+                "paragraphs": [
+                    "A lunar year of 12 Masas adds up to ~354 days, about 11 days shorter than the solar year.",
+                    "To align the lunar calendar with the solar calendar, an extra month called Adhika Masa (leap month) is added roughly every 2–3 years."
+                ]
+            }
+        ],
+        "masa_names": {
+            "title": "Masa Names in Order"
+        },
+        "masa_orbit": {
+            "caption": "Look at how the Masa changes"
+        },
+        "purnimanta_masa": "Purnimanta Masa",
+        "amanta_masa": "Amanta Masa"
+    },
+    "festivals": {
+        "makar_sankranti": {
+            "title": "Makar Sankranti",
+            "subtitle": "Also known as Pongal",
+            "caption": "A sacred turning point honoring Surya and the light that guides new beginnings",
+            "description": "Makar Sankranti signifies the end of winter and the onset of longer, warmer days. It is an auspicious day to start new endeavors.",
+            "celebration": "Bathe in holy rivers or water-bodies. Worship Surya, the sun god. Make Pongal and Sesame seed and Jaggery sweets. Fly kites and enjoy the company of friends and family. Perform acts of charity."
+        },
+        "vasant_panchami": {
+            "title": "Vasant Panchami",
+            "subtitle": "Also known as Saraswati Jayanti",
+            "caption": "Honor Goddess Saraswati, embracing wisdom and new educational endeavors",
+            "description": "Vasant Panchami is the birth anniversary of Goddess Saraswati, the deity of knowledge, music, arts, wisdom, and learning.",
+            "celebration": "Perform Saraswati Puja at homes and educational institutions in white and yellow attire. Offer Mustard and Marigold flowers to Goddess Saraswati. Perform <i>Vidya Arambha</i>, a ritual to initiate young children into education."
+        },
+        "maha_shivaratri": {
+            "title": "Maha Shivaratri",
+            "caption": "A Night of Spiritual Awakening",
+            "description": "Maha Shivaratri celebrates the divine marriage of Lord Shiva and Goddess Parvati and marks the day when Lord Shiva destroys creation performing his divine dance, <i>Tandava</i>. Take advantage of this most auspicious day.",
+            "celebration": "Observe a fast for the day and night. Perform <i>Abhishekam</i> for the Shiva <i>Lingam</i> by bathing it in water, milk, curd, ghee, honey and fruits. Stay alert the entire night."
+        },
+        "holi": {
+            "title": "Holi",
+            "caption": "A Celebration of Colors and Love",
+            "description": "Holi links to the legend of Prahlada, a devotee of Lord Vishnu who was saved from the fire while the demoness Holika was burned. Holi also celebrates the love between Lord Krishna and Radha as it is said that Krishna and Radha partook in applying colors to each other.",
+            "celebration": "Light or attend a bonfire and burn Holika effigies the night before. Gather with friends and apply colored powders with water to each other."
+        },
+        "ugadi": {
+            "title": "Ugadi",
+            "subtitle": "Also known as Gudi Padwa",
+            "caption": "Welcoming the New Year",
+            "description": "Ugadi marks the beginning of the New Year. Ugadi means the \"beginning of a new age\", symbolizing renewal and the ushering in of prosperity and hope.",
+            "celebration": "Listen to the calendar forecast for the year, Panchanga Sravanam. Perform Abhyang Snan by massaging your body with oil before taking a warm bath. Prepare Ugadi Pachadi, a dish combining Neem flowers, Jaggery, Tamarind, Salt and raw Mango."
+        },
+        "rama_navami": {
+            "title": "Rama Navami",
+            "caption": "Celebrating the Birth of Lord Rama",
+            "description": "Rama Navami is the birth anniversary of Lord Rama, the seventh incarnation of Lord Vishnu who is revered for his righteousness.",
+            "celebration": "Observe a day long fast. Read or listen to the Ramayana. Worship Lord Rama and Devi Sita."
+        },
+        "hanuman_jayanti": {
+            "title": "Hanuman Jayanti",
+            "caption": "Honoring the Mighty Devotee",
+            "description": "Hanuman Jayanti commemorates the birth of Lord Hanuman, the devoted disciple of Lord Rama who symbolizes unwavering devotion, selfless service and strength.",
+            "celebration": "Observe a day long fast. Recite the Hanuman Chalisa. Read or listen to the Ramayana. Offer prayers and Vermillion to Lord Hanuman."
+        },
+        "akshaya_tritiya": {
+            "title": "Akshaya Tritiya",
+            "caption": "A Day of Abundance and New Beginnings",
+            "description": "Akshaya means \"that which never diminishes\". On this day, Lord Krishna blessed his friend Sudama with wealth for his unconditional friendship. The Pandavas also recieved the Akshaya Patra, a vessel which yields unlimited food, on this day. Take advantage of this spiritually potent day as any righteous and spiritual deeds performed yield timeless merit.",
+            "celebration": "Perform acts of charity such as donating food, clothing or money or even volunteering. Worship your Istha Devata, your chosen deity. Perform any other spiritual practices as their effects multiply on this day."
+        },
+        "vat_savitri": {
+            "title": "Vat Savitri",
+            "caption": "Celebration of Marital Devotion and the Triumph of Love over Death",
+            "description": "Vat Savitri is observed by married women for the longevity and well-being of their husbands. It commemorates the devotion of Savitri who rescued her husband Satyavan from Lord Yama, the god of death.",
+            "celebration": "Married women observe a day long fast. Married women listen to the story of Savitri and Satyavan. Married women gather near a Banyan tree, and after offering prayers, tie threads around the tree and walk around it 7 times."
+        },
+        "rath_yatra": {
+            "title": "Rath Yatra",
+            "caption": "The Chariot Festival of Lord Jagannath",
+            "description": "Rath Yatra celebrates the journey of Lord Jagannath (Krishna), Lord Balarama, and Goddess Subhadra from the Jagannath temple to the Gundicha Temple, symbolizing Krishna and his siblings' return to Vrindavan, their childhood home.",
+            "celebration": "Pull a chariot with Lord Jagannath, Lord Balarama and Goddess Subhadra. Sing devotional songs for Lord Jagannath and dance along the way."
+        },
+        "guru_purnima": {
+            "title": "Guru Purnima",
+            "caption": "Honoring the Teacher",
+            "description": "Guru Purnima honors Gurus, the teachers and mentors, and acts as an opportunity to show them gratitude for their knowledge and guidance. Ved Vyasa, the narrator of the Mahabharata, was said to be born on this day.",
+            "celebration": "Offer gifts and sweets to the Gurus in your life. Reflect on their teachings and seek their blessings for future growth. Find solidarity amongst other fellow disciples."
+        },
+        "naga_panchami": {
+            "title": "Naga Panchami",
+            "caption": "Seek Blessings from Serpent Deities",
+            "description": "Naga Panchami is a day reserved for honoring the snake deities. It is said to be the day when Krishna defeated the multi-headed serpent Kaliya in the Yamuna river.",
+            "celebration": "Do not harm snakes on this day. Worship snake idols with offerings of milk."
+        },
+        "raksha_bandhan": {
+            "title": "Raksha Bandhan",
+            "subtitle": "Also known as Rakhi",
+            "caption": "A Bond of Love and Protection",
+            "description": "Raksha Bandhan celebrates the loving bond between brothers and sisters. It stems from when the Goddess Indrani tied a sacred thread to Indra, leading to his victory over the asuras. In modern times, it is celebrated between brothers and sisters.",
+            "celebration": "Sisters tie a Rakhi, a sacred thread, around the brothers' wrists and pray for their good health. Brothers repay their sisters with gifts and vow to protect them."
+        },
+        "krishna_janmashtami": {
+            "title": "Krishna Janmashtami",
+            "caption": "Celebrating the Birth of Lord Krishna",
+            "description": "This day celebrates the birth of Lord Krishna, known for his divine playfulness and wisdom. Use this day to seek his love and protection.",
+            "celebration": "Observe a day and night fast. Worship Lord Krishna at midnight as he was born at midnight. Participate in Dahi Handi, a game where a pot filled with curd is suspended from the ceiling and players must form pyramids with their bodies to reach and break it - it resembles how Krishna and his friends would steal curd in their childhood."
+        },
+        "ganesh_chaturthi": {
+            "title": "Ganesh Chaturthi",
+            "subtitle": "Also known as Vinayaka Chaturthi",
+            "caption": "Welcoming Lord Ganesha",
+            "description": "Ganesh Chaturthi celebrates the birth of Lord Ganesha, the remover of obstacles and the god of wisdom and prosperity.",
+            "celebration": "Observe a day long fast. Avoid looking at the moon on this day. Construct or purchase a clay Ganesh idol, worship it for the next 10 days, and on the final day (Chaturdashi), submerge the idol into a water body."
+        },
+        "maha_navami": {
+            "title": "Maha Navami",
+            "caption": "Honoring the Warrior Goddess",
+            "description": "Maha Navami marks the day when Goddess Durga killed Mahishasura. It is celebrated on the 9th day of Navaratri, a 9 day-long worship of the forms of Goddess Durga.",
+            "celebration": "Observe a day long fast. Perform Ayudha Puja, the worship of machinery, instruments, equipment and auto-mobiles. Read or listen to the story of Durga and Mahishasura. Worship Goddess Durga."
+        },
+        "dussehra": {
+            "title": "Dussehra",
+            "subtitle": "Also known as Vijayadashami",
+            "caption": "Triumph of Good Over Evil",
+            "description": "Dussehra marks Lord Rama's victory over Ravana, and celebrates the triumph of good over evil.",
+            "celebration": "Burn effigies of Ravana, Meghananda (Ravana's son) and Kumbhakarna (Ravana's brother). Read or listen to the Ramayana. Worship Lord Rama and Devi Sita."
+        },
+        "kojagara_puja": {
+            "title": "Kojagara Puja",
+            "caption": "A Night for Goddess Lakshmi",
+            "description": "It is believed that Goddess Lakshmi roams the earth on this night and blesses those who remain awake with prosperity.",
+            "celebration": "Stay awake the entire night. Observe a day and night fast. Light oil lamps and candles in your home. Offer prayers and sweets to Goddess Lakshmi."
+        },
+        "karwa_chauth": {
+            "title": "Karwa Chauth",
+            "caption": "Celebration of the Marital Bond",
+            "description": "On Karwa Chauth, married women fast from sunrise to moonrise for their husbands' well-being.",
+            "celebration": "Married women observe a fast from sunrise to moonrise and conclude it by looking at the moon through a transparent cloth or sieve. Arghya, ceremonial water, is offered to the moon and then their husband offers them water, breaking the fast."
+        },
+        "govardhana_puja": {
+            "title": "Govardhana Puja",
+            "subtitle": "Fourth day of Diwali",
+            "caption": "Honoring the Sacred Mountain",
+            "description": "On this day, Lord Krishna saves the residents of Gokul from Indra's rain and storms by lifting up Govardhan hill.",
+            "celebration": "Create a miniature Govardhan hill and offer prayers to it. Prepare 56 varities of sweets, savories and delicaies and offer them to Lord Krishna and Govardhan hill."
+        },
+        "dhanteras": {
+            "title": "Dhanteras",
+            "subtitle": "First day of Diwali",
+            "caption": "Beginning of Diwali",
+            "description": "Dhanteras marks the first of the five day Diwali celebrations. It is the day in which Dhanvantari, the father of Ayurveda, and Goddess Lakshmi were born. It is also the day in which King Hima's son was saved from death due to a predicted snake bite: his wife lit up oil lamps and placed ornaments that distracted King Yama, the god of death, who came as a snake to deliver the bite.",
+            "celebration": "Worship Goddess Lakshmi and Lord Dhanvantari in the evening. Light up the lamps in the southern direction to gain blessings from Lord Yama for protection against the untimely deaths of family members."
+        },
+        "narak_chaturdashi": {
+            "title": "Narak Chaturdashi",
+            "subtitle": "Second day of Diwali",
+            "caption": "End of Darkness",
+            "description": "Narak Chaturdashi is the day when Lord Krishna and Goddess Satyabhama killed the demon king Narakasura.",
+            "celebration": "Take Abhyang Snan, an oil massage, with a warm bath before sunrise. Light oil lamps around your house and burst fire crackers. Worship Lord Krishna."
+        },
+        "lakshmi_puja": {
+            "title": "Lakshmi Puja",
+            "subtitle": "Third day of Diwali",
+            "caption": "Worship Goddess Lakshmi",
+            "description": "Lakshmi Puja is the 3rd day of Diwali and is considered to be the main Diwali festival. It is dedicated to Goddess Lakshmi.",
+            "celebration": "Observe a day long fast. Clean and decorate homes and offices with Marigold, Mango and Banana leaves. Place both sides of a broken, unpeeled Coconut in front of your home. Light oil lamps and place them throughout the home. Worship Goddess Lakshmi."
+        },
+        "bhaiya_dooj": {
+            "title": "Bhaiya Dooj",
+            "subtitle": "Fifth day of Diwali",
+            "caption": "Celebrate the Brother-Sister Bond",
+            "description": "Similar to Raksha Bandan, Bhaiya Dhooj is a day where the bond between brothers and sisters is celebrated. It is said that Lord Yama visited his sister Yamuna and recieved such a warm welcome that he granted her a boon on this day.",
+            "celebration": "A sister invites her brother to her home for a good meal. A sister will then perform Aarti and apply Tilak on her brother's forehead for his success. The brother will vow to protect his sister and gives her a gift."
+        }
+    },
+    "settings": {
+        "settings_items": {
+            "location": {
+                "title": "Location"
+            },
+            "notifications": {
+                "title": "Notifications",
+                "enabled": "Enabled",
+                "disabled": "Disabled",
+                "checking": "Checking...",
+                "enable_notifications": "Enable Notifications",
+                "disable_notifications": "Disable Notifications",
+                "not_now": "Not Now",
+                "open_settings": "Open Settings",
+                "disable_notifications_alert": "Please disable notifications by turning them off in the settings.",
+                "enable_notifications_alert": "Please enable notifications by turning them on in the settings.",
+                "not_now_alert": "Not Now",
+                "open_settings_alert": "Open Settings"
+            }
+        }
+    }
+}

@@ -20,6 +20,7 @@ import Animated, {
   interpolate,
 } from "react-native-reanimated";
 import { View, Text } from "@/theme";
+import { useTranslation } from "react-i18next";
 
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 
@@ -34,7 +35,7 @@ const orbitsStylesFactory = (
   },
   svgContainer: {
     width: "100%",
-    alignItems: "center"
+    alignItems: "center",
   },
 });
 
@@ -96,7 +97,7 @@ function Orbits({ isHeliocentric, size }: OrbitsProps) {
   // In heliocentric (0): earth orbits sun
   // In geocentric (1): earth is at center
   const earthOrbitRadius = useDerivedValue(
-    () => size * 0.30 * (1 - transitionProgress.value) // 0.3*size when heliocentric, 0 when geocentric
+    () => size * 0.3 * (1 - transitionProgress.value) // 0.3*size when heliocentric, 0 when geocentric
   );
 
   const earthX = useDerivedValue(
@@ -228,7 +229,7 @@ function Orbits({ isHeliocentric, size }: OrbitsProps) {
           <AnimatedCircle
             cx={centerX}
             cy={centerY}
-            r={size * 0.30}
+            r={size * 0.3}
             stroke={tintColor}
             strokeWidth="1"
             strokeDasharray="5,5"
@@ -269,7 +270,7 @@ const introOrbitsDiagramStylesFactory = (
   container: {
     width: "100%",
     alignItems: "center",
-    paddingHorizontal: "4%"
+    paddingHorizontal: "4%",
   },
   orbitsContainer: {
     width: "100%",
@@ -311,6 +312,8 @@ export function IntroOrbitsDiagram({
   // If size is not provided, calculate it from window width
   const size = providedSize ?? width * 0.8;
 
+  const { t } = useTranslation();
+
   return (
     <View style={introOrbitsDiagramStyles.container}>
       <View style={[introOrbitsDiagramStyles.orbitsContainer, { width: size }]}>
@@ -327,7 +330,7 @@ export function IntroOrbitsDiagram({
               primary={!isHeliocentric}
               background={isHeliocentric}
             >
-              Heliocentric
+              {t("intro.geocentric.heliocentric")}
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
@@ -342,7 +345,7 @@ export function IntroOrbitsDiagram({
               primary={isHeliocentric}
               background={!isHeliocentric}
             >
-              Geocentric
+              {t("intro.geocentric.geocentric")}
             </Text>
           </TouchableOpacity>
         </View>

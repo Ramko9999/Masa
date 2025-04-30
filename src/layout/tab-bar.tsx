@@ -15,6 +15,7 @@ import Animated, {
   LinearTransition
 } from "react-native-reanimated";
 import { StyleUtils } from "@/theme/style-utils";
+import { useTranslation } from "react-i18next";
 
 const stylesFactory = (
   theme: ColorSchemeName
@@ -60,6 +61,7 @@ export const CustomTabBar = ({ state, navigation }: BottomTabBarProps) => {
   const activeTabIndex = useSharedValue(state.index);
   const primaryColor = useGetColor(AppColor.primary, theme);
   const backgroundColor = useGetColor(AppColor.background, theme);
+  const { t } = useTranslation();
 
   React.useEffect(() => {
     activeTabIndex.value = state.index;
@@ -81,11 +83,11 @@ export const CustomTabBar = ({ state, navigation }: BottomTabBarProps) => {
   const getTabText = (routeName: string) => {
     switch (routeName) {
       case "home":
-        return "Home";
+        return t("tabs.home");
       case "festivals":
-        return "Festivals";
+        return t("tabs.festivals");
       default:
-        return "Settings";
+        return t("tabs.settings");
     }
   };
 

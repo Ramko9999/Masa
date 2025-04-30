@@ -6,6 +6,11 @@ import { InfoHeader } from "./info-header";
 import { StyleUtils } from "@/theme/style-utils";
 import { useGetColor, AppColor, useThemedStyles } from "@/theme/color";
 
+export interface InfoPageSectionTranslation {
+  title: string;
+  paragraphs: string[];
+}
+
 export interface InfoPageProps {
   title: string;
   children: ReactNode;

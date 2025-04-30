@@ -24,6 +24,7 @@ import { NakshatraInterval } from "@/api/panchanga/core/nakshatra";
 import { useNavigation } from "@react-navigation/native";
 import { ChevronRight } from "lucide-react-native";
 import { AppColor, useGetColor, useThemedStyles } from "@/theme/color";
+import { useTranslation } from "react-i18next";
 
 const panchangaStylesFactory = (
   theme: ColorSchemeName
@@ -60,8 +61,11 @@ type PachangaProps = {
 };
 
 function getIntervalDescription(
-  intervals: TithiInterval[] | NakshatraInterval[]
+  intervals: TithiInterval[] | NakshatraInterval[],
+  type: "tithi" | "nakshatra"
 ) {
+  const { t, i18n } = useTranslation();
+
   return intervals
     .map((interval, index) => {
       // Check if there's a next interval to refer to
@@ -71,9 +75,10 @@ function getIntervalDescription(
         : null;
 
       if (hasNextInterval) {
-        return `changes to ${nextIntervalName} at ${getHumanReadableDate(
-          interval.endDate
-        )}`;
+        return t("home.cards.interval_change", {
+          nextName: t(`${type}.${nextIntervalName}`),
+          time: getHumanReadableDate(i18n.language, interval.endDate),
+        });
       } else {
         return "";
       }
@@ -108,17 +113,19 @@ export function Pachanga({
     festivals,
   } = computePanchanga(truncateToDay(selectedDay), location!);
 
+  const { t } = useTranslation();
+
   return (
     <View style={panchangaStyles.container}>
       <Card
-        title="VAARA—DAY OF THE WEEK"
-        mainText={vaara.name}
+        title={t("home.cards.vaara.title")}
+        mainText={t(`vaara.${vaara.name}`)}
         onClick={onVaaraClick}
       >
         <View style={panchangaStyles.rowContainer}>
           <View>
             <Text semibold tint>
-              Sunrise
+              {t("home.cards.vaara.sunrise")}
             </Text>
             <View style={panchangaStyles.iconTextContainer}>
               <SunriseIcon />
@@ -129,7 +136,7 @@ export function Pachanga({
           </View>
           <View>
             <Text semibold tint>
-              Moonrise
+              {t("home.cards.vaara.moonrise")}
             </Text>
             <View style={panchangaStyles.iconTextContainer}>
               <MoonriseIcon />
@@ -142,7 +149,7 @@ export function Pachanga({
         <View style={panchangaStyles.rowContainer}>
           <View>
             <Text semibold tint>
-              Sunset
+              {t("home.cards.vaara.sunset")}
             </Text>
             <View style={panchangaStyles.iconTextContainer}>
               <SunsetIcon />
@@ -153,7 +160,7 @@ export function Pachanga({
           </View>
           <View>
             <Text semibold tint>
-              Moonset
+              {t("home.cards.vaara.moonset")}
             </Text>
             <View style={panchangaStyles.iconTextContainer}>
               <MoonsetIcon />
@@ -165,39 +172,39 @@ export function Pachanga({
         </View>
       </Card>
       <Card
-        title="TITHI—LUNAR DAY"
-        mainText={tithi[0].name}
-        caption={getIntervalDescription(tithi)}
+        title={t("home.cards.tithi.title")}
+        mainText={t(`tithi.${tithi[0].name}`)}
+        caption={getIntervalDescription(tithi, "tithi")}
         onClick={onTithiClick}
       />
       <Card
-        title="NAKSHATRA-CONSTELLATION"
-        mainText={nakshatra[0].name}
-        caption={getIntervalDescription(nakshatra)}
+        title={t("home.cards.nakshatra.title")}
+        mainText={t(`nakshatra.${nakshatra[0].name}`)}
+        caption={getIntervalDescription(nakshatra, "nakshatra")}
         onClick={onNakshatraClick}
       />
-      <Card title="MASA—LUNAR MONTH" onClick={onMasaClick}>
+      <Card title={t("home.cards.masa.title")} onClick={onMasaClick}>
         <View style={panchangaStyles.rowContainer}>
           <View>
             <Text semibold tint>
-              Amanta
+              {t("home.cards.masa.amanta")}
             </Text>
             <Text semibold larger>
-              {masa.amanta.name}
+              {t(`masa.${masa.amanta.name}`)}
             </Text>
           </View>
           <View>
             <Text semibold tint>
-              Purnimanta
+              {t("home.cards.masa.purnimanta")}
             </Text>
             <Text semibold larger>
-              {masa.purnimanta.name}
+              {t(`masa.${masa.purnimanta.name}`)}
             </Text>
           </View>
         </View>
       </Card>
       {festivals.length !== 0 && (
-        <Card title="FESTIVALS">
+        <Card title={t("home.cards.festivals.title")}>
           {festivals.map((festival, index) => (
             <TouchableOpacity
               key={`${festival.name}-${index}`}
@@ -209,10 +216,10 @@ export function Pachanga({
               <View style={panchangaStyles.festivalContainer}>
                 <View style={{ flexDirection: "column", gap: 4 }}>
                   <Text bold larger>
-                    {festival.name}
+                    {t(`festivals.${festival.name}.title`)}
                   </Text>
                   <View>
-                    <Text>{festival.caption}</Text>
+                    <Text>{t(`festivals.${festival.name}.caption`)}</Text>
                   </View>
                 </View>
                 <ChevronRight

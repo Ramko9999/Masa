@@ -23,6 +23,7 @@ import Animated, {
 import { getFontSize } from "@/theme";
 import { TITHI_NAMES, TithiIndex } from "@/api/panchanga/core/tithi";
 import { Moon } from "@/components/tithi/moon-phases";
+import { useTranslation } from "react-i18next";
 
 // Create animated components
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
@@ -73,13 +74,20 @@ export function TithiOrbit() {
   const centerX = size / 2;
   const centerY = size / 2;
 
+  const { t } = useTranslation();
+  const theme = useColorScheme();
+  const styles = useThemedStyles(stylesFactory);
+
+  // Get all tithi translations at once
+  const tithiTranslations = t("tithi", { returnObjects: true }) as Record<
+    string,
+    string
+  >;
+
   // Add state for tithiIndex
   const [currentTithiIndex, setCurrentTithiIndex] = useState<TithiIndex>(
     TithiIndex.Amavasya
   );
-
-  const theme = useColorScheme();
-  const styles = useThemedStyles(stylesFactory);
 
   // Get the tint color from the theme
   const tintColor = useGetColor(AppColor.tint, theme);
@@ -140,17 +148,27 @@ export function TithiOrbit() {
     cy: moonY.value,
   }));
 
+  const sunAngleText = t("orbits.sun_angle", {
+    angle: 0,
+  });
+  const moonAngleText = t("orbits.moon_angle", {
+    angle: 0,
+  });
+
   const sunAngleTextProps = useAnimatedProps(() => {
     return {
-      text: `Sun: ${Math.round(sunAngleDeg.value)}°`,
-      defaultValue: "Sun: 0°",
+      text: sunAngleText.replace("0", Math.round(sunAngleDeg.value).toString()),
+      defaultValue: sunAngleText,
     };
   });
 
   const moonAngleTextProps = useAnimatedProps(() => {
     return {
-      text: `Moon: ${Math.round(moonAngleDeg.value)}°`,
-      defaultValue: "Moon: 0°",
+      text: moonAngleText.replace(
+        "0",
+        Math.round(moonAngleDeg.value).toString()
+      ),
+      defaultValue: moonAngleText,
     };
   });
 
@@ -168,8 +186,8 @@ export function TithiOrbit() {
 
   const tithiNameTextProps = useAnimatedProps(() => {
     return {
-      text: `${TITHI_NAMES[tithiIndex.value]}`,
-      defaultValue: `${TITHI_NAMES[TithiIndex.Amavasya]}`,
+      text: tithiTranslations[TITHI_NAMES[currentTithiIndex]],
+      defaultValue: tithiTranslations[TITHI_NAMES[currentTithiIndex]],
     };
   });
 

@@ -13,9 +13,7 @@ import { IntroOrbitsDiagram } from "@/components/intro/orbit";
 import { useState } from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useThemedStyles } from "@/theme/color";
-const GEOCENTRIC_TITLE = "The Hindu Calendar is Geocentric";
-const GEOCENTRIC_FIRST_POINT =
-  "The Hindu calendar's elements are based off the positions of the celestial bodies from the perspective of Earth.";
+import { useTranslation } from "react-i18next";
 
 export function IntroGeocentricSlide({ onNext }: IntroSlideProps) {
   const [skipAnimationIndex, setSkipAnimationIndex] = useState(-1);
@@ -32,10 +30,12 @@ export function IntroGeocentricSlide({ onNext }: IntroSlideProps) {
     setCurrentAnimationIndex((prev) => Math.max(prev, currentAnimation));
   };
 
+  const { t } = useTranslation();
+
   return (
     <View style={introSlideStyles.container} onTouchEnd={handleTap}>
       <AnimatedSentence
-        content={GEOCENTRIC_TITLE}
+        content={t("intro.geocentric.title")}
         wordDuration={WORD_DURATION}
         stagger={STAGGER}
         textStyle={introSlideStyles.title}
@@ -45,7 +45,7 @@ export function IntroGeocentricSlide({ onNext }: IntroSlideProps) {
         initialDelay={DELAY_PADDING}
       />
       <AnimatedSentence
-        content={GEOCENTRIC_FIRST_POINT}
+        content={t("intro.geocentric.first_point")}
         wordDuration={WORD_DURATION}
         stagger={STAGGER}
         textStyle={[
@@ -81,7 +81,7 @@ export function IntroGeocentricSlide({ onNext }: IntroSlideProps) {
           style={introSlideStyles.actionButton}
         >
           <Text large semibold background>
-            Understood
+            {t("intro.geocentric.button")}
           </Text>
         </TouchableOpacity>
       </DelayedFadeIn>

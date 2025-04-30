@@ -21,6 +21,7 @@ import { IntroGeocentricSlide } from "@/components/intro/slide/geocentric";
 import { IntroRegionalVariantsSlide } from "@/components/intro/slide/regional-variants";
 import { LocationApi } from "@/api/location";
 import { useLocation } from "@/context/location";
+import { useTranslation } from "react-i18next";
 
 const introHeaderStylesFactory = (
   theme: ColorSchemeName
@@ -46,6 +47,8 @@ function IntroHeader({ onSkip, currentIndex, totalSlides }: IntroHeaderProps) {
   const insets = useSafeAreaInsets();
   const { height } = useWindowDimensions();
   const introHeaderStyles = useThemedStyles(introHeaderStylesFactory);
+  const { t } = useTranslation();
+
   return (
     <View
       style={[
@@ -56,7 +59,7 @@ function IntroHeader({ onSkip, currentIndex, totalSlides }: IntroHeaderProps) {
       <IntroPagination length={totalSlides} currentIndex={currentIndex} />
       <TouchableOpacity onPress={onSkip}>
         <Text neutral style={introHeaderStyles.skipButton}>
-          Skip
+          {t("intro.skip")}
         </Text>
       </TouchableOpacity>
     </View>
