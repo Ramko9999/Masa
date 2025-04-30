@@ -24,19 +24,21 @@ const splashStylesFactory = (
 type SplashProps = StackScreenProps<RootStackParamList, "splash">;
 
 type SplashState = {
-  hasLocationPermission: boolean;
+  hasLocation: boolean;
   shouldAnimateLogo: boolean;
   hasSeenOnboarding: boolean;
+  needsToAskForNotificationPermission: boolean;
 };
 
 export function Splash({ navigation }: SplashProps) {
   const splashStyles = useThemedStyles(splashStylesFactory);
   const { setLocation } = useLocation();
   const [
-    { hasLocationPermission, shouldAnimateLogo, hasSeenOnboarding },
+    { hasLocation, shouldAnimateLogo, hasSeenOnboarding, needsToAskForNotificationPermission },
     setState,
   ] = useState<SplashState>({
-    hasLocationPermission: false,
+    hasLocation: false,
+    needsToAskForNotificationPermission: false,
     shouldAnimateLogo: false,
     hasSeenOnboarding: false,
   });
@@ -44,13 +46,8 @@ export function Splash({ navigation }: SplashProps) {
   const onAnimationComplete = async () => {
     if (shouldAnimateLogo) {
       if (hasSeenOnboarding) {
-        if (hasLocationPermission) {
-          const notificationSettings =
-            await Notifications.getPermissionsAsync();
-          if (
-            notificationSettings.status === "undetermined" &&
-            Platform.OS === "ios"
-          ) {
+        if (hasLocation) {
+          if (needsToAskForNotificationPermission) {
             navigation.replace("notification_permission");
           } else {
             navigation.replace("tabs", { screen: "home" });
@@ -66,25 +63,20 @@ export function Splash({ navigation }: SplashProps) {
 
   useEffect(() => {
     Promise.all([
-      LocationApi.getLocationPermissionStatus(),
+      LocationApi.getSavedLocation(),
       UserApi.hasSeenOnboarding(),
-    ]).then(([permission, hasSeenOnboarding]) => {
-      if (permission.status === "granted") {
-        LocationApi.readDeviceLocation().then((location) => {
-          setLocation(location);
-          setState({
-            hasLocationPermission: true,
-            shouldAnimateLogo: true,
-            hasSeenOnboarding,
-          });
-        });
-      } else {
-        setState({
-          hasLocationPermission: false,
-          shouldAnimateLogo: true,
-          hasSeenOnboarding,
-        });
+      Notifications.getPermissionsAsync(),
+    ]).then(([savedLocation, hasSeenOnboarding, notificationSettings]) => {
+      const splashState = {
+        shouldAnimateLogo: true,
+        hasSeenOnboarding,
+        needsToAskForNotificationPermission: notificationSettings.status === "undetermined" && Platform.OS === "ios",
+        hasLocation: savedLocation !== undefined,
       }
+      if (savedLocation) {
+        setLocation(savedLocation);
+      }
+      setState(splashState);
     });
   }, []);
 

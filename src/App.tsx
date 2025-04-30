@@ -7,6 +7,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { LocationProvider } from "@/context/location";
 import { CalendarProvider } from "@/components/calendar";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import { SettingSheetsProvider } from "./components/settings";
 // Preload assets
 const preloadAssets = async () => {
   // Load image assets
@@ -50,7 +51,9 @@ export function App() {
       <GestureHandlerRootView>
         <LocationProvider>
           <CalendarProvider>
-            <Layout />
+            <SettingSheetsProvider>
+              <Layout />
+            </SettingSheetsProvider>
           </CalendarProvider>
         </LocationProvider>
       </GestureHandlerRootView>

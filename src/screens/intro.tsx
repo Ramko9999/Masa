@@ -130,11 +130,10 @@ export function Intro({ navigation }: IntroProps) {
 
   const handleOnboardingComplete = async () => {
     await UserApi.markOnboardingComplete();
-    const locationPermissionStatus =
-      await LocationApi.getLocationPermissionStatus();
-    if (locationPermissionStatus.status === "granted") {
-      const location = await LocationApi.readDeviceLocation();
-      setLocation(location);
+
+    const savedLocation = await LocationApi.getSavedLocation();
+    if (savedLocation) {
+      setLocation(savedLocation);
       const notificationSettings = await Notifications.getPermissionsAsync();
       if (
         notificationSettings.status === "undetermined" &&

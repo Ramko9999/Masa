@@ -11,11 +11,15 @@
       "appleTeamId": "37U34B89DU",
       "supportsTablet": false,
       "entitlements": {
-        "com.apple.security.application-groups": ["group.com.anonymous.masa"]
+        "com.apple.security.application-groups": [
+          "group.com.anonymous.masa"
+        ]
       },
       "infoPlist": {
-        "NSLocationUsageDescription": "We need your location to calculate the correct calendar elements and festival timings for your region.",
-        "NSLocationAlwaysAndWhenInUseUsageDescription": "We need your location to calculate the correct calendar elements and festival timings for your region."
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "The app uses your location to calculate accurate Panchangam details and festival timings specific to your area.",
+        "NSLocationAlwaysUsageDescription": "The app uses your location to calculate accurate Panchangam details and festival timings specific to your area.",
+        "NSLocationWhenInUseUsageDescription": "The app uses your location to calculate accurate Panchangam details and festival timings specific to your area.",
+        "NSLocationUsageDescription": "The app uses your location to calculate accurate Panchangam details and festival timings specific to your area."
       },
       "bundleIdentifier": "com.anonymous.masa",
       "icon": {

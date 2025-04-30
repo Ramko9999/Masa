@@ -46,13 +46,13 @@
       <true/>
     </dict>
     <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-    <string>We need your location to calculate the correct calendar elements and festival timings for your region.</string>
+    <string>The app uses your location to calculate accurate Panchangam details and festival timings specific to your area.</string>
     <key>NSLocationAlwaysUsageDescription</key>
-    <string>Allow $(PRODUCT_NAME) to access your location</string>
+    <string>The app uses your location to calculate accurate Panchangam details and festival timings specific to your area.</string>
     <key>NSLocationUsageDescription</key>
-    <string>We need your location to calculate the correct calendar elements and festival timings for your region.</string>
+    <string>The app uses your location to calculate accurate Panchangam details and festival timings specific to your area.</string>
     <key>NSLocationWhenInUseUsageDescription</key>
-    <string>Allow $(PRODUCT_NAME) to access your location</string>
+    <string>The app uses your location to calculate accurate Panchangam details and festival timings specific to your area.</string>
     <key>UILaunchStoryboardName</key>
     <string>SplashScreen</string>
     <key>UIRequiredDeviceCapabilities</key>

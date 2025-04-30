@@ -5,7 +5,7 @@ import {
   useColorScheme,
   ViewStyle,
 } from "react-native";
-import { forwardRef, useEffect, useImperativeHandle } from "react";
+import { forwardRef, useEffect, useImperativeHandle, useCallback, ReactNode } from "react";
 import Animated, {
   Easing,
   interpolate,
@@ -15,9 +15,15 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
-import React from "react";
+import React, { ForwardedRef } from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { AppColor, useGetColor, useThemedStyles } from "@/theme/color";
+import { View } from "@/theme";
+import BottomSheet, {
+  BottomSheetBackdrop,
+  BottomSheetBackgroundProps,
+  BottomSheetHandle,
+} from "@gorhom/bottom-sheet";
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
@@ -84,7 +90,8 @@ const SNAP_CLOSE_CONFIG = {
   easing: Easing.bezier(0.4, 0.0, 0.2, 1.0),
 };
 
-export const BottomSheet = forwardRef<BottomSheetRef, BottomSheetProps>(
+// todo: deprecate this and use PopupBottomSheet instead
+export const GenericBottomSheet = forwardRef<BottomSheetRef, BottomSheetProps>(
   (
     { show, onHide, children, contentHeight, contentStyle, hitslopHeight },
     ref
@@ -177,6 +184,91 @@ export const BottomSheet = forwardRef<BottomSheetRef, BottomSheetProps>(
           </GestureDetector>
         </>
       )
+    );
+  }
+);
+
+const popupBottomSheetStylesFactory = (
+  theme: ColorSchemeName
+): StyleSheet.NamedStyles<any> => ({
+  backdrop: {
+    backgroundColor: useGetColor(AppColor.primary, theme)
+  },
+  handle: {
+    borderTopLeftRadius: 15,
+    borderTopRightRadius: 15,
+    backgroundColor: useGetColor(AppColor.background, theme),
+  },
+  background: {
+    borderTopLeftRadius: 15,
+    borderTopRightRadius: 15,
+    backgroundColor: useGetColor(AppColor.background, theme),
+  },
+  indicator: {
+    width: "20%",
+    height: 3,
+    backgroundColor: useGetColor(AppColor.primary, theme),
+  },
+});
+
+type PopupBottomSheetProps = {
+  children: ReactNode;
+  show: boolean;
+  onHide: () => void;
+};
+
+export const PopupBottomSheet = forwardRef(
+  ({ children, show, onHide }: PopupBottomSheetProps, ref: ForwardedRef<BottomSheet>) => {
+    const popupBottomSheetStyles = useThemedStyles(popupBottomSheetStylesFactory);
+
+    const renderBackground = useCallback(
+      (props: BottomSheetBackgroundProps) => (
+        <View
+          {...props}
+          style={[props.style, popupBottomSheetStyles.background]}
+        />
+      ),
+      [popupBottomSheetStyles]
+    );
+
+    const renderBackdrop = useCallback(
+      (props: any) => (
+        <BottomSheetBackdrop
+          {...props}
+          disappearsOnIndex={-1}
+          appearsOnIndex={0}
+          opacity={0.5}
+          style={[props.style, popupBottomSheetStyles.backdrop]}
+        />
+      ),
+      []
+    );
+
+    const renderHandle = useCallback(
+      (props: any) => (
+        <BottomSheetHandle
+          {...props}
+          style={[props.style, popupBottomSheetStyles.handle]}
+          indicatorStyle={popupBottomSheetStyles.indicator}
+        />
+      ),
+      [popupBottomSheetStyles]
+    );
+
+    return (
+      <BottomSheet
+        ref={ref}
+        enableDynamicSizing={true}
+        enablePanDownToClose
+        enableOverDrag={false}
+        onClose={onHide}
+        index={show ? 0 : -1}
+        backdropComponent={renderBackdrop}
+        handleComponent={renderHandle}
+        backgroundComponent={renderBackground}
+      >
+        {children}
+      </BottomSheet>
     );
   }
 );
