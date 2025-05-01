@@ -18,7 +18,7 @@ import { useState } from "react";
 
 const NOTIFICATION_TITLE = "Festival Reminders";
 const NOTIFICATION_SUBTEXT =
-  "We use notifications to remind you when a festival begins. You can toggle them on or off anytime in the settings.";
+  "We use notifications to remind you when a festival begins.";
 
 const notificationPermissionStylesFactory = (
   theme: ColorSchemeName
