@@ -16,10 +16,10 @@
         ]
       },
       "infoPlist": {
-        "NSLocationAlwaysAndWhenInUseUsageDescription": "The app uses your location to calculate accurate Panchangam details and festival timings specific to your area.",
-        "NSLocationAlwaysUsageDescription": "The app uses your location to calculate accurate Panchangam details and festival timings specific to your area.",
-        "NSLocationWhenInUseUsageDescription": "The app uses your location to calculate accurate Panchangam details and festival timings specific to your area.",
-        "NSLocationUsageDescription": "The app uses your location to calculate accurate Panchangam details and festival timings specific to your area."
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "The app uses your location to calculate accurate Hindu calendar elements and festival timings specific to your area.",
+        "NSLocationAlwaysUsageDescription": "The app uses your location to calculate accurate Hindu calendar elements and festival timings specific to your area.",
+        "NSLocationWhenInUseUsageDescription": "The app uses your location to calculate accurate Hindu calendar elements and festival timings specific to your area.",
+        "NSLocationUsageDescription": "The app uses your location to calculate accurate Hindu calendar elements and festival timings specific to your area."
       },
       "bundleIdentifier": "com.anonymous.masa",
       "icon": {

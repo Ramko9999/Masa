@@ -21,7 +21,7 @@ import { useEffect, useState } from "react";
 import { shadeColor, tintColor } from "@/util/color";
 
 const LOCATION_SUBTEXT =
-  "Pick one of the following cities to base your Hindu calendar on";
+  "If you don't want to share your location, pick one of these cities to base your Hindu calendar on";
 
 const prepopulatedLocationSelectionStylesFactory = (
   theme: ColorSchemeName

@@ -46,13 +46,13 @@
       <true/>
     </dict>
     <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-    <string>The app uses your location to calculate accurate Panchangam details and festival timings specific to your area.</string>
+    <string>The app uses your location to calculate accurate Hindu calendar elements and festival timings specific to your area.</string>
     <key>NSLocationAlwaysUsageDescription</key>
-    <string>The app uses your location to calculate accurate Panchangam details and festival timings specific to your area.</string>
+    <string>The app uses your location to calculate accurate Hindu calendar elements and festival timings specific to your area.</string>
     <key>NSLocationUsageDescription</key>
-    <string>The app uses your location to calculate accurate Panchangam details and festival timings specific to your area.</string>
+    <string>The app uses your location to calculate accurate Hindu calendar elements and festival timings specific to your area.</string>
     <key>NSLocationWhenInUseUsageDescription</key>
-    <string>The app uses your location to calculate accurate Panchangam details and festival timings specific to your area.</string>
+    <string>The app uses your location to calculate accurate Hindu calendar elements and festival timings specific to your area.</string>
     <key>UILaunchStoryboardName</key>
     <string>SplashScreen</string>
     <key>UIRequiredDeviceCapabilities</key>
