@@ -11,7 +11,6 @@ import {
   ColorSchemeName,
   ScrollView,
   StyleSheet,
-  useColorScheme,
 } from "react-native";
 import { View } from "@/theme";
 import { AppColor, useGetColor, useThemedStyles } from "@/theme/color";

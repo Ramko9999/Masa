@@ -13,6 +13,7 @@ import {
 import { useCalendar } from "@/components/calendar/context";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import PagerView from "react-native-pager-view";
+import { useLocation } from "@/context/location";
 
 const dayStylesFactory = (
   theme: ColorSchemeName
@@ -142,42 +143,68 @@ const Week = memo(
   shouldNotRenderWeek
 );
 
-const calendarTitleStyles = StyleSheet.create({
+const calendarTitleStylesFactory = (
+  theme: ColorSchemeName
+): StyleSheet.NamedStyles<any> => ({
   container: {
     ...StyleUtils.flexRow(),
     justifyContent: "space-between",
     alignItems: "center",
-    paddingBottom: "2%",
+    paddingBottom: "2%"
   },
-  date: {
-    ...StyleUtils.flexColumn(),
+  leftColumn: {
+    ...StyleUtils.flexColumn(2),
+  },
+  rightColumn: {
+    ...StyleUtils.flexColumn(2),
     alignItems: "flex-end",
   },
+  dateContainer: {
+    ...StyleUtils.flexRow(8),
+    alignItems: "center",
+  }
 });
 
 type CalendarTitleProps = {
   day: number;
 };
 
+function formatCalendarTitleDate(date: number): { monthDay: string; year: string } {
+  const d = new Date(date);
+  const month = new Intl.DateTimeFormat("en-US", { month: "long" }).format(d);
+  const day = d.getDate();
+  const year = d.getFullYear().toString();
+  return {
+    monthDay: `${month} ${day}`,
+    year
+  };
+}
+
 function CalendarTitle({ day }: CalendarTitleProps) {
   const { openMonthCalendar } = useCalendar();
+  const calendarTitleStyles = useThemedStyles(calendarTitleStylesFactory);
+  const { location } = useLocation();
+  const { monthDay, year } = formatCalendarTitleDate(day);
+
   return (
     <View style={calendarTitleStyles.container}>
-      <Text huge bold>
-        {DAYS_OF_WEEK[new Date(day).getDay()]}
-      </Text>
+      <View style={calendarTitleStyles.leftColumn}>
+        <Text big semibold>
+          {DAYS_OF_WEEK[new Date(day).getDay()]}
+        </Text>
+        <Text tint semibold big>
+          {location?.place}
+        </Text>
+      </View>
       <TouchableOpacity
-        style={calendarTitleStyles.date}
+        style={calendarTitleStyles.rightColumn}
         onPress={openMonthCalendar}
       >
         <Text tint semibold big>
-          {new Intl.DateTimeFormat("en-US", { month: "long" }).format(
-            new Date(day)
-          )}{" "}
-          {new Date(day).getDate().toString().padStart(2, "0")}
+          {monthDay}
         </Text>
         <Text tint semibold big>
-          {new Date(day).getFullYear()}
+          {year}
         </Text>
       </TouchableOpacity>
     </View>
@@ -204,7 +231,7 @@ const weekCalendarStyles = StyleSheet.create({
   container: {
     ...StyleUtils.flexColumn(5),
     paddingHorizontal: "3%",
-    paddingVertical: "4%",
+    paddingVertical: "2%",
   },
   page: {
     ...StyleUtils.flexRowCenterAll(),
