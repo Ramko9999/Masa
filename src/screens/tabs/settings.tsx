@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Alert,
   Linking,
+  Platform,
 } from "react-native";
 import { StyleUtils } from "@/theme/style-utils";
 import { useLocation } from "@/context/location";
@@ -108,11 +109,13 @@ export function Settings() {
         value={location!.place}
         onClick={() => locationSettingSheet.open()}
       />
-      <SettingItem
-        title="Notifications"
-        value={notificationStatus}
-        onClick={handleNotificationClick}
-      />
+      {Platform.OS === "ios" && (
+        <SettingItem
+          title="Notifications"
+          value={notificationStatus}
+          onClick={handleNotificationClick}
+        />
+      )}
     </View>
   );
 } 
