@@ -1,7 +1,6 @@
 import { getFestivals } from "@/api/panchanga";
 import * as Notifications from "expo-notifications";
 import { SchedulableTriggerInputTypes } from "expo-notifications";
-import { truncateToDay } from "@/util/date";
 import { Location } from "@/api/location";
 import { Platform } from "react-native";
 
@@ -29,6 +28,8 @@ async function getNotificationPermissionStatus() {
   return true;
 }
 
+
+// todo: investigate why notfications aren't always scheduled
 async function scheduleFestivalNotifications(location: Location) {
   const festivals = getFestivals(location);
 
@@ -47,7 +48,7 @@ async function scheduleFestivalNotifications(location: Location) {
       continue;
     }
 
-    const notification = await Notifications.scheduleNotificationAsync({
+    await Notifications.scheduleNotificationAsync({
       content: {
         title: festival.name,
         body: festival.caption,

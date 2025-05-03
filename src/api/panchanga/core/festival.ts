@@ -492,6 +492,8 @@ function generateCacheKey(anchorDay: number, location: Location): CacheKey {
   )}`;
 }
 
+
+// todo: fix cache so that only festivals for the anchor date year are cached
 export function getFestivals(location: Location) {
   const today = new Date();
   const anchorDay = new Date(today.getFullYear(), 0, 1).valueOf();

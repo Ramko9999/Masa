@@ -4,6 +4,7 @@ import { Festival } from "@/api/panchanga/core/festival";
 export type TabParamList = {
     home: undefined;
     festivals: undefined;
+    settings: undefined;
 }
 
 export type RootStackParamList = {

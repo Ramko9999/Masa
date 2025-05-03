@@ -9,6 +9,7 @@ import { LocationPermission } from "@/screens/location-permission";
 import { NotificationPermission } from "@/screens/notification-permission";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Festivals } from "@/screens/tabs/festivals";
+import { Settings } from "@/screens/tabs/settings";
 import { FestivalDetails } from "@/screens/festival-details";
 import { TithiInfoPage } from "@/screens/tithi-info";
 import { VaaraInfoPage } from "@/screens/vaara-info";
@@ -47,6 +48,13 @@ function Tabs() {
         component={Festivals}
         options={{
           title: "Festivals",
+        }}
+      />
+      <Tab.Screen
+        name="settings"
+        component={Settings}
+        options={{
+          title: "Settings",
         }}
       />
     </Tab.Navigator>

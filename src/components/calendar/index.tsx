@@ -1,8 +1,8 @@
-import { ColorSchemeName, Platform, StyleSheet, useWindowDimensions } from "react-native";
+import { ColorSchemeName, StyleSheet, useWindowDimensions } from "react-native";
 import { truncateToDay } from "@/util/date";
 import { MonthCalendar } from "./month";
 import { CalendarContext, Selection } from "./context";
-import { BottomSheet, BottomSheetRef } from "../util/sheet";
+import { BottomSheetRef, GenericBottomSheet } from "../util/sheet";
 import { useThemedStyles } from "@/theme/color";
 import { useRef, useState } from "react";
 
@@ -42,7 +42,7 @@ export function CalendarProvider({ children }: { children: React.ReactNode }) {
     >
       <>
         {children}
-        <BottomSheet
+        <GenericBottomSheet
           ref={bottomSheetRef}
           show={isMonthCalendarOpen}
           onHide={() => setIsMonthCalendarOpen(false)}
@@ -53,7 +53,7 @@ export function CalendarProvider({ children }: { children: React.ReactNode }) {
           <MonthCalendar
             onFinishDayClick={() => bottomSheetRef.current?.hide()}
           />
-        </BottomSheet>
+        </GenericBottomSheet>
       </>
     </CalendarContext.Provider>
   );
