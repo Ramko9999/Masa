@@ -43,36 +43,6 @@
         "festivals": "Festivals",
         "settings": "Settings"
     },
-    "prepopulated_locations": {
-        "san_francisco": {
-            "city": "San Francisco",
-            "country": "USA"
-        },
-        "chicago": {
-            "city": "Chicago",
-            "country": "USA"
-        },
-        "new_york": {
-            "city": "New York",
-            "country": "USA"
-        },
-        "delhi": {
-            "city": "Delhi",
-            "country": "India"
-        },
-        "mumbai": {
-            "city": "Mumbai",
-            "country": "India"
-        },
-        "bangalore": {
-            "city": "Bangalore",
-            "country": "India"
-        },
-        "hyderabad": {
-            "city": "Hyderabad",
-            "country": "India"
-        }
-    },
     "home": {
         "cards": {
             "vaara": {
@@ -525,10 +495,18 @@
                     "alert": "Disable Notifications",
                     "settings_alert": "Please disable notifications by turning them off in the settings."
                 },
-                "checking": "Checking...",
-                "not_now": "Not Now",
-                "open_settings": "Open Settings"
+                "checking": "Checking..."
             }
-        }
+        },
+        "not_now": "Not Now",
+        "open_settings": "Open Settings"
+    },
+    "location_permission": {
+        "select": "Select a location",
+        "last_set_to": "Your location was last set to",
+        "use_current_location": "Use current location",
+        "select_from_prepopulated_locations": "Select from the following cities",
+        "location_access_disabled": "Location Access Disabled",
+        "location_error": "The current location cannot be retrieved because location access is disabled. Please enable location access in your device settings."
     }
 }

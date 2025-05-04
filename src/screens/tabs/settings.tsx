@@ -66,24 +66,25 @@ export function Settings() {
   const settingsStyles = useThemedStyles(settingsStylesFactory);
   const { locationSettingSheet } = useSettingsSheet();
   const { t } = useTranslation();
-  const [notificationStatus, setNotificationStatus] =
-    useState<string>("Checking...");
+  const [notificationStatus, setNotificationStatus] = useState<string>(
+    t("settings.settings_items.notifications.checking")
+  );
 
   const showNotificationSettingsAlert = (isEnabled: boolean) => {
     Alert.alert(
       isEnabled
-        ? t("settings.setting_items.notifications.enabled.alert")
-        : t("settings.setting_items.notifications.disabled.alert"),
+        ? t("settings.settings_items.notifications.enabled.alert")
+        : t("settings.settings_items.notifications.disabled.alert"),
       isEnabled
-        ? t("settings.setting_items.notifications.disabled.settings_alert")
-        : t("settings.setting_items.notifications.enabled.settings_alert"),
+        ? t("settings.settings_items.notifications.enabled.settings_alert")
+        : t("settings.settings_items.notifications.disabled.settings_alert"),
       [
         {
-          text: t("settings.setting_items.notifications.now_now"),
+          text: t("settings.not_now"),
           style: "cancel",
         },
         {
-          text: t("settings.setting_items.notifications.open_settings"),
+          text: t("settings.open_settings"),
           onPress: Linking.openSettings,
         },
       ]
@@ -92,12 +93,13 @@ export function Settings() {
 
   const handleNotificationClick = useCallback(() => {
     if (
-      notificationStatus === t("settings.setting_items.notifications.checking")
+      notificationStatus === t("settings.settings_items.notifications.checking")
     ) {
       return;
     }
     const isEnabled =
-      notificationStatus === t("settings.setting_items.notifications.enabled.title");
+      notificationStatus ===
+      t("settings.settings_items.notifications.enabled.title");
     showNotificationSettingsAlert(isEnabled);
   }, [notificationStatus]);
 
@@ -107,8 +109,8 @@ export function Settings() {
         const settings = await Notifications.getPermissionsAsync();
         setNotificationStatus(
           settings.granted
-            ? t("settings.setting_items.notifications.enabled.title")
-            : t("settings.setting_items.notifications.disabled.title")
+            ? t("settings.settings_items.notifications.enabled.title")
+            : t("settings.settings_items.notifications.disabled.title")
         );
       };
       checkNotificationStatus();
@@ -123,13 +125,13 @@ export function Settings() {
         </Text>
       </View>
       <SettingItem
-        title={t("settings.setting_items.location.title")}
+        title={t("settings.settings_items.location.title")}
         value={location!.place}
         onClick={() => locationSettingSheet.open()}
       />
       {Platform.OS === "ios" && (
         <SettingItem
-          title={t("settings.setting_items.notifications.title")}
+          title={t("settings.settings_items.notifications.title")}
           value={notificationStatus}
           onClick={handleNotificationClick}
         />
