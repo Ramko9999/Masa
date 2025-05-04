@@ -515,17 +515,19 @@
             },
             "notifications": {
                 "title": "Notifications",
-                "enabled": "Enabled",
-                "disabled": "Disabled",
+                "enabled": {
+                    "title": "Enabled",
+                    "alert": "Enable Notifications",
+                    "settings_alert": "Please enable notifications by turning them on in the settings."
+                },
+                "disabled": {
+                    "title": "Disabled",
+                    "alert": "Disable Notifications",
+                    "settings_alert": "Please disable notifications by turning them off in the settings."
+                },
                 "checking": "Checking...",
-                "enable_notifications": "Enable Notifications",
-                "disable_notifications": "Disable Notifications",
                 "not_now": "Not Now",
-                "open_settings": "Open Settings",
-                "disable_notifications_alert": "Please disable notifications by turning them off in the settings.",
-                "enable_notifications_alert": "Please enable notifications by turning them on in the settings.",
-                "not_now_alert": "Not Now",
-                "open_settings_alert": "Open Settings"
+                "open_settings": "Open Settings"
             }
         }
     }

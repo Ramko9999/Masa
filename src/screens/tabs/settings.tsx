@@ -72,18 +72,18 @@ export function Settings() {
   const showNotificationSettingsAlert = (isEnabled: boolean) => {
     Alert.alert(
       isEnabled
-        ? t("settings.setting_items.notifications.disable_notifications")
-        : t("settings.setting_items.notifications.enable_notifications"),
+        ? t("settings.setting_items.notifications.enabled.alert")
+        : t("settings.setting_items.notifications.disabled.alert"),
       isEnabled
-        ? t("settings.setting_items.notifications.disable_notifications_alert")
-        : t("settings.setting_items.notifications.enable_notifications_alert"),
+        ? t("settings.setting_items.notifications.disabled.settings_alert")
+        : t("settings.setting_items.notifications.enabled.settings_alert"),
       [
         {
-          text: t("settings.setting_items.notifications.not_now_alert"),
+          text: t("settings.setting_items.notifications.now_now"),
           style: "cancel",
         },
         {
-          text: t("settings.setting_items.notifications.open_settings_alert"),
+          text: t("settings.setting_items.notifications.open_settings"),
           onPress: Linking.openSettings,
         },
       ]
@@ -97,7 +97,7 @@ export function Settings() {
       return;
     }
     const isEnabled =
-      notificationStatus === t("settings.setting_items.notifications.enabled");
+      notificationStatus === t("settings.setting_items.notifications.enabled.title");
     showNotificationSettingsAlert(isEnabled);
   }, [notificationStatus]);
 
@@ -107,8 +107,8 @@ export function Settings() {
         const settings = await Notifications.getPermissionsAsync();
         setNotificationStatus(
           settings.granted
-            ? t("settings.setting_items.notifications.enabled")
-            : t("settings.setting_items.notifications.disabled")
+            ? t("settings.setting_items.notifications.enabled.title")
+            : t("settings.setting_items.notifications.disabled.title")
         );
       };
       checkNotificationStatus();
