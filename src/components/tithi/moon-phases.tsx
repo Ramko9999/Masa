@@ -19,7 +19,7 @@ import Animated, {
   useAnimatedReaction,
 } from "react-native-reanimated";
 import { Text } from "@/theme";
-
+import { useTranslation } from "react-i18next";
 export interface MoonProps {
   width?: number;
   height?: number;
@@ -112,13 +112,19 @@ export const MoonSlider = ({ onProgressChange }: MoonSliderProps) => {
       transform: [{ translateX: offset.value }],
     };
   });
+  const { t } = useTranslation();
+
+  const tithiTranslations = t("tithi", { returnObjects: true }) as Record<
+    string,
+    string
+  >;
 
   return (
     <View style={moonSliderStyles.container}>
       <View style={moonSliderStyles.moonContainer}>
         <Moon tithiIndex={currentTithiIndex} width={80} height={80} />
         <Text tint semibold>
-          {TITHI_NAMES[currentTithiIndex]}
+          {tithiTranslations[TITHI_NAMES[currentTithiIndex]]}
         </Text>
       </View>
       <View
@@ -133,7 +139,7 @@ export const MoonSlider = ({ onProgressChange }: MoonSliderProps) => {
         </GestureDetector>
       </View>
       <Text tint tiny style={{ fontStyle: "italic" }}>
-        Use the slider to explore Tithis
+        {t("tithi_info.moon_phases.caption")}
       </Text>
     </View>
   );

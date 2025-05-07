@@ -12,13 +12,19 @@ import { AppColor, useGetColor, useThemedStyles } from "@/theme/color";
 import { ChevronLeft } from "lucide-react-native";
 import { RootStackParamList } from "@/layout/types";
 import { StackScreenProps } from "@react-navigation/stack";
-import { FestivalName, RuleType } from "@/api/panchanga/core/festival";
+import {
+  FestivalInfo,
+  FestivalName,
+  RuleType,
+} from "@/api/panchanga/core/festival";
 import { ParallaxScrollView } from "@/components/parallax-scroll-view";
 import { FESTIVAL_IMAGES } from "@/components/festival-images";
 import { TITHI_NAMES } from "@/api/panchanga/core/tithi";
 import { MASA_NAMES } from "@/api/panchanga/core/masa";
 import { StyleUtils } from "@/theme/style-utils";
 import { SystemBars } from "react-native-edge-to-edge";
+import { useTranslation } from "react-i18next";
+import { formatDate } from "@/util/date";
 
 const festivalDetailsStylesFactory = (
   theme: ColorSchemeName
@@ -100,13 +106,13 @@ export function FestivalDetails({ navigation, route }: FestivalDetailsProps) {
   const { width } = useWindowDimensions();
   const spacing = width * 0.03;
   const festivalDetailsStyles = useThemedStyles(festivalDetailsStylesFactory);
+  const { i18n } = useTranslation();
+  const formattedDate = formatDate(i18n.language, new Date(festival.date));
+  const { t } = useTranslation();
 
-  const formattedDate = new Date(festival.date).toLocaleDateString("en-US", {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
+  const festivalInfo = t(`festivals.${festival.name}`, {
+    returnObjects: true,
+  }) as FestivalInfo;
 
   return (
     <>
@@ -137,11 +143,11 @@ export function FestivalDetails({ navigation, route }: FestivalDetailsProps) {
             <View style={festivalDetailsStyles.festivalInfo}>
               <View style={festivalDetailsStyles.festivalTitle}>
                 <Text huge bold>
-                  {festival.name}
+                  {festivalInfo.title}
                 </Text>
-                {festival.subtitle && (
+                {festivalInfo.subtitle && (
                   <Text style={{ fontStyle: "italic" }} neutral>
-                    {festival.subtitle}
+                    {festivalInfo.subtitle}
                   </Text>
                 )}
                 <View style={festivalDetailsStyles.date}>
@@ -155,17 +161,19 @@ export function FestivalDetails({ navigation, route }: FestivalDetailsProps) {
                   <View style={festivalDetailsStyles.metaInfo}>
                     <View>
                       <Text semibold neutral tint>
-                        Tithi
+                        {t("tithi_info.title")}
                       </Text>
                       <Text neutral>
-                        {TITHI_NAMES[festival.rule.tithiIndex]}
+                        {t(`tithi.${TITHI_NAMES[festival.rule.tithiIndex]}`)}
                       </Text>
                     </View>
                     <View>
                       <Text semibold neutral tint>
-                        Purnimanta Masa
+                        {t("masa_info.purnimanta_masa")}
                       </Text>
-                      <Text neutral>{MASA_NAMES[festival.rule.masaIndex]}</Text>
+                      <Text neutral>
+                        {t(`masa.${MASA_NAMES[festival.rule.masaIndex]}`)}
+                      </Text>
                     </View>
                   </View>
                 </>
@@ -174,18 +182,18 @@ export function FestivalDetails({ navigation, route }: FestivalDetailsProps) {
           </View>
           <View>
             <Text large semibold>
-              About this festival
+              {t("festival_details.about")}
             </Text>
             <View style={festivalDetailsStyles.description}>
-              {parseLine(festival.description, "description")}
+              {parseLine(festivalInfo.description, "description")}
             </View>
           </View>
           <View>
             <Text large semibold>
-              How to celebrate?
+              {t("festival_details.how_to_celebrate")}
             </Text>
             <View style={festivalDetailsStyles.celebration}>
-              {parseContent(festival.celebration)}
+              {parseContent(festivalInfo.celebration)}
             </View>
           </View>
         </ParallaxScrollView>

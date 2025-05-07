@@ -12,13 +12,7 @@ import { DelayedFadeIn } from "@/components/util/delayed-fade-in";
 import { useState } from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useThemedStyles } from "@/theme/color";
-const HINDU_CALENDAR_TITLE = "Two Calendars, Two Systems";
-const HINDU_CALENDAR_FIRST_POINT =
-  "It's not changing! Diwali is based off the Hindu calendar which has a different astronomical basis than the Gregorian calendar.";
-const HINDU_CALENDAR_SECOND_POINT =
-  "The Gregorian calendar tracks Earth's journey around the Sun, while the Hindu calendar also considers the Moon's phases and positions.";
-const HINDU_CALENDAR_THIRD_POINT =
-  "Here are a couple other things to keep in mind:";
+import { useTranslation } from "react-i18next";
 
 export function IntroHinduCalendarSlide({ onNext }: IntroSlideProps) {
   const [skipAnimationIndex, setSkipAnimationIndex] = useState(-1);
@@ -35,10 +29,12 @@ export function IntroHinduCalendarSlide({ onNext }: IntroSlideProps) {
 
   const insets = useSafeAreaInsets();
 
+  const { t } = useTranslation();
+
   return (
     <View style={introSlideStyles.container} onTouchEnd={handleTap}>
       <AnimatedSentence
-        content={HINDU_CALENDAR_TITLE}
+        content={t("intro.hindu_calendar.title")}
         wordDuration={WORD_DURATION}
         stagger={STAGGER}
         textStyle={introSlideStyles.title}
@@ -48,7 +44,7 @@ export function IntroHinduCalendarSlide({ onNext }: IntroSlideProps) {
         initialDelay={DELAY_PADDING}
       />
       <AnimatedSentence
-        content={HINDU_CALENDAR_FIRST_POINT}
+        content={t("intro.hindu_calendar.first_point")}
         wordDuration={WORD_DURATION}
         stagger={STAGGER}
         textStyle={[
@@ -61,7 +57,7 @@ export function IntroHinduCalendarSlide({ onNext }: IntroSlideProps) {
         onAnimationFinished={() => triggerNextAnimation(2)}
       />
       <AnimatedSentence
-        content={HINDU_CALENDAR_SECOND_POINT}
+        content={t("intro.hindu_calendar.second_point")}
         wordDuration={WORD_DURATION}
         stagger={STAGGER}
         textStyle={[
@@ -74,7 +70,7 @@ export function IntroHinduCalendarSlide({ onNext }: IntroSlideProps) {
         onAnimationFinished={() => triggerNextAnimation(3)}
       />
       <AnimatedSentence
-        content={HINDU_CALENDAR_THIRD_POINT}
+        content={t("intro.hindu_calendar.third_point")}
         wordDuration={WORD_DURATION}
         stagger={STAGGER}
         textStyle={[
@@ -101,7 +97,7 @@ export function IntroHinduCalendarSlide({ onNext }: IntroSlideProps) {
           style={introSlideStyles.actionButton}
         >
           <Text large semibold background>
-            Tell me more
+            {t("intro.hindu_calendar.button")}
           </Text>
         </TouchableOpacity>
       </DelayedFadeIn>

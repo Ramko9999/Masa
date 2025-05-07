@@ -18,6 +18,7 @@ import { CompositeScreenProps } from "@react-navigation/native";
 import { useLocation } from "@/context/location";
 import { useGetColor, useThemedStyles } from "@/theme/color";
 import { AppColor } from "@/theme/color";
+import { useTranslation } from "node_modules/react-i18next";
 
 const festivalsStylesFactory = (
   theme: ColorSchemeName
@@ -55,6 +56,7 @@ type FestivalItemProps = {
 function FestivalItem({ festival, onPress }: FestivalItemProps) {
   const festivalsStyles = useThemedStyles(festivalsStylesFactory);
   const theme = useColorScheme();
+  const { i18n, t } = useTranslation();
 
   return (
     <View>
@@ -69,11 +71,11 @@ function FestivalItem({ festival, onPress }: FestivalItemProps) {
           ]}
         >
           <Text neutral tint semibold>
-            {getHumanReadableDateWithWeekday(festival.date)}
+            {getHumanReadableDateWithWeekday(i18n.language, festival.date)}
           </Text>
         </View>
         <Text large semibold>
-          {festival.name}
+          {t(`festivals.${festival.name}.title`)}
         </Text>
       </TouchableOpacity>
     </View>
@@ -89,6 +91,8 @@ export function Festivals({ navigation }: FestivalsProps) {
     navigation.navigate("festival_details", { festival });
   };
 
+  const { t } = useTranslation();
+
   return (
     <View
       style={[
@@ -97,7 +101,7 @@ export function Festivals({ navigation }: FestivalsProps) {
       ]}
     >
       <Text huge bold>
-        Festivals
+        {t("tabs.festivals")}
       </Text>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={festivalsStyles.festivalsList}>

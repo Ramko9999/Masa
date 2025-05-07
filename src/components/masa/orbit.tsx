@@ -24,6 +24,7 @@ import { getFontSize } from "@/theme";
 import { TITHI_NAMES, TithiIndex } from "@/api/panchanga/core/tithi";
 import { MASA_NAMES, MasaIndex } from "@/api/panchanga/core/masa";
 import { Moon } from "@/components/tithi/moon-phases";
+import { useTranslation } from "react-i18next";
 
 // Create animated components
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
@@ -117,11 +118,6 @@ export function MasaOrbit() {
   // Add state for tithiIndex
   const [currentTithiIndex, setCurrentTithiIndex] = useState<TithiIndex>(
     TithiIndex.Amavasya
-  );
-
-  // Add state for masaIndex
-  const [currentMasaIndex, setCurrentMasaIndex] = useState<MasaIndex>(
-    MasaIndex.Chaitra
   );
 
   // Add state for both masa types
@@ -219,11 +215,6 @@ export function MasaOrbit() {
     () => centerY + Math.sin(moonAngleRad.value) * moonOrbitRadius
   );
 
-  // Calculate the instantaneous angle between sun and moon (0-360)
-  const moonSunAngleDegrees = useDerivedValue(() => {
-    return (moonAngleDeg.value - sunAngleDeg.value + 360) % 360;
-  });
-
   // Calculate the total relative angle traveled by moon compared to sun
   const totalRelativeAngle = useDerivedValue(() => {
     return totalMoonAngle.value - totalSunAngle.value;
@@ -240,17 +231,29 @@ export function MasaOrbit() {
     cy: moonY.value,
   }));
 
+  const { t } = useTranslation();
+
+  const sunAngleText = t("orbits.sun_angle", {
+    angle: 0,
+  });
+  const moonAngleText = t("orbits.moon_angle", {
+    angle: 0,
+  });
+
   const sunAngleTextProps = useAnimatedProps(() => {
     return {
-      text: `Sun: ${Math.round(sunAngleDeg.value)}°`,
-      defaultValue: "Sun: 0°",
+      text: sunAngleText.replace("0", Math.round(sunAngleDeg.value).toString()),
+      defaultValue: sunAngleText,
     };
   });
 
   const moonAngleTextProps = useAnimatedProps(() => {
     return {
-      text: `Moon: ${Math.round(moonAngleDeg.value)}°`,
-      defaultValue: "Moon: 0°",
+      text: moonAngleText.replace(
+        "0",
+        Math.round(moonAngleDeg.value).toString()
+      ),
+      defaultValue: moonAngleText,
     };
   });
 
@@ -307,24 +310,32 @@ export function MasaOrbit() {
     }
   );
 
+  const tithiTranslations = t("tithi", {
+    returnObjects: true,
+  }) as Record<string, string>;
+
+  const masaTranslations = t("masa", {
+    returnObjects: true,
+  }) as Record<string, string>;
+
   const tithiNameTextProps = useAnimatedProps(() => {
     return {
-      text: `${TITHI_NAMES[tithiIndex.value]}`,
-      defaultValue: `${TITHI_NAMES[TithiIndex.Amavasya]}`,
+      text: tithiTranslations[TITHI_NAMES[tithiIndex.value]],
+      defaultValue: tithiTranslations[TITHI_NAMES[TithiIndex.Amavasya]],
     };
   });
 
   const amantaMasaValueProps = useAnimatedProps(() => {
     return {
-      text: `${MASA_NAMES[amantaMasaIndex.value]}`,
-      defaultValue: `${MASA_NAMES[MasaIndex.Chaitra]}`,
+      text: masaTranslations[MASA_NAMES[amantaMasaIndex.value]],
+      defaultValue: masaTranslations[MASA_NAMES[amantaMasaIndex.value]],
     };
   });
 
   const purnimantaMasaValueProps = useAnimatedProps(() => {
     return {
-      text: `${MASA_NAMES[purnimantaMasaIndex.value]}`,
-      defaultValue: `${MASA_NAMES[MasaIndex.Chaitra]}`,
+      text: masaTranslations[MASA_NAMES[purnimantaMasaIndex.value]],
+      defaultValue: masaTranslations[MASA_NAMES[purnimantaMasaIndex.value]],
     };
   });
 
@@ -445,7 +456,7 @@ export function MasaOrbit() {
           />
           <TextInput
             style={styles.masaLabelText}
-            value="Amanta Masa"
+            value={t("masa_info.purnimanta_masa")}
             editable={false}
           />
         </View>
@@ -457,7 +468,7 @@ export function MasaOrbit() {
           />
           <TextInput
             style={styles.masaLabelText}
-            value="Purnimanta Masa"
+            value={t("masa_info.purnimanta_masa")}
             editable={false}
           />
         </View>

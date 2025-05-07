@@ -53,11 +53,11 @@ export function getDatesBetween(startTimestamp: number, endTimestamp: number) {
   return dates;
 }
 
-export function getHumanReadableDate(timestamp: number) {
+export function getHumanReadableDate(language: string, timestamp: number) {
   const today = truncateToDay(Date.now());
   const truncatedTime = truncateToDay(timestamp);
 
-  const time = new Date(timestamp).toLocaleTimeString("default", {
+  const time = new Date(timestamp).toLocaleTimeString(language, {
     hour: "numeric",
     minute: "2-digit",
     hour12: true,
@@ -69,7 +69,7 @@ export function getHumanReadableDate(timestamp: number) {
   } else if (today === removeDays(truncatedTime, 1)) {
     return `Tomorrow ${time}`;
   } else {
-    date = new Date(truncatedTime).toLocaleDateString("default", {
+    date = new Date(truncatedTime).toLocaleDateString(language, {
       month: "long",
       day: "numeric",
     });
@@ -77,16 +77,46 @@ export function getHumanReadableDate(timestamp: number) {
   }
 }
 
-export function getHumanReadableDateWithWeekday(timestamp: number) {
+export function getHumanReadableDateWithWeekday(
+  language: string,
+  timestamp: number
+) {
   const date = new Date(timestamp);
   const weekday = date
-    .toLocaleDateString("en-US", { weekday: "long" })
+    .toLocaleDateString(language, { weekday: "long" })
     .toUpperCase();
   const month = date
-    .toLocaleDateString("en-US", { month: "short" })
+    .toLocaleDateString(language, { month: "short" })
     .toUpperCase();
   const day = date.getDate();
   return `${weekday} — ${month} ${day}`;
+}
+
+export function dayOfWeekShort(language: string, timestamp: number) {
+  return new Date(timestamp)
+    .toLocaleDateString(language, { weekday: "short" })
+    .toUpperCase();
+}
+
+export function dayOfWeekFull(language: string, timestamp: number) {
+  return new Date(timestamp).toLocaleDateString(language, { weekday: "long" });
+}
+
+export function monthFull(language: string, timestamp: number) {
+  return new Date(timestamp).toLocaleDateString(language, { month: "long" });
+}
+
+export function daysOfWeekShort(language: string): string[] {
+  const formatter = new Intl.DateTimeFormat(language, { weekday: "short" });
+
+  // Jan 7, 2024 is a known Sunday
+  const start = new Date(2024, 0, 7);
+
+  return Array.from({ length: 7 }, (_, i) => {
+    const date = new Date(start);
+    date.setDate(start.getDate() + i);
+    return formatter.format(date).toUpperCase();
+  });
 }
 
 export function getHumanReadableTime(timestamp: number | null) {
@@ -118,10 +148,18 @@ export function getFirstDayOfMonth(year: number, month: number): number {
 /**
  * Format a date as "Month Year"
  */
-export function formatMonthYear(date: Date): string {
-  return date.toLocaleDateString("en-US", { month: "long", year: "numeric" });
+export function formatMonthYear(language: string, date: Date): string {
+  return date.toLocaleDateString(language, { month: "long", year: "numeric" });
 }
 
+export function formatDate(language: string, date: Date): string {
+  return date.toLocaleDateString(language, {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+}
 /**
  * Generate an array representing days in a month with proper padding for calendar display
  */
@@ -167,21 +205,12 @@ export function groupIntoWeeks(
   return weeks;
 }
 
-export const DAYS_OF_WEEK_ABBR = [
-  "SUN",
-  "MON",
-  "TUE",
-  "WED",
-  "THU",
-  "FRI",
-  "SAT",
-];
 export const DAYS_OF_WEEK = [
-  "Sunday",
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
+  "sunday",
+  "monday",
+  "tuesday",
+  "wednesday",
+  "thursday",
+  "friday",
+  "saturday",
 ];

@@ -23,6 +23,7 @@ import {
   NAKSHATRA_NAMES,
   NakshatraIndex,
 } from "@/api/panchanga/core/nakshatra";
+import { useTranslation } from "node_modules/react-i18next";
 
 // Create animated components
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
@@ -114,12 +115,25 @@ export function NakshatraOrbit() {
     cy: moonY.value,
   }));
 
+  const { t } = useTranslation();
+
+  const moonAngleText = t("orbits.moon_angle", {
+    angle: 0,
+  });
+
   const moonAngleTextProps = useAnimatedProps(() => {
     return {
-      text: `Moon: ${Math.round(moonAngleDeg.value)}°`,
-      defaultValue: "Moon: 0°",
+      text: moonAngleText.replace(
+        "0",
+        Math.round(moonAngleDeg.value).toString()
+      ),
+      defaultValue: moonAngleText,
     };
   });
+
+  const nakshatraTranslations = t("nakshatra", {
+    returnObjects: true,
+  }) as Record<string, string>;
 
   // Updated nakshatra index calculation to use segmentAngle instead of dividing by 27
   const nakshatraIndex = useDerivedValue(() => {
@@ -133,8 +147,9 @@ export function NakshatraOrbit() {
 
   const nakshatraNameTextProps = useAnimatedProps(() => {
     return {
-      text: NAKSHATRA_NAMES[nakshatraIndex.value],
-      defaultValue: NAKSHATRA_NAMES[NakshatraIndex.Ashwini],
+      text: nakshatraTranslations[NAKSHATRA_NAMES[nakshatraIndex.value]],
+      defaultValue:
+        nakshatraTranslations[NAKSHATRA_NAMES[NakshatraIndex.Ashwini]],
     };
   });
 

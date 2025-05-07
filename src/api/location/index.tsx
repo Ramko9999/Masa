@@ -11,7 +11,6 @@ export type Location = {
 
 export type PrepopulatedLocation = { city: string, country: string, latitude: number, longitude: number };
 
-
 export const PREPOPULATED_LOCATIONS: PrepopulatedLocation[] = [
     {
         city: "San Francisco",

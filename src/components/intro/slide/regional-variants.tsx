@@ -12,13 +12,7 @@ import { DelayedFadeIn } from "@/components/util/delayed-fade-in";
 import { useState } from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useThemedStyles } from "@/theme/color";
-const REGIONAL_VARIANTS_TITLE = "Calendar with Regional Differences";
-const REGIONAL_VARIANTS_FIRST_POINT =
-  "Festival dates can vary based on region as different regions follow slightly different systems.";
-const REGIONAL_VARIANTS_SECOND_POINT =
-  "Local customs can also influence festival timings.";
-const REGIONAL_VARIANTS_THIRD_POINT =
-  "If you see something wrong or don't feel represented, please let us know!";
+import { useTranslation } from "react-i18next";
 
 export function IntroRegionalVariantsSlide({ onNext }: IntroSlideProps) {
   const [skipAnimationIndex, setSkipAnimationIndex] = useState(-1);
@@ -36,10 +30,12 @@ export function IntroRegionalVariantsSlide({ onNext }: IntroSlideProps) {
 
   const introSlideStyles = useThemedStyles(introSlideStylesFactory);
 
+  const { t } = useTranslation();
+
   return (
     <View style={introSlideStyles.container} onTouchEnd={handleTap}>
       <AnimatedSentence
-        content={REGIONAL_VARIANTS_TITLE}
+        content={t("intro.regional_variants.title")}
         wordDuration={WORD_DURATION}
         stagger={STAGGER}
         textStyle={introSlideStyles.title}
@@ -49,7 +45,7 @@ export function IntroRegionalVariantsSlide({ onNext }: IntroSlideProps) {
         initialDelay={DELAY_PADDING}
       />
       <AnimatedSentence
-        content={REGIONAL_VARIANTS_FIRST_POINT}
+        content={t("intro.regional_variants.first_point")}
         wordDuration={WORD_DURATION}
         stagger={STAGGER}
         textStyle={[
@@ -62,7 +58,7 @@ export function IntroRegionalVariantsSlide({ onNext }: IntroSlideProps) {
         onAnimationFinished={() => triggerNextAnimation(2)}
       />
       <AnimatedSentence
-        content={REGIONAL_VARIANTS_SECOND_POINT}
+        content={t("intro.regional_variants.second_point")}
         wordDuration={WORD_DURATION}
         stagger={STAGGER}
         textStyle={[
@@ -75,7 +71,7 @@ export function IntroRegionalVariantsSlide({ onNext }: IntroSlideProps) {
         onAnimationFinished={() => triggerNextAnimation(3)}
       />
       <AnimatedSentence
-        content={REGIONAL_VARIANTS_THIRD_POINT}
+        content={t("intro.regional_variants.third_point")}
         wordDuration={WORD_DURATION}
         stagger={STAGGER}
         textStyle={[
@@ -102,7 +98,7 @@ export function IntroRegionalVariantsSlide({ onNext }: IntroSlideProps) {
           style={introSlideStyles.actionButton}
         >
           <Text large semibold background>
-            Sounds good!
+            {t("intro.regional_variants.button")}
           </Text>
         </TouchableOpacity>
       </DelayedFadeIn>

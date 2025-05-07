@@ -9,13 +9,13 @@ export const enum VaaraIndex {
 }
 
 const VAARA_NAMES = [
-  "Ravivaara", // Sunday
-  "Somavaara", // Monday
-  "Mangalavaara", // Tuesday
-  "Budhavaara", // Wednesday
-  "Guruvaara", // Thursday
-  "Shukravaara", // Friday
-  "Shanivaara", // Saturday
+  "ravivaara", // Sunday
+  "somavaara", // Monday
+  "mangalavaara", // Tuesday
+  "budhavaara", // Wednesday
+  "guruvaara", // Thursday
+  "shukravaara", // Friday
+  "shanivaara", // Saturday
 ];
 
 export type Vaara = {
@@ -24,7 +24,7 @@ export type Vaara = {
 };
 
 export function compute(day: number): Vaara {
-  const dayIndex = (new Date(day).getDay()) % 7;
+  const dayIndex = new Date(day).getDay() % 7;
   return {
     index: dayIndex,
     name: VAARA_NAMES[dayIndex],

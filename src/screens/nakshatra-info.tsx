@@ -6,24 +6,24 @@ import {
   InfoParagraph,
   InfoSectionTitle,
   InfoVisual,
+  InfoPageSectionTranslation,
 } from "@/components/util/info-page";
+import { useTranslation } from "react-i18next";
 
 export function NakshatraInfoPage() {
+  const { t } = useTranslation();
+
+  const intro = t("nakshatra_info.intro", { returnObjects: true }) as string[];
+  const sections = t("nakshatra_info.sections", {
+    returnObjects: true,
+  }) as InfoPageSectionTranslation[];
+
   return (
-    <InfoPage title="Nakshatra">
+    <InfoPage title={t("nakshatra_info.title")}>
       <InfoSection>
-        <InfoParagraph>
-          Nakshatra can refer to both a single star and a group of stars
-          (asterism).
-        </InfoParagraph>
-        <InfoParagraph>
-          In the Hindu Calendar, a Nakshatra is a segment of the Moon's
-          ecliptic orbit.
-        </InfoParagraph>
-        <InfoParagraph>
-          The Moon takes about 27 days to complete its orbit, so there are 27
-          Nakshatras, with the Moon spending roughly one day in each.
-        </InfoParagraph>
+        {intro.map((p, i) => (
+          <InfoParagraph key={i}>{p}</InfoParagraph>
+        ))}
       </InfoSection>
 
       <InfoVisual>
@@ -31,19 +31,10 @@ export function NakshatraInfoPage() {
       </InfoVisual>
 
       <InfoSection>
-        <InfoSectionTitle>Naming & Relevance</InfoSectionTitle>
-        <InfoParagraph>
-          Each Nakshatra is named after the prominent star that lies within its segment.
-        </InfoParagraph>
-        <InfoParagraph>
-          A person's birth Nakshatra influences rituals like naming,
-          personality traits, and compatibility with other people.
-        </InfoParagraph>
-        <InfoParagraph>
-          Nakshatras also serve as a convenient coordinate system to locate the
-          positions of planets in the sky. For example, one might say "Saturn is
-          in Dhanishtha Nakshatra."
-        </InfoParagraph>
+        <InfoSectionTitle>{sections[0].title}</InfoSectionTitle>
+        {sections[0].paragraphs.map((p, i) => (
+          <InfoParagraph key={i}>{p}</InfoParagraph>
+        ))}
       </InfoSection>
     </InfoPage>
   );

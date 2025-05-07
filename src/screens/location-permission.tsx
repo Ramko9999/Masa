@@ -16,12 +16,14 @@ import { StyleUtils } from "@/theme/style-utils";
 import * as ExpoLocation from "expo-location";
 import { StackScreenProps } from "@react-navigation/stack";
 import { RootStackParamList } from "@/layout/types";
-import { LocationApi, PrepopulatedLocation, PREPOPULATED_LOCATIONS } from "@/api/location";
+import {
+  LocationApi,
+  PrepopulatedLocation,
+  PREPOPULATED_LOCATIONS,
+} from "@/api/location";
 import { useEffect, useState } from "react";
 import { shadeColor, tintColor } from "@/util/color";
-
-const LOCATION_SUBTEXT =
-  "If you don't want to share your location, pick one of these cities to base your Hindu calendar on";
+import { useTranslation } from "react-i18next";
 
 const prepopulatedLocationSelectionStylesFactory = (
   theme: ColorSchemeName
@@ -29,7 +31,7 @@ const prepopulatedLocationSelectionStylesFactory = (
   container: {
     ...StyleUtils.flexColumn(20),
     paddingHorizontal: "5%",
-    paddingTop: "10%"
+    paddingTop: "10%",
   },
   title: {
     ...StyleUtils.flexRow(),
@@ -38,7 +40,10 @@ const prepopulatedLocationSelectionStylesFactory = (
   },
   locationContainer: {
     ...StyleUtils.flexRowCenterAll(10),
-    backgroundColor: (theme === "dark" ? shadeColor : tintColor)(useGetColor(AppColor.primary, theme), 0.95),
+    backgroundColor: (theme === "dark" ? shadeColor : tintColor)(
+      useGetColor(AppColor.primary, theme),
+      0.95
+    ),
     paddingHorizontal: "4%",
     paddingVertical: "4%",
     borderRadius: 12,
@@ -54,7 +59,7 @@ const prepopulatedLocationSelectionStylesFactory = (
   },
   loadingIndicator: {
     marginBottom: "5%",
-  }
+  },
 });
 
 type PrepopulatedLocationSelectionProps = {
@@ -64,13 +69,15 @@ type PrepopulatedLocationSelectionProps = {
   isLoading?: boolean;
 };
 
-export function PrepopulatedLocationSelection({ 
-  location, 
-  isSelected, 
+export function PrepopulatedLocationSelection({
+  location,
+  isSelected,
   onSelect,
-  isLoading = false 
+  isLoading = false,
 }: PrepopulatedLocationSelectionProps) {
-  const prepopulatedLocationSelectionStyles = useThemedStyles(prepopulatedLocationSelectionStylesFactory);
+  const prepopulatedLocationSelectionStyles = useThemedStyles(
+    prepopulatedLocationSelectionStylesFactory
+  );
 
   return (
     <View>
@@ -83,12 +90,7 @@ export function PrepopulatedLocationSelection({
         disabled={isLoading}
       >
         <View style={prepopulatedLocationSelectionStyles.textContainer}>
-          <Text 
-            large 
-            semibold 
-            primary={!isSelected} 
-            background={isSelected}
-          >
+          <Text large semibold primary={!isSelected} background={isSelected}>
             {`${location.city}, ${location.country}`}
           </Text>
         </View>
@@ -123,7 +125,7 @@ const newLocationPermissionStylesFactory = (
     alignItems: "center",
   },
   loadingOverlay: {
-    position: 'absolute',
+    position: "absolute",
     top: 0,
     left: 0,
     right: 0,
@@ -142,19 +144,27 @@ type LocationPermissionProps = StackScreenProps<
 export function LocationPermission({ navigation }: LocationPermissionProps) {
   const { setLocation } = useLocation();
   const [isLoading, setIsLoading] = useState(false);
-  const [prepopulatedLocation, setPrepopulatedLocation] = useState<PrepopulatedLocation | null>(null);
+  const [prepopulatedLocation, setPrepopulatedLocation] =
+    useState<PrepopulatedLocation | null>(null);
   const insets = useSafeAreaInsets();
   const { height } = useWindowDimensions();
   const theme = useColorScheme();
   const newLocationPermissionStyles = useThemedStyles(
     newLocationPermissionStylesFactory
   );
+  const { t } = useTranslation();
 
   const onHandleNext = async () => {
     setIsLoading(true);
     if (prepopulatedLocation) {
-      await LocationApi.saveLocation({ ...prepopulatedLocation, place: prepopulatedLocation.city });
-      setLocation({ ...prepopulatedLocation, place: prepopulatedLocation.city });
+      await LocationApi.saveLocation({
+        ...prepopulatedLocation,
+        place: prepopulatedLocation.city,
+      });
+      setLocation({
+        ...prepopulatedLocation,
+        place: prepopulatedLocation.city,
+      });
       const notificationSettings = await Notifications.getPermissionsAsync();
       if (
         notificationSettings.status === "undetermined" &&
@@ -166,26 +176,29 @@ export function LocationPermission({ navigation }: LocationPermissionProps) {
       }
     }
     setIsLoading(false);
-  }
+  };
 
   useEffect(() => {
-    ExpoLocation.requestForegroundPermissionsAsync().then(async (permission) => {
-      if (permission.granted) {
-        setIsLoading(true);
-        const location = await LocationApi.readAndSaveDeviceLocation();
-        setLocation(location);
-        const notificationSettings = await Notifications.getPermissionsAsync();
-        if (
-          notificationSettings.status === "undetermined" &&
-          Platform.OS === "ios"
-        ) {
-          navigation.replace("notification_permission");
-        } else {
-          navigation.replace("tabs", { screen: "home" });
+    ExpoLocation.requestForegroundPermissionsAsync().then(
+      async (permission) => {
+        if (permission.granted) {
+          setIsLoading(true);
+          const location = await LocationApi.readAndSaveDeviceLocation();
+          setLocation(location);
+          const notificationSettings =
+            await Notifications.getPermissionsAsync();
+          if (
+            notificationSettings.status === "undetermined" &&
+            Platform.OS === "ios"
+          ) {
+            navigation.replace("notification_permission");
+          } else {
+            navigation.replace("tabs", { screen: "home" });
+          }
+          setIsLoading(false);
         }
-        setIsLoading(false);
       }
-    });
+    );
   }, []);
 
   return (
@@ -197,7 +210,7 @@ export function LocationPermission({ navigation }: LocationPermissionProps) {
         ]}
       >
         <Text big primary>
-          {LOCATION_SUBTEXT}
+          {t("intro.location_permission.subtext")}
         </Text>
         <View>
           {PREPOPULATED_LOCATIONS.map((location) => (
@@ -210,28 +223,34 @@ export function LocationPermission({ navigation }: LocationPermissionProps) {
             </View>
           ))}
         </View>
-        <View style={[newLocationPermissionStyles.actionButtonContainer, { marginBottom: insets.bottom }]}>
+        <View
+          style={[
+            newLocationPermissionStyles.actionButtonContainer,
+            { marginBottom: insets.bottom },
+          ]}
+        >
           <TouchableOpacity
             style={[
               newLocationPermissionStyles.actionButton,
-              prepopulatedLocation === null && { opacity: 0.5 }
+              prepopulatedLocation === null && { opacity: 0.5 },
             ]}
             onPress={onHandleNext}
             disabled={prepopulatedLocation === null}
           >
             <Text large semibold background>
-              Next
+              {t("intro.location_permission.button")}
             </Text>
           </TouchableOpacity>
         </View>
       </View>
       {isLoading && (
         <View style={newLocationPermissionStyles.loadingOverlay}>
-          <ActivityIndicator size="large" color={useGetColor(AppColor.primary, theme)} />
+          <ActivityIndicator
+            size="large"
+            color={useGetColor(AppColor.primary, theme)}
+          />
         </View>
       )}
     </View>
   );
 }
-
-

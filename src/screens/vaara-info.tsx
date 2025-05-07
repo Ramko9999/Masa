@@ -1,78 +1,59 @@
 import React from "react";
-import { InfoPage, InfoSection, InfoParagraph, InfoSectionTitle } from "@/components/util/info-page";
+import {
+  InfoPage,
+  InfoSection,
+  InfoParagraph,
+  InfoSectionTitle,
+} from "@/components/util/info-page";
 import { InfoTable, Column } from "@/components/util/info-table";
+import { useTranslation } from "react-i18next";
 
-const columns: Column[] = [
-  { header: "Graha", key: "graha", flex: 0.6 },
-  { header: "Vaara", key: "vaara", flex: 1.2 },
-  { header: "Represents", key: "represents", flex: 1.2 },
-];
-
-const data = [
-  {
-    graha: "Sun",
-    vaara: "Ravivaara (Sunday)",
-    represents: "Vitality, Authority, Energy",
-  },
-  {
-    graha: "Moon",
-    vaara: "Somavaara (Monday)",
-    represents: "Emotions, Calmness",
-  },
-  {
-    graha: "Mars",
-    vaara: "Mangalavaara (Tuesday)",
-    represents: "Courage, Strength",
-  },
-  {
-    graha: "Mercury",
-    vaara: "Budhavaara (Wednesday)",
-    represents: "Intellect, Communication, Learning",
-  },
-  {
-    graha: "Jupiter",
-    vaara: "Guruvaara (Thursday)",
-    represents: "Wisdom, Expansion, Luck",
-  },
-  {
-    graha: "Venus",
-    vaara: "Shukravaara (Friday)",
-    represents: "Love, Beauty",
-  },
-  {
-    graha: "Saturn",
-    vaara: "Shanivaara (Saturday)",
-    represents: "Discipline, Patience, Challenges",
-  },
-];
+type VaaraRow = {
+  graha: string;
+  vaara: string;
+  represents: string;
+};
 
 export function VaaraInfoPage() {
+  const { t } = useTranslation();
+
+  const columns: Column[] = [
+    { header: t("vaara_info.table.columns.graha"), key: "graha", flex: 0.6 },
+    { header: t("vaara_info.table.columns.vaara"), key: "vaara", flex: 1.2 },
+    {
+      header: t("vaara_info.table.columns.represents"),
+      key: "represents",
+      flex: 1.2,
+    },
+  ];
+
+  // Get the rows from i18n and cast them properly
+  const rows = t("vaara_info.table.rows", {
+    returnObjects: true,
+  }) as VaaraRow[];
+
+  const intro = t("vaara_info.intro", {
+    returnObjects: true,
+  }) as string[];
 
   return (
-    <InfoPage title="Vaara">
+    <InfoPage title={t("vaara_info.title")}>
       <InfoSection>
-        <InfoParagraph>
-          Vaara means day of the week in the Hindu calendar.
-        </InfoParagraph>
-        <InfoParagraph>
-          Each day is linked to a graha (planet), and each graha has special
-          qualities. These qualities influence our mood, energy, and
-          activities for the day.
-        </InfoParagraph>
-        <InfoTable columns={columns} data={data} />
+        {intro.map((line, i) => (
+          <InfoParagraph key={i}>{line}</InfoParagraph>
+        ))}
+        <InfoTable columns={columns} data={rows} />
       </InfoSection>
 
       <InfoSection>
-        <InfoSectionTitle>
-          How is Vaara decided?
-        </InfoSectionTitle>
-        <InfoParagraph>
-          Each day is made up of 24 hours (called Horas).
-        </InfoParagraph>
-        <InfoParagraph>
-          Every Hora is linked to a planet, and the planet that is linked to
-          the first Hora after sunrise decides the Vaara.
-        </InfoParagraph>
+        <InfoSectionTitle>{t("vaara_info.sections.0.title")}</InfoSectionTitle>
+        {(
+          t("vaara_info.sections.0.paragraphs", {
+            returnObjects: true,
+          }) as string[]
+        ).map((p, i) => (
+          <InfoParagraph key={i}>{p}</InfoParagraph>
+        ))}
       </InfoSection>
     </InfoPage>
   );

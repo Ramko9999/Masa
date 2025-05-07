@@ -5,15 +5,17 @@ import { AppColor } from "@/theme/color";
 import { View, Text } from "@/theme";
 import { useCallback, useEffect, useState, memo, useRef } from "react";
 import {
-  DAYS_OF_WEEK,
-  DAYS_OF_WEEK_ABBR,
+  dayOfWeekFull,
+  dayOfWeekShort,
   generateEnclosingWeek,
+  monthFull,
   truncateToDay,
 } from "@/util/date";
 import { useCalendar } from "@/components/calendar/context";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import PagerView from "react-native-pager-view";
 import { useLocation } from "@/context/location";
+import { useTranslation } from "react-i18next";
 
 const dayStylesFactory = (
   theme: ColorSchemeName
@@ -60,6 +62,7 @@ type DayProps = {
 
 function Day({ day, isSelected, isToday, onClick }: DayProps) {
   const dayStyles = useThemedStyles(dayStylesFactory);
+  const { i18n } = useTranslation();
 
   return (
     <TouchableOpacity
@@ -93,7 +96,7 @@ function Day({ day, isSelected, isToday, onClick }: DayProps) {
               isToday && dayStyles.todayText,
             ]}
           >
-            {DAYS_OF_WEEK_ABBR[new Date(day).getDay()]}
+            {dayOfWeekShort(i18n.language, day)}
           </Text>
         </View>
       </View>
@@ -169,9 +172,9 @@ type CalendarTitleProps = {
   day: number;
 };
 
-function formatCalendarTitleDate(date: number): { monthDay: string; year: string } {
+function formatCalendarTitleDate(language: string, date: number): { monthDay: string; year: string } {
   const d = new Date(date);
-  const month = new Intl.DateTimeFormat("en-US", { month: "long" }).format(d);
+  const month = new Intl.DateTimeFormat(language, { month: "long" }).format(d);
   const day = d.getDate();
   const year = d.getFullYear().toString();
   return {
@@ -184,13 +187,14 @@ function CalendarTitle({ day }: CalendarTitleProps) {
   const { openMonthCalendar } = useCalendar();
   const calendarTitleStyles = useThemedStyles(calendarTitleStylesFactory);
   const { location } = useLocation();
-  const { monthDay, year } = formatCalendarTitleDate(day);
+  const { i18n } = useTranslation();
+  const { monthDay, year } = formatCalendarTitleDate(i18n.language, day);
 
   return (
     <View style={calendarTitleStyles.container}>
       <View style={calendarTitleStyles.leftColumn}>
         <Text big semibold>
-          {DAYS_OF_WEEK[new Date(day).getDay()]}
+          {dayOfWeekFull(i18n.language, day)}
         </Text>
         <Text tint semibold big>
           {location?.place}

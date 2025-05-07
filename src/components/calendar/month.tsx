@@ -10,16 +10,17 @@ import { useState, useCallback, useRef, memo } from "react";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 import {
+  daysOfWeekShort,
   formatMonthYear,
   generateCalendarDays,
   groupIntoWeeks,
-  DAYS_OF_WEEK_ABBR,
   truncateToDay,
 } from "@/util/date";
 import { StyleUtils } from "@/theme/style-utils";
 import { useCalendar } from "@/components/calendar/context";
 import { ChevronLeft, ChevronRight } from "lucide-react-native";
 import PagerView from "react-native-pager-view";
+import { useTranslation } from "react-i18next";
 
 const MONTH_CALENDAR_WIDTH = 0.96;
 
@@ -163,13 +164,14 @@ const Month = memo(
     const daysArray = generateCalendarDays(year, month);
     const weeks = groupIntoWeeks(daysArray);
     const monthStyles = useThemedStyles(monthStylesFactory);
+    const { i18n } = useTranslation();
 
     return (
       <View
         style={[monthStyles.container, { width: width * MONTH_CALENDAR_WIDTH }]}
       >
         <View style={monthStyles.weekdayRow}>
-          {DAYS_OF_WEEK_ABBR.map((day, index) => (
+          {daysOfWeekShort(i18n.language).map((day, index) => (
             <View key={index} style={monthStyles.weekdayCell}>
               <Text semibold tint>
                 {day}
@@ -238,10 +240,15 @@ function MonthCalendarHeader({
     monthCalendarHeaderStylesFactory
   );
   const theme = useColorScheme();
+  const { i18n } = useTranslation();
+
   return (
     <View style={monthCalendarHeaderStyles.container}>
       <Text semibold large>
-        {formatMonthYear(new Date(monthDatum.year, monthDatum.month))}
+        {formatMonthYear(
+          i18n.language,
+          new Date(monthDatum.year, monthDatum.month)
+        )}
       </Text>
       <View style={monthCalendarHeaderStyles.actions}>
         <TouchableOpacity onPress={onGoBack} disabled={!canGoBack}>
@@ -378,7 +385,7 @@ export function MonthCalendar({ onFinishDayClick }: MonthCalendarProps) {
             collapsable={false}
           >
             {index >= currentPage - OFFSCREEN_PAGES &&
-              index <= currentPage + OFFSCREEN_PAGES ? (
+            index <= currentPage + OFFSCREEN_PAGES ? (
               <Month
                 {...monthData}
                 selectedDate={selection.date}
