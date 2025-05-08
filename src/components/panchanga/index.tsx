@@ -77,7 +77,7 @@ function getIntervalDescription(
       if (hasNextInterval) {
         return t("home.cards.interval_change", {
           nextName: t(`${type}.${nextIntervalName}`),
-          time: getHumanReadableDate(i18n.language, interval.endDate),
+          time: getHumanReadableDate(i18n.language, interval.endDate, t),
         });
       } else {
         return "";

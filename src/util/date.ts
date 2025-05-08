@@ -53,7 +53,11 @@ export function getDatesBetween(startTimestamp: number, endTimestamp: number) {
   return dates;
 }
 
-export function getHumanReadableDate(language: string, timestamp: number) {
+export function getHumanReadableDate(
+  language: string,
+  timestamp: number,
+  t: (key: string) => string
+) {
   const today = truncateToDay(Date.now());
   const truncatedTime = truncateToDay(timestamp);
 
@@ -67,7 +71,8 @@ export function getHumanReadableDate(language: string, timestamp: number) {
   if (today === truncatedTime) {
     return time;
   } else if (today === removeDays(truncatedTime, 1)) {
-    return `Tomorrow ${time}`;
+    const tomorrow = t("home.cards.tomorrow");
+    return `${tomorrow} ${time}`;
   } else {
     date = new Date(truncatedTime).toLocaleDateString(language, {
       month: "long",

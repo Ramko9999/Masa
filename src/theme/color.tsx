@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { ColorSchemeName, useColorScheme, StyleSheet } from "react-native";
 
 export enum AppColor {
@@ -29,15 +30,16 @@ export function useGetColor(color: AppColor, theme: ColorSchemeName) {
   return theme === "light" ? LightColors[color] : DarkColors[color];
 }
 
-type StyleFactory<T> = (theme: ColorSchemeName) => T;
+type StyleFactory<T> = (theme: ColorSchemeName, language: string) => T;
 
 export function useThemedStyles<
   T extends StyleSheet.NamedStyles<T> | StyleSheet.NamedStyles<any>
 >(styleFactory: StyleFactory<T>): T {
   const theme = useColorScheme();
+  const { i18n } = useTranslation();
 
   const styles = useMemo(() => {
-    const rawStyles = styleFactory(theme);
+    const rawStyles = styleFactory(theme, i18n.language);
     return StyleSheet.create(rawStyles);
   }, [theme, styleFactory]);
 

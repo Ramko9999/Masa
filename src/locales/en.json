@@ -63,6 +63,7 @@
                 "amanta": "Amanta",
                 "purnimanta": "Purnimanta"
             },
+            "tomorrow": "Tomorrow",
             "interval_change": "Changes to {{nextName}} at {{time}}",
             "festivals": {
                 "title": "FESTIVALS"
@@ -265,7 +266,8 @@
                 "title": "Tithi Nuances",
                 "paragraphs": [
                     "Tithis can start and end at any time, lasting between 18 to 24 hours due to the elliptical nature of the moon's orbit.",
-                    "Tithis can be named using Sanskrit numbers: Pratipada (1st), Dwitiya (2nd), Tritiya (3rd), Chaturthi (4th), and so on."
+                    "This makes it difficult to predict Tithi for a day without evaluating the moon's position at sunrise relative to the sun.",
+                    "Due to historical conventions, the Tithi at sunrise is considered the Tithi for the day."
                 ]
             }
         ]
