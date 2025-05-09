@@ -160,3 +160,26 @@ function getNakshatraInterval(startDate: number, nakshatraIndex: number) {
     name: NAKSHATRA_NAMES[nakshatraIndex],
   };
 }
+
+export function getPreviousNakshatra(current: NakshatraInterval): NakshatraInterval {
+    const previousIndex = (current.index - 1) % 27;
+    const previousNakshatraBegin = previousIndex * NAKSHATRA_INTERVAL_ARC_SECONDS;
+    
+    const offsets = generateHourlyOffsets(current.startDate, -6, 6);
+    const angles = makeDecreasingAnglesNonCircular(offsets.map(nakshatraFunc));
+    
+    const startDate = Math.floor(
+        inverseLagrangianInterpolation(
+            offsets,
+            angles,
+            previousNakshatraBegin
+        )
+    );
+    
+    return {
+        startDate,
+        endDate: current.startDate,
+        index: previousIndex,
+        name: NAKSHATRA_NAMES[previousIndex]
+    };
+}

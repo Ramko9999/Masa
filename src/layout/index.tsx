@@ -22,6 +22,7 @@ import { Intro } from "@/screens/intro";
 import { useColorScheme } from "react-native";
 import { useGetColor } from "@/theme/color";
 import { AppColor } from "@/theme/color";
+import { MuhurtamInfoPage } from "@/screens/muhurtam-info";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator<TabParamList>();
@@ -100,6 +101,10 @@ export function Layout() {
         <Stack.Screen
           name="masa_info"
           component={MasaInfoPage}
+        />
+        <Stack.Screen
+          name="muhurtam_info"
+          component={MuhurtamInfoPage}
         />
       </Stack.Navigator>
       <SystemBars style="dark" />

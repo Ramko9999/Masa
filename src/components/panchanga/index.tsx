@@ -25,6 +25,104 @@ import { useNavigation } from "@react-navigation/native";
 import { ChevronRight } from "lucide-react-native";
 import { AppColor, useGetColor, useThemedStyles } from "@/theme/color";
 import { useTranslation } from "react-i18next";
+import { MuhurtamInterval } from "@/api/panchanga/core/muhurtam";
+import { StyleUtils } from "@/theme/style-utils";
+
+type MuhurtamProps = {
+  muhurtams: MuhurtamInterval[];
+};
+
+const muhurtamStylesFactory = (
+  theme: ColorSchemeName
+): StyleSheet.NamedStyles<any> => ({
+  container: {
+    ...StyleUtils.flexColumn(10),
+    paddingTop: "1%",
+  },
+  row: {
+    ...StyleUtils.flexRow(10),
+    alignItems: "center",
+    position: "relative", // Needed for absolute underline
+  },
+  past: {
+    opacity: 0.4,
+    textDecorationLine: "line-through",
+  },
+  future: {
+    opacity: 0.7,
+  },
+  currentMuhurtamIndicator: {
+    position: "absolute",
+    left: 0,
+    bottom: -5,
+    height: 2,
+    width: "100%",
+    backgroundColor: useGetColor(AppColor.tint, theme), // Accent color
+    borderRadius: 1,
+  },
+});
+
+function Muhurtam({ muhurtams }: MuhurtamProps) {
+  const sortedMuhurtams = [...muhurtams].sort(
+    (a, b) => a.startTime - b.startTime
+  );
+  const muhurtamStyles = useThemedStyles(muhurtamStylesFactory);
+  const now = Date.now();
+
+  return (
+    <View style={muhurtamStyles.container}>
+      {sortedMuhurtams.map((m, idx) => {
+        const isPast = m.endTime < now;
+        const isCurrent = m.startTime <= now && now < m.endTime;
+        const isFuture = m.startTime > now;
+        const style = isPast
+          ? muhurtamStyles.past
+          : isFuture
+          ? muhurtamStyles.future
+          : undefined;
+
+        return (
+          <View key={idx} style={muhurtamStyles.row}>
+            <View>
+              <Text style={style}>
+                {`${m.muhurtham} - ${getHumanReadableTime(
+                  m.startTime
+                )} to ${getHumanReadableTime(m.endTime)}`}
+              </Text>
+              {isCurrent && (
+                <View style={muhurtamStyles.currentMuhurtamIndicator} />
+              )}
+            </View>
+            <View />
+          </View>
+        );
+      })}
+    </View>
+  );
+}
+
+type MuhurtamCardProps = {
+  muhurtams: MuhurtamInterval[];
+};
+
+function MuhurtamCard({ muhurtams }: MuhurtamCardProps) {
+  const now = Date.now();
+  const current = muhurtams.find((m) => m.startTime <= now && now < m.endTime);
+  const navigation = useNavigation();
+
+  const caption = current ? current.isPositive ? "Auspicious Period" : "Inauspicious Period" : undefined;
+
+  return (
+    <Card
+      title="MUHURTHAM—AUSPICIOUS TIMINGS"
+      mainText={current?.muhurtham}
+      caption={caption}
+      onClick={() => navigation.navigate("muhurtam_info" as never)}
+    >
+      <Muhurtam muhurtams={muhurtams} />
+    </Card>
+  );
+}
 
 const panchangaStylesFactory = (
   theme: ColorSchemeName
@@ -111,12 +209,14 @@ export function Pachanga({
     moonrise,
     moonset,
     festivals,
+    muhurtam,
   } = computePanchanga(truncateToDay(selectedDay), location!);
 
   const { t } = useTranslation();
 
   return (
     <View style={panchangaStyles.container}>
+
       <Card
         title={t("home.cards.vaara.title")}
         mainText={t(`vaara.${vaara.name}`)}
