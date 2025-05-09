@@ -11,6 +11,7 @@ import {
   getSunrise,
   getSunset,
 } from "@/api/panchanga/util";
+import * as Muhurtam from "./core/muhurtam";
 
 export type Panchanga = {
   tithi: Tithi.TithiInterval[];
@@ -19,6 +20,7 @@ export type Panchanga = {
   masa: Masa.Masa;
   vaara: Vaara.Vaara;
   festivals: Festival.Festival[];
+  muhurtam: Muhurtam.MuhurtamInterval[];
   day: number;
   sunrise: number | null;
   sunset: number | null;
@@ -38,6 +40,7 @@ export function computePanchanga(day: number, location: Location): Panchanga {
   const yoga = Yoga.compute(day, sunrise);
   const vaara = Vaara.compute(day);
   const masa = Masa.compute(sunrise);
+  const muhurtam = Muhurtam.compute(sunrise, sunset, day, nakshatra);
   const festivals = Festival.getFestivals(location).filter(
     (festival) => festival.date === day
   );
@@ -52,6 +55,7 @@ export function computePanchanga(day: number, location: Location): Panchanga {
     vaara,
     day,
     masa,
+    muhurtam,
     festivals,
     sunrise,
     sunset,

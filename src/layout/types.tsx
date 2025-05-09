@@ -18,4 +18,5 @@ export type RootStackParamList = {
     vaara_info: undefined;
     nakshatra_info: undefined;
     masa_info: undefined;
+    muhurtam_info: undefined;
 }
