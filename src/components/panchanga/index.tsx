@@ -26,6 +26,9 @@ import { ChevronRight } from "lucide-react-native";
 import { AppColor, useGetColor, useThemedStyles } from "@/theme/color";
 import { useTranslation } from "react-i18next";
 import { MuhurtamInterval } from "@/api/panchanga/core/muhurtam";
+import React from "react";
+import { Festival } from "@/api/panchanga/core/festival";
+import { Muhurtams } from "./muhurtam";
 import { StyleUtils } from "@/theme/style-utils";
 
 type MuhurtamProps = {
@@ -111,8 +114,6 @@ type MuhurtamCardProps = {
 };
 
 function MuhurtamCard({ muhurtams }: MuhurtamCardProps) {
-  const now = Date.now();
-  const current = muhurtams.find((m) => m.startTime <= now && now < m.endTime);
   const navigation = useNavigation();
   const { t } = useTranslation();
   const caption = current
@@ -128,7 +129,7 @@ function MuhurtamCard({ muhurtams }: MuhurtamCardProps) {
       caption={caption}
       onClick={() => navigation.navigate("muhurtam_info" as never)}
     >
-      <Muhurtam muhurtams={muhurtams} />
+      <Muhurtams muhurtams={muhurtams} />
     </Card>
   );
 }
@@ -156,6 +157,9 @@ const panchangaStylesFactory = (
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+  },
+  festivalColumn: {
+    ...StyleUtils.flexColumn(4),
   },
 });
 
@@ -193,6 +197,50 @@ function getIntervalDescription(
     .filter((value) => value.trim().length > 0)
     .join("\n");
 }
+
+interface FestivalsCardProps {
+  festivals: Festival[];
+}
+
+const FestivalsCard = ({ festivals }: FestivalsCardProps) => {
+  const { t } = useTranslation();
+  const navigation = useNavigation();
+  const theme = useColorScheme();
+
+  if(festivals.length === 0) {
+    return null;
+  }
+
+  const panchangaStyles = useThemedStyles(panchangaStylesFactory);
+  return (
+    <Card title={t("home.cards.festivals.title")}> 
+      {festivals.map((festival: Festival, index: number) => (
+        <TouchableOpacity
+          key={`${festival.name}-${index}`}
+          onPress={() =>
+            /* @ts-ignore */
+            navigation.navigate("festival_details", { festival })
+          }
+        >
+          <View style={panchangaStyles.festivalContainer}>
+            <View style={panchangaStyles.festivalColumn}>
+              <Text bold larger>
+                {t(`festivals.${festival.name}.title`)}
+              </Text>
+              <View>
+                <Text>{t(`festivals.${festival.name}.caption`)}</Text>
+              </View>
+            </View>
+            <ChevronRight
+              size={24}
+              color={useGetColor(AppColor.tint, theme)}
+            />
+          </View>
+        </TouchableOpacity>
+      ))}
+    </Card>
+  );
+};
 
 // todo: verify moon rise and set times
 export function Pachanga({

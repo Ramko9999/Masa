@@ -4,18 +4,16 @@ import { ColorSchemeName, Pressable, StyleSheet } from "react-native";
 import { BottomTabBarProps } from "@react-navigation/bottom-tabs";
 import { AppColor, useGetColor, useThemedStyles } from "@/theme/color";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { CalendarDays, PartyPopper, Settings } from "lucide-react-native";
+import {
+  House,
+  PartyPopper,
+  Settings,
+} from "lucide-react-native";
 import { useColorScheme } from "react-native";
-import Animated, {
-  useAnimatedStyle,
-  useSharedValue,
-  FadeInRight,
-  FadeOutRight,
-  withSpring,
-  LinearTransition
-} from "react-native-reanimated";
 import { StyleUtils } from "@/theme/style-utils";
 import { useTranslation } from "react-i18next";
+import { convertHexToRGBA } from "@/util/color";
+import { BlurView } from "expo-blur";
 
 const stylesFactory = (
   theme: ColorSchemeName
@@ -25,56 +23,74 @@ const stylesFactory = (
     bottom: 0,
     left: 0,
     right: 0,
-    ...StyleUtils.flexRowCenterAll(),
+    borderTopWidth: 1,
+    borderTopColor: convertHexToRGBA(useGetColor(AppColor.tint, theme), 0.1),
   },
   container: {
     ...StyleUtils.flexRow(),
-    borderRadius: 30,
+    justifyContent: "space-around",
     alignItems: "center",
-    justifyContent: "space-between",
-    padding: 2,
-    backgroundColor: useGetColor(AppColor.tint, theme),
+    width: "100%",
+    paddingTop: "2%",
   },
   tab: {
-    ...StyleUtils.flexRowCenterAll(8),
-    borderRadius: 30,
+    flex: 1,
+    alignItems: "center",
     paddingVertical: 8,
-    paddingHorizontal: 16,
   },
-  activeTab: {
-    backgroundColor: useGetColor(AppColor.primary, theme),
+  tabContent: {
+    alignItems: "center",
+    gap: 4,
   },
   icon: {
-    color: useGetColor(AppColor.background, theme),
+    opacity: 0.5,
+  },
+  activeIcon: {
+    opacity: 0.9,
   },
   tabText: {
-    color: useGetColor(AppColor.background, theme),
-  }
+    opacity: 0.2,
+    color: useGetColor(AppColor.primary, theme),
+  },
+  activeTabText: {
+    opacity: 0.7,
+    color: useGetColor(AppColor.primary, theme),
+  },
 });
-
-const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
 export const CustomTabBar = ({ state, navigation }: BottomTabBarProps) => {
   const insets = useSafeAreaInsets();
   const styles = useThemedStyles(stylesFactory);
   const theme = useColorScheme();
-  const activeTabIndex = useSharedValue(state.index);
   const primaryColor = useGetColor(AppColor.primary, theme);
-  const backgroundColor = useGetColor(AppColor.background, theme);
   const { t } = useTranslation();
 
-  React.useEffect(() => {
-    activeTabIndex.value = state.index;
-  }, [state.index]);
-
-  const getTabIcon = (routeName: string) => {
+  const getTabIcon = (routeName: string, isActive: boolean) => {
     switch (routeName) {
       case "home":
-        return <CalendarDays size={24} color={backgroundColor} />;
+        return (
+          <House
+            size={24}
+            color={primaryColor}
+            style={isActive ? styles.activeIcon : styles.icon}
+          />
+        );
       case "festivals":
-        return <PartyPopper size={24} color={backgroundColor} />;
+        return (
+          <PartyPopper
+            size={24}
+            color={primaryColor}
+            style={isActive ? styles.activeIcon : styles.icon}
+          />
+        );
       case "settings":
-        return <Settings size={24} color={backgroundColor} />;
+        return (
+          <Settings
+            size={24}
+            color={primaryColor}
+            style={isActive ? styles.activeIcon : styles.icon}
+          />
+        );
       default:
         return null;
     }
@@ -92,7 +108,12 @@ export const CustomTabBar = ({ state, navigation }: BottomTabBarProps) => {
   };
 
   return (
-    <View style={[styles.wrapper, { paddingBottom: insets.bottom + 20 }]}>
+    <BlurView
+      intensity={80}
+      tint={theme === "dark" ? "dark" : "light"}
+      style={[styles.wrapper, { paddingBottom: insets.bottom }]}
+      experimentalBlurMethod="dimezisBlurView"
+    >
       <View style={styles.container}>
         {state.routes.map((route, index) => {
           const isFocused = state.index === index;
@@ -101,41 +122,22 @@ export const CustomTabBar = ({ state, navigation }: BottomTabBarProps) => {
             navigation.navigate(route.name);
           };
 
-          const animatedStyle = useAnimatedStyle(() => {
-            const isActive = activeTabIndex.value === index;
-            return {
-              backgroundColor: withSpring(
-                isActive ? primaryColor : "transparent",
-                { damping: 80, stiffness: 200 }
-              ),
-            };
-          });
-
           return (
-            <Animated.View
-              key={route.name}
-              layout={LinearTransition.springify().damping(80).stiffness(200)}
-            >
-              <AnimatedPressable
-                onPress={onPress}
-                style={[styles.tab, animatedStyle]}
-              >
-                {getTabIcon(route.name)}
-                {isFocused && (
-                  <Animated.View
-                    entering={FadeInRight.springify().damping(80).stiffness(200)}
-                    exiting={FadeOutRight.springify().damping(80).stiffness(200)}
-                  >
-                    <Text semibold small style={styles.tabText}>
-                      {getTabText(route.name)}
-                    </Text>
-                  </Animated.View>
-                )}
-              </AnimatedPressable>
-            </Animated.View>
+            <Pressable key={route.name} onPress={onPress} style={styles.tab}>
+              <View style={styles.tabContent}>
+                {getTabIcon(route.name, isFocused)}
+                <Text
+                  semibold
+                  tiny
+                  style={isFocused ? styles.activeTabText : styles.tabText}
+                >
+                  {getTabText(route.name)}
+                </Text>
+              </View>
+            </Pressable>
           );
         })}
       </View>
-    </View>
+    </BlurView>
   );
 };

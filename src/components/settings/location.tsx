@@ -122,7 +122,7 @@ function InitialLocationPrompt({
             {t("location_permission.last_set_to")}
           </Text>
           <Text larger semibold>
-            {location?.place ?? "Unknown Place"}
+            {` ${location?.place ?? "Unknown Place"}`}
           </Text>
         </Text>
       </View>
