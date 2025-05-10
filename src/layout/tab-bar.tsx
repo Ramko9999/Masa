@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text } from "@/theme/index";
-import { ColorSchemeName, Pressable, StyleSheet } from "react-native";
+import { ColorSchemeName, Pressable, StyleSheet, Platform } from "react-native";
 import { BottomTabBarProps } from "@react-navigation/bottom-tabs";
 import { AppColor, useGetColor, useThemedStyles } from "@/theme/color";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -15,6 +15,40 @@ import { useTranslation } from "react-i18next";
 import { convertHexToRGBA } from "@/util/color";
 import { BlurView } from "expo-blur";
 
+function TabBarContainer({ children }: { children: React.ReactNode }) {
+  const insets = useSafeAreaInsets();
+  const styles = useThemedStyles(stylesFactory);
+  const theme = useColorScheme();
+  const backgroundColor = useGetColor(AppColor.background, theme);
+
+  if (Platform.OS === 'ios') {
+    return (
+      <BlurView
+        intensity={80}
+        tint={theme === "dark" ? "dark" : "light"}
+        style={[styles.wrapper, { paddingBottom: insets.bottom }]}
+        experimentalBlurMethod="dimezisBlurView"
+      >
+        {children}
+      </BlurView>
+    );
+  }
+
+  return (
+    <View 
+      style={[
+        styles.wrapper, 
+        { 
+          paddingBottom: insets.bottom,
+          backgroundColor: backgroundColor
+        }
+      ]}
+    >
+      {children}
+    </View>
+  );
+}
+
 const stylesFactory = (
   theme: ColorSchemeName
 ): StyleSheet.NamedStyles<any> => ({
@@ -24,7 +58,7 @@ const stylesFactory = (
     left: 0,
     right: 0,
     borderTopWidth: 1,
-    borderTopColor: convertHexToRGBA(useGetColor(AppColor.tint, theme), 0.1),
+    borderTopColor: useGetColor(AppColor.border, theme),
   },
   container: {
     ...StyleUtils.flexRow(),
@@ -108,12 +142,7 @@ export const CustomTabBar = ({ state, navigation }: BottomTabBarProps) => {
   };
 
   return (
-    <BlurView
-      intensity={80}
-      tint={theme === "dark" ? "dark" : "light"}
-      style={[styles.wrapper, { paddingBottom: insets.bottom }]}
-      experimentalBlurMethod="dimezisBlurView"
-    >
+    <TabBarContainer>
       <View style={styles.container}>
         {state.routes.map((route, index) => {
           const isFocused = state.index === index;
@@ -138,6 +167,6 @@ export const CustomTabBar = ({ state, navigation }: BottomTabBarProps) => {
           );
         })}
       </View>
-    </BlurView>
+    </TabBarContainer>
   );
 };

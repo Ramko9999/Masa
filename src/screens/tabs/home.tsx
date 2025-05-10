@@ -13,6 +13,7 @@ import {
   StyleSheet,
   useColorScheme,
   TouchableOpacity,
+  useWindowDimensions,
 } from "react-native";
 import { View } from "@/theme";
 import { AppColor, useGetColor, useThemedStyles } from "@/theme/color";
@@ -20,6 +21,7 @@ import { NotificationApi } from "@/api/notification";
 import { useLocation } from "@/context/location";
 import { CalendarDays } from "lucide-react-native";
 import { StyleUtils } from "@/theme/style-utils";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 type HomeProps = CompositeScreenProps<
   BottomTabScreenProps<TabParamList, "home">,
@@ -36,7 +38,6 @@ const homeStylesFactory = (
   floatingButton: {
     position: "absolute",
     right: "3%",
-    bottom: "12%",
     backgroundColor: useGetColor(AppColor.primary, theme),
     borderRadius: 32,
     padding: "2.5%",
@@ -55,6 +56,9 @@ export function Home({ navigation }: HomeProps) {
   const { location } = useLocation();
   const theme = useColorScheme();
   const homeStyles = useThemedStyles(homeStylesFactory);
+  const insets = useSafeAreaInsets();
+  
+  const {height} = useWindowDimensions();
 
   useEffect(() => {
     NotificationApi.scheduleFestivalNotifications(location!);
@@ -72,7 +76,7 @@ export function Home({ navigation }: HomeProps) {
           selectedDay={selection.date}
         />
       </ScrollView>
-      <TouchableOpacity style={homeStyles.floatingButton} onPress={openMonthCalendar}>
+      <TouchableOpacity style={[homeStyles.floatingButton, { bottom: insets.bottom + height * 0.09 }]} onPress={openMonthCalendar}>
         <CalendarDays size={24} color={useGetColor(AppColor.background, theme)} />
       </TouchableOpacity>
     </View>

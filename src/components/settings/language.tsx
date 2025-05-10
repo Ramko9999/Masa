@@ -29,7 +29,7 @@ const languageSheetStylesFactory = (
   container: {
     ...StyleUtils.flexColumn(20),
     paddingHorizontal: "5%",
-    paddingTop: "10%",
+    paddingTop: "2%",
   },
   title: {
     ...StyleUtils.flexRow(),
@@ -84,7 +84,7 @@ function LanguageSelection({
 
   return (
     <BottomSheetView
-      style={[languageSheetStyles.container, { bottom: insets.bottom }]}
+      style={[languageSheetStyles.container, { paddingBottom: insets.bottom + 10}]}
     >
       <View style={languageSheetStyles.title}>
         <Text larger semibold tint>

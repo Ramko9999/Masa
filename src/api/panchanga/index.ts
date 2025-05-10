@@ -32,7 +32,7 @@ export function computePanchanga(day: number, location: Location): Panchanga {
   const startTime = performance.now();
   
   const sunrise = getSunrise(day, location);
-  const sunset = getSunset(day, location);
+  const sunset = getSunset(sunrise, location);
   const moonrise = getMoonrise(day, location);
   const moonset = getMoonset(day, location);
   const tithi = Tithi.compute(day, sunrise);

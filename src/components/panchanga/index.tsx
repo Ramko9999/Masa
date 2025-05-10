@@ -59,6 +59,9 @@ const panchangaStylesFactory = (
   rowContainer: {
     flexDirection: "row",
   },
+  masasContainer: {
+    ...StyleUtils.flexRow(10)
+  },
   column: {
     flex: 1,
   },
@@ -255,7 +258,7 @@ export function Pachanga({
         onClick={onNakshatraClick}
       />
       <Card title={t("home.cards.masa.title")} onClick={onMasaClick}>
-        <View style={panchangaStyles.rowContainer}>
+        <View style={panchangaStyles.masasContainer}>
           <View>
             <Text semibold tint>
               {t("home.cards.masa.amanta")}
