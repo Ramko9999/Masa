@@ -19,6 +19,7 @@ import { IntroQuestionSlide } from "@/components/intro/slide/question";
 import { IntroHinduCalendarSlide } from "@/components/intro/slide/hindu-calendar";
 import { IntroGeocentricSlide } from "@/components/intro/slide/geocentric";
 import { IntroRegionalVariantsSlide } from "@/components/intro/slide/regional-variants";
+import { IntroLanguageSlide } from "@/components/intro/slide/language";
 import { LocationApi } from "@/api/location";
 import { useLocation } from "@/context/location";
 import { useTranslation } from "react-i18next";
@@ -152,7 +153,7 @@ export function Intro({ navigation }: IntroProps) {
   };
 
   const handleNext = async () => {
-    if (currentIndex === 3) {
+    if (currentIndex === 4) {
       await handleOnboardingComplete();
     } else {
       setCurrentIndex((index) => index + 1);
@@ -167,14 +168,16 @@ export function Intro({ navigation }: IntroProps) {
     <View style={introStyles.container}>
       <IntroHeader
         onSkip={onHandleSkip}
-        totalSlides={4}
+        totalSlides={5}
         currentIndex={currentIndex}
       />
       {currentIndex === 0 ? (
-        <IntroQuestionSlide onNext={handleNext} />
+        <IntroLanguageSlide onNext={handleNext} />
       ) : currentIndex === 1 ? (
-        <IntroHinduCalendarSlide onNext={handleNext} />
+        <IntroQuestionSlide onNext={handleNext} />
       ) : currentIndex === 2 ? (
+        <IntroHinduCalendarSlide onNext={handleNext} />
+      ) : currentIndex === 3 ? (
         <IntroGeocentricSlide onNext={handleNext} />
       ) : (
         <IntroRegionalVariantsSlide onNext={handleNext} />
