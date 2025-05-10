@@ -67,9 +67,9 @@ export function Settings() {
   const settingsStyles = useThemedStyles(settingsStylesFactory);
   const { locationSettingSheet, languageSettingSheet } = useSettingsSheet();
   const { t, i18n } = useTranslation();
-  const [notificationStatus, setNotificationStatus] = useState<string>(
-    t("settings.settings_items.notifications.checking")
-  );
+
+  const [isLoading, setIsLoading] = useState(true);
+  const [hasEnabledNotifications, setHasEnabledNotifications] = useState(false);
 
   const showNotificationSettingsAlert = (isEnabled: boolean) => {
     Alert.alert(
@@ -93,30 +93,27 @@ export function Settings() {
   };
 
   const handleNotificationClick = useCallback(() => {
-    if (
-      notificationStatus === t("settings.settings_items.notifications.checking")
-    ) {
+    if (isLoading) {
       return;
     }
-    const isEnabled =
-      notificationStatus ===
-      t("settings.settings_items.notifications.enabled.title");
-    showNotificationSettingsAlert(isEnabled);
-  }, [notificationStatus]);
+    showNotificationSettingsAlert(hasEnabledNotifications);
+  }, [hasEnabledNotifications, isLoading]);
 
   useFocusEffect(
     useCallback(() => {
-      const checkNotificationStatus = async () => {
-        const settings = await Notifications.getPermissionsAsync();
-        setNotificationStatus(
-          settings.granted
-            ? t("settings.settings_items.notifications.enabled.title")
-            : t("settings.settings_items.notifications.disabled.title")
-        );
-      };
-      checkNotificationStatus();
+      Notifications.getPermissionsAsync()
+        .then(({ granted }) => {
+          setHasEnabledNotifications(granted);
+        })
+        .finally(() => setIsLoading(false));
     }, [])
   );
+
+  const notificationStatus = isLoading
+    ? t("settings.settings_items.notifications.checking")
+    : hasEnabledNotifications
+    ? t("settings.settings_items.notifications.enabled.title")
+    : t("settings.settings_items.notifications.disabled.title");
 
   return (
     <View style={[settingsStyles.container, { paddingTop: insets.top + 20 }]}>

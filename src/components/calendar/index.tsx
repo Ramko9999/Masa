@@ -5,6 +5,7 @@ import { CalendarContext, Selection } from "./context";
 import { BottomSheetRef, GenericBottomSheet } from "../util/sheet";
 import { useThemedStyles } from "@/theme/color";
 import { useRef, useState } from "react";
+import React from "react";
 
 const calendarProviderStylesFactory = (
   _: ColorSchemeName

@@ -2,8 +2,6 @@ import { useRef, useState, createContext, useContext } from "react";
 import BottomSheet from "@gorhom/bottom-sheet";
 import { LocationSettingSheet } from "./location";
 import { LanguageSettingSheet } from "./language";
-import { useTranslation } from "react-i18next";
-import { UserApi } from "@/api/user";
 
 type SettingsSheetContextType = {
   locationSettingSheet: {
@@ -44,7 +42,6 @@ export function SettingSheetsProvider({
   const [isLanguageSheetOpen, setIsLanguageSheetOpen] = useState(false);
   const locationSheetRef = useRef<BottomSheet>(null);
   const languageSheetRef = useRef<BottomSheet>(null);
-  const { i18n } = useTranslation();
 
   const contextValue: SettingsSheetContextType = {
     locationSettingSheet: {
@@ -81,11 +78,6 @@ export function SettingSheetsProvider({
         ref={languageSheetRef}
         show={isLanguageSheetOpen}
         onHide={() => setIsLanguageSheetOpen(false)}
-        onSelectLanguage={async (language) => {
-          i18n.changeLanguage(language);
-          await UserApi.setLanguage(language);
-        }}
-        currentLanguage={i18n.language}
       />
     </SettingsSheetContext.Provider>
   );

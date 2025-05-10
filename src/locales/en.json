@@ -554,5 +554,8 @@
         "select_from_prepopulated_locations": "Select from the following cities",
         "location_access_disabled": "Location Access Disabled",
         "location_error": "The current location cannot be retrieved because location access is disabled. Please enable location access in your device settings."
+    },
+    "month_calendar": {
+        "today": "Today"
     }
 }

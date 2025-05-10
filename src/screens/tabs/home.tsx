@@ -11,11 +11,15 @@ import {
   ColorSchemeName,
   ScrollView,
   StyleSheet,
+  useColorScheme,
+  TouchableOpacity,
 } from "react-native";
 import { View } from "@/theme";
 import { AppColor, useGetColor, useThemedStyles } from "@/theme/color";
 import { NotificationApi } from "@/api/notification";
 import { useLocation } from "@/context/location";
+import { CalendarDays } from "lucide-react-native";
+import { StyleUtils } from "@/theme/style-utils";
 
 type HomeProps = CompositeScreenProps<
   BottomTabScreenProps<TabParamList, "home">,
@@ -29,11 +33,27 @@ const homeStylesFactory = (
     flex: 1,
     backgroundColor: useGetColor(AppColor.background, theme),
   },
+  floatingButton: {
+    position: "absolute",
+    right: "3%",
+    bottom: "12%",
+    backgroundColor: useGetColor(AppColor.primary, theme),
+    borderRadius: 32,
+    padding: "2.5%",
+    aspectRatio: 1,
+    ...StyleUtils.flexRowCenterAll(),
+    shadowColor: useGetColor(AppColor.primary, theme),
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 5,
+  },
 });
 
 export function Home({ navigation }: HomeProps) {
-  const { selection } = useCalendar();
+  const { selection, openMonthCalendar } = useCalendar();
   const { location } = useLocation();
+  const theme = useColorScheme();
   const homeStyles = useThemedStyles(homeStylesFactory);
 
   useEffect(() => {
@@ -43,7 +63,7 @@ export function Home({ navigation }: HomeProps) {
   return (
     <View style={homeStyles.container}>
       <WeekCalendar />
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <Pachanga
           onTithiClick={() => navigation.navigate("tithi_info")}
           onVaaraClick={() => navigation.navigate("vaara_info")}
@@ -52,6 +72,9 @@ export function Home({ navigation }: HomeProps) {
           selectedDay={selection.date}
         />
       </ScrollView>
+      <TouchableOpacity style={homeStyles.floatingButton} onPress={openMonthCalendar}>
+        <CalendarDays size={24} color={useGetColor(AppColor.background, theme)} />
+      </TouchableOpacity>
     </View>
   );
 }
