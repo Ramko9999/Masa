@@ -1,6 +1,9 @@
 {
     "intro": {
         "skip": "స్కిప్",
+        "language_selection": {
+            "button": "తర్వత"
+        },
         "question": {
             "title": "మీరు ఎప్పుడైనా ఆలోచించారా?",
             "question": "దీపావళి ప్రతి ఏడాది వేర్వేరు రోజున ఎందుకు వస్తుంది?",
@@ -522,6 +525,9 @@
         "settings_items": {
             "location": {
                 "title": "లొకేషన్"
+            },
+            "language": {
+                "title": "భాష / Language"
             },
             "notifications": {
                 "title": "నోటిఫికేషన్‌లు",

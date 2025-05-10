@@ -17,6 +17,7 @@ import { useCallback, useState } from "react";
 import { useSettingsSheet } from "@/components/settings";
 import { useFocusEffect } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
+import { LANGUAGE_OPTIONS } from "@/components/settings/language";
 
 const settingsStylesFactory = (
   theme: ColorSchemeName
@@ -64,8 +65,8 @@ export function Settings() {
   const { location } = useLocation();
   const insets = useSafeAreaInsets();
   const settingsStyles = useThemedStyles(settingsStylesFactory);
-  const { locationSettingSheet } = useSettingsSheet();
-  const { t } = useTranslation();
+  const { locationSettingSheet, languageSettingSheet } = useSettingsSheet();
+  const { t, i18n } = useTranslation();
   const [notificationStatus, setNotificationStatus] = useState<string>(
     t("settings.settings_items.notifications.checking")
   );
@@ -128,6 +129,11 @@ export function Settings() {
         title={t("settings.settings_items.location.title")}
         value={location!.place}
         onClick={() => locationSettingSheet.open()}
+      />
+      <SettingItem
+        title={t("settings.settings_items.language.title")}
+        value={LANGUAGE_OPTIONS[i18n.language as keyof typeof LANGUAGE_OPTIONS]}
+        onClick={() => languageSettingSheet.open()}
       />
       {Platform.OS === "ios" && (
         <SettingItem

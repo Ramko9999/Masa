@@ -1,6 +1,9 @@
 {
     "intro": {
         "skip": "Skip",
+        "language_selection": {
+            "button": "Continue"
+        },
         "question": {
             "title": "Have you ever wondered",
             "question": "Why does Diwali start on a different day every year?",
@@ -522,6 +525,9 @@
         "settings_items": {
             "location": {
                 "title": "Location"
+            },
+            "language": {
+                "title": "Language"
             },
             "notifications": {
                 "title": "Notifications",
