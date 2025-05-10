@@ -157,6 +157,14 @@ export function formatMonthYear(language: string, date: Date): string {
   return date.toLocaleDateString(language, { month: "long", year: "numeric" });
 }
 
+export function formatMonth(language: string, date: Date): string {
+  return date.toLocaleDateString(language, { month: "long" });
+}
+
+export function formatYear(language: string, date: Date): string {
+  return date.toLocaleDateString(language, { year: "numeric" });
+}
+
 export function formatDate(language: string, date: Date): string {
   return date.toLocaleDateString(language, {
     weekday: "long",

@@ -76,7 +76,7 @@ export function Home({ navigation }: HomeProps) {
           selectedDay={selection.date}
         />
       </ScrollView>
-      <TouchableOpacity style={[homeStyles.floatingButton, { bottom: insets.bottom + height * 0.09 }]} onPress={openMonthCalendar}>
+      <TouchableOpacity style={[homeStyles.floatingButton, { bottom: insets.bottom + height * 0.11 }]} onPress={openMonthCalendar}>
         <CalendarDays size={24} color={useGetColor(AppColor.background, theme)} />
       </TouchableOpacity>
     </View>

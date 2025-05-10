@@ -11,7 +11,9 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 
 import {
   daysOfWeekShort,
+  formatMonth,
   formatMonthYear,
+  formatYear,
   generateCalendarDays,
   groupIntoWeeks,
   truncateToDay,
@@ -220,6 +222,11 @@ const monthCalendarHeaderStylesFactory = (
     ...StyleUtils.flexRow(2),
     alignItems: "center",
   },
+  titleContainer: {
+    flexDirection: "row",
+    alignItems: "baseline",
+    gap: 2,
+  },
 });
 
 type MonthCalendarHeaderProps = {
@@ -247,12 +254,20 @@ function MonthCalendarHeader({
 
   return (
     <View style={monthCalendarHeaderStyles.container}>
-      <Text semibold large>
-        {formatMonthYear(
-          i18n.language,
-          new Date(monthDatum.year, monthDatum.month)
-        )}
-      </Text>
+      <View style={monthCalendarHeaderStyles.titleContainer}>
+        <Text semibold large>
+          {formatMonth(
+            i18n.language,
+            new Date(monthDatum.year, monthDatum.month)
+          )}
+        </Text>
+        <Text semibold large>
+          {formatYear(
+            i18n.language,
+            new Date(monthDatum.year, monthDatum.month)
+          )}
+        </Text>
+      </View>
       <View style={monthCalendarHeaderStyles.actions}>
         <TouchableOpacity onPress={onGoBack} disabled={!canGoBack}>
           <ChevronLeft
