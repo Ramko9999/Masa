@@ -33,7 +33,7 @@ const initialLocationPromptStylesFactory = (
   container: {
     ...StyleUtils.flexColumn(20),
     paddingHorizontal: "5%",
-    paddingTop: "10%",
+    paddingTop: "2%",
   },
   title: {
     ...StyleUtils.flexRow(),
@@ -114,7 +114,7 @@ function InitialLocationPrompt({
 
   return (
     <BottomSheetView
-      style={[initialLocationPromptStyles.container, { bottom: insets.bottom }]}
+      style={[initialLocationPromptStyles.container, { paddingBottom: insets.bottom + 10}]}
     >
       <View style={initialLocationPromptStyles.title}>
         <Text>
@@ -176,7 +176,7 @@ const prepopulatedLocationSelectionStylesFactory = (
   container: {
     ...StyleUtils.flexColumn(20),
     paddingHorizontal: "5%",
-    paddingTop: "10%",
+    paddingTop: "2%"
   },
   title: {
     ...StyleUtils.flexRow(),
@@ -229,6 +229,7 @@ function PrepopulatedLocationSelection({
     prepopulatedLocationSelectionStylesFactory
   );
   const theme = useColorScheme();
+  const { t } = useTranslation();
 
   const handleLocationSelect = async (location: PrepopulatedLocation) => {
     setIsLoading(true);
@@ -248,12 +249,12 @@ function PrepopulatedLocationSelection({
     <BottomSheetView
       style={[
         prepopulatedLocationSelectionStyles.container,
-        { bottom: insets.bottom },
+        { paddingBottom: insets.bottom + 10 },
       ]}
     >
       <View style={prepopulatedLocationSelectionStyles.title}>
         <Text larger semibold tint>
-          Select from the following cities
+          {t("location_permission.select_from_prepopulated_locations")}
         </Text>
       </View>
       <Animated.View
