@@ -68,6 +68,7 @@ function Muhurtam({ muhurtams }: MuhurtamProps) {
   );
   const muhurtamStyles = useThemedStyles(muhurtamStylesFactory);
   const now = Date.now();
+  const { t } = useTranslation();
 
   return (
     <View style={muhurtamStyles.container}>
@@ -85,9 +86,13 @@ function Muhurtam({ muhurtams }: MuhurtamProps) {
           <View key={idx} style={muhurtamStyles.row}>
             <View>
               <Text style={style}>
-                {`${m.muhurtham} - ${getHumanReadableTime(
-                  m.startTime
-                )} to ${getHumanReadableTime(m.endTime)}`}
+                {`${t(`muhurtam.${m.muhurtham}`)} - ${t(
+                  "home.cards.muhurtam.time",
+                  {
+                    start: getHumanReadableTime(m.startTime),
+                    end: getHumanReadableTime(m.endTime),
+                  }
+                )}`}
               </Text>
               {isCurrent && (
                 <View style={muhurtamStyles.currentMuhurtamIndicator} />
@@ -109,12 +114,16 @@ function MuhurtamCard({ muhurtams }: MuhurtamCardProps) {
   const now = Date.now();
   const current = muhurtams.find((m) => m.startTime <= now && now < m.endTime);
   const navigation = useNavigation();
-
-  const caption = current ? current.isPositive ? "Auspicious Period" : "Inauspicious Period" : undefined;
+  const { t } = useTranslation();
+  const caption = current
+    ? current.isPositive
+      ? t("home.cards.muhurtam.auspicious")
+      : t("home.cards.muhurtam.inauspicious")
+    : undefined;
 
   return (
     <Card
-      title="MUHURTHAM—AUSPICIOUS TIMINGS"
+      title={t("home.cards.muhurtam.title")}
       mainText={current?.muhurtham}
       caption={caption}
       onClick={() => navigation.navigate("muhurtam_info" as never)}
@@ -216,7 +225,6 @@ export function Pachanga({
 
   return (
     <View style={panchangaStyles.container}>
-
       <Card
         title={t("home.cards.vaara.title")}
         mainText={t(`vaara.${vaara.name}`)}
@@ -331,6 +339,7 @@ export function Pachanga({
           ))}
         </Card>
       )}
+      <MuhurtamCard muhurtams={muhurtam} />
     </View>
   );
 }

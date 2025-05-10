@@ -67,6 +67,12 @@
             "interval_change": "Changes to {{nextName}} at {{time}}",
             "festivals": {
                 "title": "FESTIVALS"
+            },
+            "muhurtam": {
+                "title": "MUHURTHAM—AUSPICIOUS TIMINGS",
+                "time": "{{start}} to {{end}}",
+                "auspicious": "Auspicious Period",
+                "inauspicious": "Inauspicious Period"
             }
         }
     },
@@ -172,6 +178,13 @@
         "adhika_pausha": "Adhika Pausha",
         "adhika_magha": "Adhika Magha",
         "adhika_phalguna": "Adhika Phalguna"
+    },
+    "muhurtam": {
+        "rahu_kalam": "Rahu Kalam",
+        "yama_gandam": "Yama Gandam",
+        "abhijit": "Abhijit",
+        "gulika_kalam": "Gulika Kalam",
+        "varjyam": "Varjyam"
     },
     "vaara_info": {
         "title": "Vaara",
@@ -322,6 +335,31 @@
         },
         "purnimanta_masa": "Purnimanta Masa",
         "amanta_masa": "Amanta Masa"
+    },
+    "muhurtam_info": {
+        "title": "Muhurtam",
+        "intro": [
+            "Muhurtam is a Hindu unit of time, roughly 48 minutes long. It also refers to auspicious/inauspicious periods.",
+            "Auspicious periods bring prosperity while inauspicious ones bring misfortune.",
+            "The timing of auspicious and inauspicious periods depends on the alignment of celestial bodies and sunrise and sunset times.",
+            "It is important to align signifcant events, like Marriage and House Warming, with auspicious periods to ensure success."
+        ],
+        "sections": [
+            {
+                "title": "Negative Muhurtams",
+                "paragraphs": [
+                    "Rahu Kalam, Yama Gandam, Gulika Kalam and Varjyam are negative muhurtams.",
+                    "Avoid starting new businesses/projects, significant purchases, journeys and auspicious activities during these periods."
+                ]
+            },
+            {
+                "title": "Positive Muhurtams",
+                "paragraphs": [
+                    "Abhijit Muhurtam is one of the most auspicious periods.",
+                    "Use this time to start new businesses/projects, perform rituals/pujas, and make signifcant purchases and other important decisions."
+                ]
+            }
+        ]
     },
     "festivals": {
         "makar_sankranti": {

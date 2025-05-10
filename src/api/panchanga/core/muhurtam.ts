@@ -2,11 +2,11 @@ import { addDays } from "@/util/date";
 import { getPreviousNakshatra, NakshatraIndex, NakshatraInterval } from "./nakshatra";
 
 export const enum MuhurtamType {
-    RahuKalam = "Rahu Kalam",
-    YamaGandam = "Yama Gandam",
-    Abhijit = "Abhijit Muhurtam",
-    GulikaKalam = "Gulika Kalam",
-    Varjyam = "Varjyam",
+    RahuKalam = "rahu_kalam",
+    YamaGandam = "yama_gandam",
+    Abhijit = "abhijit",
+    GulikaKalam = "gulika_kalam",
+    Varjyam = "varjyam",
 }
 
 export type MuhurtamInterval = {
