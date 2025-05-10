@@ -45,7 +45,6 @@ const dayStylesFactory = (
   },
   selectedText: {
     color: useGetColor(AppColor.background, theme),
-    fontWeight: "bold",
   },
   todayText: {
     color: useGetColor(AppColor.background, theme),
@@ -89,7 +88,7 @@ function Day({ day, isSelected, isToday, onClick }: DayProps) {
             {new Date(day).getDate()}
           </Text>
           <Text
-            small
+            tiny
             style={[
               dayStyles.text,
               isSelected && dayStyles.selectedText,

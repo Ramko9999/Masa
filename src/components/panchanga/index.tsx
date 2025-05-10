@@ -58,7 +58,9 @@ const panchangaStylesFactory = (
   },
   rowContainer: {
     flexDirection: "row",
-    gap: 25,
+  },
+  column: {
+    flex: 1,
   },
   iconTextContainer: {
     flexDirection: "row",
@@ -192,7 +194,7 @@ export function Pachanga({
         onClick={onVaaraClick}
       >
         <View style={panchangaStyles.rowContainer}>
-          <View>
+          <View style={panchangaStyles.column}>
             <Text semibold tint>
               {t("home.cards.vaara.sunrise")}
             </Text>
@@ -203,7 +205,7 @@ export function Pachanga({
               </Text>
             </View>
           </View>
-          <View>
+          <View style={panchangaStyles.column}>
             <Text semibold tint>
               {t("home.cards.vaara.moonrise")}
             </Text>
@@ -216,7 +218,7 @@ export function Pachanga({
           </View>
         </View>
         <View style={panchangaStyles.rowContainer}>
-          <View>
+          <View style={panchangaStyles.column}>
             <Text semibold tint>
               {t("home.cards.vaara.sunset")}
             </Text>
@@ -227,7 +229,7 @@ export function Pachanga({
               </Text>
             </View>
           </View>
-          <View>
+          <View style={panchangaStyles.column}>
             <Text semibold tint>
               {t("home.cards.vaara.moonset")}
             </Text>
