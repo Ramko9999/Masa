@@ -2,7 +2,7 @@
   "expo": {
     "name": "Masa",
     "slug": "masa",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -29,7 +29,7 @@
       }
     },
     "android": {
-      "versionCode": 4,
+      "versionCode": 6,
       "adaptiveIcon": {
         "foregroundImage": "./assets/logo/android/adaptive.png",
         "monochromeImage": "./assets/logo/android/adaptive.png",
