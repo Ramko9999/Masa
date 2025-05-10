@@ -17,6 +17,7 @@ import { shadeColor, tintColor } from "@/util/color";
 import { useTranslation } from "react-i18next";
 import { UserApi } from "@/api/user";
 import Animated, { LinearTransition } from "react-native-reanimated";
+import { timeout } from "@/util/misc";
 
 export const LANGUAGE_OPTIONS = {
   en: "English",
@@ -76,6 +77,7 @@ function LanguageSelection({
 
   const onSelectLanguage = async (language: string) => {
     setIsLoading(true);
+    await timeout(1);
     await i18n.changeLanguage(language);
     await UserApi.setLanguage(language);
     onSelectLanguageFinished();

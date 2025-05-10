@@ -126,12 +126,12 @@ const FestivalsCard = ({ festivals }: FestivalsCardProps) => {
   const { t } = useTranslation();
   const navigation = useNavigation();
   const theme = useColorScheme();
+  const panchangaStyles = useThemedStyles(panchangaStylesFactory);
 
   if (festivals.length === 0) {
     return null;
   }
 
-  const panchangaStyles = useThemedStyles(panchangaStylesFactory);
   return (
     <Card title={t("home.cards.festivals.title")}>
       {festivals.map((festival: Festival, index: number) => (
