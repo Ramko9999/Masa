@@ -31,84 +31,6 @@ import { Festival } from "@/api/panchanga/core/festival";
 import { Muhurtams } from "./muhurtam";
 import { StyleUtils } from "@/theme/style-utils";
 
-type MuhurtamProps = {
-  muhurtams: MuhurtamInterval[];
-};
-
-const muhurtamStylesFactory = (
-  theme: ColorSchemeName
-): StyleSheet.NamedStyles<any> => ({
-  container: {
-    ...StyleUtils.flexColumn(10),
-    paddingTop: "1%",
-  },
-  row: {
-    ...StyleUtils.flexRow(10),
-    alignItems: "center",
-    position: "relative", // Needed for absolute underline
-  },
-  past: {
-    opacity: 0.4,
-    textDecorationLine: "line-through",
-  },
-  future: {
-    opacity: 0.7,
-  },
-  currentMuhurtamIndicator: {
-    position: "absolute",
-    left: 0,
-    bottom: -5,
-    height: 2,
-    width: "100%",
-    backgroundColor: useGetColor(AppColor.tint, theme), // Accent color
-    borderRadius: 1,
-  },
-});
-
-function Muhurtam({ muhurtams }: MuhurtamProps) {
-  const sortedMuhurtams = [...muhurtams].sort(
-    (a, b) => a.startTime - b.startTime
-  );
-  const muhurtamStyles = useThemedStyles(muhurtamStylesFactory);
-  const now = Date.now();
-  const { t } = useTranslation();
-
-  return (
-    <View style={muhurtamStyles.container}>
-      {sortedMuhurtams.map((m, idx) => {
-        const isPast = m.endTime < now;
-        const isCurrent = m.startTime <= now && now < m.endTime;
-        const isFuture = m.startTime > now;
-        const style = isPast
-          ? muhurtamStyles.past
-          : isFuture
-          ? muhurtamStyles.future
-          : undefined;
-
-        return (
-          <View key={idx} style={muhurtamStyles.row}>
-            <View>
-              <Text style={style}>
-                {`${t(`muhurtam.${m.muhurtham}`)} - ${t(
-                  "home.cards.muhurtam.time",
-                  {
-                    start: getHumanReadableTime(m.startTime),
-                    end: getHumanReadableTime(m.endTime),
-                  }
-                )}`}
-              </Text>
-              {isCurrent && (
-                <View style={muhurtamStyles.currentMuhurtamIndicator} />
-              )}
-            </View>
-            <View />
-          </View>
-        );
-      })}
-    </View>
-  );
-}
-
 type MuhurtamCardProps = {
   muhurtams: MuhurtamInterval[];
 };
@@ -116,17 +38,10 @@ type MuhurtamCardProps = {
 function MuhurtamCard({ muhurtams }: MuhurtamCardProps) {
   const navigation = useNavigation();
   const { t } = useTranslation();
-  const caption = current
-    ? current.isPositive
-      ? t("home.cards.muhurtam.auspicious")
-      : t("home.cards.muhurtam.inauspicious")
-    : undefined;
 
   return (
     <Card
       title={t("home.cards.muhurtam.title")}
-      mainText={current?.muhurtham}
-      caption={caption}
       onClick={() => navigation.navigate("muhurtam_info" as never)}
     >
       <Muhurtams muhurtams={muhurtams} />
@@ -207,13 +122,13 @@ const FestivalsCard = ({ festivals }: FestivalsCardProps) => {
   const navigation = useNavigation();
   const theme = useColorScheme();
 
-  if(festivals.length === 0) {
+  if (festivals.length === 0) {
     return null;
   }
 
   const panchangaStyles = useThemedStyles(panchangaStylesFactory);
   return (
-    <Card title={t("home.cards.festivals.title")}> 
+    <Card title={t("home.cards.festivals.title")}>
       {festivals.map((festival: Festival, index: number) => (
         <TouchableOpacity
           key={`${festival.name}-${index}`}
@@ -231,10 +146,7 @@ const FestivalsCard = ({ festivals }: FestivalsCardProps) => {
                 <Text>{t(`festivals.${festival.name}.caption`)}</Text>
               </View>
             </View>
-            <ChevronRight
-              size={24}
-              color={useGetColor(AppColor.tint, theme)}
-            />
+            <ChevronRight size={24} color={useGetColor(AppColor.tint, theme)} />
           </View>
         </TouchableOpacity>
       ))}
@@ -273,6 +185,7 @@ export function Pachanga({
 
   return (
     <View style={panchangaStyles.container}>
+      <FestivalsCard festivals={festivals} />
       <Card
         title={t("home.cards.vaara.title")}
         mainText={t(`vaara.${vaara.name}`)}
@@ -359,34 +272,6 @@ export function Pachanga({
           </View>
         </View>
       </Card>
-      {festivals.length !== 0 && (
-        <Card title={t("home.cards.festivals.title")}>
-          {festivals.map((festival, index) => (
-            <TouchableOpacity
-              key={`${festival.name}-${index}`}
-              onPress={() =>
-                /* @ts-ignore */
-                navigation.navigate("festival_details", { festival })
-              }
-            >
-              <View style={panchangaStyles.festivalContainer}>
-                <View style={{ flexDirection: "column", gap: 4 }}>
-                  <Text bold larger>
-                    {t(`festivals.${festival.name}.title`)}
-                  </Text>
-                  <View>
-                    <Text>{t(`festivals.${festival.name}.caption`)}</Text>
-                  </View>
-                </View>
-                <ChevronRight
-                  size={24}
-                  color={useGetColor(AppColor.tint, theme)}
-                />
-              </View>
-            </TouchableOpacity>
-          ))}
-        </Card>
-      )}
       <MuhurtamCard muhurtams={muhurtam} />
     </View>
   );

@@ -218,6 +218,7 @@ const monthCalendarHeaderStylesFactory = (
   },
   actions: {
     ...StyleUtils.flexRow(2),
+    alignItems: "center",
   },
 });
 
@@ -227,6 +228,7 @@ type MonthCalendarHeaderProps = {
   onGoBack: () => void;
   canGoForward: boolean;
   onGoForward: () => void;
+  onBackToToday?: () => void;
 };
 
 function MonthCalendarHeader({
@@ -235,12 +237,13 @@ function MonthCalendarHeader({
   onGoBack,
   canGoForward,
   onGoForward,
+  onBackToToday,
 }: MonthCalendarHeaderProps) {
   const monthCalendarHeaderStyles = useThemedStyles(
     monthCalendarHeaderStylesFactory
   );
   const theme = useColorScheme();
-  const { i18n } = useTranslation();
+  const { i18n, t } = useTranslation();
 
   return (
     <View style={monthCalendarHeaderStyles.container}>
@@ -270,6 +273,11 @@ function MonthCalendarHeader({
                 : useGetColor(AppColor.tint, theme)
             }
           />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={onBackToToday} style={{ marginLeft: 8 }}>
+          <Text primary semibold large>
+            {t("month_calendar.today")}
+          </Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -370,6 +378,7 @@ export function MonthCalendar({ onFinishDayClick }: MonthCalendarProps) {
           onGoBack={onGoBack}
           canGoForward={currentPage < data.length - 1}
           onGoForward={onGoForward}
+          onBackToToday={() => onDayClick(truncateToDay(Date.now()))}
         />
       </View>
       <PagerView

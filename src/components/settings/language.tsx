@@ -1,14 +1,22 @@
-import { forwardRef, ForwardedRef, MutableRefObject } from "react";
+import { forwardRef, ForwardedRef, MutableRefObject, useState } from "react";
 import BottomSheet from "@gorhom/bottom-sheet";
 import { PopupBottomSheet } from "@/components/util/sheet";
 import { View, Text } from "@/theme";
-import { StyleSheet, ColorSchemeName, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  ColorSchemeName,
+  TouchableOpacity,
+  ActivityIndicator,
+  useColorScheme,
+} from "react-native";
 import { useThemedStyles, useGetColor, AppColor } from "@/theme/color";
 import { StyleUtils } from "@/theme/style-utils";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { BottomSheetView } from "@gorhom/bottom-sheet";
 import { shadeColor, tintColor } from "@/util/color";
 import { useTranslation } from "react-i18next";
+import { UserApi } from "@/api/user";
+import Animated, { LinearTransition } from "react-native-reanimated";
 
 export const LANGUAGE_OPTIONS = {
   en: "English",
@@ -47,20 +55,32 @@ const languageSheetStylesFactory = (
   languageScrollContent: {
     ...StyleUtils.flexColumn(10),
   },
+  loadingIndicator: {
+    marginBottom: "5%",
+  },
 });
 
 type LanguageSelectionProps = {
-  onSelectLanguage: (language: string) => void;
-  currentLanguage: string;
+  onSelectLanguageFinished: () => void;
 };
 
 function LanguageSelection({
-  onSelectLanguage,
-  currentLanguage,
+  onSelectLanguageFinished,
 }: LanguageSelectionProps) {
+  const [isLoading, setIsLoading] = useState(false);
   const insets = useSafeAreaInsets();
   const languageSheetStyles = useThemedStyles(languageSheetStylesFactory);
-  const { t } = useTranslation();
+  const { i18n, t } = useTranslation();
+  const currentLanguage = i18n.language;
+  const theme = useColorScheme();
+
+  const onSelectLanguage = async (language: string) => {
+    setIsLoading(true);
+    await i18n.changeLanguage(language);
+    await UserApi.setLanguage(language);
+    onSelectLanguageFinished();
+    setIsLoading(false);
+  };
 
   return (
     <BottomSheetView
@@ -71,7 +91,11 @@ function LanguageSelection({
           {t("settings.settings_items.language.title")}
         </Text>
       </View>
-      <View style={languageSheetStyles.languageScrollContent}>
+      <Animated.View
+        key={"language-scroll-content"}
+        style={languageSheetStyles.languageScrollContent}
+        layout={LinearTransition.duration(300)}
+      >
         {Object.entries(LANGUAGE_OPTIONS).map(([code, label]) => (
           <TouchableOpacity
             key={code}
@@ -93,7 +117,14 @@ function LanguageSelection({
             </View>
           </TouchableOpacity>
         ))}
-      </View>
+        {isLoading && (
+          <ActivityIndicator
+            size="large"
+            color={useGetColor(AppColor.primary, theme)}
+            style={languageSheetStyles.loadingIndicator}
+          />
+        )}
+      </Animated.View>
     </BottomSheetView>
   );
 }
@@ -101,28 +132,19 @@ function LanguageSelection({
 type LanguageSettingSheetProps = {
   show: boolean;
   onHide: () => void;
-  onSelectLanguage: (language: string) => void;
-  currentLanguage: string;
 };
 
 export const LanguageSettingSheet = forwardRef(
   (
-    {
-      show,
-      onHide,
-      onSelectLanguage,
-      currentLanguage,
-    }: LanguageSettingSheetProps,
+    { show, onHide }: LanguageSettingSheetProps,
     ref: ForwardedRef<BottomSheet>
   ) => {
     return (
       <PopupBottomSheet ref={ref} show={show} onHide={onHide}>
         <LanguageSelection
-          onSelectLanguage={(language) => {
-            onSelectLanguage(language);
-            (ref as MutableRefObject<BottomSheet>).current?.close();
-          }}
-          currentLanguage={currentLanguage}
+          onSelectLanguageFinished={() =>
+            (ref as MutableRefObject<BottomSheet>).current?.close()
+          }
         />
       </PopupBottomSheet>
     );

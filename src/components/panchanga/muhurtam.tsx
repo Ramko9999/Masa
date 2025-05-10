@@ -10,6 +10,8 @@ import { useThemedStyles } from "@/theme/color";
 import { StyleUtils } from "@/theme/style-utils";
 import { MuhurtamInterval } from "@/api/panchanga/core/muhurtam";
 import { shadeColor, tintColor } from "@/util/color";
+import { useTranslation } from "react-i18next";
+import { getHumanReadableTime } from "@/util/date";
 
 function getBarColor(
   isPositive: boolean,
@@ -22,19 +24,6 @@ function getBarColor(
     return shadeColor(baseColor, 0.5);
   }
   return tintColor(baseColor, 0.5);
-}
-
-function formatMuhurtamTiming(startTime?: number, endTime?: number) {
-  if (!startTime || !endTime) return null;
-  const start = new Date(startTime).toLocaleTimeString([], {
-    hour: "2-digit",
-    minute: "2-digit",
-  });
-  const end = new Date(endTime).toLocaleTimeString([], {
-    hour: "2-digit",
-    minute: "2-digit",
-  });
-  return `${start} - ${end}`;
 }
 
 const muhurtamStyles = (
@@ -82,6 +71,9 @@ function Muhurtam({ muhurtam }: MuhurtamProps) {
   const isFuture = muhurtam.startTime > Date.now();
   const isCurrent =
     muhurtam.startTime <= Date.now() && Date.now() < muhurtam.endTime;
+
+  const { t } = useTranslation();
+
   return (
     <View style={[styles.container, { height: height * 0.08 }]}>
       <View style={styles.barContainer}>
@@ -107,7 +99,7 @@ function Muhurtam({ muhurtam }: MuhurtamProps) {
             isFuture ? styles.futureText : undefined,
           ]}
         >
-          {muhurtam.muhurtham}
+          {t(`muhurtam.${muhurtam.muhurtham}`)}
         </Text>
         <Text
           small
@@ -116,7 +108,10 @@ function Muhurtam({ muhurtam }: MuhurtamProps) {
             isFuture ? styles.futureText : undefined,
           ]}
         >
-          {formatMuhurtamTiming(muhurtam.startTime, muhurtam.endTime)}
+          {t("home.cards.muhurtam.time", {
+            start: getHumanReadableTime(muhurtam.startTime),
+            end: getHumanReadableTime(muhurtam.endTime),
+          })}
         </Text>
       </View>
     </View>
