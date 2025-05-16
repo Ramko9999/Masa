@@ -8,12 +8,36 @@ import "../styles/global.css";
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width" />
     <title>Masa - Hindu Calendar App</title>
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://masa-mu.vercel.app/" />
+    <meta property="og:title" content="Masa - Hindu Calendar App" />
+    <meta property="og:description" content="Daily Panchangam" />
+    <meta property="og:image" content="https://masa-mu.vercel.app/OG.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:alt" content="Masa - Hindu Calendar App" />
+    <meta property="og:site_name" content="Masa" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://masa-mu.vercel.app/" />
+    <meta name="twitter:title" content="Masa - Hindu Calendar App" />
+    <meta name="twitter:description" content="Daily Panchangam" />
+    <meta name="twitter:image" content="https://masa-mu.vercel.app/OG.png" />
+    <meta name="twitter:image:alt" content="Masa - Hindu Calendar App" />
+
+    <!-- Discord optimizations -->
+    <meta name="theme-color" content="#FFFFFF" />
   </head>
   <body>
     <main class="h-full flex flex-col items-center justify-center mb-4">
       <div class="max-w-4xl mx-auto text-center">
         <h1 class="font-serif text-5xl sm:text-6xl md:text-7xl mt-4">Masa</h1>
         <span class="text-gray-600 text-xl"> Hindu Calendar App </span>
+
         <div class="relative w-full max-w-[320px] mx-auto my-2">
           <img
             src="/phone_screenshot.png"
@@ -21,7 +45,51 @@ import "../styles/global.css";
             class="w-full h-auto"
           />
         </div>
-        <p class="text-gray-600 text-sm">
+
+        <div class="flex justify-center gap-4 mt-6 mb-6">
+          <a
+            class="bg-black text-white font-semibold rounded-lg px-3 py-2 cursor-pointer flex items-center gap-2 text-sm"
+            href="https://apps.apple.com/us/app/masa-hindu-calendar/id6744852418"
+          >
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 16 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              style="transform: translateY(-1px);"
+            >
+              <path
+                d="M13.3636 10.6359C13.3832 9.09202 14.1985 7.63115 15.4918 6.82249C14.6759 5.6374 13.3092 4.88602 11.8874 4.84078C10.3708 4.67889 8.90062 5.76366 8.12782 5.76366C7.34007 5.76366 6.15022 4.85685 4.86895 4.88366C3.19887 4.93853 1.64194 5.90417 0.82941 7.38906C-0.917205 10.4644 0.385612 14.9841 2.05872 17.47C2.89582 18.6873 3.87414 20.047 5.15425 19.9988C6.40692 19.9459 6.87477 19.1864 8.38684 19.1864C9.88489 19.1864 10.3238 19.9988 11.6299 19.9681C12.9741 19.9459 13.821 18.7454 14.6287 17.5166C15.2301 16.6493 15.693 15.6907 16 14.6763C14.4204 13.9969 13.3654 12.3802 13.3636 10.6359Z"
+                fill="currentColor"></path>
+              <path
+                d="M10.8966 3.20595C11.6295 2.31119 11.9906 1.16113 11.9031 0C10.7834 0.1196 9.74914 0.663834 9.00635 1.52426C8.27999 2.36494 7.90199 3.49477 7.97345 4.61152C9.09356 4.62325 10.1947 4.09376 10.8966 3.20595Z"
+                fill="currentColor"></path>
+            </svg>
+            Download on iOS
+          </a>
+          <a
+            class="bg-black text-white font-semibold rounded-lg px-3 py-2 cursor-pointer flex items-center gap-2 text-sm"
+            href="https://play.google.com/store/apps/details?id=com.anonymous.masa"
+          >
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 256 256"
+              xmlns="http://www.w3.org/2000/svg"
+              style="transform: translateY(-1px);"
+            >
+              <g fill="currentColor" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal">
+                <g transform="scale(5.12,5.12)">
+                  <path d="M7.125,2l21.65625,21.5l5.9375,-5.9375l-26.25,-15.15625c-0.4375,-0.25391 -0.90625,-0.39453 -1.34375,-0.40625zM5.3125,3c-0.19531,0.34766 -0.3125,0.75781 -0.3125,1.21875v41.78125c0,0.33594 0.07031,0.63672 0.1875,0.90625l22.15625,-22zM36.53125,18.59375l-6.34375,6.3125l6.34375,6.28125l7.75,-4.4375c1.10156,-0.63672 1.25781,-1.44531 1.25,-1.875c-0.01172,-0.71094 -0.46094,-1.375 -1.21875,-1.78125c-0.66016,-0.35547 -5.5625,-3.21094 -7.78125,-4.5zM28.78125,26.3125l-21.84375,21.65625c0.36328,-0.01953 0.75781,-0.09766 1.125,-0.3125c0.85547,-0.49609 18.15625,-10.5 18.15625,-10.5l8.53125,-4.90625z"></path>
+                </g>
+              </g>
+            </svg>
+            Download on Android
+          </a>
+        </div>
+
+        <p class="text-gray-600 text-sm mt-4">
           Made by <a href="https://github.com/ramko9999" class="underline"
             >Ramki Pitchala</a
           > & <a href="https://github.com/rohanshiva" class="underline"
