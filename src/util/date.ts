@@ -173,6 +173,12 @@ export function formatDate(language: string, date: Date): string {
     day: "numeric",
   });
 }
+
+export function formatMonthYearFromTimestamp(language: string, timestamp: number): string {
+  const date = new Date(timestamp);
+  return date.toLocaleDateString(language, { month: "long", year: "numeric" });
+}
+
 /**
  * Generate an array representing days in a month with proper padding for calendar display
  */
