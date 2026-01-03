@@ -2,7 +2,7 @@
   "expo": {
     "name": "Masa",
     "slug": "masa",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "orientation": "portrait",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -29,7 +29,7 @@
       }
     },
     "android": {
-      "versionCode": 6,
+      "versionCode": 7,
       "adaptiveIcon": {
         "foregroundImage": "./assets/logo/android/adaptive.png",
         "monochromeImage": "./assets/logo/android/adaptive.png",
@@ -56,7 +56,14 @@
             "enforceNavigationBarContrast": false
           }
         }
+      ],
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/logo/android/notification_icon.png"
+        }
       ]
+
     ],
     "extra": {
       "eas": {

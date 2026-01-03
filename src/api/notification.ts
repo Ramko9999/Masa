@@ -2,7 +2,8 @@ import { getFestivals } from "@/api/panchanga";
 import * as Notifications from "expo-notifications";
 import { SchedulableTriggerInputTypes } from "expo-notifications";
 import { Location } from "@/api/location";
-import { Platform } from "react-native";
+import i18n from "../../i18n";
+import { FestivalInfo } from "@/api/panchanga/core/festival";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -28,16 +29,9 @@ async function getNotificationPermissionStatus() {
   return true;
 }
 
-
 // todo: investigate why notfications aren't always scheduled
 async function scheduleFestivalNotifications(location: Location) {
   const festivals = getFestivals(location);
-
-  const { status } = await Notifications.getPermissionsAsync();
-
-  if (status !== "granted" && Platform.OS === "ios") {
-    return;
-  }
 
   await Notifications.cancelAllScheduledNotificationsAsync();
 
@@ -47,19 +41,27 @@ async function scheduleFestivalNotifications(location: Location) {
     if (notificationDate < new Date()) {
       continue;
     }
+    // Get festival info from translations
+    const festivalInfo = i18n.t(`festivals.${festival.name}`, {
+      returnObjects: true,
+    }) as FestivalInfo;
 
-    await Notifications.scheduleNotificationAsync({
+    const notificationId = await Notifications.scheduleNotificationAsync({
       content: {
-        title: festival.name,
-        body: festival.caption,
+        title: festivalInfo.title,
+        body: festivalInfo.caption,
         data: { festivalName: festival.name },
         sound: true,
       },
       trigger: {
         type: SchedulableTriggerInputTypes.DATE,
         date: notificationDate,
+        channelId: "default",
       },
     });
+    console.log(
+      `[NOTIFICATION] Scheduled notification ${notificationId} for festival ${festival.name} at ${notificationDate}`
+    );
   }
 }
 

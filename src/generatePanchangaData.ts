@@ -1,11 +1,12 @@
 // Import necessary modules and functions
 import { computePanchanga } from "@/api/panchanga";
 import { writeFileSync, mkdirSync, existsSync } from "fs";
-import { getLocation } from "@/api/panchanga/location";
+import { getLocation } from "@/store/location";
 import { join, dirname } from "path";
 import { TithiInterval } from "@/api/panchanga/core/tithi";
 import { NakshatraInterval } from "@/api/panchanga/core/nakshatra";
 import { YogaInterval } from "@/api/panchanga/core/yoga";
+
 function toUTC(timestamp: number): string {
   const date = new Date(timestamp);
   const year = date.getFullYear();
