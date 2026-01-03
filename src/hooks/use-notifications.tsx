@@ -22,5 +22,12 @@ export function useNotifications() {
     if (location) {
       debouncedScheduleNotifications(location);
     }
+
+    return () => {
+      if (scheduleNotificationsTimer) {
+        clearTimeout(scheduleNotificationsTimer);
+      }
+    };
+
   }, [location]);
 }

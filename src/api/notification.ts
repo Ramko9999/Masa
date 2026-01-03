@@ -4,14 +4,7 @@ import { SchedulableTriggerInputTypes } from "expo-notifications";
 import { Location } from "@/api/location";
 import i18n from "../../i18n";
 import { FestivalInfo } from "@/api/panchanga/core/festival";
-
-Notifications.setNotificationHandler({
-  handleNotification: async () => ({
-    shouldShowAlert: true,
-    shouldPlaySound: true,
-    shouldSetBadge: false,
-  }),
-});
+import { Platform } from "react-native";
 
 async function getNotificationPermissionStatus() {
   const { status: existingStatus } = await Notifications.getPermissionsAsync();
@@ -34,6 +27,12 @@ async function scheduleFestivalNotifications(location: Location) {
   const festivals = getFestivals(location);
 
   await Notifications.cancelAllScheduledNotificationsAsync();
+
+  const { status } = await Notifications.getPermissionsAsync();
+
+  if (status !== "granted" && Platform.OS === "ios") {
+    return;
+  }
 
   for (const festival of festivals) {
     const notificationDate = new Date(festival.date);
