@@ -8,12 +8,12 @@ import { LocationProvider } from "@/context/location";
 import { CalendarProvider } from "@/components/calendar";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { SettingSheetsProvider } from "./components/settings";
+import { NotificationProvider } from "./components/notifications";
+import { BackgroundHandlers } from "./components/background-handlers";
 // Preload assets
 const preloadAssets = async () => {
   // Load image assets
-  await Asset.loadAsync([
-    ...NavigationAssets,
-  ]);
+  await Asset.loadAsync([...NavigationAssets]);
 };
 
 SplashScreen.preventAutoHideAsync();
@@ -49,13 +49,16 @@ export function App() {
   return (
     <SafeAreaProvider>
       <GestureHandlerRootView>
-        <LocationProvider>
-          <CalendarProvider>
-            <SettingSheetsProvider>
-              <Layout />
-            </SettingSheetsProvider>
-          </CalendarProvider>
-        </LocationProvider>
+        <NotificationProvider>
+          <LocationProvider>
+            <CalendarProvider>
+              <SettingSheetsProvider>
+                <Layout />
+                <BackgroundHandlers />
+              </SettingSheetsProvider>
+            </CalendarProvider>
+          </LocationProvider>
+        </NotificationProvider>
       </GestureHandlerRootView>
     </SafeAreaProvider>
   );

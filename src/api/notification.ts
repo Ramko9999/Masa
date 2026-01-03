@@ -2,15 +2,9 @@ import { getFestivals } from "@/api/panchanga";
 import * as Notifications from "expo-notifications";
 import { SchedulableTriggerInputTypes } from "expo-notifications";
 import { Location } from "@/api/location";
+import i18n from "../../i18n";
+import { FestivalInfo } from "@/api/panchanga/core/festival";
 import { Platform } from "react-native";
-
-Notifications.setNotificationHandler({
-  handleNotification: async () => ({
-    shouldShowAlert: true,
-    shouldPlaySound: true,
-    shouldSetBadge: false,
-  }),
-});
 
 async function getNotificationPermissionStatus() {
   const { status: existingStatus } = await Notifications.getPermissionsAsync();
@@ -28,10 +22,11 @@ async function getNotificationPermissionStatus() {
   return true;
 }
 
-
 // todo: investigate why notfications aren't always scheduled
 async function scheduleFestivalNotifications(location: Location) {
   const festivals = getFestivals(location);
+
+  await Notifications.cancelAllScheduledNotificationsAsync();
 
   const { status } = await Notifications.getPermissionsAsync();
 
@@ -39,27 +34,33 @@ async function scheduleFestivalNotifications(location: Location) {
     return;
   }
 
-  await Notifications.cancelAllScheduledNotificationsAsync();
-
   for (const festival of festivals) {
     const notificationDate = new Date(festival.date);
 
     if (notificationDate < new Date()) {
       continue;
     }
+    // Get festival info from translations
+    const festivalInfo = i18n.t(`festivals.${festival.name}`, {
+      returnObjects: true,
+    }) as FestivalInfo;
 
-    await Notifications.scheduleNotificationAsync({
+    const notificationId = await Notifications.scheduleNotificationAsync({
       content: {
-        title: festival.name,
-        body: festival.caption,
+        title: festivalInfo.title,
+        body: festivalInfo.caption,
         data: { festivalName: festival.name },
         sound: true,
       },
       trigger: {
         type: SchedulableTriggerInputTypes.DATE,
         date: notificationDate,
+        channelId: "default",
       },
     });
+    console.log(
+      `[NOTIFICATION] Scheduled notification ${notificationId} for festival ${festival.name} at ${notificationDate}`
+    );
   }
 }
 
