@@ -14,7 +14,7 @@ import { AppColor, useGetColor } from '@/theme/color';
 export default function RootLayout() {
   const theme = useColorScheme();
   const backgroundColor = useGetColor(AppColor.background, theme);
-
+  
   return (
     <SafeAreaProvider>
       <GestureHandlerRootView style={{ flex: 1 }}>

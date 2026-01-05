@@ -35,6 +35,7 @@ const dayStylesFactory = (
     padding: 8,
   },
   selectedOverlay: {
+    borderRadius: 10,
     backgroundColor: useGetColor(AppColor.primary, theme),
   },
   todayOverlay: {
