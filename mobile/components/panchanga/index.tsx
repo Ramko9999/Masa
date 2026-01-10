@@ -32,7 +32,6 @@ import { Muhurtams } from "./muhurtam";
 import { StyleUtils } from "@/theme/style-utils";
 import { setPanchangaDay } from "@/store/widget";
 
-
 type MuhurtamCardProps = {
   muhurtams: MuhurtamInterval[];
   onMuhurtamClick?: () => void;
