@@ -63,7 +63,8 @@
           "icon": "./assets/logo/android/notification_icon.png"
         }
       ],
-      "expo-router"
+      "expo-router",
+      "@bacons/apple-targets"
     ],
     "extra": {
       "eas": {
