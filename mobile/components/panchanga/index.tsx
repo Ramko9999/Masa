@@ -26,10 +26,11 @@ import { ChevronRight } from "lucide-react-native";
 import { AppColor, useGetColor, useThemedStyles } from "@/theme/color";
 import { useTranslation } from "react-i18next";
 import { MuhurtamInterval } from "@/api/panchanga/core/muhurtam";
-import React from "react";
+import React, { useEffect } from "react";
 import { Festival } from "@/api/panchanga/core/festival";
 import { Muhurtams } from "./muhurtam";
 import { StyleUtils } from "@/theme/style-utils";
+import { setPanchangaDay } from "@/store/widget";
 
 
 type MuhurtamCardProps = {
@@ -176,6 +177,7 @@ export function Pachanga({
   const panchangaStyles = useThemedStyles(panchangaStylesFactory);
   const theme = useColorScheme();
 
+  const panchanga = computePanchanga(truncateToDay(selectedDay), location!);
   const {
     tithi,
     nakshatra,
@@ -187,9 +189,18 @@ export function Pachanga({
     moonset,
     festivals,
     muhurtam,
-  } = computePanchanga(truncateToDay(selectedDay), location!);
+  } = panchanga;
 
   const { t } = useTranslation();
+
+  // Sync panchanga data to widget store
+  useEffect(() => {
+    if (location) {
+      setPanchangaDay(panchanga).catch((error) => {
+        console.error("Failed to sync panchanga to widget:", error);
+      });
+    }
+  }, [panchanga.day, location?.latitude, location?.longitude]);
 
   return (
     <View style={panchangaStyles.container}>
