@@ -16,52 +16,32 @@ func formatRelativeDate(from now: Date, to festivalDate: Date) -> String {
     } else if days == 0 {
         return "Today"
     } else if days == 1 {
-        return "In 1 day"
+        return "Tomorrow"
     } else {
         return "In \(days) days"
     }
 }
 
-// MARK: - Festival Data
-
-struct FestivalInfo {
-    let imageName: String
-    let displayName: String
-}
-
-// Hardcoded to Hanuman Jayanti
-let HANUMAN_JAYANTI = FestivalInfo(imageName: "hanuman_jayanti", displayName: "Hanuman Jayanti")
-
 // MARK: - Festival Provider
 
 struct FestivalProvider: TimelineProvider {
     func placeholder(in context: Context) -> FestivalEntry {
-        FestivalEntry(
-            date: Date(),
-            festival: HANUMAN_JAYANTI,
-            relativeDate: "Soon"
-        )
+        let currentDate = Date()
+        let (festivalDate, relativeDate) = getNarakChaturdashiData(currentDate: currentDate)
+        return FestivalEntry(date: currentDate, festivalDate: festivalDate, relativeDate: relativeDate)
     }
 
     func getSnapshot(in context: Context, completion: @escaping (FestivalEntry) -> ()) {
         let currentDate = Date()
-        let (festivalDate, relativeDate) = loadHanumanJayantiData(currentDate: currentDate)
-        let entry = FestivalEntry(
-            date: currentDate,
-            festival: HANUMAN_JAYANTI,
-            relativeDate: relativeDate
-        )
+        let (festivalDate, relativeDate) = getNarakChaturdashiData(currentDate: currentDate)
+        let entry = FestivalEntry(date: currentDate, festivalDate: festivalDate, relativeDate: relativeDate)
         completion(entry)
     }
     
     func getTimeline(in context: Context, completion: @escaping (Timeline<FestivalEntry>) -> ()) {
         let currentDate = Date()
-        let (festivalDate, relativeDate) = loadHanumanJayantiData(currentDate: currentDate)
-        let entry = FestivalEntry(
-            date: currentDate,
-            festival: HANUMAN_JAYANTI,
-            relativeDate: relativeDate
-        )
+        let (festivalDate, relativeDate) = getNarakChaturdashiData(currentDate: currentDate)
+        let entry = FestivalEntry(date: currentDate, festivalDate: festivalDate, relativeDate: relativeDate)
         
         // Refresh at midnight
         let calendar = Calendar.current
@@ -71,21 +51,20 @@ struct FestivalProvider: TimelineProvider {
         completion(timeline)
     }
     
-    private func loadHanumanJayantiData(currentDate: Date) -> (Date?, String) {
-        guard let defaults = UserDefaults(suiteName: "group.com.anonymous.masa") else {
-            return (nil, "Soon")
-        }
+    private func getNarakChaturdashiData(currentDate: Date) -> (Date, String) {
+        // Hardcoded Narak Chaturdashi date: October 31, 2024
+        // You can update this date as needed
+        let calendar = Calendar.current
+        var components = DateComponents()
+        components.year = 2024
+        components.month = 10
+        components.day = 31
+        components.hour = 0
+        components.minute = 0
+        components.second = 0
         
-        // Load festival date (stored as timestamp in milliseconds)
-        var festivalDate: Date? = nil
-        if let dateTimestamp = defaults.object(forKey: "festival_date_hanuman_jayanti") as? Int64 {
-            festivalDate = Date(timeIntervalSince1970: TimeInterval(dateTimestamp / 1000))
-        } else if let dateTimestampString = defaults.string(forKey: "festival_date_hanuman_jayanti"),
-                  let dateTimestamp = Int64(dateTimestampString) {
-            festivalDate = Date(timeIntervalSince1970: TimeInterval(dateTimestamp / 1000))
-        }
-        
-        let relativeDate = festivalDate != nil ? formatRelativeDate(from: currentDate, to: festivalDate!) : "Soon"
+        let festivalDate = calendar.date(from: components) ?? currentDate
+        let relativeDate = formatRelativeDate(from: currentDate, to: festivalDate)
         
         return (festivalDate, relativeDate)
     }
@@ -93,7 +72,7 @@ struct FestivalProvider: TimelineProvider {
 
 struct FestivalEntry: TimelineEntry {
     let date: Date
-    let festival: FestivalInfo
+    let festivalDate: Date
     let relativeDate: String
 }
 
@@ -108,8 +87,7 @@ struct FestivalWidgetEntryView: View {
     @ViewBuilder
     private func festivalImageView() -> some View {
         // Load image from widget bundle's Assets.xcassets with cover fit
-        // Using standardized snake_case name matching the enum
-        if let uiImage = UIImage(named: entry.festival.imageName) {
+        if let uiImage = UIImage(named: "narak_chaturdashi") {
             GeometryReader { geometry in
                 Image(uiImage: uiImage)
                     .resizable()
@@ -174,27 +152,24 @@ struct FestivalWidgetEntryView: View {
     
     @ViewBuilder
     private func festivalNameView() -> some View {
-        let festivalName = entry.festival.displayName
-        let nameParts = festivalName.split(separator: " ")
-        
-        if isSmallWidget && nameParts.count > 1 {
-            // Split into two lines for small widget if name has multiple words
+        if isSmallWidget {
+            // Split into two lines for small widget
             VStack(alignment: .leading, spacing: 0) {
-                Text(String(nameParts[0]))
+                Text("Narak")
                     .font(.subheadline)
                     .fontWeight(.semibold)
-                Text(nameParts.dropFirst().joined(separator: " "))
+                Text("Chaturdashi")
                     .font(.subheadline)
                     .fontWeight(.semibold)
             }
         } else if widgetFamily == .systemLarge {
             // Larger text for large widget
-            Text(festivalName)
+            Text("Narak Chaturdashi")
                 .font(.largeTitle)
                 .fontWeight(.semibold)
         } else {
             // Single line for medium widgets
-            Text(festivalName)
+            Text("Narak Chaturdashi")
                 .font(.title3)
                 .fontWeight(.semibold)
         }
@@ -209,7 +184,7 @@ struct FestivalWidgetEntryView: View {
             festivalNameView()
                 .foregroundStyle(.white)
             
-            // Relative date (hardcoded to "Soon")
+            // Relative date
             Text(entry.relativeDate)
                 .font(widgetFamily == .systemLarge ? .body : .caption)
                 .foregroundStyle(.white.opacity(0.9))
@@ -256,17 +231,17 @@ struct FestivalWidget: Widget {
 #Preview("Small", as: .systemSmall) {
     FestivalWidget()
 } timeline: {
-    FestivalEntry(date: .now, festival: HANUMAN_JAYANTI, relativeDate: "In 5 days")
+    FestivalEntry(date: .now, festivalDate: Date().addingTimeInterval(86400 * 5), relativeDate: "In 5 days")
 }
 
 #Preview("Medium", as: .systemMedium) {
     FestivalWidget()
 } timeline: {
-    FestivalEntry(date: .now, festival: HANUMAN_JAYANTI, relativeDate: "Today")
+    FestivalEntry(date: .now, festivalDate: Date().addingTimeInterval(86400 * 270), relativeDate: "In 9 months")
 }
 
 #Preview("Large", as: .systemLarge) {
     FestivalWidget()
 } timeline: {
-    FestivalEntry(date: .now, festival: HANUMAN_JAYANTI, relativeDate: "In 1 day")
+    FestivalEntry(date: .now, festivalDate: Date().addingTimeInterval(86400 * 30), relativeDate: "In 1 month")
 }
