@@ -2,7 +2,7 @@ import { getFestivals } from "@/api/panchanga";
 import * as Notifications from "expo-notifications";
 import { SchedulableTriggerInputTypes } from "expo-notifications";
 import { Location } from "@/api/location";
-import i18n from "../i18n";
+import i18n from "@/i18n";
 import { FestivalInfo } from "@/api/panchanga/core/festival";
 import { Platform } from "react-native";
 

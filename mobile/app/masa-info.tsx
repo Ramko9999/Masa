@@ -101,4 +101,3 @@ export default function MasaInfoPage() {
     </InfoPage>
   );
 }
-
