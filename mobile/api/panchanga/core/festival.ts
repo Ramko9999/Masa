@@ -362,7 +362,6 @@ function generateCacheKey(anchorDay: number, location: Location): CacheKey {
   )}`;
 }
 
-
 // todo: fix cache so that only festivals for the anchor date year are cached
 export function getFestivals(location: Location) {
   const today = new Date();
@@ -374,11 +373,15 @@ export function getFestivals(location: Location) {
     return cachedResult.festivals;
   }
 
+  const start = performance.now();
   const lunarFestivals = getLunarFestivals(anchorDay, location);
   const dynamicFestivals = getDynamicFestivals(anchorDay, location);
   const festivals = [...lunarFestivals, ...dynamicFestivals].sort(
     (a, b) => a.date - b.date
   );
+
+  const end = performance.now();
+  console.log(`[FESTIVALS] Computed ${festivals.length} festivals in ${end - start}ms`);
 
   festivalsCache.set(cacheKey, {
     festivals,
