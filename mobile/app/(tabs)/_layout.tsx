@@ -54,7 +54,6 @@ export default function TabsLayout() {
         />
         <Label>{t("tabs.festivals")}</Label>
       </NativeTabs.Trigger>
-      
       <NativeTabs.Trigger name="settings">
         <Icon 
           sf={{ default: "gearshape", selected: "gearshape.fill" }}

@@ -18,6 +18,8 @@ import { CalendarDays } from "lucide-react-native";
 import { StyleUtils } from "@/theme/style-utils";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
+import { Host, Button, Image } from "@expo/ui/swift-ui";
+import { isLiquidGlassAvailable } from "expo-glass-effect";
 
 const homeStylesFactory = (
   theme: ColorSchemeName
@@ -25,6 +27,10 @@ const homeStylesFactory = (
   container: {
     flex: 1,
     backgroundColor: useGetColor(AppColor.background, theme),
+  },
+  liquidGlassFloatingButton: {
+    position: "absolute",
+    right: "3%",
   },
   floatingButton: {
     position: "absolute",
@@ -45,11 +51,8 @@ const homeStylesFactory = (
 export default function Home() {
   const { selection, openMonthCalendar } = useCalendar();
   const { location } = useLocation();
-  const theme = useColorScheme();
   const homeStyles = useThemedStyles(homeStylesFactory);
-  const insets = useSafeAreaInsets();
   const router = useRouter();
-  const {height} = useWindowDimensions();
 
   useEffect(() => {
     NotificationApi.scheduleFestivalNotifications(location!);
@@ -68,10 +71,50 @@ export default function Home() {
           selectedDay={selection.date}
         />
       </ScrollView>
-      <TouchableOpacity style={[homeStyles.floatingButton, { bottom: insets.bottom + height * 0.11 }]} onPress={openMonthCalendar}>
-        <CalendarDays size={24} color={useGetColor(AppColor.background, theme)} />
-      </TouchableOpacity>
+      <FloatingButton onPress={openMonthCalendar} />
     </View>
   );
 }
 
+interface FloatingButtonProps {
+  onPress: () => void;
+}
+
+function FloatingButton({ onPress }: FloatingButtonProps) {
+  const theme = useColorScheme();
+  const homeStyles = useThemedStyles(homeStylesFactory);
+  const insets = useSafeAreaInsets();
+  const { height } = useWindowDimensions();
+
+  if (isLiquidGlassAvailable()) {
+    return (
+      <Host
+        matchContents
+        style={[
+          homeStyles.liquidGlassFloatingButton,
+          { bottom: insets.bottom + height * 0.08 },
+        ]}
+      >
+        <Button
+          variant="glassProminent"
+          controlSize="extraLarge"
+          color={useGetColor(AppColor.primary, theme)}
+          systemImage="calendar"
+          onPress={onPress}
+        />
+      </Host>
+    );
+  }
+
+  return (
+    <TouchableOpacity
+      style={[
+        homeStyles.floatingButton,
+        { bottom: insets.bottom + height * 0.11 },
+      ]}
+      onPress={onPress}
+    >
+      <CalendarDays size={24} color={useGetColor(AppColor.background, theme)} />
+    </TouchableOpacity>
+  );
+}
