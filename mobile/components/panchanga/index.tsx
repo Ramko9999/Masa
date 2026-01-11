@@ -26,11 +26,12 @@ import { ChevronRight } from "lucide-react-native";
 import { AppColor, useGetColor, useThemedStyles } from "@/theme/color";
 import { useTranslation } from "react-i18next";
 import { MuhurtamInterval } from "@/api/panchanga/core/muhurtam";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Festival } from "@/api/panchanga/core/festival";
 import { Muhurtams } from "./muhurtam";
 import { StyleUtils } from "@/theme/style-utils";
-import { setPanchangaDay } from "@/store/widget";
+import { registerPanchangaSyncTask, triggerPanchangaSyncNow } from "@/services/panchanga-sync";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 type MuhurtamCardProps = {
   muhurtams: MuhurtamInterval[];
@@ -192,17 +193,65 @@ export function Pachanga({
 
   const { t } = useTranslation();
 
-  // Sync panchanga data to widget store
+  // DEBUG: State for background task logs
+  const [bgTaskLogs, setBgTaskLogs] = useState<string[]>([]);
+
+  // Register background task for panchanga sync (idempotent - just updates location)
   useEffect(() => {
     if (location) {
-      setPanchangaDay(panchanga).catch((error) => {
-        console.error("Failed to sync panchanga to widget:", error);
+      registerPanchangaSyncTask(location).catch((error) => {
+        console.error("Failed to register panchanga sync task:", error);
       });
     }
-  }, [panchanga.day, location?.latitude, location?.longitude]);
+  }, [location?.latitude, location?.longitude]);
+
+  // DEBUG: Trigger background task on mount (for testing)
+  useEffect(() => {
+    if (__DEV__ && location) {
+      console.log("[DEBUG] Triggering background task for testing...");
+      triggerPanchangaSyncNow().catch((error) => {
+        console.error("Failed to trigger background task:", error);
+      });
+    }
+  }, [location]);
+
+  // DEBUG: Refresh logs every 2 seconds
+  useEffect(() => {
+    const loadLogs = async () => {
+      try {
+        const logsJson = await AsyncStorage.getItem("bg_task_debug");
+        if (logsJson) {
+          const logs = JSON.parse(logsJson);
+          setBgTaskLogs(logs);
+        }
+      } catch (error) {
+        console.error("Failed to load background task logs:", error);
+      }
+    };
+
+    // Load immediately
+    loadLogs();
+
+    // Set up interval to refresh every 2 seconds
+    const interval = setInterval(loadLogs, 2000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <View style={panchangaStyles.container}>
+      {/* DEBUG: Background Task Logs */}
+      {__DEV__ && bgTaskLogs.length > 0 && (
+        <Card title="🔧 Background Task Debug">
+          <View>
+            {bgTaskLogs.map((log, index) => (
+              <Text key={index} style={{ fontSize: 10, marginBottom: 4 }}>
+                {log}
+              </Text>
+            ))}
+          </View>
+        </Card>
+      )}
       <FestivalsCard festivals={festivals} />
       <Card
         title={t("home.cards.vaara.title")}
