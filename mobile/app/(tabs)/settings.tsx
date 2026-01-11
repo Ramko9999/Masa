@@ -19,6 +19,7 @@ import { useSettingsSheet } from "@/components/settings";
 import { useTranslation } from "react-i18next";
 import { LANGUAGE_OPTIONS } from "@/components/settings/language";
 import { useFocusEffect } from "expo-router";
+import { ExtensionStorage } from "@bacons/apple-targets";
 
 const settingsStylesFactory = (
   theme: ColorSchemeName
@@ -72,6 +73,7 @@ export default function Settings() {
 
   const [isLoading, setIsLoading] = useState(true);
   const [hasEnabledNotifications, setHasEnabledNotifications] = useState(false);
+  const [debugInfo, setDebugInfo] = useState<string | null>(null);
 
   const showNotificationSettingsAlert = (isEnabled: boolean) => {
     Alert.alert(
@@ -108,6 +110,15 @@ export default function Settings() {
           setHasEnabledNotifications(granted);
         })
         .finally(() => setIsLoading(false));
+      
+      // Load widget debug info
+      try {
+        const store = new ExtensionStorage("group.com.anonymous.masa");
+        const info = store.get("widget_debug_info");
+        setDebugInfo(typeof info === "string" ? info : null);
+      } catch {
+        setDebugInfo(null);
+      }
     }, [])
   );
 
@@ -143,6 +154,19 @@ export default function Settings() {
             title={t("settings.settings_items.notifications.title")}
             value={notificationStatus}
             onClick={handleNotificationClick}
+          />
+        )}
+        {Platform.OS === "ios" && (
+          <SettingItem
+            title="Widget Debug Info"
+            value={debugInfo ? "Tap to view" : "No debug info"}
+            onClick={() => {
+              Alert.alert(
+                "Widget Debug Info",
+                debugInfo || "No debug information available. The widget needs to run first.",
+                [{ text: "OK" }]
+              );
+            }}
           />
         )}
       </ScrollView>

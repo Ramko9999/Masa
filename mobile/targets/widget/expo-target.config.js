@@ -2,5 +2,5 @@
 module.exports = config => ({
   type: "widget",
   icon: 'https://github.com/expo.png',
-  entitlements: config.ios.entitlements,
+  entitlements: { /* Add entitlements */ }
 });
