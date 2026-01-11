@@ -16,44 +16,36 @@ TaskManager.defineTask(PANCHANGA_SYNC_TASK, async () => {
       `[PanchangaSync] Background task started at: ${new Date().toISOString()}`
     );
 
-    // Get location from AsyncStorage
     const AsyncStorage = require("@react-native-async-storage/async-storage").default;
-    const locationJson = await AsyncStorage.getItem("panchanga_sync_location");
+
+    // TEST: Long running computation to verify background execution
+    const totalIterations = 1000000000; // 1 billion iterations
+    const logInterval = 1000000; // Log every 1 million
+    let logs: string[] = [];
     
-    if (!locationJson) {
-      console.log("[PanchangaSync] No location available, skipping sync");
-      return BackgroundTask.BackgroundTaskResult.Success;
+    logs.push(`Started at: ${new Date().toISOString()}`);
+    await AsyncStorage.setItem("bg_task_debug", JSON.stringify(logs));
+
+    for (let i = 0; i < totalIterations; i++) {
+      // Do some computation
+      Math.sqrt(i);
+      
+      if (i > 0 && i % logInterval === 0) {
+        const progress = ((i / totalIterations) * 100).toFixed(2);
+        const logMessage = `Progress: ${i.toLocaleString()} / ${totalIterations.toLocaleString()} (${progress}%) at ${new Date().toISOString()}`;
+        console.log(`[PanchangaSync] ${logMessage}`);
+        logs.push(logMessage);
+        await AsyncStorage.setItem("bg_task_debug", JSON.stringify(logs));
+      }
     }
 
-    const location = JSON.parse(locationJson) as Location;
+    logs.push(`Completed at: ${new Date().toISOString()}`);
+    await AsyncStorage.setItem("bg_task_debug", JSON.stringify(logs));
 
-    // Compute panchanga for all days from today to end of year
-    const today = truncateToDay(Date.now());
-    const currentYear = new Date(today).getFullYear();
-    const endOfYear = new Date(currentYear, 11, 31).valueOf(); // December 31st
-
-    console.log(
-      `[PanchangaSync] Computing panchanga from ${new Date(
-        today
-      ).toISOString()} to ${new Date(endOfYear).toISOString()}`
-    );
-
-    // Get all days from today to end of year
-    const days = getDatesBetween(today, endOfYear);
-
-    // Compute panchanga for all days
-    const panchangas = days.map((day) => computePanchanga(day, location));
-
-    // Store all panchanga data
-    await setPanchangaDays(panchangas);
-
-    console.log(
-      `[PanchangaSync] Successfully synced ${panchangas.length} days of panchanga data`
-    );
-
+    console.log("[PanchangaSync] Background task completed successfully");
     return BackgroundTask.BackgroundTaskResult.Success;
   } catch (error) {
-    console.error("[PanchangaSync] Failed to sync panchanga data:", error);
+    console.error("[PanchangaSync] Failed to run background task:", error);
     return BackgroundTask.BackgroundTaskResult.Failed;
   }
 });
