@@ -45,7 +45,7 @@ async function scheduleFestivalNotifications(location: Location) {
       returnObjects: true,
     }) as FestivalInfo;
 
-    const notificationId = await Notifications.scheduleNotificationAsync({
+    await Notifications.scheduleNotificationAsync({
       content: {
         title: festivalInfo.title,
         body: festivalInfo.caption,
@@ -58,10 +58,11 @@ async function scheduleFestivalNotifications(location: Location) {
         channelId: "default",
       },
     });
-    console.log(
-      `[NOTIFICATION] Scheduled notification ${notificationId} for festival ${festival.name} at ${notificationDate}`
-    );
   }
+
+  console.log(
+    `[NOTIFICATION] Scheduled ${festivals.length} festival notifications`
+  );
 }
 
 export const NotificationApi = {

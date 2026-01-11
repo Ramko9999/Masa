@@ -2,6 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
   <dict>
+    <key>BGTaskSchedulerPermittedIdentifiers</key>
+    <array>
+      <string>com.expo.modules.backgroundtask.processing</string>
+    </array>
     <key>CADisableMinimumFrameDurationOnPhone</key>
     <true/>
     <key>CFBundleDevelopmentRegion</key>
@@ -59,6 +63,11 @@
     </array>
     <key>RCTNewArchEnabled</key>
     <true/>
+    <key>UIBackgroundModes</key>
+    <array>
+      <string>fetch</string>
+      <string>processing</string>
+    </array>
     <key>UILaunchStoryboardName</key>
     <string>SplashScreen</string>
     <key>UIRequiredDeviceCapabilities</key>
