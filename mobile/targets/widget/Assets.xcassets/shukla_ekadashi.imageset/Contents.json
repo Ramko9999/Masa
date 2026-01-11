@@ -1,0 +1,23 @@
+{
+  "images": [
+    {
+      "filename": "shukla_ekadashi.png",
+      "idiom": "universal",
+      "scale": "1x"
+    },
+    {
+      "filename": "shukla_ekadashi.png",
+      "idiom": "universal",
+      "scale": "2x"
+    },
+    {
+      "filename": "shukla_ekadashi.png",
+      "idiom": "universal",
+      "scale": "3x"
+    }
+  ],
+  "info": {
+    "author": "xcode",
+    "version": 1
+  }
+}
