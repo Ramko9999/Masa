@@ -30,7 +30,7 @@ import React, { useEffect } from "react";
 import { Festival } from "@/api/panchanga/core/festival";
 import { Muhurtams } from "./muhurtam";
 import { StyleUtils } from "@/theme/style-utils";
-import { setPanchangaDay } from "@/store/widget";
+import { registerPanchangaSyncTask } from "@/services/panchanga-sync";
 
 type MuhurtamCardProps = {
   muhurtams: MuhurtamInterval[];
@@ -192,14 +192,14 @@ export function Pachanga({
 
   const { t } = useTranslation();
 
-  // Sync panchanga data to widget store
+  // Register background task for panchanga sync (idempotent - just updates location)
   useEffect(() => {
     if (location) {
-      setPanchangaDay(panchanga).catch((error) => {
-        console.error("Failed to sync panchanga to widget:", error);
+      registerPanchangaSyncTask(location).catch((error) => {
+        console.error("Failed to register panchanga sync task:", error);
       });
     }
-  }, [panchanga.day, location?.latitude, location?.longitude]);
+  }, [location?.latitude, location?.longitude]);
 
   return (
     <View style={panchangaStyles.container}>

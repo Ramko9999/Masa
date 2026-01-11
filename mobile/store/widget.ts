@@ -1,6 +1,7 @@
 import { ExtensionStorage } from "@bacons/apple-targets";
-import { Panchanga } from "@/api/panchanga";
-import { truncateToDay } from "@/util/date";
+import { Panchanga, computePanchanga } from "@/api/panchanga";
+import { Location } from "@/api/location";
+import { truncateToDay, addDays, getDatesBetween } from "@/util/date";
 
 const store = new ExtensionStorage("group.com.anonymous.masa");
 
@@ -71,7 +72,31 @@ function panchangaToDayData(panchanga: Panchanga): PanchangaDayData {
 }
 
 // Store panchanga data for a single day
-export async function setPanchangaDay(panchanga: Panchanga): Promise<void> {
+// If location is provided, computes and stores panchanga for all days from today to end of year
+export async function setPanchangaDay(
+  panchanga: Panchanga,
+  location?: Location
+): Promise<void> {
+  // If location is provided, compute panchanga for all days from today to end of year
+  if (location) {
+    const today = truncateToDay(Date.now());
+    const currentYear = new Date(today).getFullYear();
+    const endOfYear = new Date(currentYear, 11, 31).valueOf(); // December 31st
+    
+    // Get all days from today to end of year
+    const days = getDatesBetween(today, endOfYear);
+    
+    // Compute panchanga for all days
+    const panchangas: Panchanga[] = days.map((day) => 
+      computePanchanga(day, location)
+    );
+    
+    // Store all panchanga data
+    await setPanchangaDays(panchangas);
+    return;
+  }
+
+  // Original behavior: store just the single day
   const dayData = panchangaToDayData(panchanga);
   const dayKey = String(truncateToDay(panchanga.day));
 
