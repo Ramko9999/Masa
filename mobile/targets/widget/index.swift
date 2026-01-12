@@ -7,5 +7,6 @@ struct exportWidgets: WidgetBundle {
         // Export widgets here
         TithiWidget()
         FestivalWidget()
+        NakshatraWidget()
     }
 }

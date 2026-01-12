@@ -178,22 +178,11 @@ struct FestivalWidgetEntryView: View {
         let displayName = entry.festivalName.replacingOccurrences(of: "_", with: " ").capitalized
         
         if isSmallWidget {
-            // Show first two words on separate lines for small widget
-            let words = displayName.split(separator: " ")
-            if words.count >= 2 {
-                VStack(alignment: .leading, spacing: 0) {
-                    Text(String(words[0]))
-                        .font(.subheadline)
-                        .fontWeight(.semibold)
-                    Text(String(words[1]))
-                        .font(.subheadline)
-                        .fontWeight(.semibold)
-                }
-            } else {
-                Text(displayName)
-                    .font(.subheadline)
-                    .fontWeight(.semibold)
-            }
+            // Single line with smaller font for small widget
+            Text(displayName)
+                .font(.subheadline)
+                .fontWeight(.semibold)
+                .lineLimit(1)
         } else if widgetFamily == .systemLarge {
             // Larger text for large widget
             Text(displayName)
@@ -216,7 +205,7 @@ struct FestivalWidgetEntryView: View {
             festivalNameView()
                 .foregroundStyle(.white)
             
-            // Relative date
+            // Relative date underneath
             Text(entry.relativeDate)
                 .font(widgetFamily == .systemLarge ? .body : .caption)
                 .foregroundStyle(.white.opacity(0.9))
