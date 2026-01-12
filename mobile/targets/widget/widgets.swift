@@ -1,80 +1,81 @@
 import WidgetKit
 import SwiftUI
 
-// Data models are defined in records.swift
-
-// MARK: - Provider
-
-struct Provider: TimelineProvider {
-  func placeholder(in context: Context) -> PanchangaEntry {
-    PanchangaEntry(date: Date(), panchanga: nil)
-  }
-
-  func getSnapshot(in context: Context, completion: @escaping (PanchangaEntry) -> Void) {
-    let panchanga = loadPanchangaForDate(Date())
-    let entry = PanchangaEntry(date: Date(), panchanga: panchanga)
-    completion(entry)
-  }
-
-  func getTimeline(in context: Context, completion: @escaping (Timeline<PanchangaEntry>) -> Void) {
-    let currentDate = Date()
-    let panchanga = loadPanchangaForDate(currentDate)
-    let entry = PanchangaEntry(date: currentDate, panchanga: panchanga)
-
-    // Refresh at midnight
-    let calendar = Calendar.current
-    let nextUpdate = calendar.startOfDay(
-      for: calendar.date(byAdding: .day, value: 1, to: currentDate)!)
-
-    let timeline = Timeline(entries: [entry], policy: .after(nextUpdate))
-    completion(timeline)
-  }
-}
-
-struct PanchangaEntry: TimelineEntry {
-  let date: Date
-  let panchanga: PanchangaDay?
-}
-
-struct widgetEntryView: View {
-  var entry: PanchangaEntry
-
-  var body: some View {
-    VStack(alignment: .leading, spacing: 8) {
-      if let panchanga = entry.panchanga {
-        VStack(alignment: .leading, spacing: 6) {
-          Text("Tithi: \(panchanga.tithi.name)")
-            .font(.headline)
-          Text("Nakshatra: \(panchanga.nakshatra.name)")
-            .font(.subheadline)
-          Text("Masa: \(panchanga.masa.purnimanta.name)")
-            .font(.subheadline)
-        }
-      } else {
-        Text("No panchanga data available")
-          .font(.caption)
-          .foregroundColor(.secondary)
-      }
+struct Provider: AppIntentTimelineProvider {
+    func placeholder(in context: Context) -> SimpleEntry {
+        SimpleEntry(date: Date(), configuration: ConfigurationAppIntent())
     }
-    .padding()
-  }
+
+    func snapshot(for configuration: ConfigurationAppIntent, in context: Context) async -> SimpleEntry {
+        SimpleEntry(date: Date(), configuration: configuration)
+    }
+    
+    func timeline(for configuration: ConfigurationAppIntent, in context: Context) async -> Timeline<SimpleEntry> {
+        var entries: [SimpleEntry] = []
+
+        // Generate a timeline consisting of five entries an hour apart, starting from the current date.
+        let currentDate = Date()
+        for hourOffset in 0 ..< 5 {
+            let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate)!
+            let entry = SimpleEntry(date: entryDate, configuration: configuration)
+            entries.append(entry)
+        }
+
+        return Timeline(entries: entries, policy: .atEnd)
+    }
+
+//    func relevances() async -> WidgetRelevances<ConfigurationAppIntent> {
+//        // Generate a list containing the contexts this widget is relevant in.
+//    }
+}
+
+struct SimpleEntry: TimelineEntry {
+    let date: Date
+    let configuration: ConfigurationAppIntent
+}
+
+struct widgetEntryView : View {
+    var entry: Provider.Entry
+
+    var body: some View {
+        VStack {
+            Text("Time:")
+            Text(entry.date, style: .time)
+
+            Text("Favorite Emoji:")
+            Text(entry.configuration.favoriteEmoji)
+        }
+    }
 }
 
 struct widget: Widget {
-  let kind: String = "widget"
+    let kind: String = "widget"
 
-  var body: some WidgetConfiguration {
-    StaticConfiguration(kind: kind, provider: Provider()) { entry in
-      widgetEntryView(entry: entry)
-        .containerBackground(.fill.tertiary, for: .widget)
+    var body: some WidgetConfiguration {
+        AppIntentConfiguration(kind: kind, intent: ConfigurationAppIntent.self, provider: Provider()) { entry in
+            widgetEntryView(entry: entry)
+                .containerBackground(.fill.tertiary, for: .widget)
+        }
     }
-    .configurationDisplayName("Panchanga")
-    .description("Shows today's tithi, nakshatra, and masa")
-  }
+}
+
+extension ConfigurationAppIntent {
+    fileprivate static var smiley: ConfigurationAppIntent {
+        let intent = ConfigurationAppIntent()
+        intent.favoriteEmoji = "😀"
+        return intent
+    }
+    
+    fileprivate static var starEyes: ConfigurationAppIntent {
+        let intent = ConfigurationAppIntent()
+        intent.favoriteEmoji = "🤩"
+        return intent
+    }
 }
 
 #Preview(as: .systemSmall) {
-  widget()
+    widget()
 } timeline: {
-  PanchangaEntry(date: .now, panchanga: nil)
+    SimpleEntry(date: .now, configuration: .smiley)
+    SimpleEntry(date: .now, configuration: .starEyes)
 }

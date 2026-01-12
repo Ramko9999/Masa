@@ -46,8 +46,23 @@ struct FestivalProvider: TimelineProvider {
     }
 
     func getSnapshot(in context: Context, completion: @escaping (FestivalEntry) -> ()) {
-        // Always show Diwali for previews
-        completion(diwaliEntry())
+        // Try to load next upcoming festival, fallback to Diwali
+        let now = Date()
+        if let nextFestival = loadNextFestival(from: now) {
+            let festivalDate = Date(timeIntervalSince1970: TimeInterval(nextFestival.date) / 1000.0)
+            let relativeDate = formatRelativeDate(from: now, to: festivalDate)
+            
+            completion(FestivalEntry(
+                date: now,
+                festivalName: nextFestival.name,
+                festivalDate: festivalDate,
+                relativeDate: relativeDate,
+                isEmptyState: false
+            ))
+        } else {
+            // Fallback to Diwali for preview
+            completion(diwaliEntry())
+        }
     }
     
     func getTimeline(in context: Context, completion: @escaping (Timeline<FestivalEntry>) -> ()) {
@@ -106,11 +121,17 @@ struct FestivalWidgetEntryView: View {
     private func festivalImageView() -> some View {
         // Load image from widget bundle with cover fit
         GeometryReader { geometry in
-            Image(entry.festivalName)
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-                .frame(width: geometry.size.width, height: geometry.size.height)
-                .clipped()
+            if let uiImage = UIImage(named: entry.festivalName) {
+                Image(uiImage: uiImage)
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(width: geometry.size.width, height: geometry.size.height)
+                    .clipped()
+            } else {
+                // Fallback if image not found in bundle
+                Color.black
+                    .frame(width: geometry.size.width, height: geometry.size.height)
+            }
         }
     }
     
