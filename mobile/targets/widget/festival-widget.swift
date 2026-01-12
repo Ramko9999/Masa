@@ -25,38 +25,61 @@ func formatRelativeDate(from now: Date, to festivalDate: Date) -> String {
 // MARK: - Festival Provider
 
 struct FestivalProvider: TimelineProvider {
-    // Helper to create Narak Chaturdashi entry (always used as fallback)
-    private func narakChaturdashiEntry() -> FestivalEntry {
+    // Helper to create Diwali entry (for previews/placeholders)
+    private func diwaliEntry() -> FestivalEntry {
         let now = Date()
         let futureDate = Calendar.current.date(byAdding: .day, value: 5, to: now) ?? now
         let relativeDate = formatRelativeDate(from: now, to: futureDate)
         
-        return FestivalEntry(
-            date: now,
-            festivalName: "narak_chaturdashi",
-            festivalDate: futureDate,
-            relativeDate: relativeDate,
-            isPlaceholder: false
-        )
+            return FestivalEntry(
+                date: now,
+                festivalName: "diwali",
+                festivalDate: futureDate,
+                relativeDate: relativeDate,
+                isEmptyState: false
+            )
     }
     
     func placeholder(in context: Context) -> FestivalEntry {
-        // Always show Narak Chaturdashi for preview
-        return narakChaturdashiEntry()
+        // Always show Diwali for preview
+        return diwaliEntry()
     }
 
     func getSnapshot(in context: Context, completion: @escaping (FestivalEntry) -> ()) {
-        // Always show Narak Chaturdashi for previews
-        completion(narakChaturdashiEntry())
+        // Always show Diwali for previews
+        completion(diwaliEntry())
     }
     
     func getTimeline(in context: Context, completion: @escaping (Timeline<FestivalEntry>) -> ()) {
-        // Always show Narak Chaturdashi (no data loading for testing)
-        let entry = narakChaturdashiEntry()
+        let now = Date()
+        
+        // Try to load next upcoming festival
+        let entry: FestivalEntry
+        if let nextFestival = loadNextFestival(from: now) {
+            let festivalDate = Date(timeIntervalSince1970: TimeInterval(nextFestival.date) / 1000.0)
+            let relativeDate = formatRelativeDate(from: now, to: festivalDate)
+            
+            entry = FestivalEntry(
+                date: now,
+                festivalName: nextFestival.name,
+                festivalDate: festivalDate,
+                relativeDate: relativeDate,
+                isEmptyState: false
+            )
+        } else {
+            // Show empty state if no festival data
+            entry = FestivalEntry(
+                date: now,
+                festivalName: "",
+                festivalDate: now,
+                relativeDate: "",
+                isEmptyState: true
+            )
+        }
         
         // Refresh at midnight
         let calendar = Calendar.current
-        let nextUpdate = calendar.startOfDay(for: calendar.date(byAdding: .day, value: 1, to: Date())!)
+        let nextUpdate = calendar.startOfDay(for: calendar.date(byAdding: .day, value: 1, to: now)!)
         
         let timeline = Timeline(entries: [entry], policy: .after(nextUpdate))
         completion(timeline)
@@ -68,7 +91,7 @@ struct FestivalEntry: TimelineEntry {
     let festivalName: String
     let festivalDate: Date
     let relativeDate: String
-    let isPlaceholder: Bool
+    let isEmptyState: Bool
 }
 
 struct FestivalWidgetEntryView: View {
@@ -81,9 +104,9 @@ struct FestivalWidgetEntryView: View {
     
     @ViewBuilder
     private func festivalImageView() -> some View {
-        // Load image from widget bundle's Assets.xcassets with cover fit
+        // Load image from widget bundle with cover fit
         GeometryReader { geometry in
-            Image(uiImage: UIImage(named: entry.festivalName)!)
+            Image(entry.festivalName)
                 .resizable()
                 .aspectRatio(contentMode: .fill)
                 .frame(width: geometry.size.width, height: geometry.size.height)
@@ -185,14 +208,21 @@ struct FestivalWidgetEntryView: View {
 
     var body: some View {
         ZStack {
-            // Background image that fills entire widget
-            festivalImageView()
-            
-            // Gradient overlay at the bottom
-            gradientOverlay()
-            
-            // Text overlay at the bottom
-            textOverlay()
+            if entry.isEmptyState {
+                // Show empty state when no data
+                Color.black
+                    .ignoresSafeArea()
+                WidgetEmptyStateView()
+            } else {
+                // Background image that fills entire widget
+                festivalImageView()
+                
+                // Gradient overlay at the bottom
+                gradientOverlay()
+                
+                // Text overlay at the bottom
+                textOverlay()
+            }
         }
         .ignoresSafeArea()
     }
@@ -218,17 +248,17 @@ struct FestivalWidget: Widget {
 #Preview("Small", as: .systemSmall) {
     FestivalWidget()
 } timeline: {
-    FestivalEntry(date: .now, festivalName: "diwali", festivalDate: Date().addingTimeInterval(86400 * 5), relativeDate: "In 5 days", isPlaceholder: false)
+    FestivalEntry(date: .now, festivalName: "diwali", festivalDate: Date().addingTimeInterval(86400 * 5), relativeDate: "In 5 days", isEmptyState: false)
 }
 
 #Preview("Medium", as: .systemMedium) {
     FestivalWidget()
 } timeline: {
-    FestivalEntry(date: .now, festivalName: "holi", festivalDate: Date().addingTimeInterval(86400 * 270), relativeDate: "In 9 months", isPlaceholder: false)
+    FestivalEntry(date: .now, festivalName: "holi", festivalDate: Date().addingTimeInterval(86400 * 270), relativeDate: "In 9 months", isEmptyState: false)
 }
 
 #Preview("Large", as: .systemLarge) {
     FestivalWidget()
 } timeline: {
-    FestivalEntry(date: .now, festivalName: "ganesh_chaturthi", festivalDate: Date().addingTimeInterval(86400 * 30), relativeDate: "In 1 month", isPlaceholder: false)
+    FestivalEntry(date: .now, festivalName: "ganesh_chaturthi", festivalDate: Date().addingTimeInterval(86400 * 30), relativeDate: "In 1 month", isEmptyState: false)
 }

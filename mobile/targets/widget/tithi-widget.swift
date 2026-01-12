@@ -6,7 +6,7 @@ import SwiftUI
 struct TithiProvider: TimelineProvider {
     func placeholder(in context: Context) -> TithiEntry {
         // Show Krishna Ashtami for preview (when adding widget)
-        TithiEntry(date: Date(), tithiIndex: 22, tithiName: "krishna_ashtami", isPlaceholder: false)
+        TithiEntry(date: Date(), tithiIndex: 22, tithiName: "krishna_ashtami", isEmptyState: false)
     }
 
     func getSnapshot(in context: Context, completion: @escaping (TithiEntry) -> ()) {
@@ -17,7 +17,7 @@ struct TithiProvider: TimelineProvider {
                 date: Date(),
                 tithiIndex: panchanga!.tithi.index,
                 tithiName: panchanga!.tithi.name,
-                isPlaceholder: false
+                isEmptyState: false
             )
             : placeholder(in: context)
         completion(entry)
@@ -30,7 +30,7 @@ struct TithiProvider: TimelineProvider {
             date: currentDate,
             tithiIndex: panchanga?.tithi.index ?? 14,
             tithiName: panchanga?.tithi.name ?? "Purnima",
-            isPlaceholder: panchanga == nil
+            isEmptyState: panchanga == nil
         )
         
         // Refresh at midnight
@@ -47,7 +47,7 @@ struct TithiEntry: TimelineEntry {
     let date: Date
     let tithiIndex: Int
     let tithiName: String
-    let isPlaceholder: Bool // True when using fallback data
+    let isEmptyState: Bool // True when no data available
 }
 
 struct TithiWidgetEntryView: View {
@@ -139,7 +139,7 @@ struct TithiWidgetEntryView: View {
             Color.black
                 .ignoresSafeArea()
             
-            if entry.isPlaceholder {
+            if entry.isEmptyState {
                 // Show shared empty state view
                 WidgetEmptyStateView()
             } else {
@@ -192,5 +192,5 @@ struct TithiWidget: Widget {
 #Preview("Small", as: .systemSmall) {
     TithiWidget()
 } timeline: {
-    TithiEntry(date: .now, tithiIndex: 22, tithiName: "krishna_ashtami", isPlaceholder: false)
+    TithiEntry(date: .now, tithiIndex: 22, tithiName: "krishna_ashtami", isEmptyState: false)
 }
