@@ -25,55 +25,73 @@ func formatRelativeDate(from now: Date, to festivalDate: Date) -> String {
 // MARK: - Festival Provider
 
 struct FestivalProvider: TimelineProvider {
+    // Helper to create Diwali entry (for previews/placeholders)
+    private func diwaliEntry() -> FestivalEntry {
+        let now = Date()
+        let futureDate = Calendar.current.date(byAdding: .day, value: 5, to: now) ?? now
+        let relativeDate = formatRelativeDate(from: now, to: futureDate)
+        
+            return FestivalEntry(
+                date: now,
+                festivalName: "diwali",
+                festivalDate: futureDate,
+                relativeDate: relativeDate,
+                isEmptyState: false
+            )
+    }
+    
     func placeholder(in context: Context) -> FestivalEntry {
-        let currentDate = Date()
-        let (festivalDate, relativeDate) = getNarakChaturdashiData(currentDate: currentDate)
-        return FestivalEntry(date: currentDate, festivalDate: festivalDate, relativeDate: relativeDate)
+        // Always show Diwali for preview
+        return diwaliEntry()
     }
 
     func getSnapshot(in context: Context, completion: @escaping (FestivalEntry) -> ()) {
-        let currentDate = Date()
-        let (festivalDate, relativeDate) = getNarakChaturdashiData(currentDate: currentDate)
-        let entry = FestivalEntry(date: currentDate, festivalDate: festivalDate, relativeDate: relativeDate)
-        completion(entry)
+        // Always show Diwali for previews
+        completion(diwaliEntry())
     }
     
     func getTimeline(in context: Context, completion: @escaping (Timeline<FestivalEntry>) -> ()) {
-        let currentDate = Date()
-        let (festivalDate, relativeDate) = getNarakChaturdashiData(currentDate: currentDate)
-        let entry = FestivalEntry(date: currentDate, festivalDate: festivalDate, relativeDate: relativeDate)
+        let now = Date()
+        
+        // Try to load next upcoming festival
+        let entry: FestivalEntry
+        if let nextFestival = loadNextFestival(from: now) {
+            let festivalDate = Date(timeIntervalSince1970: TimeInterval(nextFestival.date) / 1000.0)
+            let relativeDate = formatRelativeDate(from: now, to: festivalDate)
+            
+            entry = FestivalEntry(
+                date: now,
+                festivalName: nextFestival.name,
+                festivalDate: festivalDate,
+                relativeDate: relativeDate,
+                isEmptyState: false
+            )
+        } else {
+            // Show empty state if no festival data
+            entry = FestivalEntry(
+                date: now,
+                festivalName: "",
+                festivalDate: now,
+                relativeDate: "",
+                isEmptyState: true
+            )
+        }
         
         // Refresh at midnight
         let calendar = Calendar.current
-        let nextUpdate = calendar.startOfDay(for: calendar.date(byAdding: .day, value: 1, to: currentDate)!)
+        let nextUpdate = calendar.startOfDay(for: calendar.date(byAdding: .day, value: 1, to: now)!)
         
         let timeline = Timeline(entries: [entry], policy: .after(nextUpdate))
         completion(timeline)
-    }
-    
-    private func getNarakChaturdashiData(currentDate: Date) -> (Date, String) {
-        // Hardcoded Narak Chaturdashi date: October 31, 2024
-        // You can update this date as needed
-        let calendar = Calendar.current
-        var components = DateComponents()
-        components.year = 2024
-        components.month = 10
-        components.day = 31
-        components.hour = 0
-        components.minute = 0
-        components.second = 0
-        
-        let festivalDate = calendar.date(from: components) ?? currentDate
-        let relativeDate = formatRelativeDate(from: currentDate, to: festivalDate)
-        
-        return (festivalDate, relativeDate)
     }
 }
 
 struct FestivalEntry: TimelineEntry {
     let date: Date
+    let festivalName: String
     let festivalDate: Date
     let relativeDate: String
+    let isEmptyState: Bool
 }
 
 struct FestivalWidgetEntryView: View {
@@ -86,29 +104,13 @@ struct FestivalWidgetEntryView: View {
     
     @ViewBuilder
     private func festivalImageView() -> some View {
-        // Load image from widget bundle's Assets.xcassets with cover fit
-        if let uiImage = UIImage(named: "narak_chaturdashi") {
-            GeometryReader { geometry in
-                Image(uiImage: uiImage)
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .frame(width: geometry.size.width, height: geometry.size.height)
-                    .clipped()
-            }
-        } else {
-            // Fallback if image not found
-            Color.orange.opacity(0.3)
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .overlay(
-                    VStack {
-                        Image(systemName: "photo")
-                            .font(.largeTitle)
-                            .foregroundColor(.orange)
-                        Text("Image not found")
-                            .font(.caption2)
-                            .foregroundColor(.secondary)
-                    }
-                )
+        // Load image from widget bundle with cover fit
+        GeometryReader { geometry in
+            Image(entry.festivalName)
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+                .frame(width: geometry.size.width, height: geometry.size.height)
+                .clipped()
         }
     }
     
@@ -152,24 +154,33 @@ struct FestivalWidgetEntryView: View {
     
     @ViewBuilder
     private func festivalNameView() -> some View {
+        let displayName = entry.festivalName.replacingOccurrences(of: "_", with: " ").capitalized
+        
         if isSmallWidget {
-            // Split into two lines for small widget
-            VStack(alignment: .leading, spacing: 0) {
-                Text("Narak")
-                    .font(.subheadline)
-                    .fontWeight(.semibold)
-                Text("Chaturdashi")
+            // Show first two words on separate lines for small widget
+            let words = displayName.split(separator: " ")
+            if words.count >= 2 {
+                VStack(alignment: .leading, spacing: 0) {
+                    Text(String(words[0]))
+                        .font(.subheadline)
+                        .fontWeight(.semibold)
+                    Text(String(words[1]))
+                        .font(.subheadline)
+                        .fontWeight(.semibold)
+                }
+            } else {
+                Text(displayName)
                     .font(.subheadline)
                     .fontWeight(.semibold)
             }
         } else if widgetFamily == .systemLarge {
             // Larger text for large widget
-            Text("Narak Chaturdashi")
+            Text(displayName)
                 .font(.largeTitle)
                 .fontWeight(.semibold)
         } else {
             // Single line for medium widgets
-            Text("Narak Chaturdashi")
+            Text(displayName)
                 .font(.title3)
                 .fontWeight(.semibold)
         }
@@ -197,14 +208,21 @@ struct FestivalWidgetEntryView: View {
 
     var body: some View {
         ZStack {
-            // Background image that fills entire widget
-            festivalImageView()
-            
-            // Gradient overlay at the bottom
-            gradientOverlay()
-            
-            // Text overlay at the bottom
-            textOverlay()
+            if entry.isEmptyState {
+                // Show empty state when no data
+                Color.black
+                    .ignoresSafeArea()
+                WidgetEmptyStateView()
+            } else {
+                // Background image that fills entire widget
+                festivalImageView()
+                
+                // Gradient overlay at the bottom
+                gradientOverlay()
+                
+                // Text overlay at the bottom
+                textOverlay()
+            }
         }
         .ignoresSafeArea()
     }
@@ -217,31 +235,30 @@ struct FestivalWidget: Widget {
         StaticConfiguration(kind: kind, provider: FestivalProvider()) { entry in
             FestivalWidgetEntryView(entry: entry)
                 .containerBackground(for: .widget) {
-                    // Empty background to allow edge-to-edge content
                     Color.clear
                 }
         }
         .contentMarginsDisabled()
         .supportedFamilies([.systemSmall, .systemMedium, .systemLarge])
         .configurationDisplayName("Upcoming Festival")
-        .description("Shows the next upcoming festival with its image")
+        .description("Shows the next upcoming festival")
     }
 }
 
 #Preview("Small", as: .systemSmall) {
     FestivalWidget()
 } timeline: {
-    FestivalEntry(date: .now, festivalDate: Date().addingTimeInterval(86400 * 5), relativeDate: "In 5 days")
+    FestivalEntry(date: .now, festivalName: "diwali", festivalDate: Date().addingTimeInterval(86400 * 5), relativeDate: "In 5 days", isEmptyState: false)
 }
 
 #Preview("Medium", as: .systemMedium) {
     FestivalWidget()
 } timeline: {
-    FestivalEntry(date: .now, festivalDate: Date().addingTimeInterval(86400 * 270), relativeDate: "In 9 months")
+    FestivalEntry(date: .now, festivalName: "holi", festivalDate: Date().addingTimeInterval(86400 * 270), relativeDate: "In 9 months", isEmptyState: false)
 }
 
 #Preview("Large", as: .systemLarge) {
     FestivalWidget()
 } timeline: {
-    FestivalEntry(date: .now, festivalDate: Date().addingTimeInterval(86400 * 30), relativeDate: "In 1 month")
+    FestivalEntry(date: .now, festivalName: "ganesh_chaturthi", festivalDate: Date().addingTimeInterval(86400 * 30), relativeDate: "In 1 month", isEmptyState: false)
 }
