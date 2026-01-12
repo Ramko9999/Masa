@@ -5,12 +5,12 @@ import SwiftUI
 
 struct TithiProvider: TimelineProvider {
     func placeholder(in context: Context) -> TithiEntry {
-        // Show Krishna Ashtami for preview (when adding widget)
-        TithiEntry(date: Date(), tithiIndex: 22, tithiName: "krishna_ashtami", isEmptyState: false)
+        // Show Purnima for preview (when adding widget)
+        TithiEntry(date: Date(), tithiIndex: 14, tithiName: "purnima", isEmptyState: false)
     }
 
     func getSnapshot(in context: Context, completion: @escaping (TithiEntry) -> ()) {
-        // getSnapshot is used for previews - show Krishna Ashtami if no data
+        // getSnapshot is used for previews - show Purnima if no data
         let panchanga = loadPanchangaForDate(Date())
         let entry = panchanga != nil
             ? TithiEntry(
@@ -116,20 +116,6 @@ struct TithiWidgetEntryView: View {
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
-        } else {
-            // Fallback if image not found
-            Color.gray.opacity(0.3)
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .overlay(
-                    VStack {
-                        Image(systemName: "moon")
-                            .font(.largeTitle)
-                            .foregroundColor(.gray)
-                        Text("Image: \(imageName)")
-                            .font(.caption2)
-                            .foregroundColor(.secondary)
-                    }
-                )
         }
     }
     
@@ -192,5 +178,5 @@ struct TithiWidget: Widget {
 #Preview("Small", as: .systemSmall) {
     TithiWidget()
 } timeline: {
-    TithiEntry(date: .now, tithiIndex: 22, tithiName: "krishna_ashtami", isEmptyState: false)
+    TithiEntry(date: .now, tithiIndex: 14, tithiName: "purnima", isEmptyState: false)
 }
